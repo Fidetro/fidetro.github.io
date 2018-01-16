@@ -249,9 +249,46 @@ border: none;
 <img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/D45F4AE5-5D7F-4C98-9AB9-B26886FFC8FF.png" alt="" /></li>
 </ol>
 
-<p>数据的流向：App得到数据-&gt;解析成action-&gt;Store通过AOP得到处理数据后的action-&gt;Controller通过store订阅对应的action</p>
-
 <p><code class="highlighter-rouge">AOP</code>的框架，我看了网上也有很多，大部分是在<a href="https://github.com/steipete/Aspects">Aspects</a>的基础上封装的，更推荐直接去使用<code class="highlighter-rouge">Aspects</code>,像是一些发送队列，几秒内只接收一个，几秒内只处理最后一个这种需求，都比较方便，当然也用<code class="highlighter-rouge">RAC</code>或者<code class="highlighter-rouge">RxSwift</code>处理，见仁见智。</p>
+
+<p>怕讲的太抽象，放一段使用<code class="highlighter-rouge">Aspects</code>的伪代码：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Action的伪实现
+</span><span class="k">@implementation</span> <span class="nc">TAction</span>
+
+<span class="k">+</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">parse</span><span class="p">:(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span>
+<span class="p">{</span>
+  <span class="c1">//处理数据
+</span>    <span class="k">return</span> <span class="s">@"hello action"</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+
+
+<span class="c1">//Store的伪代码实现
+</span><span class="k">@implementation</span> <span class="nc">TStore</span>
+<span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">subscribe</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">str</span><span class="p">))</span><span class="nv">handler_block</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">object_getClass</span><span class="p">([</span><span class="n">TAction</span> <span class="nf">class</span><span class="p">])</span> <span class="nf">aspect_hookSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nf">parse</span><span class="p">:)</span> <span class="n">withOptions</span><span class="o">:</span><span class="n">AspectPositionAfter</span> <span class="n">usingBlock</span><span class="o">:^</span><span class="p">(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">AspectInfo</span><span class="o">&gt;</span> <span class="n">aspectInfo</span><span class="p">,</span><span class="n">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NSString</span> <span class="o">*</span><span class="n">str</span><span class="p">;</span>
+        <span class="p">[</span><span class="n">aspectInfo</span><span class="p">.</span><span class="n">originalInvocation</span> <span class="nf">getReturnValue</span><span class="p">:</span><span class="o">&amp;</span><span class="n">str</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">handler_block</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">handler_block</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="n">error</span><span class="o">:</span><span class="nb">NULL</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</code></pre></div></div>
+<p>在Controller上，我们就只需要订阅Store的消息就可以了：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@implementation</span> <span class="nc">ViewController</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>    
+    <span class="p">[</span><span class="n">TStore</span> <span class="nf">subscribe</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,</span><span class="n">str</span><span class="p">);</span>
+    <span class="p">}];</span>    
+<span class="p">}</span>
+<span class="k">@end</span>
+</code></pre></div></div>
 
 <hr />
 
