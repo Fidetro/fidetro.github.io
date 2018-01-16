@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>如何在阿里云上部署Perfect服务器 - fidetro | FoolishTalk Blog</title>
+
+    <link rel="canonical" href="http://localhost:4000/2017/08/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E4%B8%8A%E9%83%A8%E7%BD%B2Perfect%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">FoolishTalk</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <style type="text/css">
+/* 新浪微博 */
+.-mob-share-weibo {
+background-image: url("https://fidetro.github.io/img/share/sina_share.png")!important;
+width: 30px;height: 30px;
+border: none;
+}
+/* 微信 */
+.-mob-share-weixin {
+background-image: url("https://fidetro.github.io/img/share/wechat_share.png")!important;
+width: 30px;height: 30px;
+border: none;
+}
+/* QQ */
+.-mob-share-qq {
+background-image: url("https://fidetro.github.io/img/share/qq_share.png")!important;
+width: 30px;height: 30px;
+border: none;
+}
+</style>
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-old.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#经验" title="经验">经验</a>
+                        
+                        <a class="tag" href="/tags/#Perfect-Server" title="Perfect-Server">Perfect-Server</a>
+                        
+                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        
+                    </div>
+                    <h1>如何在阿里云上部署Perfect服务器</h1>
+                    
+                    
+                    <h2 class="subheading">Swift，Perfect-Server</h2>
+                    
+                    <span class="meta">Posted by Fidetro on August 21, 2017</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">            
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h3 id="下面的文章是基于perfect-v2写的支持的是swift-310月11号perfect发布了v3版本支持swift-4如果希望服务器支持swift-4可以配置部分参考perfect-v2版本服务器升级v3">下面的文章是基于Perfect v2写的，支持的是swift 3，10月11号Perfect发布了v3版本，支持swift 4，如果希望服务器支持swift 4，可以配置部分参考<a href="https://fidetro.github.io/2017/10/19/Perfect-v2版本服务器升级v3/">Perfect v2版本服务器升级v3</a></h3>
+
+<h2 id="如何在阿里云上部署perfect服务器">如何在阿里云上部署Perfect服务器</h2>
+<p><a href="https://www.aliyun.com/">阿里云地址</a></p>
+<ol>
+  <li>
+    <p>登录自己阿里云的账号，进入控制台 <br />
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/00C3BAD3-3C65-4B5F-87C2-081F101F8861.png" alt="登录自己阿里云的账号，进入控制台.png" /></p>
+  </li>
+  <li>
+    <p>创建实例 <br />
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/ED04EC90-DE3C-4F62-9165-DF2CB4833620.png" alt="创建实例.png" /></p>
+  </li>
+</ol>
+
+<p>这篇相当于总结了自己一些在部署的时候踩坑经验，即使对linux操作不熟悉的人，也能能根据这篇文章部署，文章大部分都是参考了以下的资料：</p>
+
+<ol>
+  <li>
+    <p>选择配置 <br />
+包年包月就是不限流量，按量付费就是根据流量的使用去扣费，地域如果是自己选着玩的话，选个离自己近一点的，这样没那么卡
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/753AEF9A-47EF-4B58-B4D0-DA7E212C48B3.png" alt="选择配置.png" /></p>
+  </li>
+  <li>
+    <p>端口设置  <br />
+根据自己需要用到的服务去勾选，假如要用http，就要勾80端口，要用https就勾443端口
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/76F22B6F-ABDF-45DC-804D-50D84E82A7D2.png" alt="端口设置.png" /></p>
+  </li>
+  <li>
+    <p>选择配置 <br />
+因为我自己是自己写着玩的，对配置没什么要求，所以选了个比较便宜的
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/50BE7137-8340-4B90-8572-0711DD7259FA.png" alt="选择配置.png" /></p>
+  </li>
+  <li>
+    <p>公网带宽 
+带宽自己玩的话，1M也足够了，就是下载swift工具链的时候比较慢
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/BBFEDAFE-3632-40B3-86D4-F1035C927039.png" alt="公网带宽.png" /></p>
+  </li>
+  <li>
+    <p>镜像 <br />
+镜像请选择Ubuntu16.04 64位，嗯？你问为什么，因为我只部署过这个系统啊哈哈哈（其实是swift工具链目前是只支持macOS系统和Ubuntu16.10和Ubuntu16.04
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/C089B50A-B5BA-4C66-BFB9-CBCD6EC4E51C.png" alt="镜像.png" /></p>
+  </li>
+  <li>存储和购买量 <br />
+这些也是按自己需求买，SSD处理会快一点，自己玩的话，高效云盘就够了
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/A7055D0D-F48E-4823-B824-82EE53764825.png" alt="存储和购买量.png" /></li>
+  <li>自定义数据和安全设置 <br />
+自定义数据是什么我也不知道，所以我选了不设置，这里的设置密码是进入系统的时候root的密码，实例名称相当于你服务器在阿里云上的昵称
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/B936E7C4-6BFC-406D-88E8-A7FD57F3EF82.png" alt="自定义数据和安全设置.png" /></li>
+  <li>
+    <p>最后就是购买，付钱</p>
+  </li>
+  <li>购买完成后重新进入到管理控制台</li>
+</ol>
+
+<p><img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/6ACD1478-8BF5-40D3-99CC-2BCBFE01EEF8.png" alt="屏幕快照 2017-09-15 下午6.54.48.png" /></p>
+
+<ol>
+  <li>点击远程连接之后首次登录的时候会有6位数密码，请记住这个密码，以后不会再显示，输入6位数密码后，按照提示操作初始化，进入到系统后就可以按照下面的步骤操作了，也可以直接ssh登录</li>
+</ol>
+
+<h2 id="在ubuntu上部署perfect服务器">在Ubuntu上部署Perfect服务器</h2>
+<p><a href="https://github.com/PerfectlySoft/PerfectDocs/blob/master/guide.zh_CN/deployment-Ubuntu1510.md">为Swift 3 ＋ Perfect 2 创建 Ubuntu 15.10 基本镜像</a>
+<a href="https://swift.org">Swift官方博客</a>
+<a href="https://www.perfect.org/docs/gettingStartedFromScratch_zh_CN.html">Perfect官网文档</a></p>
+
+<ol>
+  <li>通过APT安装项目必要的依存关系库
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install make git clang libicu-dev libmysqlclient-dev libpq-dev sqlite3 libsqlite3-dev apache2-dev pkg-config libssl-dev libsasl2-dev libcurl4-openssl-dev uuid-dev wget
+</code></pre></div>    </div>
+  </li>
+  <li>将swift软件包下载到服务器中
+swift在linux或者ubuntu上编译需要依赖swift软件包
+<a href="https://swift.org/download/#releases">下载链接</a>，选择自己要用的swift版本，以及服务器的系统版本。
+例如我要下载swift4.0，服务器是Unbuntu 16.04的版本
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//将软件包下载到home目录下，这里只是做个演示，事实上可以放在任意地方
+$ cd /home/
+//下载软件包
+$ wget https://swift.org/builds/swift-4.0-branch/ubuntu1604/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-16-a/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-16-a-ubuntu16.04.tar.gz
+//下载验证签名
+$ wget https://swift.org/builds/swift-4.0-branch/ubuntu1604/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-16-a/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-16-a-ubuntu16.04.tar.gz.sig
+</code></pre></div>    </div>
+  </li>
+  <li>将PGP密钥导入密钥环：
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gpg --keyserver hkp://pool.sks-keyservers.net \
+   --recv-keys \
+   '7463 A81A 4B2E EA1B 551F  FBCF D441 C977 412B 37AD' \
+   '1BE1 E29A 084C B305 F397  D62A 9F59 7F4D 21A5 6D5F' \
+   'A3BA FD35 56A5 9079 C068  94BD 63BC 1CFE 91D3 06C6'
+</code></pre></div>    </div>
+    <p>或者</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ wget -q -O - https://swift.org/keys/all-keys.asc | \
+  gpg --import -
+</code></pre></div>    </div>
+  </li>
+  <li>验证签名
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//下载最新的签名证书
+$ gpg --keyserver hkp://pool.sks-keyservers.net --refresh-keys Swift
+//用下载的签名验证下载下来的swift软件包
+//注意将swift-&lt;VERSION&gt;-&lt;PLATFORM&gt;.tar.gz.sig替换成你下载下来的文件名
+$ gpg --verify swift-3.1.1-RELEASE-ubuntu16.04.tar.gz.sig
+...
+gpg: Good signature from "Swift Automatic Signing Key #1 &lt;swift-infrastructure@swift.org&gt;"
+</code></pre></div>    </div>
+    <p>如果出现提示<code class="highlighter-rouge">gpg: Can't check signature: No public key</code>请根据以下步骤<a href="https://swift.org/download/#active-signing-keys">导入公钥</a>
+如果出现了下面的警告，但是你按照了以上的步骤操作并检验了软件包，那就是没有问题的。</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+</code></pre></div>    </div>
+  </li>
+  <li>解压下载的文件
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//注意将swift-&lt;VERSION&gt;-&lt;PLATFORM&gt;.tar.gz替换成你下载下来的文件名
+$ tar xzf swift-3.1.1-RELEASE-ubuntu16.04.tar.gz
+</code></pre></div>    </div>
+  </li>
+  <li>将swift工具链添加到路径
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//   /home/swift-3.1.1-RELEASE-ubuntu16.04/usr/bin是你刚刚解压出来的路径
+$ export PATH=/path/to/usr/bin:/home/swift-3.1.1-RELEASE-ubuntu16.04/usr/bin
+</code></pre></div>    </div>
+    <p>这时候执行<code class="highlighter-rouge">$ swift</code>应该已经可以运行了
+如果要将其设置成永久的环境变量，可以按照以下步骤</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vim /etc/profile
+在文件内容最后加上
+export PATH=/home/swift-3.1.1-RELEASE-ubuntu16.04/usr/bin:$PATH
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>到这里为止，swift的环境已经是配置好了，然后可以下载perfect上的demo测试一下</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone https://github.com/PerfectlySoft/PerfectTemplate.git
+$ cd PerfectTemplate
+$ swift build
+$ .build/debug/PerfectTemplate
+</code></pre></div></div>
+<p><a href="http://www.jianshu.com/u/097a14a11101">吕毅楽</a>在评论区提到了安全规则的问题，这种情况需要：</p>
+
+<p><img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/444F8C63-D47D-4C4D-8A2F-DCCA61BBF07D.png" alt="屏幕快照 2017-09-16 下午3.34.46.png" /></p>
+
+<p>然后根据设置成想要的端口和协议</p>
+
+<p><img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/25023164-A3A4-4F4F-9ABC-B63D6AD48649.png" alt="屏幕快照 2017-09-16 下午3.55.59.png" /></p>
+
+<p>如果有遇到什么问题，可以在评论区留言给我</p>
+
+
+                <hr>
+                
+                <!-- 分享代码 -->
+                
+<div class="-foot-share-buttons">
+    <b>分享到：</b>
+    <button class="-mob-share-weibo"></button>
+    <button class="-mob-share-weixin"></button>
+    <button class="-mob-share-qq"></button>
+</div>
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=23ba60f5704b3"></script>
+                
+                <hr>
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/07/02/Swift%E5%85%B3%E9%94%AE%E5%AD%97-@escaping%E9%80%83%E9%80%B8%E9%97%AD%E5%8C%85/" data-toggle="tooltip" data-placement="top" title="Swift关键字-@escaping逃逸闭包">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/09/10/Cannot-use-mutating-member-on-immutable-value/" data-toggle="tooltip" data-placement="top" title="Cannot use mutating member on immutable value">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#经验" title="经验" rel="5">
+                                    经验
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="18">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="10">
+                                    问题随笔
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Code-Life" title="Code-Life" rel="2">
+                                    Code-Life
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#WWDC" title="WWDC" rel="2">
+                                    WWDC
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Swift" title="Swift" rel="6">
+                                    Swift
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="2">
+                                    Perfect-Server
+                                </a>
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "fidetro-github-io";
+    var disqus_identifier = "/2017/08/21/如何在阿里云上部署Perfect服务器";
+    var disqus_url = "http://localhost:4000/2017/08/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E4%B8%8A%E9%83%A8%E7%BD%B2Perfect%E6%9C%8D%E5%8A%A1%E5%99%A8/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+
+
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; FoolishTalk 2018
+                    <br>
+               
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-111166556-1';
+    var _gaDomain = 'fidetro.github.io';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="50" height="50" /> -->
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

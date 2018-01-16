@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>fidetro | FoolishTalk Blog</title>
+
+    <link rel="canonical" href="http://localhost:4000/page2/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">FoolishTalk</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Page Header -->
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>FoolishTalk</h1>
+                    <!--<hr class="small">-->
+                    <span class="subheading">谈谈技术，聊聊生活</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
+    		<div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+    			
+<div class="post-preview">
+    <a href="/2017/09/10/Cannot-use-mutating-member-on-immutable-value/">
+        <h2 class="post-title">
+            Cannot use mutating member on immutable value
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Swift，iOS
+        </h3>
+        
+        <div class="post-content-preview">
+            这个报错是在我写swift的FFDB时候遇到的，因为在做swift版的时候，考虑到SQL语句层是通用的，所以打算抽象出来复用在Perfect上，选择用结构体和协议的方式去做，在使用结构体的时候，发现会报错，用类是不会报这个错的。原因是这样：
+结构体中，func不可以改变self本身的成员变量，如果修改本身的成员变量，需要在func前加上mutating关键字
+
+
+加上了mutating之后本...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on September 10, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/08/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E4%B8%8A%E9%83%A8%E7%BD%B2Perfect%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+        <h2 class="post-title">
+            如何在阿里云上部署Perfect服务器
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Swift，Perfect-Server
+        </h3>
+        
+        <div class="post-content-preview">
+            下面的文章是基于Perfect v2写的，支持的是swift 3，10月11号Perfect发布了v3版本，支持swift 4，如果希望服务器支持swift 4，可以配置部分参考Perfect v2版本服务器升级v3
+
+如何在阿里云上部署Perfect服务器
+阿里云地址
+
+  
+    登录自己阿里云的账号，进入控制台 
+
+  
+  
+    创建实例 
+
+  
+
+
+这篇相当于总结了自己一些...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on August 21, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/07/02/Swift%E5%85%B3%E9%94%AE%E5%AD%97-@escaping%E9%80%83%E9%80%B8%E9%97%AD%E5%8C%85/">
+        <h2 class="post-title">
+            Swift关键字-@escaping逃逸闭包
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Swift，iOS
+        </h3>
+        
+        <div class="post-content-preview">
+            这部分在The Swift Programming Language的Closures一节有详细的说，当时看的时候没特别注意，今天在看Perfect的源码的时候看到了，重新去看了一下文档，也看了卓同学的一篇文章，写的比我的更详细。
+当闭包不是函数执行完之前就得到返回结果的时候，这个就是非逃逸闭包。
+反之，闭包在函数执行完后才调用，则是逃逸闭包。
+举两个常用例子，SnapKit和Masonry...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on July 2, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/06/21/WWDC-2017%E7%AC%94%E8%AE%B0-Codable/">
+        <h2 class="post-title">
+            WWDC-2017笔记---Codable
+        </h2>
+        
+        <h3 class="post-subtitle">
+            WWDC，iOS，Codable
+        </h3>
+        
+        <div class="post-content-preview">
+            在swift中并不推荐使用runtime，所以json转model比较麻烦，而且也不支持struct和enum
+
+但是现在可以通过Codable来实现，实现一个这样的结构体
+public struct DataListResult:Codable{
+    let _id : String?
+ 
+    let images : Array&lt;String&gt;?
+
+}
+public ...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on June 21, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/06/21/%E6%9B%B4%E6%96%B0%E8%87%AA%E5%B7%B1%E7%9A%84CocoaPods%E5%BA%93/">
+        <h2 class="post-title">
+            更新自己的CocoaPods库
+        </h2>
+        
+        <h3 class="post-subtitle">
+            CocoaPod，iOS
+        </h3>
+        
+        <div class="post-content-preview">
+            以自己写的一个库为例子
+
+Pod::Spec.new do |s|
+
+  s.name         = "FFDB"
+  s.version      = "1.7.0"
+  s.summary      = "easy to use FMDB"
+  s.homepage     = "https://github.com/Fidetro/FFDB"
+  s.license       ...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on June 21, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/06/19/%E8%AE%B0%E5%BD%95%E7%82%B9%E8%87%AA%E5%B7%B1%E5%81%9ACocoaPod%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">
+        <h2 class="post-title">
+            记录点自己做CocoaPod时遇到的坑
+        </h2>
+        
+        <h3 class="post-subtitle">
+            CocoaPod，iOS
+        </h3>
+        
+        <div class="post-content-preview">
+            [!] The spec did not pass validation, due to 1 error.
+[!] The validator for Swift projects uses Swift 3.0 by default, if you are using a different version of swift you can use a `.swift-version` fi...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on June 19, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/04/02/%E7%97%9B%E8%8B%A6%E9%80%A0%E5%B0%B1%E6%80%A7%E6%A0%BC/">
+        <h2 class="post-title">
+            痛苦造就性格
+        </h2>
+        
+        <h3 class="post-subtitle">
+            阅读
+        </h3>
+        
+        <div class="post-content-preview">
+            最近读了《如何变得有思想》这本书，里面有挺多有意思的文章，其中一篇《痛苦造就性格》里面有一段很有意思，敲出来分享一下。
+
+TechCrunch发表了一篇题目叫《创业是艰难的：多工作，少喊累，别发牢骚》，这篇文章引用了程序员杰米·嘉文斯基于1994年的日记，得出这么一个观点：
+
+
+  如果你在创业公司工作，觉得工作得很累、牺牲太多，那么换个地方，找一份更适合你的工作吧。
+
+
+言下之意，软件业就...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on April 2, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/03/27/CollectionViewLayout%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">
+        <h2 class="post-title">
+            CollectionViewLayout遇到的问题
+        </h2>
+        
+        <h3 class="post-subtitle">
+            CocoaPod，iOS，UI
+        </h3>
+        
+        <div class="post-content-preview">
+            2017-03-27 11:12:20.902274 DTSampleLight[1480:432147] The behavior of the UICollectionViewFlowLayout is not defined because:
+2017-03-27 11:12:20.902372 DTSampleLight[1480:432147] the item height mu...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on March 27, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/03/16/UISlider%E5%AE%9E%E7%8E%B0%E7%82%B9%E5%87%BB%E6%95%88%E6%9E%9C/">
+        <h2 class="post-title">
+            UISlider实现点击效果
+        </h2>
+        
+        <h3 class="post-subtitle">
+            CocoaPod，iOS，UI
+        </h3>
+        
+        <div class="post-content-preview">
+            找了很久网上文章都是各种复制，而且不管用，最后在stackOverFlow找到怎么解决，记录一下链接
+
+关键是用UILongPressGestureRecognizer，实现拖动和点击
+- (void)actionLongGesture:(UILongPressGestureRecognizer *)sender {
+    
+    if (sender.state == UIGestur...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on March 16, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/01/02/2016%E5%B9%B4%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E4%BA%8B/">
+        <h2 class="post-title">
+            2016年的一些小事
+        </h2>
+        
+        <h3 class="post-subtitle">
+            生活
+        </h3>
+        
+        <div class="post-content-preview">
+            在3月底，我投了200来份简历，我在5月2号那一天终于面试了第一份工作，也就是我的第一份iOS工作，那时候的我对自己的技术算是很满意的，面试我的人，也不会iOS，只是自学过一段时间，能做出app这样，目测是个40多岁左右，也是我们的CTO，后来一面试就成了。
+在没工作的时候，我总是憧憬着，公司会有很厉害的大牛，很牛b的架构，和我很多不懂的技术，去到那公司的时候，我心里还是有点落差的。当时的团...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on January 2, 2017
+    </p>
+</div>
+<hr>
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    <li class="previous">
+        <a href="/">&larr; Newer Posts</a>
+    </li>
+    
+    
+    <li class="next">
+        <a href="/page3">Older Posts &rarr;</a>
+    </li>
+    
+</ul>
+
+
+    		</div>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                            
+                                <a href="/tags/#经验" title="经验" rel="5">
+                                    经验
+                                </a>
+                            
+                        
+                            
+                        
+                            
+                                <a href="/tags/#iOS" title="iOS" rel="18">
+                                    iOS
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#问题随笔" title="问题随笔" rel="10">
+                                    问题随笔
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#Code-Life" title="Code-Life" rel="2">
+                                    Code-Life
+                                </a>
+                            
+                        
+                            
+                        
+                            
+                                <a href="/tags/#WWDC" title="WWDC" rel="2">
+                                    WWDC
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#Swift" title="Swift" rel="6">
+                                    Swift
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#Perfect-Server" title="Perfect-Server" rel="2">
+                                    Perfect-Server
+                                </a>
+                            
+                        
+                            
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
+                    <div class="short-about">
+                        
+                            <img src="/img/avatar-fidetro.jpg" />
+                        
+                        
+                            <p>吝啬分享的程序员。</p>
+                        
+                        <!-- SNS Link -->
+                        <ul class="list-inline">
+                            
+                            
+                            
+                            
+                            
+                            
+                        </ul>
+                    </div>
+                </section>
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                </ul>
+                
+    		</div>
+        
+	</div>
+</div>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+
+
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; FoolishTalk 2018
+                    <br>
+               
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-111166556-1';
+    var _gaDomain = 'fidetro.github.io';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="50" height="50" /> -->
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

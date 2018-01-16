@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>iPhoneX和iOS-11的适配你可能会踩到的坑 - fidetro | FoolishTalk Blog</title>
+
+    <link rel="canonical" href="http://localhost:4000/2017/10/07/iPhoneX%E5%92%8CiOS-11%E7%9A%84%E9%80%82%E9%85%8D%E4%BD%A0%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">FoolishTalk</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <style type="text/css">
+/* 新浪微博 */
+.-mob-share-weibo {
+background-image: url("https://fidetro.github.io/img/share/sina_share.png")!important;
+width: 30px;height: 30px;
+border: none;
+}
+/* 微信 */
+.-mob-share-weixin {
+background-image: url("https://fidetro.github.io/img/share/wechat_share.png")!important;
+width: 30px;height: 30px;
+border: none;
+}
+/* QQ */
+.-mob-share-qq {
+background-image: url("https://fidetro.github.io/img/share/qq_share.png")!important;
+width: 30px;height: 30px;
+border: none;
+}
+</style>
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-old.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#问题随笔" title="问题随笔">问题随笔</a>
+                        
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                    </div>
+                    <h1>iPhoneX和iOS-11的适配你可能会踩到的坑</h1>
+                    
+                    
+                    <h2 class="subheading">iOS，UI</h2>
+                    
+                    <span class="meta">Posted by Fidetro on October 7, 2017</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">            
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<p>这几天都在看关于适配的问题，看WWDC的时候，哇这个功能好酷炫，API变得好方便，适配一定很方便，然后自己用的时候一看这些方法后面带着<code class="highlighter-rouge">API_AVAILABLE(ios(11.0),tvos(11.0))</code>
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/2357E228-C575-46EF-AFEF-C28514BBD380.png" alt="" />
+那么iPhone X究竟给我们带来了什么，导致适配变得麻烦呢？凶手就是这个刘海！
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/C4439A59-7652-49B4-A437-31D56F8744AA.png" alt="" /></p>
+
+<p>在没有iPhoneX的时代，我们的statusBar是20pt，navigationBar是44pt，iPhone X的statusBar变成了44pt，navigationBar是44pt</p>
+
+<p><img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/0B24C760-58CD-40DB-B212-A1DF9A65ED40.png" alt="" />
+为了方便我们适配，引入了<code class="highlighter-rouge">Safe Area</code>的概念，根据苹果最新的<a href="https://developer.apple.com/ios/human-interface-guidelines/overview/iphone-x/">人机交互指南</a>中我们布局UI时候应该在<code class="highlighter-rouge">Safe Area</code>中而不应该超出<code class="highlighter-rouge">Safe Area</code>的范围
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/764E4AA7-A3BE-4782-AACF-69E4EBE4CAF7.png" alt="" />
+说完这些坑之后，也该讲讲怎么适配了，talk is cheap，show me the code！
+ 在iOS 11发布后，Masonry也更新了最新适配的方法，增加了以下属性方便我们适配</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuide</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideLeading</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideTrailing</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideLeft</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideRight</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideTop</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideBottom</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideWidth</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideHeight</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideCenterX</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideCenterY</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+</code></pre></div></div>
+<p>但是这些属性只有在iOS 11中才可以使用，所以如果要适配从iOS 8开始，做下面的效果得写判断</p>
+
+<p><img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/E6C62EB6-71E0-4253-80FC-EFBEE4657537.png" alt="" /></p>
+
+<p><img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/C9391B5F-D768-48F7-B003-0E7964D48820.png" alt="" /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"First";
+    UIView *colorView = [[UIView alloc]init];
+    [self.view addSubview:colorView];
+    colorView.backgroundColor = [UIColor redColor];
+    [colorView mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (@available(iOS 11.0, *)) {
+            make.top.mas_equalTo(self.view.mas_safeAreaLayoutGuideTop);
+        } else {
+            make.top.mas_equalTo(self.view.mas_top).mas_offset(64);
+        }
+        make.left.bottom.right.mas_equalTo(self.view);
+    }];
+}
+</code></pre></div></div>
+<p><code class="highlighter-rouge">@available(iOS 11.0, *)</code>只是判断iOS系统版本，并不是判断是否iPhoneX，即时是iPhoneX以下，只要升到了iOS11也是可以用<code class="highlighter-rouge">SafeArea</code>的
+在iOS 11之前，ViewController中的<code class="highlighter-rouge">automaticallyAdjustsScrollViewInsets</code>是默认<code class="highlighter-rouge">YES</code>的，这样会导致在有导航栏的情况下，第一个subView如果<code class="highlighter-rouge">UIScrollView</code>的子类，例如<code class="highlighter-rouge">UITableView</code>的时候，<code class="highlighter-rouge">TableView</code>的本身不会做偏移，但是<code class="highlighter-rouge">UITableViewWrapperView</code>会往下偏移到导航栏下面，让导航栏不会发生挡住TableView内容的情况。但是在iOS11后，<code class="highlighter-rouge">automaticallyAdjustsScrollViewInsets</code>被废弃了，这个属性被移到了<code class="highlighter-rouge">UIScrollView</code>中的<code class="highlighter-rouge">contentInsetAdjustmentBehavior</code>，大家应该都遇过导航栏是透明的但是导航栏的Item是显示的需求，如果要做这种效果</p>
+
+<p><img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/5759B33B-9C3F-485A-801C-32C421E0023F.png" alt="" />
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/B7D623C5-CBF1-47A8-9D07-3EA684D8BBD9.png" alt="" /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor greenColor];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+ 
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.bottom.right.mas_equalTo(self.view);
+        if (@available(iOS 11.0, *)) {
+            if (((UIApplication *)[UIApplication performSelector:@selector(sharedApplication)]).keyWindow.safeAreaInsets.top &gt; 0.0) {//iOS11而且是iPhone X
+                make.top.mas_equalTo(self.view.mas_top).mas_offset(44);//这个也可以用    self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0); make.top.mas_equalTo(self.view.mas_top);代替
+
+            } else {//iOS11，但是不是iPhone X
+                make.top.mas_equalTo(self.view.mas_top).mas_offset(20);
+            }
+        } else {//iOS11以下，而且不是iPhone X
+            make.top.mas_equalTo(self.view.mas_top).mas_offset(20);
+        }
+    }];
+}
+</code></pre></div></div>
+<p>或者使用scrollView的contentInset</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor greenColor];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    
+    if (@available(iOS 11.0, *)) {
+        if (((UIApplication *)[UIApplication performSelector:@selector(sharedApplication)]).keyWindow.safeAreaInsets.top &gt; 0.0) {//iOS11而且是iPhone X
+            self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
+        } else {//iOS11，但是不是iPhone X
+            self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
+        }
+    } else {//iOS11以下，而且不是iPhone X
+        self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
+        
+    }
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+ 
+   [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.bottom.right.mas_equalTo(self.view);
+    }];
+}
+</code></pre></div></div>
+<p>总的来说，如果不出现很多这种导航栏隐藏的情况，适配应该工作量不会很大，如果TabBar和NavigationBar全是自定义的话，估计工作量会大很多。
+附上参考链接和WWDC链接：</p>
+<ol>
+  <li><a href="https://developer.apple.com/cn/ios/update-apps-for-iphone-x/">官方适配指南</a></li>
+  <li><a href="https://developer.apple.com/videos/play/fall2017/801/">Designing for iPhone X</a></li>
+  <li><a href="https://developer.apple.com/videos/play/fall2017/201/">Building Apps for iPhone X</a></li>
+  <li><a href="https://developer.apple.com/videos/play/wwdc2017/204/">Updating Your App for iOS 11</a></li>
+  <li><a href="https://developer.apple.com/videos/play/wwdc2017/219/">Modern User Interaction on iOS</a></li>
+  <li><a href="https://developer.apple.com/videos/play/wwdc2017/412/">Auto Layout Techniques in Interface Builder</a></li>
+</ol>
+
+
+                <hr>
+                
+                <!-- 分享代码 -->
+                
+<div class="-foot-share-buttons">
+    <b>分享到：</b>
+    <button class="-mob-share-weibo"></button>
+    <button class="-mob-share-weixin"></button>
+    <button class="-mob-share-qq"></button>
+</div>
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=23ba60f5704b3"></script>
+                
+                <hr>
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/09/22/iOS%E8%8E%B7%E5%8F%96%E7%9B%B8%E5%86%8C%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%9B%BE%E7%89%87-%E4%BB%A5%E5%8F%8A%E7%94%B3%E8%AF%B7%E6%9D%83%E9%99%90-%E6%80%BB%E7%BB%93%E8%87%AA%E5%B7%B1%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/" data-toggle="tooltip" data-placement="top" title="iOS获取相册中的所有图片，以及申请权限，总结自己踩到的坑">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/10/14/%E5%8F%88%E5%A4%A7%E4%B8%80%E5%B2%81-%E5%85%88%E8%81%8A%E8%81%8A%E7%BC%96%E7%A8%8B-%E5%86%8D%E8%81%8A%E8%81%8A%E7%94%9F%E6%B4%BB-%E6%9C%80%E5%90%8E%E5%86%8D%E8%81%8A%E5%9B%9E%E7%BC%96%E7%A8%8B/" data-toggle="tooltip" data-placement="top" title="又大一岁，先聊聊编程，再聊聊生活，最后再聊回编程">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#经验" title="经验" rel="5">
+                                    经验
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="18">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="10">
+                                    问题随笔
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Code-Life" title="Code-Life" rel="2">
+                                    Code-Life
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#WWDC" title="WWDC" rel="2">
+                                    WWDC
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Swift" title="Swift" rel="6">
+                                    Swift
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="2">
+                                    Perfect-Server
+                                </a>
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "fidetro-github-io";
+    var disqus_identifier = "/2017/10/07/iPhoneX和iOS-11的适配你可能会踩到的坑";
+    var disqus_url = "http://localhost:4000/2017/10/07/iPhoneX%E5%92%8CiOS-11%E7%9A%84%E9%80%82%E9%85%8D%E4%BD%A0%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+
+
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; FoolishTalk 2018
+                    <br>
+               
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-111166556-1';
+    var _gaDomain = 'fidetro.github.io';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="50" height="50" /> -->
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
