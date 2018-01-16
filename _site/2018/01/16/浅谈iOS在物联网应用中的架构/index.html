@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>记一个iOS打开相机遇到的坑 - fidetro | FoolishTalk Blog</title>
+    <title>浅谈iOS在物联网应用中的架构 - fidetro | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/2016/10/06/%E8%AE%B0%E4%B8%80%E4%B8%AAiOS%E6%89%93%E5%BC%80%E7%9B%B8%E6%9C%BA%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">
+    <link rel="canonical" href="http://localhost:4000/2018/01/16/%E6%B5%85%E8%B0%88iOS%E5%9C%A8%E7%89%A9%E8%81%94%E7%BD%91%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E6%9E%B6%E6%9E%84/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,12 +145,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-sea.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-old.jpg')
+        background-image: url('/img/post-bg-sea.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -160,17 +160,19 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#问题随笔" title="问题随笔">问题随笔</a>
+                        <a class="tag" href="/tags/#架构" title="架构">架构</a>
+                        
+                        <a class="tag" href="/tags/#物联网" title="物联网">物联网</a>
                         
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
                     </div>
-                    <h1>记一个iOS打开相机遇到的坑</h1>
+                    <h1>浅谈iOS在物联网应用中的架构</h1>
                     
                     
-                    <h2 class="subheading">CocoaPod，iOS，相机</h2>
+                    <h2 class="subheading">架构，物联网，iOS</h2>
                     
-                    <span class="meta">Posted by Fidetro on October 6, 2016</span>
+                    <span class="meta">Posted by Fidetro on January 16, 2018</span>
                 </div>
             </div>
         </div>
@@ -187,23 +189,67 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>iOS在打开相机的时候会发生内存泄漏，使用instruments会发现</p>
+				<p>这篇文章在很早之前就在酝酿，我目前的开发生涯中，在现在这间公司之前，都是和硬件打交道的，期间踩了很多坑，尝试了很多不同方式的写法和架构的改变，因此有了些经验，可能文中的一些点大家都比较熟悉，只是在处理上略有不同，接下来我会分享一下自己的做法，作为对自己在iOS物联网方面一个短暂的总结吧。如果有什么不同的意见，也可以在评论区留下评论，可以一起探讨一下问题。</p>
 
-<p><img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/034EC7E4-E9F2-4C90-B3E2-41190810BEEB.png" alt="C2C97AF5-571C-49A1-B4FB-53D2593964A1.png" /></p>
+<hr />
 
-<p>翻了谷歌也没有找到能解决的资料，下了apple官方的demo同时用insturments调试，同样也发现有这个错</p>
+<h2 id="物联网在ios上的表现无非两种">物联网在iOS上的表现，无非两种</h2>
+<ul>
+  <li>WiFi</li>
+  <li>蓝牙<br />
+而这两种表现形式，在做的事情无非就是：<br />
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/2345604-7134da016a716ebf.png" alt="" /></li>
+</ul>
 
-<blockquote>
-  <p><a href="https://developer.apple.com/library/content/samplecode/PhotoPicker/Introduction/Intro.html#//apple_ref/doc/uid/DTS40010196-Intro-DontLinkElementID_2">官方demo地址</a></p>
-</blockquote>
+<p><img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/0C1F4A7B-90A5-4CB1-B51A-A06A48116480.png" alt="" /></p>
 
-<p>同时stackflow也有人提出这个问题，而且是在5年前。。。</p>
-<blockquote>
-  <p><a href="http://stackoverflow.com/questions/6554225/uiimagepickercontroller-memory-leak">stackflow的传送门</a></p>
-</blockquote>
+<p>硬件和App之间如何通讯实现交互不属于本文讨论的范畴，因为其表现形式都会像上图一样。从代码层上来讲，通讯这部分都应该封装成一个类，外部无需知道内容是如何实现，业务方只需要得到设备返回的数据以及将数据发送给设备就可以了，类似于下面这样:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">DeviceDataManagerDelegate</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+<span class="c1">//  这里的device他可以是蓝牙的外设，也可以是能某种能标示设备的tag，能get到点就可以了
+</span><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">readData</span><span class="o">:</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="n">data</span> <span class="n">device</span><span class="o">:</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">device</span><span class="p">;</span>
+<span class="k">@end</span>
 
-<p>难道这个bug已经持续了5年了么。。（一脸懵逼</p>
+<span class="k">@interface</span> <span class="nc">DeviceDataManager</span> <span class="p">:</span> <span class="nc">NSObject</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sendData</span><span class="p">:(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span> <span class="nf">device</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">device</span><span class="p">;</span>
+<span class="k">@end</span>
+</code></pre></div></div>
 
+<hr />
+
+<p>为了下面的内容更好理解，避免和http请求的网络层混淆，我把这一层叫作<code class="highlighter-rouge">传输层</code>。</p>
+
+<p>在<code class="highlighter-rouge">网络层</code>中，我们一般会根据业务对网络请求进行封装，避免重复写处理非正常结果时的代码，传输层中并不能像网络层一样能直接使用得到的数据，传输层中得到一般都是经过自定的协议包装加密过后的数据，而不像网络层使用JSON那么方便，抛开自定义的协议来讲，物联网中传输层最基本的内容都会由以下的组成：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>传输层数据
+│
+├────命令字(功能)
+├────消息体(行为)
+</code></pre></div></div>
+<p>在得到这部分数据之后，我们会经过根据事先与硬件方约定好的协议去进行解析，例如<code class="highlighter-rouge">0x0100</code>这个数据代表了什么：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>           开关（功能）  状态（行为）
+传输层数据    0x01         0x00 
+</code></pre></div></div>
+<p>这部分数据看起来十分简单，但是对于一个完全没有看过事先与硬件方约定好的协议来说，是非常难懂的。<br />
+在我当时团队的code review的时候，也发现了因此带来的一些问题：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.随着版本更新，新的协议增加导致数据变得越来越庞大，接手的同学一脸懵逼;
+2.处理数据后，通知满天飞，甚至没有处理消息体直接丢;
+</code></pre></div></div>
+<p><del>对于第一个问题，我曾经有考虑过使用一门语言作出通用的解析库，硬件端、移动端、前端、后台如果需要解析这个数据，只需要传入传输层数据，返回的就是JSON对象这样的一个方案。想象中挺美好的，但是这样也会带来解析库的维护成本以及额外的文档，后来还是放弃了这个做法。</del><br />
+ 在第一的问题上，最终还是老老实实的手动解析成model。<br />
+ 造成第二个问题，很大程度也是因为团队里没有约定很好的代码规范导致的。在当时，我还没有很深入的了解过AOP，选择的是在一开始处理完数据之后，会用另外一个model的block去接收，然后另外在controller去订阅，这种做法有个弊端就是代码量十分多，后来我了解到了<code class="highlighter-rouge">AOP</code>之后，我强烈推荐使用<code class="highlighter-rouge">AOP</code>去解决这个问题，这里用AOP好处是：</p>
+<ol>
+  <li>不需要再管理通知的监听和移除,也因此避免了通知带来的没有释放控制器的问题;</li>
+  <li>通过<code class="highlighter-rouge">AOP</code>，代码会变得更加整洁和少;<br />
+空说无益，还是直接上图吧<br />
+<img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/D45F4AE5-5D7F-4C98-9AB9-B26886FFC8FF.png" alt="" /></li>
+</ol>
+
+<p>数据的流向：App得到数据-&gt;解析成action-&gt;Store通过AOP得到处理数据后的action-&gt;Controller通过store订阅对应的action</p>
+
+<p><code class="highlighter-rouge">AOP</code>的框架，我看了网上也有很多，大部分是在<a href="https://github.com/steipete/Aspects">Aspects</a>的基础上封装的，更推荐直接去使用<code class="highlighter-rouge">Aspects</code>,像是一些发送队列，几秒内只接收一个，几秒内只处理最后一个这种需求，都比较方便，当然也用<code class="highlighter-rouge">RAC</code>或者<code class="highlighter-rouge">RxSwift</code>处理，见仁见智。</p>
+
+<hr />
+
+<p>物联网除了还会有很多关于网络层的小坑以外，别的就和其他领域的也差不多了，所以也不想说太多老生常谈的东西，就这样。</p>
 
 
                 <hr>
@@ -230,13 +276,9 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2016/08/22/iOS%E5%9F%BA%E4%BA%8E%E7%81%B0%E5%BA%A6%E7%9A%84%E5%9D%87%E5%80%BC%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%9B%BE%E5%83%8F%E5%8C%B9%E9%85%8D/" data-toggle="tooltip" data-placement="top" title="iOS基于灰度的均值哈希算法实现图像匹配">&larr; Previous Post</a>
+                        <a href="/2018/01/12/%E5%9C%A8UITableView%E4%B8%AD%E4%BD%BF%E7%94%A8RunLoop%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/" data-toggle="tooltip" data-placement="top" title="在UITableView中使用RunLoop遇到的坑">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2016/10/27/UICollectionView-cellForItemAtIndexPath%E4%B8%8D%E6%89%A7%E8%A1%8C/" data-toggle="tooltip" data-placement="top" title="UICollectionView-cellForItemAtIndexPath不执行">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -343,8 +385,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2016/10/06/记一个iOS打开相机遇到的坑";
-    var disqus_url = "http://localhost:4000/2016/10/06/%E8%AE%B0%E4%B8%80%E4%B8%AAiOS%E6%89%93%E5%BC%80%E7%9B%B8%E6%9C%BA%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/";
+    var disqus_identifier = "/2018/01/16/浅谈iOS在物联网应用中的架构";
+    var disqus_url = "http://localhost:4000/2018/01/16/%E6%B5%85%E8%B0%88iOS%E5%9C%A8%E7%89%A9%E8%81%94%E7%BD%91%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E6%9E%B6%E6%9E%84/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
