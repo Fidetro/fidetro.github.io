@@ -256,7 +256,7 @@ border: none;
 
 <p>怕讲的太抽象，放一段使用<code class="highlighter-rouge">Aspects</code>的伪代码：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Action的伪实现
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Action的伪实现  
 </span><span class="k">@implementation</span> <span class="nc">TAction</span>
 
 <span class="k">+</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">parse</span><span class="p">:(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span>
@@ -267,7 +267,7 @@ border: none;
 <span class="k">@end</span>
 
 
-<span class="c1">//Store的伪代码实现
+<span class="c1">//Store的伪代码实现  
 </span><span class="k">@implementation</span> <span class="nc">TStore</span>
 <span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">subscribe</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">str</span><span class="p">))</span><span class="nv">handler_block</span>
 <span class="p">{</span>
