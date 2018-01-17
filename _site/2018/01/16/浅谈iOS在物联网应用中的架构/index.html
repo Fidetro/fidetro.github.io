@@ -256,19 +256,21 @@ border: none;
 
 <p>怕讲的太抽象，放一段使用<code class="highlighter-rouge">Aspects</code>的伪代码：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Action的伪实现  
-</span><span class="k">@implementation</span> <span class="nc">TAction</span>
+<p>Action的伪实现</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 
+
+<span class="k">@implementation</span> <span class="nc">TAction</span>
 
 <span class="k">+</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">parse</span><span class="p">:(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span>
 <span class="p">{</span>
   <span class="c1">//处理数据
-</span>    <span class="k">return</span> <span class="s">@"hello action"</span><span class="p">;</span>
+</span>
+    <span class="k">return</span> <span class="s">@"hello action"</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="k">@end</span>
-
-
-<span class="c1">//Store的伪代码实现  
-</span><span class="k">@implementation</span> <span class="nc">TStore</span>
+</code></pre></div></div>
+<p>Store的伪代码实现</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@implementation</span> <span class="nc">TStore</span>
 <span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">subscribe</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">str</span><span class="p">))</span><span class="nv">handler_block</span>
 <span class="p">{</span>
     <span class="p">[</span><span class="n">object_getClass</span><span class="p">([</span><span class="n">TAction</span> <span class="nf">class</span><span class="p">])</span> <span class="nf">aspect_hookSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nf">parse</span><span class="p">:)</span> <span class="n">withOptions</span><span class="o">:</span><span class="n">AspectPositionAfter</span> <span class="n">usingBlock</span><span class="o">:^</span><span class="p">(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">AspectInfo</span><span class="o">&gt;</span> <span class="n">aspectInfo</span><span class="p">,</span><span class="n">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
