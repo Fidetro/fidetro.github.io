@@ -5,9 +5,82 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 17 Jan 2018 17:04:06 +0800</pubDate>
-    <lastBuildDate>Wed, 17 Jan 2018 17:04:06 +0800</lastBuildDate>
+    <pubDate>Mon, 29 Jan 2018 11:08:15 +0800</pubDate>
+    <lastBuildDate>Mon, 29 Jan 2018 11:08:15 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
+    
+      <item>
+        <title>Swift-Tips String截取字符串</title>
+        <description>&lt;p&gt;
+在&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;中我们可以使调&lt;code class=&quot;highlighter-rouge&quot;&gt;substringWithRange&lt;/code&gt;的方法达到截取字符串的效果&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[@&quot;123&quot; substringWithRange:NSMakeRange(1, 2)];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;在Swift 4之前，也是有类似的方法&lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;ss&quot;.substring(with: &amp;lt;Range&amp;lt;String.Index&amp;gt;&amp;gt;)&lt;/code&gt;  ,但是在Swift 4之后被弃用了，我们可以通过用&lt;code class=&quot;highlighter-rouge&quot;&gt;extension&lt;/code&gt;的方法去给他增加截取字符串的方法&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;extension String{
+    func to(_ index:Int) -&amp;gt; String? {
+        let toIndex = String.Index.init(encodedOffset: index)
+        guard toIndex &amp;lt; self.endIndex else { return nil }
+        return String(self[...toIndex])
+        
+    }
+    func from(_ index:Int) -&amp;gt; String? {
+        let fromIndex = String.Index.init(encodedOffset: index)
+        guard fromIndex &amp;lt; self.endIndex else { return nil }
+        return String(self[fromIndex..&amp;lt;self.endIndex])
+    }
+    func subString(_ from:Int,to:Int) -&amp;gt; String? {
+        let toIndex = String.Index.init(encodedOffset: from)
+        let fromIndex = String.Index.init(encodedOffset: to)
+        guard toIndex &amp;lt; self.endIndex,
+            fromIndex &amp;lt; self.endIndex,
+            toIndex &amp;lt;= fromIndex else { return nil }
+        return String(self[toIndex...fromIndex])
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;现在又可以方便的截取字符串了&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;print(&quot;12345678&quot;.to(3)) //Optional(&quot;1234&quot;)  
+
+print(&quot;12345678&quot;.from(3)) //Optional(&quot;45678&quot;)  
+
+print(&quot;12345678&quot;.subString(3, to: 5))  //Optional(&quot;456&quot;)  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;另外我们还可以结合Swift下标的特性，达到通过取字符串下标截取字符串&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;extension String{
+    subscript(index:Int) -&amp;gt; String? {
+        return subString(index, to: index)
+    }
+    subscript (bounds: CountableClosedRange&amp;lt;Int&amp;gt;) -&amp;gt; String? {
+        return subString( bounds.lowerBound, to: bounds.upperBound)
+    }
+    subscript (bounds: CountableRange&amp;lt;Int&amp;gt;) -&amp;gt; String? {
+        return subString( bounds.lowerBound, to: bounds.upperBound)
+    }   
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;print(&quot;12345678&quot;[2])  //Optional(&quot;3&quot;)  
+
+print(&quot;12345678&quot;[3...5])  //Optional(&quot;456&quot;)
+
+print(&quot;12345678&quot;[100])  //nil
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Mon, 29 Jan 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+        
+        <category>Swift-Tips</category>
+        
+        <category>Swift</category>
+        
+        
+      </item>
     
       <item>
         <title>浅谈iOS在物联网应用中的架构</title>
@@ -186,7 +259,7 @@
         <link>http://localhost:4000/2018/01/12/%E5%9C%A8UITableView%E4%B8%AD%E4%BD%BF%E7%94%A8RunLoop%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/</link>
         <guid isPermaLink="true">http://localhost:4000/2018/01/12/%E5%9C%A8UITableView%E4%B8%AD%E4%BD%BF%E7%94%A8RunLoop%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/</guid>
         
-        <category>经验</category>
+        <category>问题随笔</category>
         
         <category>RunLoop</category>
         
@@ -440,8 +513,6 @@ $ :wq
         <pubDate>Thu, 19 Oct 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/10/19/Perfect-v2%E7%89%88%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%87%E7%BA%A7v3/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/10/19/Perfect-v2%E7%89%88%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%87%E7%BA%A7v3/</guid>
-        
-        <category>经验</category>
         
         <category>Swift</category>
         
@@ -729,39 +800,6 @@ return ;
         <pubDate>Fri, 22 Sep 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/09/22/iOS%E8%8E%B7%E5%8F%96%E7%9B%B8%E5%86%8C%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%9B%BE%E7%89%87-%E4%BB%A5%E5%8F%8A%E7%94%B3%E8%AF%B7%E6%9D%83%E9%99%90-%E6%80%BB%E7%BB%93%E8%87%AA%E5%B7%B1%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/09/22/iOS%E8%8E%B7%E5%8F%96%E7%9B%B8%E5%86%8C%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%9B%BE%E7%89%87-%E4%BB%A5%E5%8F%8A%E7%94%B3%E8%AF%B7%E6%9D%83%E9%99%90-%E6%80%BB%E7%BB%93%E8%87%AA%E5%B7%B1%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/</guid>
-        
-        <category>经验</category>
-        
-        <category>问题随笔</category>
-        
-        <category>iOS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>iOS11-tableView设置section头尾高度失效</title>
-        <description>&lt;p&gt;在iOS 11之前，直接通过这两个代理，就可以修改section的高度&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return CGFLOAT_MIN;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return CGFLOAT_MIN;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;今天在适配iOS 11的时候发现，这两个代理方法都没走，解决方法：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//先设置默认高度，然后再通过代理修改
-    self.tableView.sectionFooterHeight = CGFLOAT_MIN;
-    self.tableView.sectionHeaderHeight = CGFLOAT_MIN;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;目前这个问题，只有纯代码的时候使用才会出现这个问题，如果是使用storyboard的tableView，是不会出现这个问题的，原因还没时间去查，等有空的时候查了会更新文章&lt;/p&gt;
-</description>
-        <pubDate>Thu, 21 Sep 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/09/21/iOS11-tableView%E8%AE%BE%E7%BD%AEsection%E5%A4%B4%E5%B0%BE%E9%AB%98%E5%BA%A6%E5%A4%B1%E6%95%88/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/09/21/iOS11-tableView%E8%AE%BE%E7%BD%AEsection%E5%A4%B4%E5%B0%BE%E9%AB%98%E5%BA%A6%E5%A4%B1%E6%95%88/</guid>
         
         <category>问题随笔</category>
         

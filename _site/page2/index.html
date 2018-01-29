@@ -154,6 +154,32 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2017/09/21/iOS11-tableView%E8%AE%BE%E7%BD%AEsection%E5%A4%B4%E5%B0%BE%E9%AB%98%E5%BA%A6%E5%A4%B1%E6%95%88/">
+        <h2 class="post-title">
+            iOS11-tableView设置section头尾高度失效
+        </h2>
+        
+        <h3 class="post-subtitle">
+            CocoaPod，iOS，UI
+        </h3>
+        
+        <div class="post-content-preview">
+            在iOS 11之前，直接通过这两个代理，就可以修改section的高度
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return CGFLOAT_MIN;
+}
+
+- (CGFloat)tableView:(UITableView *)tableV...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on September 21, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2017/09/11/WWDC-2017%E7%AC%94%E8%AE%B0-KVC%E5%92%8CKVO/">
         <h2 class="post-title">
             WWDC-2017笔记---KVC和KVO
@@ -383,31 +409,6 @@ TechCrunch发表了一篇题目叫《创业是艰难的：多工作，少喊累�
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2017/03/16/UISlider%E5%AE%9E%E7%8E%B0%E7%82%B9%E5%87%BB%E6%95%88%E6%9E%9C/">
-        <h2 class="post-title">
-            UISlider实现点击效果
-        </h2>
-        
-        <h3 class="post-subtitle">
-            CocoaPod，iOS，UI
-        </h3>
-        
-        <div class="post-content-preview">
-            找了很久网上文章都是各种复制，而且不管用，最后在stackOverFlow找到怎么解决，记录一下链接
-
-关键是用UILongPressGestureRecognizer，实现拖动和点击
-- (void)actionLongGesture:(UILongPressGestureRecognizer *)sender {
-    
-    if (sender.state == UIGestur...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Fidetro on March 16, 2017
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -442,12 +443,6 @@ TechCrunch发表了一篇题目叫《创业是艰难的：多工作，少喊累�
                     <div class="tags">
                         
                             
-                                <a href="/tags/#经验" title="经验" rel="5">
-                                    经验
-                                </a>
-                            
-                        
-                            
                         
                             
                                 <a href="/tags/#iOS" title="iOS" rel="19">
@@ -456,7 +451,7 @@ TechCrunch发表了一篇题目叫《创业是艰难的：多工作，少喊累�
                             
                         
                             
-                                <a href="/tags/#问题随笔" title="问题随笔" rel="10">
+                                <a href="/tags/#问题随笔" title="问题随笔" rel="11">
                                     问题随笔
                                 </a>
                             
@@ -476,7 +471,7 @@ TechCrunch发表了一篇题目叫《创业是艰难的：多工作，少喊累�
                             
                         
                             
-                                <a href="/tags/#Swift" title="Swift" rel="6">
+                                <a href="/tags/#Swift" title="Swift" rel="7">
                                     Swift
                                 </a>
                             
@@ -485,6 +480,8 @@ TechCrunch发表了一篇题目叫《创业是艰难的：多工作，少喊累�
                                 <a href="/tags/#Perfect-Server" title="Perfect-Server" rel="2">
                                     Perfect-Server
                                 </a>
+                            
+                        
                             
                         
                             

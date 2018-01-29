@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>fidetro | FoolishTalk Blog</title>
+    <title>Swift-Tips String截取字符串 - fidetro | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/page3/">
+    <link rel="canonical" href="http://localhost:4000/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -123,275 +123,249 @@
 </script>
 
 
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <style type="text/css">
+/* 新浪微博 */
+.-mob-share-weibo {
+background-image: url("http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/sina_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+/* 微信 */
+.-mob-share-weixin {
+background-image: url("http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/wechat_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+/* QQ */
+.-mob-share-qq {
+background-image: url("http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/qq_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+</style>
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-sea.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-sea.jpg')
+    }
+</style>
+<header class="intro-header" >
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>FoolishTalk</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">谈谈技术，聊聊生活</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Swift-Tips" title="Swift-Tips">Swift-Tips</a>
+                        
+                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        
+                    </div>
+                    <h1>Swift-Tips String截取字符串</h1>
+                    
+                    
+                    <h2 class="subheading">Swift，Tips</h2>
+                    
+                    <span class="meta">Posted by Fidetro on January 29, 2018</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-	<div class="row">
-        
-
-<!-- USE SIDEBAR -->
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">            
     <!-- Post Container -->
-    		<div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-    			
-<div class="post-preview">
-    <a href="/2017/03/16/UISlider%E5%AE%9E%E7%8E%B0%E7%82%B9%E5%87%BB%E6%95%88%E6%9E%9C/">
-        <h2 class="post-title">
-            UISlider实现点击效果
-        </h2>
-        
-        <h3 class="post-subtitle">
-            CocoaPod，iOS，UI
-        </h3>
-        
-        <div class="post-content-preview">
-            找了很久网上文章都是各种复制，而且不管用，最后在stackOverFlow找到怎么解决，记录一下链接
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-关键是用UILongPressGestureRecognizer，实现拖动和点击
-- (void)actionLongGesture:(UILongPressGestureRecognizer *)sender {
-    
-    if (sender.state == UIGestur...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Fidetro on March 16, 2017
-    </p>
+				<p>
+在<code class="highlighter-rouge">Objective-C</code>中我们可以使调<code class="highlighter-rouge">substringWithRange</code>的方法达到截取字符串的效果</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[@"123" substringWithRange:NSMakeRange(1, 2)];
+</code></pre></div></div>
+
+<p>在Swift 4之前，也是有类似的方法<code class="highlighter-rouge">"ss".substring(with: &lt;Range&lt;String.Index&gt;&gt;)</code>  ,但是在Swift 4之后被弃用了，我们可以通过用<code class="highlighter-rouge">extension</code>的方法去给他增加截取字符串的方法</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>extension String{
+    func to(_ index:Int) -&gt; String? {
+        let toIndex = String.Index.init(encodedOffset: index)
+        guard toIndex &lt; self.endIndex else { return nil }
+        return String(self[...toIndex])
+        
+    }
+    func from(_ index:Int) -&gt; String? {
+        let fromIndex = String.Index.init(encodedOffset: index)
+        guard fromIndex &lt; self.endIndex else { return nil }
+        return String(self[fromIndex..&lt;self.endIndex])
+    }
+    func subString(_ from:Int,to:Int) -&gt; String? {
+        let toIndex = String.Index.init(encodedOffset: from)
+        let fromIndex = String.Index.init(encodedOffset: to)
+        guard toIndex &lt; self.endIndex,
+            fromIndex &lt; self.endIndex,
+            toIndex &lt;= fromIndex else { return nil }
+        return String(self[toIndex...fromIndex])
+    }
+}
+</code></pre></div></div>
+
+<p>现在又可以方便的截取字符串了</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print("12345678".to(3)) //Optional("1234")  
+
+print("12345678".from(3)) //Optional("45678")  
+
+print("12345678".subString(3, to: 5))  //Optional("456")  
+</code></pre></div></div>
+
+<p>另外我们还可以结合Swift下标的特性，达到通过取字符串下标截取字符串</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>extension String{
+    subscript(index:Int) -&gt; String? {
+        return subString(index, to: index)
+    }
+    subscript (bounds: CountableClosedRange&lt;Int&gt;) -&gt; String? {
+        return subString( bounds.lowerBound, to: bounds.upperBound)
+    }
+    subscript (bounds: CountableRange&lt;Int&gt;) -&gt; String? {
+        return subString( bounds.lowerBound, to: bounds.upperBound)
+    }   
+}
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print("12345678"[2])  //Optional("3")  
+
+print("12345678"[3...5])  //Optional("456")
+
+print("12345678"[100])  //nil
+</code></pre></div></div>
+
+
+                <hr>
+            <div>
+                <p>请保持转载后文章内容的完整，以及文章出处。本人保留所有版权相关权利。</p>
+                <p>如果你看了文章，觉得有收获，可以通过下面的支付宝二维码打赏。</p>
+                <b>
+                <img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/qrcode.png">
+                </b>
+            </div>
+                <!-- 分享代码 -->                
+<div class="-foot-share-buttons">
+    <b>分享到：</b>
+    <button class="-mob-share-weibo"></button>
+    <button class="-mob-share-weixin"></button>
+    <button class="-mob-share-qq"></button>
+    <p>Disqus经常被墙，需要评论请科学上网</p>
 </div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/01/02/2016%E5%B9%B4%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E4%BA%8B/">
-        <h2 class="post-title">
-            2016年的一些小事
-        </h2>
-        
-        <h3 class="post-subtitle">
-            生活
-        </h3>
-        
-        <div class="post-content-preview">
-            在3月底，我投了200来份简历，我在5月2号那一天终于面试了第一份工作，也就是我的第一份iOS工作，那时候的我对自己的技术算是很满意的，面试我的人，也不会iOS，只是自学过一段时间，能做出app这样，目测是个40多岁左右，也是我们的CTO，后来一面试就成了。
-在没工作的时候，我总是憧憬着，公司会有很厉害的大牛，很牛b的架构，和我很多不懂的技术，去到那公司的时候，我心里还是有点落差的。当时的团...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Fidetro on January 2, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2016/10/27/UICollectionView-cellForItemAtIndexPath%E4%B8%8D%E6%89%A7%E8%A1%8C/">
-        <h2 class="post-title">
-            UICollectionView-cellForItemAtIndexPath不执行
-        </h2>
-        
-        <h3 class="post-subtitle">
-            CocoaPod，iOS，UI
-        </h3>
-        
-        <div class="post-content-preview">
-            写代码写太快了，经常遇到这些很低级的问题，记录一下UICollectionViewLayout的itemSize没有设置
-
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Fidetro on October 27, 2016
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2016/10/06/%E8%AE%B0%E4%B8%80%E4%B8%AAiOS%E6%89%93%E5%BC%80%E7%9B%B8%E6%9C%BA%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">
-        <h2 class="post-title">
-            记一个iOS打开相机遇到的坑
-        </h2>
-        
-        <h3 class="post-subtitle">
-            CocoaPod，iOS，相机
-        </h3>
-        
-        <div class="post-content-preview">
-            iOS在打开相机的时候会发生内存泄漏，使用instruments会发现
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=23ba60f5704b3"></script>
+                
+                <hr>
+                
 
 
-
-翻了谷歌也没有找到能解决的资料，下了apple官方的demo同时用insturments调试，同样也发现有这个错
-
-
-  官方demo地址
-
-
-同时stackflow也有人提出这个问题，而且是在5年前。。。
-
-  stackflow的传送门
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2018/01/16/%E6%B5%85%E8%B0%88iOS%E5%9C%A8%E7%89%A9%E8%81%94%E7%BD%91%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E6%9E%B6%E6%9E%84/" data-toggle="tooltip" data-placement="top" title="浅谈iOS在物联网应用中的架构">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
 
 
-难道这个bug已经持续了5年了么。。（一脸懵逼
+                
 
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
 
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Fidetro on October 6, 2016
-    </p>
-</div>
-<hr>
+            </div>
 
-<div class="post-preview">
-    <a href="/2016/08/22/iOS%E5%9F%BA%E4%BA%8E%E7%81%B0%E5%BA%A6%E7%9A%84%E5%9D%87%E5%80%BC%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%9B%BE%E5%83%8F%E5%8C%B9%E9%85%8D/">
-        <h2 class="post-title">
-            iOS基于灰度的均值哈希算法实现图像匹配
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Swift，iOS，Objective-C
-        </h3>
-        
-        <div class="post-content-preview">
-            流程：
-
-
-  先获取相机的实时数据，得到image，这里需要用到自定义相机
-这里已经写的很详细了，我是参考了苹果的Demo自己写了一个  
- iOS开发–AVFoundation自定义相机 
-
-
-图像识别主要分为3种基于灰度相关，基于特征，基于关系。
-
-  这里也有详细的介绍
-
-常用的图像匹配算法及优缺点有哪些？
-剩下的是一些参考过别的语言实现的资料，有些没写上因为当时找的时候记下来，只能...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Fidetro on August 22, 2016
-    </p>
-</div>
-<hr>
-
-
-<!-- Pager -->
-
-<ul class="pager">
-    
-    <li class="previous">
-        <a href="/page2">&larr; Newer Posts</a>
-    </li>
-    
-    
-</ul>
-
-
-    		</div>
     <!-- Sidebar Container -->
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
                 <section>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#iOS" title="iOS" rel="19">
+                				<a href="/tags/#iOS" title="iOS" rel="19">
                                     iOS
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#问题随笔" title="问题随笔" rel="11">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="11">
                                     问题随笔
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Code-Life" title="Code-Life" rel="2">
+                				<a href="/tags/#Code-Life" title="Code-Life" rel="2">
                                     Code-Life
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#WWDC" title="WWDC" rel="2">
+                				<a href="/tags/#WWDC" title="WWDC" rel="2">
                                     WWDC
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Swift" title="Swift" rel="7">
+                				<a href="/tags/#Swift" title="Swift" rel="7">
                                     Swift
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Perfect-Server" title="Perfect-Server" rel="2">
+                				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="2">
                                     Perfect-Server
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
-                    </div>
+        				
+        			</div>
                 </section>
                 
 
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
-                    <div class="short-about">
-                        
-                            <img src="/img/avatar-fidetro.jpg" />
-                        
-                        
-                            <p>吝啬分享的程序员。</p>
-                        
-                        <!-- SNS Link -->
-                        <ul class="list-inline">
-                            
-                            
-                            
-                            
-                            
-                            
-                        </ul>
-                    </div>
-                </section>
                 <!-- Friends Blog -->
                 
                 <hr>
@@ -400,10 +374,67 @@
                     
                 </ul>
                 
-    		</div>
-        
-	</div>
-</div>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "fidetro-github-io";
+    var disqus_identifier = "/2018/01/29/Swift-Tips String截取字符串";
+    var disqus_url = "http://localhost:4000/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
 
 
     <!-- Footer -->
