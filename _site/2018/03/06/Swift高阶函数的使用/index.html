@@ -235,17 +235,18 @@ public func flatMap(_ transform: (Element) throws -&gt; String?) rethrows -&gt; 
  }
  print(b)//[1,2,3,4,5,6]
 </code></pre>
-    <h1 id="filter">filter</h1>
-    <p><code class="highlighter-rouge">filter</code>用于过滤元素</p>
-    <pre><code class="language-Swift"> let a = [1,2,3,4,5,6]
- //去掉a数组内&lt;4的元素
- let b = a.filter { (value) -&gt; Bool in
-     return value &gt; 4
- }
- print(b)
-</code></pre>
   </li>
 </ol>
+
+<h1 id="filter">filter</h1>
+<p><code class="highlighter-rouge">filter</code>用于过滤元素</p>
+<pre><code class="language-Swift">    let a = [1,2,3,4,5,6]
+    //去掉a数组内&lt;4的元素
+    let b = a.filter { (value) -&gt; Bool in
+        return value &gt; 4
+    }
+    print(b)
+</code></pre>
 
 <h1 id="reduce">reduce</h1>
 <p><code class="highlighter-rouge">reduce</code>可以将数组中的元素合并到一个值</p>
@@ -356,7 +357,7 @@ print(count)//28
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" data-toggle="tooltip" data-placement="top" title="Swift-Tips String截取字符串">&larr; Previous Post</a>
+                        <a href="/2018/03/06/AVCaptureSession%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%B8%E6%9C%BA%E8%8E%B7%E5%8F%96%E7%9A%84UIImage%E6%97%8B%E8%BD%AC%E6%97%A0%E6%95%88/" data-toggle="tooltip" data-placement="top" title="AVCaptureSession自定义相机获取的UIImage旋转无效">&larr; Previous Post</a>
                     </li>
                     
                     
@@ -391,13 +392,13 @@ print(count)//28
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="19">
+                				<a href="/tags/#iOS" title="iOS" rel="20">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="11">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
