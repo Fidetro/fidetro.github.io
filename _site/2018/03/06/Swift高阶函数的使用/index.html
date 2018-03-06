@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Swift-Tips String截取字符串 - fidetro | FoolishTalk Blog</title>
+    <title>Swift高阶函数的使用 - fidetro | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+    <link rel="canonical" href="http://localhost:4000/2018/03/06/Swift%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -174,12 +174,12 @@ border: none;
                         <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
                         
                     </div>
-                    <h1>Swift-Tips String截取字符串</h1>
+                    <h1>Swift高阶函数的使用</h1>
                     
                     
                     <h2 class="subheading">Swift，Tips</h2>
                     
-                    <span class="meta">Posted by Fidetro on January 29, 2018</span>
+                    <span class="meta">Posted by Fidetro on March 6, 2018</span>
                 </div>
             </div>
         </div>
@@ -196,65 +196,139 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>
-在<code class="highlighter-rouge">Objective-C</code>中我们可以使调<code class="highlighter-rouge">substringWithRange</code>的方法达到截取字符串的效果</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[@"123" substringWithRange:NSMakeRange(1, 2)];
-</code></pre></div></div>
-
-<p>在Swift 4之前，也是有类似的方法<code class="highlighter-rouge">"ss".substring(with: &lt;Range&lt;String.Index&gt;&gt;)</code>  ,但是在Swift 4之后被弃用了，我们可以通过用<code class="highlighter-rouge">extension</code>的方法去给他增加截取字符串的方法</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>extension String{
-    func to(_ index:Int) -&gt; String? {
-        let toIndex = String.Index.init(encodedOffset: index)
-        guard toIndex &lt; self.endIndex else { return nil }
-        return String(self[...toIndex])
-        
+				<h2 id="本文内容基于swift-4">本文内容基于Swift 4</h2>
+<p>在读《Swift进阶》的时候发现,Swift提供了很多内置的高阶函数用于数组变形，使用高阶函数最大优势在于，用更少量的代码去解决问题。</p>
+<h1 id="map">map</h1>
+<pre><code class="language-Swift">let a = [1,2,3,4,5,6]
+</code></pre>
+<p>如果要把这个数组中的元素每个都+1，按照以前的做法</p>
+<pre><code class="language-Swift">var b = [Int]()
+    for ele in a {
+        b.append(ele+1)
     }
-    func from(_ index:Int) -&gt; String? {
-        let fromIndex = String.Index.init(encodedOffset: index)
-        guard fromIndex &lt; self.endIndex else { return nil }
-        return String(self[fromIndex..&lt;self.endIndex])
+    print(b)//[2,3,4,5,6,7]
+</code></pre>
+<p>但使用map之后</p>
+<pre><code class="language-Swift">    let b = a.map { (ele) -&gt; Int in
+        return ele+1
     }
-    func subString(_ from:Int,to:Int) -&gt; String? {
-        let toIndex = String.Index.init(encodedOffset: from)
-        let fromIndex = String.Index.init(encodedOffset: to)
-        guard toIndex &lt; self.endIndex,
-            fromIndex &lt; self.endIndex,
-            toIndex &lt;= fromIndex else { return nil }
-        return String(self[toIndex...fromIndex])
+    print(b)//[2,3,4,5,6,7]
+</code></pre>
+<p>同时也因为<code class="highlighter-rouge">Swift</code>闭包的特性，上面的代码还可以写成</p>
+<pre><code class="language-Swift">    let b = a.map{
+        $0+1
     }
+    print(b)//[2,3,4,5,6,7]
+</code></pre>
+<h1 id="flatmap">flatMap</h1>
+<p><code class="highlighter-rouge">flatMap</code>和<code class="highlighter-rouge">map</code>的用法很相像，通过对比两者的不难发现：</p>
+<pre><code class="language-Swift">public func map&lt;T&gt;(_ transform: (Element) throws -&gt; T) rethrows -&gt; [T]
+
+public func flatMap(_ transform: (Element) throws -&gt; String?) rethrows -&gt; [String]
+</code></pre>
+<ol>
+  <li><code class="highlighter-rouge">flatMap</code>允许返回<code class="highlighter-rouge">nil</code>值，对元素进行过滤再变形</li>
+  <li><code class="highlighter-rouge">flatMap</code>可以将多维数组转成一维数组
+    <pre><code class="language-Swift">let a = [[1,2,3],[4,5,6]]
+ let b = a.flatMap {
+     $0
+ }
+ print(b)//[1,2,3,4,5,6]
+</code></pre>
+    <h1 id="filter">filter</h1>
+    <p><code class="highlighter-rouge">filter</code>用于过滤元素</p>
+    <pre><code class="language-Swift"> let a = [1,2,3,4,5,6]
+ //去掉a数组内&lt;4的元素
+ let b = a.filter { (value) -&gt; Bool in
+     return value &gt; 4
+ }
+ print(b)
+</code></pre>
+  </li>
+</ol>
+
+<h1 id="reduce">reduce</h1>
+<p><code class="highlighter-rouge">reduce</code>可以将数组中的元素合并到一个值</p>
+<pre><code class="language-Swift">let a = [1,2,3,4,5,6]
+//如果要将a数组内所有元素相加，再+7，以前的写法是这样：
+let count = 0
+for value in a {
+   count += value
 }
-</code></pre></div></div>
-
-<p>现在又可以方便的截取字符串了</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print("12345678".to(3)) //Optional("1234")  
-
-print("12345678".from(3)) //Optional("45678")  
-
-print("12345678".subString(3, to: 5))  //Optional("456")  
-</code></pre></div></div>
-
-<p>另外我们还可以结合Swift下标的特性，达到通过取字符串下标截取字符串</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>extension String{
-    subscript(index:Int) -&gt; String? {
-        return subString(index, to: index)
+count += 7
+print(count)//28
+</code></pre>
+<p>在使用reduce之后，事件就变得非常简单</p>
+<pre><code class="language-Swift">    let b = a.reduce(7) { (count, value) -&gt; Int in
+        return count+value
     }
-    subscript (bounds: CountableClosedRange&lt;Int&gt;) -&gt; String? {
-        return subString( bounds.lowerBound, to: bounds.upperBound)
+    print(b)//28
+</code></pre>
+
+<h1 id="sequence">sequence</h1>
+<p>通过<code class="highlighter-rouge">sequence</code>可以生成无限的序列
+假设我们要从遍历从0到100的偶数，以前的写法是：</p>
+<pre><code class="language-Swift">    for i in 0..&lt;26 {
+        print(i*2) //0,2,4...48,50
     }
-    subscript (bounds: CountableRange&lt;Int&gt;) -&gt; String? {
-        return subString( bounds.lowerBound, to: bounds.upperBound)
-    }   
-}
-</code></pre></div></div>
+</code></pre>
+<p>而<code class="highlighter-rouge">sequence</code>只需要:</p>
+<pre><code class="language-Swift">    for i in sequence(first: 0, next: {$0+2}) {
+        if i&gt;50 {
+            break
+        }
+        print(i) //0,2,4...48,50
+    }
+</code></pre>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print("12345678"[2])  //Optional("3")  
+<h1 id="sorted">sorted</h1>
+<p>用于排序</p>
+<pre><code class="language-Swift">//倒序
+    let a = [1,2,3,4,5,6]
+    let b =  a.sorted { (next, last) -&gt; Bool in
+        return next &gt; last
+    }
+    print(b)//[6, 5, 4, 3, 2, 1]
 
-print("12345678"[3...5])  //Optional("456")
+    //根据字母顺序倒序
+    let students: Set = ["Kofi", "Abena", "Peter", "Kweku", "Akosua"]
+    let descendingStudents = students.sorted(by: &gt;)
+    print(descendingStudents)
+    // Prints "["Peter", "Kweku", "Kofi", "Akosua", "Abena"]"
+</code></pre>
 
-print("12345678"[100])  //nil
-</code></pre></div></div>
+<h1 id="split">split</h1>
+<p>分割数组</p>
+<pre><code class="language-Swift">    let a = [1,2,3,4,5,6]
+    //按照0分割数组，数组中没有0
+    let b =  a.split(separator: 0)
+    print(b[0])//[1, 2, 3, 4, 5, 6]
+</code></pre>
+
+<pre><code class="language-Swift">    let a = [1,2,3,4,3,6]
+    //按照3分割数组
+    let b =  a.split(separator: 3)
+    print(b)//[ArraySlice([1, 2]), ArraySlice([4]), ArraySlice([6])]
+</code></pre>
+
+<h1 id="prefix">prefix</h1>
+<p><code class="highlighter-rouge">prefix</code>和<code class="highlighter-rouge">filter</code>类似，过滤条件为true的时候会到结果中，区别在于，当为false的时候会直接结束</p>
+<pre><code class="language-Swift">    let a = [1,2,3,4,3,6]
+    let b =  a.prefix(upTo: 4)
+    print(b)//[1,2,3,4]
+</code></pre>
+
+<h1 id="drop">drop</h1>
+<p><code class="highlighter-rouge">drop</code>和<code class="highlighter-rouge">prefix</code>相反，当为true的时候元素会被丢弃，为false的时候会直接结束</p>
+<pre><code class="language-Swift">    let a = [1,2,3,4,3,6]
+    let b =  a.drop(while: { (value) -&gt; Bool in
+        if value &lt; 3 {
+            return true
+        }
+        return false
+    })
+     print(b)//[3, 4, 3, 6]
+</code></pre>
 
 
                 <hr>
@@ -282,13 +356,9 @@ print("12345678"[100])  //nil
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/01/16/%E6%B5%85%E8%B0%88iOS%E5%9C%A8%E7%89%A9%E8%81%94%E7%BD%91%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E6%9E%B6%E6%9E%84/" data-toggle="tooltip" data-placement="top" title="浅谈iOS在物联网应用中的架构">&larr; Previous Post</a>
+                        <a href="/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" data-toggle="tooltip" data-placement="top" title="Swift-Tips String截取字符串">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2018/03/06/Swift%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/" data-toggle="tooltip" data-placement="top" title="Swift高阶函数的使用">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -395,8 +465,8 @@ print("12345678"[100])  //nil
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2018/01/29/Swift-Tips String截取字符串";
-    var disqus_url = "http://localhost:4000/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/";
+    var disqus_identifier = "/2018/03/06/Swift高阶函数的使用";
+    var disqus_url = "http://localhost:4000/2018/03/06/Swift%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

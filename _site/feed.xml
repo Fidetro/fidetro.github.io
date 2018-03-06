@@ -5,9 +5,156 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 29 Jan 2018 11:08:15 +0800</pubDate>
-    <lastBuildDate>Mon, 29 Jan 2018 11:08:15 +0800</lastBuildDate>
+    <pubDate>Tue, 06 Mar 2018 16:06:49 +0800</pubDate>
+    <lastBuildDate>Tue, 06 Mar 2018 16:06:49 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
+    
+      <item>
+        <title>Swift高阶函数的使用</title>
+        <description>&lt;h2 id=&quot;本文内容基于swift-4&quot;&gt;本文内容基于Swift 4&lt;/h2&gt;
+&lt;p&gt;在读《Swift进阶》的时候发现,Swift提供了很多内置的高阶函数用于数组变形，使用高阶函数最大优势在于，用更少量的代码去解决问题。&lt;/p&gt;
+&lt;h1 id=&quot;map&quot;&gt;map&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;let a = [1,2,3,4,5,6]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如果要把这个数组中的元素每个都+1，按照以前的做法&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;var b = [Int]()
+    for ele in a {
+        b.append(ele+1)
+    }
+    print(b)//[2,3,4,5,6,7]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;但使用map之后&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    let b = a.map { (ele) -&amp;gt; Int in
+        return ele+1
+    }
+    print(b)//[2,3,4,5,6,7]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;同时也因为&lt;code class=&quot;highlighter-rouge&quot;&gt;Swift&lt;/code&gt;闭包的特性，上面的代码还可以写成&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    let b = a.map{
+        $0+1
+    }
+    print(b)//[2,3,4,5,6,7]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&quot;flatmap&quot;&gt;flatMap&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;flatMap&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;map&lt;/code&gt;的用法很相像，通过对比两者的不难发现：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;public func map&amp;lt;T&amp;gt;(_ transform: (Element) throws -&amp;gt; T) rethrows -&amp;gt; [T]
+
+public func flatMap(_ transform: (Element) throws -&amp;gt; String?) rethrows -&amp;gt; [String]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;flatMap&lt;/code&gt;允许返回&lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;值，对元素进行过滤再变形&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;flatMap&lt;/code&gt;可以将多维数组转成一维数组
+    &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;let a = [[1,2,3],[4,5,6]]
+ let b = a.flatMap {
+     $0
+ }
+ print(b)//[1,2,3,4,5,6]
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;h1 id=&quot;filter&quot;&gt;filter&lt;/h1&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;filter&lt;/code&gt;用于过滤元素&lt;/p&gt;
+    &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt; let a = [1,2,3,4,5,6]
+ //去掉a数组内&amp;lt;4的元素
+ let b = a.filter { (value) -&amp;gt; Bool in
+     return value &amp;gt; 4
+ }
+ print(b)
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;reduce&quot;&gt;reduce&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;reduce&lt;/code&gt;可以将数组中的元素合并到一个值&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;let a = [1,2,3,4,5,6]
+//如果要将a数组内所有元素相加，再+7，以前的写法是这样：
+let count = 0
+for value in a {
+   count += value
+}
+count += 7
+print(count)//28
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在使用reduce之后，事件就变得非常简单&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    let b = a.reduce(7) { (count, value) -&amp;gt; Int in
+        return count+value
+    }
+    print(b)//28
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;sequence&quot;&gt;sequence&lt;/h1&gt;
+&lt;p&gt;通过&lt;code class=&quot;highlighter-rouge&quot;&gt;sequence&lt;/code&gt;可以生成无限的序列
+假设我们要从遍历从0到100的偶数，以前的写法是：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    for i in 0..&amp;lt;26 {
+        print(i*2) //0,2,4...48,50
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;而&lt;code class=&quot;highlighter-rouge&quot;&gt;sequence&lt;/code&gt;只需要:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    for i in sequence(first: 0, next: {$0+2}) {
+        if i&amp;gt;50 {
+            break
+        }
+        print(i) //0,2,4...48,50
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;sorted&quot;&gt;sorted&lt;/h1&gt;
+&lt;p&gt;用于排序&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;//倒序
+    let a = [1,2,3,4,5,6]
+    let b =  a.sorted { (next, last) -&amp;gt; Bool in
+        return next &amp;gt; last
+    }
+    print(b)//[6, 5, 4, 3, 2, 1]
+
+    //根据字母顺序倒序
+    let students: Set = [&quot;Kofi&quot;, &quot;Abena&quot;, &quot;Peter&quot;, &quot;Kweku&quot;, &quot;Akosua&quot;]
+    let descendingStudents = students.sorted(by: &amp;gt;)
+    print(descendingStudents)
+    // Prints &quot;[&quot;Peter&quot;, &quot;Kweku&quot;, &quot;Kofi&quot;, &quot;Akosua&quot;, &quot;Abena&quot;]&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;split&quot;&gt;split&lt;/h1&gt;
+&lt;p&gt;分割数组&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    let a = [1,2,3,4,5,6]
+    //按照0分割数组，数组中没有0
+    let b =  a.split(separator: 0)
+    print(b[0])//[1, 2, 3, 4, 5, 6]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    let a = [1,2,3,4,3,6]
+    //按照3分割数组
+    let b =  a.split(separator: 3)
+    print(b)//[ArraySlice([1, 2]), ArraySlice([4]), ArraySlice([6])]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;prefix&quot;&gt;prefix&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;prefix&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;filter&lt;/code&gt;类似，过滤条件为true的时候会到结果中，区别在于，当为false的时候会直接结束&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    let a = [1,2,3,4,3,6]
+    let b =  a.prefix(upTo: 4)
+    print(b)//[1,2,3,4]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;drop&quot;&gt;drop&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;drop&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;prefix&lt;/code&gt;相反，当为true的时候元素会被丢弃，为false的时候会直接结束&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    let a = [1,2,3,4,3,6]
+    let b =  a.drop(while: { (value) -&amp;gt; Bool in
+        if value &amp;lt; 3 {
+            return true
+        }
+        return false
+    })
+     print(b)//[3, 4, 3, 6]
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+        <pubDate>Tue, 06 Mar 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/03/06/Swift%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/03/06/Swift%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+        
+        <category>Swift-Tips</category>
+        
+        <category>Swift</category>
+        
+        
+      </item>
     
       <item>
         <title>Swift-Tips String截取字符串</title>
@@ -663,143 +810,6 @@ $ :wq
         <pubDate>Sat, 07 Oct 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/10/07/iPhoneX%E5%92%8CiOS-11%E7%9A%84%E9%80%82%E9%85%8D%E4%BD%A0%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/10/07/iPhoneX%E5%92%8CiOS-11%E7%9A%84%E9%80%82%E9%85%8D%E4%BD%A0%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/</guid>
-        
-        <category>问题随笔</category>
-        
-        <category>iOS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>iOS获取相册中的所有图片，以及申请权限，总结自己踩到的坑</title>
-        <description>&lt;p&gt;之前没做过这一块的，今天也是刚接触，上网查了一下主要是两个库iOS 8之前需要使用&lt;code class=&quot;highlighter-rouge&quot;&gt;AssetsLibrary .framework&lt;/code&gt;,iOS 8之后使用&lt;code class=&quot;highlighter-rouge&quot;&gt;Photos.framework&lt;/code&gt;
-想看详细讲解的，可以直接看&lt;a href=&quot;http://kayosite.com/ios-development-and-detail-of-photo-framework.html&quot;&gt;iOS 开发之照片框架详解&lt;/a&gt;
-Photos参考了这里&lt;a href=&quot;http://www.jianshu.com/p/6bcda6b35801&quot;&gt;获取系统相册的所有照片&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;在iOS 8以后，申请相册权限是可以得到回调的:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-        [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-            if (request_block)
-            {
-                if (status == PHAuthorizationStatusAuthorized) {
-                    request_block(YES);
-                }else{
-                    request_block(NO);
-                }
-                
-            }
-        }];
-      
-    }];
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;申请摄像头权限：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-        [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-            if (request_block)
-            {
-                    request_block(granted);
-            }
-        }];
-    }];
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;其实都是不太复杂的东西，网上看下就懂了，获取系统所有图片的时候得每个都转&lt;code class=&quot;highlighter-rouge&quot;&gt;UIImage&lt;/code&gt;这点很不好用，我分别封装了一下&lt;code class=&quot;highlighter-rouge&quot;&gt;AssetsLibrary .framework&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;Photos.framework&lt;/code&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;全文重点来了github地址在这里&quot;&gt;全文重点来了&lt;a href=&quot;https://github.com/Fidetro/PhotoLibrary&quot;&gt;Github地址在这里&lt;/a&gt;&lt;/h4&gt;
-&lt;p&gt;但是在使用&lt;code class=&quot;highlighter-rouge&quot;&gt;AssetsLibrary&lt;/code&gt;获取所有图片的时候会有很明显的卡顿，如果需要支持iOS 8之前的话，可以参考&lt;a href=&quot;http://kayosite.com/ios-development-and-detail-of-photo-framework.html&quot;&gt;iOS 开发之照片框架详解&lt;/a&gt;提到的索引加载&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;踩到的坑
-    &lt;ol&gt;
-      &lt;li&gt;使用下面这个方法获取图片，会得到多次，首次加载的时候，会先得到一个相对模糊的图片，随后会再次得到一张清晰的图像，但是如果我要一开始就要得到是高清的图像呢？&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//获取图片
-+ (void)accessToImageAccordingToTheAsset:(PHAsset *)asset size:(CGSize)size resizeMode:(PHImageRequestOptionsResizeMode)resizeMode completion:(void(^)(UIImage *image,NSDictionary *info))completion
-{
-    static PHImageRequestID requestID = -2;
-    
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGFloat width = MIN([UIScreen mainScreen].bounds.size.width, 500);
-    if (requestID &amp;gt;= 1 &amp;amp;&amp;amp; size.width / width == scale) {
-        [[PHCachingImageManager defaultManager] cancelImageRequest:requestID];
-    }
-    PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
-    option.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
-    option.resizeMode = resizeMode;
- 
-    requestID = [[PHCachingImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeAspectFill options:option resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(result,info);
-        });
-    }];
-    
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;原因是因为将&lt;code class=&quot;highlighter-rouge&quot;&gt;option.deliveryMode &lt;/code&gt;设置成了&lt;code class=&quot;highlighter-rouge&quot;&gt;PHImageRequestOptionsDeliveryModeOpportunistic&lt;/code&gt;,
-你以为只要把&lt;code class=&quot;highlighter-rouge&quot;&gt;option.deliveryMode &lt;/code&gt;设置成了&lt;code class=&quot;highlighter-rouge&quot;&gt;PHImageRequestOptionsDeliveryModeFastFormat&lt;/code&gt;就可以了吗？
-这时候还要设置&lt;code class=&quot;highlighter-rouge&quot;&gt;option.synchronous = YES;&lt;/code&gt;
-但是这样设置后，获取图片会变成同步操作，如果直接获取相册中的所有照片，会造成卡顿。&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;typedef NS_ENUM(NSInteger, PHImageRequestOptionsDeliveryMode) {
-    PHImageRequestOptionsDeliveryModeOpportunistic = 0, // client may get several image results when the call is asynchronous or will get one result when the call is synchronous
-    PHImageRequestOptionsDeliveryModeHighQualityFormat = 1, // client will get one result only and it will be as asked or better than asked (sync requests are automatically processed this way regardless of the specified mode)
-    PHImageRequestOptionsDeliveryModeFastFormat = 2 // client will get one result only and it may be degraded
-} PHOTOS_ENUM_AVAILABLE_IOS_TVOS(8_0, 10_0);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;获取相册中的图片转成&lt;code class=&quot;highlighter-rouge&quot;&gt;NSData&lt;/code&gt;得到&lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;
-我遇到的场景是：
-在获取了相册图片后，需要将&lt;code class=&quot;highlighter-rouge&quot;&gt;UIImage&lt;/code&gt;转成&lt;code class=&quot;highlighter-rouge&quot;&gt;NSData&lt;/code&gt;，但是会有少部分图片，使用下面的方法转成&lt;code class=&quot;highlighter-rouge&quot;&gt;NSData&lt;/code&gt;会得到&lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;的情况
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSData *jpegData = UIImageJPEGRepresentation(image, 0.2);
-NSData *pngData = UIImagePNGRepresentation(image);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;p&gt;这种情况，可以通过重新绘制&lt;code class=&quot;highlighter-rouge&quot;&gt;UIImage&lt;/code&gt;:
-```
-NSData *jpegData = UIImageJPEGRepresentation(image, 0.2);
-  if (jpegData == nil) {
-jpegData = image.generateJPEGRepresentation;
- if (jpegData == nil) {
-return ;
-  }
-}&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;@implementation UIImage (FIDExtra)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;(NSData *)generateJPEGRepresentation
-{
-  UIImage *newImage = [self copyOriginalImage];
-  NSData *newData = UIImageJPEGRepresentation(newImage, 0.2);
-  return newData;
-}&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;(UIImage *)copyOriginalImage
-{
-  UIGraphicsBeginImageContext(self.size);
-  [self drawInRect:CGRectMake(0, 0, self.size.width, self.size.height)];
-  UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-  return newImage;
-}&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;@end
-```&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 22 Sep 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/09/22/iOS%E8%8E%B7%E5%8F%96%E7%9B%B8%E5%86%8C%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%9B%BE%E7%89%87-%E4%BB%A5%E5%8F%8A%E7%94%B3%E8%AF%B7%E6%9D%83%E9%99%90-%E6%80%BB%E7%BB%93%E8%87%AA%E5%B7%B1%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/09/22/iOS%E8%8E%B7%E5%8F%96%E7%9B%B8%E5%86%8C%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%9B%BE%E7%89%87-%E4%BB%A5%E5%8F%8A%E7%94%B3%E8%AF%B7%E6%9D%83%E9%99%90-%E6%80%BB%E7%BB%93%E8%87%AA%E5%B7%B1%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/</guid>
         
         <category>问题随笔</category>
         
