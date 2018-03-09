@@ -5,9 +5,248 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 07 Mar 2018 10:33:06 +0800</pubDate>
-    <lastBuildDate>Wed, 07 Mar 2018 10:33:06 +0800</lastBuildDate>
+    <pubDate>Fri, 09 Mar 2018 17:22:07 +0800</pubDate>
+    <lastBuildDate>Fri, 09 Mar 2018 17:22:07 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
+    
+      <item>
+        <title>用Swift打造一个轻量级POP的网络请求库</title>
+        <description>&lt;p&gt;我从&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;转到&lt;code class=&quot;highlighter-rouge&quot;&gt;Swift&lt;/code&gt;已经有好些时间了，&lt;code class=&quot;highlighter-rouge&quot;&gt;Swift&lt;/code&gt;起码在iOS开发这块，开源组件已经很完善，为什么还要再造轮子呢？&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;目的只有一个，为了简化对业务层的操作。&lt;br /&gt;
+事实上，在写这篇文章的时候，这个&lt;a href=&quot;https://github.com/Fidetro/PSea&quot;&gt;轮子&lt;/a&gt;已经做好了,所以来聊聊他做了什么：&lt;br /&gt;
+在&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;时候我所遇到很多网络层都是这样的结构:&lt;/p&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt; ______________
+|              |
+| AFNetWorking | 
+|______________|
+        |
+        |
+        v
+ ______________
+|              |
+|  APIManager  | 
+|______________|
+        |
+        |
+        v
+ ______________
+|              |
+|  Controller  | 
+|______________|        
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;然后APIManager只管请求，然后回调都在Controller上处理&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;successHanlder:^(NSDictonary *dict){
+//转模型
+Model *model = [Model jsonToModel:dict];
+if (model.errorCode == 0) {
+    //数据加工
+    //刷新页面
+}else{
+    //处理错误
+    //错误显示
+}
+
+} errorHanlder:^(NSDictionry *dict,NSError *error){
+
+};
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;总结一下关于业务层能抽象出来的部分有哪些呢？&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;判断数据是否正确&lt;/li&gt;
+  &lt;li&gt;转成数据模型&lt;/li&gt;
+  &lt;li&gt;处理业务错误&lt;/li&gt;
+  &lt;li&gt;错误提示&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;知道要解决的问题之后，剩下就是怎么去解决了，还在用&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;的时候，使用过&lt;code class=&quot;highlighter-rouge&quot;&gt;YTKNetwork&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;YTKNetwork&lt;/code&gt;是用继承解决的，但是&lt;code class=&quot;highlighter-rouge&quot;&gt;Swift&lt;/code&gt;中更推荐使用&lt;code class=&quot;highlighter-rouge&quot;&gt;protocol&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;extension&lt;/code&gt;这套组合拳来解决问题。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;如果说是网络请求库可能不太准确，它更像是一种思想，它依赖&lt;code class=&quot;highlighter-rouge&quot;&gt;Alamofire&lt;/code&gt;,介于网络层和业务通用层之间的媒介。在这基础上，我给他增加了链式，让他更加Swifty一点。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;基本设置
+```Swift
+public protocol PSea: class {&lt;/p&gt;
+
+    &lt;p&gt;/// 请求方式
+func method() -&amp;gt; HTTPMethod
+/// 设置域名
+func baseURL() -&amp;gt; String
+/// 请求路由
+func requestURI() -&amp;gt; String
+/// 请求参数
+func parameters() -&amp;gt; Parameters?
+/// 请求头
+func headers() -&amp;gt; HTTPHeaders?
+/// 参数编码
+func encoding() -&amp;gt; ParameterEncoding&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;}&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+这部分是http最基本的支持，用法如下：
+```Swift
+    public func headers() -&amp;gt; HTTPHeaders? {
+        return [&quot;Content-type&quot;:&quot;application/json&quot;,
+                &quot;Accept&quot;:&quot;application/json&quot;]
+    }
+    func baseURL() -&amp;gt; String {
+        return &quot;http://localhost:23333&quot;
+    }
+    public func parameters() -&amp;gt; Parameters? {
+        return [&quot;hello&quot;:&quot;world&quot;]
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    func complete(_ completionHandler: @escaping ((DataResponse&amp;lt;Any&amp;gt;) -&amp;gt; ()))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;    func complete(_ completionHandler: @escaping ((DataResponse&amp;lt;Any&amp;gt;) -&amp;gt; ()))&lt;/code&gt;是和&lt;code class=&quot;highlighter-rouge&quot;&gt;Alamofire&lt;/code&gt;接触，实现请求的方法&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    func successParse(response:DataResponse&amp;lt;Any&amp;gt;)
+    func errorParse(response:DataResponse&amp;lt;Any&amp;gt;)
+    func failureParse(response:DataResponse&amp;lt;Any&amp;gt;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这三个是&lt;code class=&quot;highlighter-rouge&quot;&gt;protocol&lt;/code&gt;中的接口，需要遵循&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;的类去解析&lt;br /&gt;
+整个&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;目前100行代码不到，因为&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;只提供了把&lt;code class=&quot;highlighter-rouge&quot;&gt;Alamofire&lt;/code&gt;的用法转成的POP，具体涉及业务层是需要通过遵循&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;再衍生出一个业务类，还是废话少说，上代码。&lt;/p&gt;
+
+&lt;p&gt;就拿我个人项目来讲&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;
+public protocol PetRequest : PSea {
+   /// 是否需要token
+    func needToken() -&amp;gt; Bool
+    /// 请求参数
+    func petParameters() -&amp;gt; Parameters?
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;func needToken()&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;func petParameters()&lt;/code&gt;都是对外需要重写的，可以先不管&lt;br /&gt;
+接下来是把&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;需要重写的接口，实现&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;extension PetRequest {
+    public func headers() -&amp;gt; HTTPHeaders? {
+        return [&quot;Content-type&quot;:&quot;application/json&quot;,
+                &quot;Accept&quot;:&quot;application/json&quot;]
+    }
+    func baseURL() -&amp;gt; String {
+        return &quot;设置域名&quot;
+    }
+    public func parameters() -&amp;gt; Parameters? {
+        //对参数进行处理
+        let params = petParameters()    
+    
+        return params
+    }
+    
+    public func encoding() -&amp;gt; ParameterEncoding {
+        if method() == .get {
+            return URLEncoding(destination: .methodDependent)
+        }else{
+            return JSONEncoding.default
+        }
+    }
+    
+    //成功结果的解析
+    func successParse(response:DataResponse&amp;lt;Any&amp;gt;){
+        guard let value = response.result.value as? [String:Any],
+            let _ = value[&quot;errcode&quot;] as? Int else{
+                return
+        }
+        if let handler = self.successHandler {
+            handler(response,value)
+        }else{
+            //成功不处理
+        }
+    }
+    //请求成功，但结果不是我们需要的解析
+    func errorParse(response:DataResponse&amp;lt;Any&amp;gt;){
+        guard let value = response.result.value as? [String:Any],
+            let code = value[&quot;errcode&quot;] as? Int else{
+                return
+        }
+        let errmsg = value[&quot;errmsg&quot;] as? String
+        guard code == 0 else {
+            if let handler = self.errorHandler {
+                handler(response,code,errmsg ?? &quot;&quot;)
+            }else{
+                //不处理的时候会提示
+                SVProgressHUD.showError(withStatus: errmsg ?? &quot;&quot;)
+            }
+            return
+        }
+    }
+    //网络错误的解析
+    func failureParse(response:DataResponse&amp;lt;Any&amp;gt;) {
+        guard let _ = response.result.value as? [String:Any] else{
+                if let handler = self.failureHandler {
+                    handler(response,response.request,response.result.error)
+                }else{
+                    //不处理的时候会提示
+                    SVProgressHUD.showError(withStatus: &quot;网络连接超时&quot;)
+                }
+                return
+        }
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样就通过&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;设计好了一个简单的POP网络请求库，再举一个简单的登录api使用例子：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;class LoginApi: PetRequest {
+
+    var username : String = &quot;xxx&quot;
+    var password : String = &quot;xxx&quot;
+    var successHandler: SccuessCallBack?    
+    var errorHandler: ErrorCallBack?
+    var failureHandler: FailureCallBack?
+
+    func needToken() -&amp;gt; Bool {
+        return false
+    }
+
+    func petParameters() -&amp;gt; Parameters? {
+        return [&quot;username&quot;:username,
+                &quot;password&quot;:password]
+    }
+    
+    func method() -&amp;gt; HTTPMethod {
+        return .post
+    }
+    
+    func requestURI() -&amp;gt; String {
+        return &quot;/petday/login&quot;
+    }
+  
+}
+
+//使用例子
+        LoginApi().request().success { (_, value) in
+            
+            }.failure { (_, _, _) in
+                
+                
+            }.error { (_, _, _) in                
+                
+        }
+
+然后又因为failure和error都已经经过业务层做处理了，不是特殊情况下，不需要额外做处理，又可以简写成
+        LoginApi().request().success { (_, value) in
+            
+            }
+&lt;/code&gt;&lt;/pre&gt;
+
+</description>
+        <pubDate>Fri, 09 Mar 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/</guid>
+        
+        <category>Swift-Tips</category>
+        
+        <category>Swift</category>
+        
+        
+      </item>
     
       <item>
         <title>Swift高阶函数的使用</title>
@@ -779,23 +1018,6 @@ $ :wq
         <category>Swift</category>
         
         <category>Perfect-Server</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>又大一岁，先聊聊编程，再聊聊生活，最后再聊回编程</title>
-        <description>&lt;p&gt;算起来已经23岁了，iOS开发1年5个月了。&lt;del&gt;在上一间公司加班加到曾经一度认为自己已经24-25岁，开发了2年半。&lt;/del&gt;
-现在回想起来，从2016年5月3日开始，我已经是一名iOS开发了，从那时候每天朝9晚6的工作，变成了到后来朝9晚8，晚9，晚10…偶尔晚到凌晨1点的工作，我想现在每天编程的时间应该是在10-12小时左右吧，如果把睡觉的时间去掉，平时coding的时间都要比生活的时间长，很庆幸自己是个热爱编程的人，在过去的一年里，我特别的执着于提升自己的编程水平，现在看来，这一年的提升还算满意，一个人在开发路上摸索碰了很多璧，但是也弄了很多很有意思的东西，&lt;a href=&quot;https://github.com/Fidetro/FFDB&quot;&gt;FFDB&lt;/a&gt;应该是现在自己主力上维护的一个东西，虽然没什么人用233主要是一些以前同事在用，不过觉得ORM这个想法还是很nice的。我还记得开发FFDB2.0到3.0的那段时间，加班每天都是11-12点左右，但是回家了又很想重构到3.0（3.0是架构上很大的改动， 然后导致那一个星期都是3，4点，每天7点多又起床。。想想就觉得当时很疯狂。&lt;br /&gt;
-生活上，过的很简单，编程睡觉编程睡觉，在今年3月份的时候曾经有过一段时间改变，那时候不知道怎么的，很想养一只猫，我觉得猫是一些比较独立的动物，当时就这么养了，刚养的时候还是很麻烦，怕他无聊，怕他到处大小便，怕他饿坏，后来还有了猫藓，而且那段时间加班加的很严重，周末早上他带看完病，下午又得去公司加班，连续上了3星期，特别是带了头套之后，当时猫太小，带着头套吃不了东西，每天很早起来喂他吃完，中午一下班就跑回家脱了头套看他吃饱了，又回公司，最后猫藓好了，猫也长大了，然后送了给高中的一个朋友。因为发现当时公司的加班情况，真的没有办法，太累了。&lt;br /&gt;
-送完猫走之后，就想出去走走了，看看外边的世界，在外包做久了，感觉自己更加像是机器人，正好遇上@swift大会在深圳，见到了很多厉害的人，意识到自己的多么的渺小，但是更加的充满斗志。记得在上年，希望自己能开发个swift的app，虽然至今没有用swift开发过，刚好也应该算是碰上swift-server火的时候吧，平时的时间转而大部分花在开发perfect-server上，也因为这个，跟服务器搭边的前端呀，linux的一些常用的东西，都学了点，写了点html、css、js、shell，也顺便用swift写了swift的FFDB，摆脱了OC中的继承，转而用协议解决，挺满足的（尽管还是挺多没暴露的问题&lt;br /&gt;
-今年感觉想要的想学的都有了，想想明年，也没有什么别的奢望了，感觉目前自己的水平不像以前一样提升的能快起来了，学的东西多，用起来学起来也容易乱，明年的话，要么会投入学细目前的领域，要么可能还是会再去把c捡起来吧，到时候再说吧。&lt;/p&gt;
-</description>
-        <pubDate>Sat, 14 Oct 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/10/14/%E5%8F%88%E5%A4%A7%E4%B8%80%E5%B2%81-%E5%85%88%E8%81%8A%E8%81%8A%E7%BC%96%E7%A8%8B-%E5%86%8D%E8%81%8A%E8%81%8A%E7%94%9F%E6%B4%BB-%E6%9C%80%E5%90%8E%E5%86%8D%E8%81%8A%E5%9B%9E%E7%BC%96%E7%A8%8B/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/10/14/%E5%8F%88%E5%A4%A7%E4%B8%80%E5%B2%81-%E5%85%88%E8%81%8A%E8%81%8A%E7%BC%96%E7%A8%8B-%E5%86%8D%E8%81%8A%E8%81%8A%E7%94%9F%E6%B4%BB-%E6%9C%80%E5%90%8E%E5%86%8D%E8%81%8A%E5%9B%9E%E7%BC%96%E7%A8%8B/</guid>
-        
-        <category>Code-Life</category>
         
         
       </item>

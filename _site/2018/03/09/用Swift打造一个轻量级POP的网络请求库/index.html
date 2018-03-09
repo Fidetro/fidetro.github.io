@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>记录点自己做CocoaPod时遇到的坑 - fidetro | FoolishTalk Blog</title>
+    <title>用Swift打造一个轻量级POP的网络请求库 - fidetro | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/2017/06/19/%E8%AE%B0%E5%BD%95%E7%82%B9%E8%87%AA%E5%B7%B1%E5%81%9ACocoaPod%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">
+    <link rel="canonical" href="http://localhost:4000/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -154,12 +154,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-sea.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-old.jpg')
+        background-image: url('/img/post-bg-sea.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -169,17 +169,17 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#问题随笔" title="问题随笔">问题随笔</a>
+                        <a class="tag" href="/tags/#Swift-Tips" title="Swift-Tips">Swift-Tips</a>
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
                         
                     </div>
-                    <h1>记录点自己做CocoaPod时遇到的坑</h1>
+                    <h1>用Swift打造一个轻量级POP的网络请求库</h1>
                     
                     
-                    <h2 class="subheading">CocoaPod，iOS</h2>
+                    <h2 class="subheading">Swift，Tips，Alamofire</h2>
                     
-                    <span class="meta">Posted by Fidetro on June 19, 2017</span>
+                    <span class="meta">Posted by Fidetro on March 9, 2018</span>
                 </div>
             </div>
         </div>
@@ -196,14 +196,231 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[!] The spec did not pass validation, due to 1 error.
-[!] The validator for Swift projects uses Swift 3.0 by default, if you are using a different version of swift you can use a `.swift-version` file to set the version for your Pod. For example to use Swift 2.3, run: 
-    `echo "2.3" &gt; .swift-version`.
+				<p>我从<code class="highlighter-rouge">Objective-C</code>转到<code class="highlighter-rouge">Swift</code>已经有好些时间了，<code class="highlighter-rouge">Swift</code>起码在iOS开发这块，开源组件已经很完善，为什么还要再造轮子呢？</p>
+<blockquote>
+  <p>目的只有一个，为了简化对业务层的操作。<br />
+事实上，在写这篇文章的时候，这个<a href="https://github.com/Fidetro/PSea">轮子</a>已经做好了,所以来聊聊他做了什么：<br />
+在<code class="highlighter-rouge">Objective-C</code>时候我所遇到很多网络层都是这样的结构:</p>
+  <pre><code class="language-Objective-C"> ______________
+|              |
+| AFNetWorking | 
+|______________|
+        |
+        |
+        v
+ ______________
+|              |
+|  APIManager  | 
+|______________|
+        |
+        |
+        v
+ ______________
+|              |
+|  Controller  | 
+|______________|        
+</code></pre>
+</blockquote>
 
+<p>然后APIManager只管请求，然后回调都在Controller上处理</p>
+<pre><code class="language-Objective-C">successHanlder:^(NSDictonary *dict){
+//转模型
+Model *model = [Model jsonToModel:dict];
+if (model.errorCode == 0) {
+    //数据加工
+    //刷新页面
+}else{
+    //处理错误
+    //错误显示
+}
+
+} errorHanlder:^(NSDictionry *dict,NSError *error){
+
+};
+
+</code></pre>
+<p>总结一下关于业务层能抽象出来的部分有哪些呢？</p>
+<ol>
+  <li>判断数据是否正确</li>
+  <li>转成数据模型</li>
+  <li>处理业务错误</li>
+  <li>错误提示</li>
+</ol>
+
+<p>知道要解决的问题之后，剩下就是怎么去解决了，还在用<code class="highlighter-rouge">Objective-C</code>的时候，使用过<code class="highlighter-rouge">YTKNetwork</code>，<code class="highlighter-rouge">YTKNetwork</code>是用继承解决的，但是<code class="highlighter-rouge">Swift</code>中更推荐使用<code class="highlighter-rouge">protocol</code>和<code class="highlighter-rouge">extension</code>这套组合拳来解决问题。</p>
+
+<p><code class="highlighter-rouge">PSea</code>如果说是网络请求库可能不太准确，它更像是一种思想，它依赖<code class="highlighter-rouge">Alamofire</code>,介于网络层和业务通用层之间的媒介。在这基础上，我给他增加了链式，让他更加Swifty一点。</p>
+
+<ol>
+  <li>
+    <p>基本设置
+```Swift
+public protocol PSea: class {</p>
+
+    <p>/// 请求方式
+func method() -&gt; HTTPMethod
+/// 设置域名
+func baseURL() -&gt; String
+/// 请求路由
+func requestURI() -&gt; String
+/// 请求参数
+func parameters() -&gt; Parameters?
+/// 请求头
+func headers() -&gt; HTTPHeaders?
+/// 参数编码
+func encoding() -&gt; ParameterEncoding</p>
+  </li>
+</ol>
+
+<p>}</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+这部分是http最基本的支持，用法如下：
+```Swift
+    public func headers() -&gt; HTTPHeaders? {
+        return ["Content-type":"application/json",
+                "Accept":"application/json"]
+    }
+    func baseURL() -&gt; String {
+        return "http://localhost:23333"
+    }
+    public func parameters() -&gt; Parameters? {
+        return ["hello":"world"]
+    }
 </code></pre></div></div>
-<p>这是因为需要知道支持哪个swift版本，一般来讲现在都是支持Swift3的，输入这段就好了</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "3.0" &gt; .swift-version
-</code></pre></div></div>
+
+<pre><code class="language-Swift">    func complete(_ completionHandler: @escaping ((DataResponse&lt;Any&gt;) -&gt; ()))
+</code></pre>
+<p><code class="highlighter-rouge">    func complete(_ completionHandler: @escaping ((DataResponse&lt;Any&gt;) -&gt; ()))</code>是和<code class="highlighter-rouge">Alamofire</code>接触，实现请求的方法</p>
+<pre><code class="language-Swift">    func successParse(response:DataResponse&lt;Any&gt;)
+    func errorParse(response:DataResponse&lt;Any&gt;)
+    func failureParse(response:DataResponse&lt;Any&gt;)
+</code></pre>
+<p>这三个是<code class="highlighter-rouge">protocol</code>中的接口，需要遵循<code class="highlighter-rouge">PSea</code>的类去解析<br />
+整个<code class="highlighter-rouge">PSea</code>目前100行代码不到，因为<code class="highlighter-rouge">PSea</code>只提供了把<code class="highlighter-rouge">Alamofire</code>的用法转成的POP，具体涉及业务层是需要通过遵循<code class="highlighter-rouge">PSea</code>再衍生出一个业务类，还是废话少说，上代码。</p>
+
+<p>就拿我个人项目来讲</p>
+<pre><code class="language-Swift">
+public protocol PetRequest : PSea {
+   /// 是否需要token
+    func needToken() -&gt; Bool
+    /// 请求参数
+    func petParameters() -&gt; Parameters?
+}
+</code></pre>
+<p><code class="highlighter-rouge">func needToken()</code>和<code class="highlighter-rouge">func petParameters()</code>都是对外需要重写的，可以先不管<br />
+接下来是把<code class="highlighter-rouge">PSea</code>需要重写的接口，实现</p>
+<pre><code class="language-Swift">extension PetRequest {
+    public func headers() -&gt; HTTPHeaders? {
+        return ["Content-type":"application/json",
+                "Accept":"application/json"]
+    }
+    func baseURL() -&gt; String {
+        return "设置域名"
+    }
+    public func parameters() -&gt; Parameters? {
+        //对参数进行处理
+        let params = petParameters()    
+    
+        return params
+    }
+    
+    public func encoding() -&gt; ParameterEncoding {
+        if method() == .get {
+            return URLEncoding(destination: .methodDependent)
+        }else{
+            return JSONEncoding.default
+        }
+    }
+    
+    //成功结果的解析
+    func successParse(response:DataResponse&lt;Any&gt;){
+        guard let value = response.result.value as? [String:Any],
+            let _ = value["errcode"] as? Int else{
+                return
+        }
+        if let handler = self.successHandler {
+            handler(response,value)
+        }else{
+            //成功不处理
+        }
+    }
+    //请求成功，但结果不是我们需要的解析
+    func errorParse(response:DataResponse&lt;Any&gt;){
+        guard let value = response.result.value as? [String:Any],
+            let code = value["errcode"] as? Int else{
+                return
+        }
+        let errmsg = value["errmsg"] as? String
+        guard code == 0 else {
+            if let handler = self.errorHandler {
+                handler(response,code,errmsg ?? "")
+            }else{
+                //不处理的时候会提示
+                SVProgressHUD.showError(withStatus: errmsg ?? "")
+            }
+            return
+        }
+    }
+    //网络错误的解析
+    func failureParse(response:DataResponse&lt;Any&gt;) {
+        guard let _ = response.result.value as? [String:Any] else{
+                if let handler = self.failureHandler {
+                    handler(response,response.request,response.result.error)
+                }else{
+                    //不处理的时候会提示
+                    SVProgressHUD.showError(withStatus: "网络连接超时")
+                }
+                return
+        }
+    }
+}
+
+</code></pre>
+
+<p>这样就通过<code class="highlighter-rouge">PSea</code>设计好了一个简单的POP网络请求库，再举一个简单的登录api使用例子：</p>
+<pre><code class="language-Swift">class LoginApi: PetRequest {
+
+    var username : String = "xxx"
+    var password : String = "xxx"
+    var successHandler: SccuessCallBack?    
+    var errorHandler: ErrorCallBack?
+    var failureHandler: FailureCallBack?
+
+    func needToken() -&gt; Bool {
+        return false
+    }
+
+    func petParameters() -&gt; Parameters? {
+        return ["username":username,
+                "password":password]
+    }
+    
+    func method() -&gt; HTTPMethod {
+        return .post
+    }
+    
+    func requestURI() -&gt; String {
+        return "/petday/login"
+    }
+  
+}
+
+//使用例子
+        LoginApi().request().success { (_, value) in
+            
+            }.failure { (_, _, _) in
+                
+                
+            }.error { (_, _, _) in                
+                
+        }
+
+然后又因为failure和error都已经经过业务层做处理了，不是特殊情况下，不需要额外做处理，又可以简写成
+        LoginApi().request().success { (_, value) in
+            
+            }
+</code></pre>
+
 
 
                 <hr>
@@ -231,13 +448,9 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/04/02/%E7%97%9B%E8%8B%A6%E9%80%A0%E5%B0%B1%E6%80%A7%E6%A0%BC/" data-toggle="tooltip" data-placement="top" title="痛苦造就性格">&larr; Previous Post</a>
+                        <a href="/2018/03/06/Swift%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/" data-toggle="tooltip" data-placement="top" title="Swift高阶函数的使用">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/06/21/%E6%9B%B4%E6%96%B0%E8%87%AA%E5%B7%B1%E7%9A%84CocoaPods%E5%BA%93/" data-toggle="tooltip" data-placement="top" title="更新自己的CocoaPods库">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -344,8 +557,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2017/06/19/记录点自己做CocoaPod时遇到的坑";
-    var disqus_url = "http://localhost:4000/2017/06/19/%E8%AE%B0%E5%BD%95%E7%82%B9%E8%87%AA%E5%B7%B1%E5%81%9ACocoaPod%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/";
+    var disqus_identifier = "/2018/03/09/用Swift打造一个轻量级POP的网络请求库";
+    var disqus_url = "http://localhost:4000/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
