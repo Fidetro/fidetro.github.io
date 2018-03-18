@@ -84,11 +84,8 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 
 # Friends
 friends: [
-    #{
-    #     title: "Example Friends",
-    #     href: "#"
-    # },{
-    #     title: "It helps SEO",
-    #     href: "#"
-    # }
+    {
+        title: "make",
+        href: "https://www.jianshu.com/u/e80ee6ad8f86"
+    }
 ]

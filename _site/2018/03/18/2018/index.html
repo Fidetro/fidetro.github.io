@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>记一个iOS打开相机遇到的坑 - fidetro | FoolishTalk Blog</title>
+    <title>2018 - fidetro | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/2016/10/06/%E8%AE%B0%E4%B8%80%E4%B8%AAiOS%E6%89%93%E5%BC%80%E7%9B%B8%E6%9C%BA%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">
+    <link rel="canonical" href="http://localhost:4000/2018/03/18/2018/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -154,12 +154,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-unsplash.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-old.jpg')
+        background-image: url('/img/post-bg-unsplash.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -169,17 +169,15 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#问题随笔" title="问题随笔">问题随笔</a>
-                        
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        <a class="tag" href="/tags/#杂谈" title="杂谈">杂谈</a>
                         
                     </div>
-                    <h1>记一个iOS打开相机遇到的坑</h1>
+                    <h1>2018</h1>
                     
                     
-                    <h2 class="subheading">CocoaPod，iOS，相机</h2>
+                    <h2 class="subheading">杂谈，生活</h2>
                     
-                    <span class="meta">Posted by Fidetro on October 6, 2016</span>
+                    <span class="meta">Posted by Fidetro on March 18, 2018</span>
                 </div>
             </div>
         </div>
@@ -196,23 +194,26 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>iOS在打开相机的时候会发生内存泄漏，使用instruments会发现</p>
-
-<p><img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/034EC7E4-E9F2-4C90-B3E2-41190810BEEB.png" alt="C2C97AF5-571C-49A1-B4FB-53D2593964A1.png" /></p>
-
-<p>翻了谷歌也没有找到能解决的资料，下了apple官方的demo同时用insturments调试，同样也发现有这个错</p>
-
-<blockquote>
-  <p><a href="https://developer.apple.com/library/content/samplecode/PhotoPicker/Introduction/Intro.html#//apple_ref/doc/uid/DTS40010196-Intro-DontLinkElementID_2">官方demo地址</a></p>
+				<blockquote>
+  <p>正好今天跟前同事聊到工作的事情，前同事得到了阿里的面试，聊到还是得三年工作经验才能有BAT的面试，有感而发，想聊聊过去做了什么，未来想做什么，为后面的BAT做铺垫。</p>
 </blockquote>
 
-<p>同时stackflow也有人提出这个问题，而且是在5年前。。。</p>
-<blockquote>
-  <p><a href="http://stackoverflow.com/questions/6554225/uiimagepickercontroller-memory-leak">stackflow的传送门</a></p>
-</blockquote>
+<h1 id="工作">工作</h1>
+<p>在2017年的9月，从深圳来到了广州，脱离了无休止的加班，来到万表之后终于有时间做自己的事情了。</p>
 
-<p>难道这个bug已经持续了5年了么。。（一脸懵逼</p>
+<h1 id="swiftffdb">SwiftFFDB</h1>
+<p>空闲下来之后，基本全身心的放在了<a href="https://github.com/fidetro/swift-ffdb">SwiftFFDB</a>身上，在做<code class="highlighter-rouge">SwiftFFDB</code>的时候也暴露出swift不少的缺点，不够完善的反射，协议没办法像继承一样在方法推断返回self类型等等。当然，优点更大于缺点，协议编程，函数编程，extension，这些都是<code class="highlighter-rouge">Objective-C</code>所没有的。在设计<code class="highlighter-rouge">SwiftFFDB</code>的时候，看过安卓的<a href="https://github.com/LitePalFramework/LitePal">LitePal</a>,由于<code class="highlighter-rouge">Swift</code>语言本身就非常适合链式编程，所以在<code class="highlighter-rouge">SwiftFFDB</code>底层的时候，就参考了<code class="highlighter-rouge">LitePal</code>,通过SQL语句中的增删改查的类组成。其余用起来和原本的OC版本是差不多的，也算在前天把该写的单元测试也写完了，感觉稍微满意了，发布了1.x版本，回头一看才发现，距离第一个release的版本已经半年了，OC版的已经快一年了，虽然没有很多人使用，只是自己圈子内的朋友在用，维护了这么久的一个项目，怎么说呢，还是挺有意思的，从一个数据库白痴，到了现在的数据库小白，跟着自己的项目一起成长。</p>
 
+<h1 id="成长">成长</h1>
+<p>当了程序员之后，就觉得自己学习没有停过，可有效的，可持续的使用的知识在最近这段时间却很少，一开始我以为只是因为自己的学习又出现了疲倦期，然后找了个周末去了趟珠海，坐在海边看了2天海，浮躁的心思的确平稳了下去。可回到来没几天，还是没静下心来。</p>
+
+<p><img src="http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/IMG_3620%2820180121-092122%29.jpg" alt="" /></p>
+
+<p>现在想想，还是学习方法出了问题。最初因为在弄swift服务端的时候，学了下shell，觉得脚本很方便，然后跑去看了几天python，后来微信的<code class="highlighter-rouge">WCDB</code>Swift版也出来了，据说还是改了sqlite源码上做的，比起自己在<code class="highlighter-rouge">FMDB</code>基础上做要厉害多了，然后又跑去系统的学了下C语言，打算阅读源码，后来刚好自己的SS客户端出了问题，那时候在想，如果这客户端是我写的多好，那样我就知道是哪里出问题了，抱着这个想法又去写了个SS客户端，在写的时候才真正认识到自己在网络编程这一块的知识是有多么的薄弱，很多没有概念，然后又下决心去补网络编程，最后虽然是借助<code class="highlighter-rouge">NEKit</code>完成了，然而原理都不懂。<br />
+有想法去学这些，我觉得挺好的，但是想法变得太快，这几件事情都让我明白一点，自己现在的基础知识是有多么的匮乏。</p>
+
+<h1 id="三年">三年</h1>
+<p>很多人都说，程序员三年是一个转折点，从目前附近的朋友了解到的情况，似乎的确是这样的。我打算给自己立flag，距离自己三年，还差大概一年二个多月的样子，学习语言上，应该不再会被别的分心，专心的好好搞一下C，能读读源码的水平吧，基础上，希望半年内把«http权威指南»和«深入理解计算机系统»读完吧，今年一定填完上心留下的坑，希望到了三年的时候去BAT面试的自己，依旧能因为自身的水平，而保持过往面试的从容和自信，不留遗憾。</p>
 
 
                 <hr>
@@ -240,13 +241,9 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2016/08/22/iOS%E5%9F%BA%E4%BA%8E%E7%81%B0%E5%BA%A6%E7%9A%84%E5%9D%87%E5%80%BC%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%9B%BE%E5%83%8F%E5%8C%B9%E9%85%8D/" data-toggle="tooltip" data-placement="top" title="iOS基于灰度的均值哈希算法实现图像匹配">&larr; Previous Post</a>
+                        <a href="/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/" data-toggle="tooltip" data-placement="top" title="用Swift打造一个轻量级POP的网络请求库">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2016/10/27/UICollectionView-cellForItemAtIndexPath%E4%B8%8D%E6%89%A7%E8%A1%8C/" data-toggle="tooltip" data-placement="top" title="UICollectionView-cellForItemAtIndexPath不执行">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -357,8 +354,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2016/10/06/记一个iOS打开相机遇到的坑";
-    var disqus_url = "http://localhost:4000/2016/10/06/%E8%AE%B0%E4%B8%80%E4%B8%AAiOS%E6%89%93%E5%BC%80%E7%9B%B8%E6%9C%BA%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/";
+    var disqus_identifier = "/2018/03/18/2018";
+    var disqus_url = "http://localhost:4000/2018/03/18/2018/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

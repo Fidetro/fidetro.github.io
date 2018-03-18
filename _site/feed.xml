@@ -5,9 +5,41 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 14 Mar 2018 14:29:49 +0800</pubDate>
-    <lastBuildDate>Wed, 14 Mar 2018 14:29:49 +0800</lastBuildDate>
+    <pubDate>Sun, 18 Mar 2018 09:56:03 +0800</pubDate>
+    <lastBuildDate>Sun, 18 Mar 2018 09:56:03 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
+    
+      <item>
+        <title>2018</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;正好今天跟前同事聊到工作的事情，前同事得到了阿里的面试，聊到还是得三年工作经验才能有BAT的面试，有感而发，想聊聊过去做了什么，未来想做什么，为后面的BAT做铺垫。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;工作&quot;&gt;工作&lt;/h1&gt;
+&lt;p&gt;在2017年的9月，从深圳来到了广州，脱离了无休止的加班，来到万表之后终于有时间做自己的事情了。&lt;/p&gt;
+
+&lt;h1 id=&quot;swiftffdb&quot;&gt;SwiftFFDB&lt;/h1&gt;
+&lt;p&gt;空闲下来之后，基本全身心的放在了&lt;a href=&quot;https://github.com/fidetro/swift-ffdb&quot;&gt;SwiftFFDB&lt;/a&gt;身上，在做&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;的时候也暴露出swift不少的缺点，不够完善的反射，协议没办法像继承一样在方法推断返回self类型等等。当然，优点更大于缺点，协议编程，函数编程，extension，这些都是&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;所没有的。在设计&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;的时候，看过安卓的&lt;a href=&quot;https://github.com/LitePalFramework/LitePal&quot;&gt;LitePal&lt;/a&gt;,由于&lt;code class=&quot;highlighter-rouge&quot;&gt;Swift&lt;/code&gt;语言本身就非常适合链式编程，所以在&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;底层的时候，就参考了&lt;code class=&quot;highlighter-rouge&quot;&gt;LitePal&lt;/code&gt;,通过SQL语句中的增删改查的类组成。其余用起来和原本的OC版本是差不多的，也算在前天把该写的单元测试也写完了，感觉稍微满意了，发布了1.x版本，回头一看才发现，距离第一个release的版本已经半年了，OC版的已经快一年了，虽然没有很多人使用，只是自己圈子内的朋友在用，维护了这么久的一个项目，怎么说呢，还是挺有意思的，从一个数据库白痴，到了现在的数据库小白，跟着自己的项目一起成长。&lt;/p&gt;
+
+&lt;h1 id=&quot;成长&quot;&gt;成长&lt;/h1&gt;
+&lt;p&gt;当了程序员之后，就觉得自己学习没有停过，可有效的，可持续的使用的知识在最近这段时间却很少，一开始我以为只是因为自己的学习又出现了疲倦期，然后找了个周末去了趟珠海，坐在海边看了2天海，浮躁的心思的确平稳了下去。可回到来没几天，还是没静下心来。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/IMG_3620%2820180121-092122%29.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;现在想想，还是学习方法出了问题。最初因为在弄swift服务端的时候，学了下shell，觉得脚本很方便，然后跑去看了几天python，后来微信的&lt;code class=&quot;highlighter-rouge&quot;&gt;WCDB&lt;/code&gt;Swift版也出来了，据说还是改了sqlite源码上做的，比起自己在&lt;code class=&quot;highlighter-rouge&quot;&gt;FMDB&lt;/code&gt;基础上做要厉害多了，然后又跑去系统的学了下C语言，打算阅读源码，后来刚好自己的SS客户端出了问题，那时候在想，如果这客户端是我写的多好，那样我就知道是哪里出问题了，抱着这个想法又去写了个SS客户端，在写的时候才真正认识到自己在网络编程这一块的知识是有多么的薄弱，很多没有概念，然后又下决心去补网络编程，最后虽然是借助&lt;code class=&quot;highlighter-rouge&quot;&gt;NEKit&lt;/code&gt;完成了，然而原理都不懂。&lt;br /&gt;
+有想法去学这些，我觉得挺好的，但是想法变得太快，这几件事情都让我明白一点，自己现在的基础知识是有多么的匮乏。&lt;/p&gt;
+
+&lt;h1 id=&quot;三年&quot;&gt;三年&lt;/h1&gt;
+&lt;p&gt;很多人都说，程序员三年是一个转折点，从目前附近的朋友了解到的情况，似乎的确是这样的。我打算给自己立flag，距离自己三年，还差大概一年二个多月的样子，学习语言上，应该不再会被别的分心，专心的好好搞一下C，能读读源码的水平吧，基础上，希望半年内把«http权威指南»和«深入理解计算机系统»读完吧，今年一定填完上心留下的坑，希望到了三年的时候去BAT面试的自己，依旧能因为自身的水平，而保持过往面试的从容和自信，不留遗憾。&lt;/p&gt;
+</description>
+        <pubDate>Sun, 18 Mar 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/03/18/2018/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/03/18/2018/</guid>
+        
+        <category>杂谈</category>
+        
+        
+      </item>
     
       <item>
         <title>用Swift打造一个轻量级POP的网络请求库</title>
@@ -975,49 +1007,6 @@ $ rm Package.resolved
         <category>问题随笔</category>
         
         <category>iOS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Perfect-v2版本服务器升级v3</title>
-        <description>&lt;p&gt;Perfect在11号的时候就发布了v3版本，v3版本开始支持swift 4，今天正好有空，把Perfect升级了一下，顺便写了个脚本方便集成环境，如果不清楚这个脚本是干嘛的，可以看下我之前的文章&lt;a href=&quot;http://www.jianshu.com/p/fc4971b72737&quot;&gt;如何在阿里云上部署Perfect服务器
-&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;apt-get install make git clang libicu-dev libmysqlclient-dev libpq-dev sqlite3 libsqlite3-dev apache2-dev pkg-config libssl-dev libsasl2-dev libcurl4-openssl-dev uuid-dev wget
-&lt;span class=&quot;c&quot;&gt;# 在lib下建立swift文件夹，将工具链放入文件夹中&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkdir /lib/swift
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /lib/swift
-&lt;span class=&quot;c&quot;&gt;# 下载4.0工具链&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget  https://swift.org/builds/swift-4.0-release/ubuntu1604/swift-4.0-RELEASE/swift-4.0-RELEASE-ubuntu16.04.tar.gz
-&lt;span class=&quot;c&quot;&gt;# 下载签名&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget  https://swift.org/builds/swift-4.0-release/ubuntu1604/swift-4.0-RELEASE/swift-4.0-RELEASE-ubuntu16.04.tar.gz.sig
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget &lt;span class=&quot;nt&quot;&gt;-q&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; - https://swift.org/keys/all-keys.asc |  gpg &lt;span class=&quot;nt&quot;&gt;--import&lt;/span&gt; -
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gpg &lt;span class=&quot;nt&quot;&gt;--keyserver&lt;/span&gt; hkp://pool.sks-keyservers.net &lt;span class=&quot;nt&quot;&gt;--refresh-keys&lt;/span&gt; Swift
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gpg &lt;span class=&quot;nt&quot;&gt;--verify&lt;/span&gt; swift-4.0-RELEASE-ubuntu16.04.tar.gz.sig
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;tar &lt;/span&gt;xzf swift-4.0-RELEASE-ubuntu16.04.tar.gz
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;这些所有完成之后，设置系统变量&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ vim /etc/profile
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;在&lt;code class=&quot;highlighter-rouge&quot;&gt;profile&lt;/code&gt;最后一行写上
-&lt;code class=&quot;highlighter-rouge&quot;&gt;export PATH=/lib/swift/swift-4.0-RELEASE-ubuntu16.04/usr/bin:$PATH&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;esc
-$ :wq
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;设置完成之后需要重启服务器之后才会生效
-&lt;code class=&quot;highlighter-rouge&quot;&gt;$ reboot&lt;/code&gt;
-上面的都完成之后去编译之前的服务器代码，会发现报错，因为之前的配置是&lt;code class=&quot;highlighter-rouge&quot;&gt;majorVersion:2&lt;/code&gt;，需要修改成&lt;code class=&quot;highlighter-rouge&quot;&gt;majorVersion:3&lt;/code&gt;
-&lt;img src=&quot;http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/4AFAF1D2-EB80-4CFB-9A46-B4439EE8A96B.png&quot; alt=&quot;&quot; /&gt;
-如果你之前用的数据库是&lt;code class=&quot;highlighter-rouge&quot;&gt;Perfect-MySQL&lt;/code&gt;，还需要将以前导入的库名修改，在Perfect v2，用的是&lt;code class=&quot;highlighter-rouge&quot;&gt;import MySQL&lt;/code&gt;,现在改成了&lt;code class=&quot;highlighter-rouge&quot;&gt;import PerfectMySQL&lt;/code&gt;&lt;/p&gt;
-</description>
-        <pubDate>Thu, 19 Oct 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/10/19/Perfect-v2%E7%89%88%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%87%E7%BA%A7v3/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/10/19/Perfect-v2%E7%89%88%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%87%E7%BA%A7v3/</guid>
-        
-        <category>Swift</category>
-        
-        <category>Perfect-Server</category>
         
         
       </item>
