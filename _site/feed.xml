@@ -5,8 +5,8 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 18 Mar 2018 09:56:03 +0800</pubDate>
-    <lastBuildDate>Sun, 18 Mar 2018 09:56:03 +0800</lastBuildDate>
+    <pubDate>Tue, 20 Mar 2018 15:37:59 +0800</pubDate>
+    <lastBuildDate>Tue, 20 Mar 2018 15:37:59 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
@@ -282,7 +282,10 @@ public protocol PetRequest : PSea {
     
       <item>
         <title>Swift高阶函数的使用</title>
-        <description>&lt;h2 id=&quot;本文内容基于swift-4&quot;&gt;本文内容基于Swift 4&lt;/h2&gt;
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;本文内容基于Swift 4&lt;/p&gt;
+&lt;/blockquote&gt;
+
 &lt;p&gt;在读《Swift进阶》的时候发现,Swift提供了很多内置的高阶函数用于数组变形，使用高阶函数最大优势在于，用更少量的代码去解决问题。&lt;/p&gt;
 &lt;h1 id=&quot;map&quot;&gt;map&lt;/h1&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;let a = [1,2,3,4,5,6]
