@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>又大一岁，先聊聊编程，再聊聊生活，最后再聊回编程 - fidetro | FoolishTalk Blog</title>
+    <title>引起懒加载多次的问题思考 - fidetro | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/2017/10/14/%E5%8F%88%E5%A4%A7%E4%B8%80%E5%B2%81-%E5%85%88%E8%81%8A%E8%81%8A%E7%BC%96%E7%A8%8B-%E5%86%8D%E8%81%8A%E8%81%8A%E7%94%9F%E6%B4%BB-%E6%9C%80%E5%90%8E%E5%86%8D%E8%81%8A%E5%9B%9E%E7%BC%96%E7%A8%8B/">
+    <link rel="canonical" href="http://localhost:4000/2018/03/18/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -154,12 +154,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-sea.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-old.jpg')
+        background-image: url('/img/post-bg-sea.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -169,15 +169,19 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Code-Life" title="Code-Life">Code-Life</a>
+                        <a class="tag" href="/tags/#问题随笔" title="问题随笔">问题随笔</a>
+                        
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
                         
                     </div>
-                    <h1>又大一岁，先聊聊编程，再聊聊生活，最后再聊回编程</h1>
+                    <h1>引起懒加载多次的问题思考</h1>
                     
                     
-                    <h2 class="subheading">生活</h2>
+                    <h2 class="subheading">iOS，Swift，Tips，Lazy</h2>
                     
-                    <span class="meta">Posted by Fidetro on October 14, 2017</span>
+                    <span class="meta">Posted by Fidetro on March 18, 2018</span>
                 </div>
             </div>
         </div>
@@ -194,11 +198,62 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>算起来已经23岁了，iOS开发1年5个月了。<del>在上一间公司加班加到曾经一度认为自己已经24-25岁，开发了2年半。</del>
-现在回想起来，从2016年5月3日开始，我已经是一名iOS开发了，从那时候每天朝9晚6的工作，变成了到后来朝9晚8，晚9，晚10…偶尔晚到凌晨1点的工作，我想现在每天编程的时间应该是在10-12小时左右吧，如果把睡觉的时间去掉，平时coding的时间都要比生活的时间长，很庆幸自己是个热爱编程的人，在过去的一年里，我特别的执着于提升自己的编程水平，现在看来，这一年的提升还算满意，一个人在开发路上摸索碰了很多璧，但是也弄了很多很有意思的东西，<a href="https://github.com/Fidetro/FFDB">FFDB</a>应该是现在自己主力上维护的一个东西，虽然没什么人用233主要是一些以前同事在用，不过觉得ORM这个想法还是很nice的。我还记得开发FFDB2.0到3.0的那段时间，加班每天都是11-12点左右，但是回家了又很想重构到3.0（3.0是架构上很大的改动， 然后导致那一个星期都是3，4点，每天7点多又起床。。想想就觉得当时很疯狂。<br />
-生活上，过的很简单，编程睡觉编程睡觉，在今年3月份的时候曾经有过一段时间改变，那时候不知道怎么的，很想养一只猫，我觉得猫是一些比较独立的动物，当时就这么养了，刚养的时候还是很麻烦，怕他无聊，怕他到处大小便，怕他饿坏，后来还有了猫藓，而且那段时间加班加的很严重，周末早上他带看完病，下午又得去公司加班，连续上了3星期，特别是带了头套之后，当时猫太小，带着头套吃不了东西，每天很早起来喂他吃完，中午一下班就跑回家脱了头套看他吃饱了，又回公司，最后猫藓好了，猫也长大了，然后送了给高中的一个朋友。因为发现当时公司的加班情况，真的没有办法，太累了。<br />
-送完猫走之后，就想出去走走了，看看外边的世界，在外包做久了，感觉自己更加像是机器人，正好遇上@swift大会在深圳，见到了很多厉害的人，意识到自己的多么的渺小，但是更加的充满斗志。记得在上年，希望自己能开发个swift的app，虽然至今没有用swift开发过，刚好也应该算是碰上swift-server火的时候吧，平时的时间转而大部分花在开发perfect-server上，也因为这个，跟服务器搭边的前端呀，linux的一些常用的东西，都学了点，写了点html、css、js、shell，也顺便用swift写了swift的FFDB，摆脱了OC中的继承，转而用协议解决，挺满足的（尽管还是挺多没暴露的问题<br />
-今年感觉想要的想学的都有了，想想明年，也没有什么别的奢望了，感觉目前自己的水平不像以前一样提升的能快起来了，学的东西多，用起来学起来也容易乱，明年的话，要么会投入学细目前的领域，要么可能还是会再去把c捡起来吧，到时候再说吧。</p>
+				<blockquote>
+  <p>懒加载是为了保证属性只会初始化一次，同时在没有使用时，节能内存而使用的。苹果也非常推荐我们使用。但是今天在使用的时候，发现居然会懒加载了2次，为了更容易让别人看懂，我精炼了以下的代码，更好解释为什么会出现懒加载2次的情况。<br />
+```Swift
+class BViewController: UIViewController {</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lazy var bgView: UIView = {
+    var bgView = UIView()
+    view.addSubview(bgView)
+    print(bgView)
+    return bgView
+}()
+
+init(color :UIColor) {
+    super.init(nibName: nil, bundle: nil)
+    bgView.backgroundColor = color
+}
+
+required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+}
+
+override func viewDidLoad() {
+    super.viewDidLoad()
+    bgView.frame = view.frame
+    
+} } ```  
+</code></pre></div></div>
+
+<p>假设这时候AController通过<code class="highlighter-rouge">init(color :UIColor)</code>调用BController push进来</p>
+<pre><code class="language-Swift">        let bvc = BViewController(color: .red)
+        present(bvc, animated: true, completion: nil)
+</code></pre>
+<p>先来思考一下，bvc会是什么颜色？</p>
+
+<blockquote>
+  <p>答案是：黑色的(友情提示：Controller没有设置View颜色的时候，默认黑色)</p>
+</blockquote>
+
+<p>这时候看一下打印信息：</p>
+<pre><code class="language-LLVM">&lt;UIView: 0x7f97e0602fa0; frame = (0 0; 0 0); layer = &lt;CALayer: 0x60000022c2e0&gt;&gt;
+&lt;UIView: 0x7f97e06098b0; frame = (0 0; 0 0); layer = &lt;CALayer: 0x60000022be60&gt;&gt;
+
+</code></pre>
+<p>原来是因为bgView进行了两次懒加载，先讲下怎么解决这个问题，后面会详细分析原因，引起这个问题的原因其实就是因为这一行<code class="highlighter-rouge">view.addSubview(bgView)</code>,此时把<code class="highlighter-rouge">view.addSubview(bgView)</code>放到<code class="highlighter-rouge">viewDidLoad()</code>再次运行，打印信息如下：</p>
+<pre><code class="language-LLVM">&lt;UIView: 0x7fb94ac0e6b0; frame = (0 0; 0 0); layer = &lt;CALayer: 0x604000224020&gt;&gt;
+</code></pre>
+<p>问题解决！<br />
+为了方便解释，我特地画了个图来解释第一次代码的生命周期：<br />
+<img src="https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/2018-3-21-lazy-1.png" alt="" /></p>
+
+<p>换到第二个方式之后，就简单多了：</p>
+
+<p><img src="https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/2018-3-21-lazy-2.png" alt="" /></p>
+
+<p>从这个问题，可以猜测Controller的view在生成的时候就会触发<code class="highlighter-rouge">viewDidLoad</code>,为了避免出现这样的问题，还是应该尽量少在Controller的初始化方法里进行操作。</p>
 
 
                 <hr>
@@ -226,13 +281,9 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/10/07/iPhoneX%E5%92%8CiOS-11%E7%9A%84%E9%80%82%E9%85%8D%E4%BD%A0%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/" data-toggle="tooltip" data-placement="top" title="iPhoneX和iOS-11的适配你可能会踩到的坑">&larr; Previous Post</a>
+                        <a href="/2018/03/18/2018/" data-toggle="tooltip" data-placement="top" title="2018">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/10/19/Perfect-v2%E7%89%88%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%87%E7%BA%A7v3/" data-toggle="tooltip" data-placement="top" title="Perfect-v2版本服务器升级v3">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -343,8 +394,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2017/10/14/又大一岁，先聊聊编程，再聊聊生活，最后再聊回编程";
-    var disqus_url = "http://localhost:4000/2017/10/14/%E5%8F%88%E5%A4%A7%E4%B8%80%E5%B2%81-%E5%85%88%E8%81%8A%E8%81%8A%E7%BC%96%E7%A8%8B-%E5%86%8D%E8%81%8A%E8%81%8A%E7%94%9F%E6%B4%BB-%E6%9C%80%E5%90%8E%E5%86%8D%E8%81%8A%E5%9B%9E%E7%BC%96%E7%A8%8B/";
+    var disqus_identifier = "/2018/03/18/引起懒加载多次的问题思考";
+    var disqus_url = "http://localhost:4000/2018/03/18/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

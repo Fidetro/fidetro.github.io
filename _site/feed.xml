@@ -5,9 +5,81 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 21 Mar 2018 09:03:57 +0800</pubDate>
-    <lastBuildDate>Wed, 21 Mar 2018 09:03:57 +0800</lastBuildDate>
+    <pubDate>Wed, 21 Mar 2018 11:30:18 +0800</pubDate>
+    <lastBuildDate>Wed, 21 Mar 2018 11:30:18 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
+    
+      <item>
+        <title>引起懒加载多次的问题思考</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;懒加载是为了保证属性只会初始化一次，同时在没有使用时，节能内存而使用的。苹果也非常推荐我们使用。但是今天在使用的时候，发现居然会懒加载了2次，为了更容易让别人看懂，我精炼了以下的代码，更好解释为什么会出现懒加载2次的情况。&lt;br /&gt;
+```Swift
+class BViewController: UIViewController {&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lazy var bgView: UIView = {
+    var bgView = UIView()
+    view.addSubview(bgView)
+    print(bgView)
+    return bgView
+}()
+
+init(color :UIColor) {
+    super.init(nibName: nil, bundle: nil)
+    bgView.backgroundColor = color
+}
+
+required init?(coder aDecoder: NSCoder) {
+    fatalError(&quot;init(coder:) has not been implemented&quot;)
+}
+
+override func viewDidLoad() {
+    super.viewDidLoad()
+    bgView.frame = view.frame
+    
+} } ```  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;假设这时候AController通过&lt;code class=&quot;highlighter-rouge&quot;&gt;init(color :UIColor)&lt;/code&gt;调用BController push进来&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;        let bvc = BViewController(color: .red)
+        present(bvc, animated: true, completion: nil)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;先来思考一下，bvc会是什么颜色？&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;答案是：黑色的(友情提示：Controller没有设置View颜色的时候，默认黑色)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;这时候看一下打印信息：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-LLVM&quot;&gt;&amp;lt;UIView: 0x7f97e0602fa0; frame = (0 0; 0 0); layer = &amp;lt;CALayer: 0x60000022c2e0&amp;gt;&amp;gt;
+&amp;lt;UIView: 0x7f97e06098b0; frame = (0 0; 0 0); layer = &amp;lt;CALayer: 0x60000022be60&amp;gt;&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;原来是因为bgView进行了两次懒加载，先讲下怎么解决这个问题，后面会详细分析原因，引起这个问题的原因其实就是因为这一行&lt;code class=&quot;highlighter-rouge&quot;&gt;view.addSubview(bgView)&lt;/code&gt;,此时把&lt;code class=&quot;highlighter-rouge&quot;&gt;view.addSubview(bgView)&lt;/code&gt;放到&lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad()&lt;/code&gt;再次运行，打印信息如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-LLVM&quot;&gt;&amp;lt;UIView: 0x7fb94ac0e6b0; frame = (0 0; 0 0); layer = &amp;lt;CALayer: 0x604000224020&amp;gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;问题解决！&lt;br /&gt;
+为了方便解释，我特地画了个图来解释第一次代码的生命周期：&lt;br /&gt;
+&lt;img src=&quot;https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/2018-3-21-lazy-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;换到第二个方式之后，就简单多了：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/2018-3-21-lazy-2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;从这个问题，可以猜测Controller的view在生成的时候就会触发&lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt;,为了避免出现这样的问题，还是应该尽量少在Controller的初始化方法里进行操作。&lt;/p&gt;
+</description>
+        <pubDate>Sun, 18 Mar 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/03/18/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/03/18/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/</guid>
+        
+        <category>问题随笔</category>
+        
+        <category>iOS</category>
+        
+        <category>Swift</category>
+        
+        
+      </item>
     
       <item>
         <title>2018</title>
@@ -983,31 +1055,6 @@ $ rm Package.resolved
         <guid isPermaLink="true">http://localhost:4000/2017/10/22/%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%81%9ASwift-Package-Manager/</guid>
         
         <category>Swift</category>
-        
-        <category>iOS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Xcode判断编译环境</title>
-        <description>&lt;p&gt;有个需要区分是命令行的编译环境还是iOS的环境，这种情况下我用了&lt;code class=&quot;highlighter-rouge&quot;&gt;__APPLE__&lt;/code&gt;  、&lt;code class=&quot;highlighter-rouge&quot;&gt;TARGET_IPHONE_SIMULATOR&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;TARGET_OS_IPHONE&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;TARGET_OS_MAC&lt;/code&gt;，居然都没判断进去iOS的环境？最后用了一个没怎么见过的宏&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#if os(iOS)
-#elseif os(Linux)//这个也可以判断是在Ubuntu环境
-#elseif os(macOS)
-#elseif os(watchOS)
-#elseif os(tvOS)
-#elseif os(Linux)
-#else
-#endif
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;这种情况测试后发现，用swift&lt;code class=&quot;highlighter-rouge&quot;&gt;__APPLE__&lt;/code&gt;会没法判断，但是oc是没问题的&lt;/p&gt;
-</description>
-        <pubDate>Sat, 21 Oct 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/10/21/Xcode%E5%88%A4%E6%96%AD%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/10/21/Xcode%E5%88%A4%E6%96%AD%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/</guid>
-        
-        <category>问题随笔</category>
         
         <category>iOS</category>
         
