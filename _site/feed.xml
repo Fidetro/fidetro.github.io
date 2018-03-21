@@ -5,40 +5,41 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 21 Mar 2018 11:30:18 +0800</pubDate>
-    <lastBuildDate>Wed, 21 Mar 2018 11:30:18 +0800</lastBuildDate>
+    <pubDate>Wed, 21 Mar 2018 11:32:18 +0800</pubDate>
+    <lastBuildDate>Wed, 21 Mar 2018 11:32:18 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
         <title>引起懒加载多次的问题思考</title>
         <description>&lt;blockquote&gt;
-  &lt;p&gt;懒加载是为了保证属性只会初始化一次，同时在没有使用时，节能内存而使用的。苹果也非常推荐我们使用。但是今天在使用的时候，发现居然会懒加载了2次，为了更容易让别人看懂，我精炼了以下的代码，更好解释为什么会出现懒加载2次的情况。&lt;br /&gt;
-```Swift
-class BViewController: UIViewController {&lt;/p&gt;
+  &lt;p&gt;懒加载是为了保证属性只会初始化一次，同时在没有使用时，节能内存而使用的。苹果也非常推荐我们使用。但是今天在使用的时候，发现居然会懒加载了2次，为了更容易让别人看懂，我精炼了以下的代码，更好解释为什么会出现懒加载2次的情况。&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lazy var bgView: UIView = {
-    var bgView = UIView()
-    view.addSubview(bgView)
-    print(bgView)
-    return bgView
-}()
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;class BViewController: UIViewController {
 
-init(color :UIColor) {
-    super.init(nibName: nil, bundle: nil)
-    bgView.backgroundColor = color
-}
-
-required init?(coder aDecoder: NSCoder) {
-    fatalError(&quot;init(coder:) has not been implemented&quot;)
-}
-
-override func viewDidLoad() {
-    super.viewDidLoad()
-    bgView.frame = view.frame
+    lazy var bgView: UIView = {
+        var bgView = UIView()
+        view.addSubview(bgView)
+        print(bgView)
+        return bgView
+    }()
     
-} } ```  
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+    init(color :UIColor) {
+        super.init(nibName: nil, bundle: nil)
+        bgView.backgroundColor = color
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError(&quot;init(coder:) has not been implemented&quot;)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        bgView.frame = view.frame
+        
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;假设这时候AController通过&lt;code class=&quot;highlighter-rouge&quot;&gt;init(color :UIColor)&lt;/code&gt;调用BController push进来&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;        let bvc = BViewController(color: .red)
