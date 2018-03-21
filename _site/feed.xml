@@ -5,8 +5,8 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 21 Mar 2018 11:32:18 +0800</pubDate>
-    <lastBuildDate>Wed, 21 Mar 2018 11:32:18 +0800</lastBuildDate>
+    <pubDate>Wed, 21 Mar 2018 12:44:28 +0800</pubDate>
+    <lastBuildDate>Wed, 21 Mar 2018 12:44:28 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
@@ -69,9 +69,9 @@
 
 &lt;p&gt;从这个问题，可以猜测Controller的view在生成的时候就会触发&lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt;,为了避免出现这样的问题，还是应该尽量少在Controller的初始化方法里进行操作。&lt;/p&gt;
 </description>
-        <pubDate>Sun, 18 Mar 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/03/18/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/03/18/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/</guid>
+        <pubDate>Wed, 21 Mar 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/03/21/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/03/21/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/</guid>
         
         <category>问题随笔</category>
         
