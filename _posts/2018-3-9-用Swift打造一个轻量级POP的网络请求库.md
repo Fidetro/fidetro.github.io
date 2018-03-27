@@ -101,10 +101,11 @@ public protocol PSea: class {
 ```
 `    func complete(_ completionHandler: @escaping ((DataResponse<Any>) -> ()))`是和`Alamofire`接触，实现请求的方法
 ```Swift
-    func successParse(response:DataResponse<Any>)
-    func errorParse(response:DataResponse<Any>)
-    func failureParse(response:DataResponse<Any>)
-```
+    func successParse(response: DataResponse<Any>)
+    func errorParse(response: DataResponse<Any>)
+    func failureParse(response:DataResponse<Any>,error: Error)
+ ```  
+
 这三个是`protocol`中的接口，需要遵循`PSea`的类去解析  
 整个`PSea`目前100行代码不到，因为`PSea`只提供了把`Alamofire`的用法转成的POP，具体涉及业务层是需要通过遵循`PSea`再衍生出一个业务类，还是废话少说，上代码。
 
@@ -174,15 +175,15 @@ extension PetRequest {
         }
     }
     //网络错误的解析
-    func failureParse(response:DataResponse<Any>) {
+    func failureParse(response: DataResponse<Any>, error: Error) {
         guard let _ = response.result.value as? [String:Any] else{
-                if let handler = self.failureHandler {
-                    handler(response,response.request,response.result.error)
-                }else{
-                    //不处理的时候会提示
-                    SVProgressHUD.showError(withStatus: "网络连接超时")
-                }
-                return
+            if let handler = self.failureHandler {
+                handler(response,error)
+            }else{
+                //TODO: 提示请求超时
+                SVProgressHUD.showError(withStatus: "网络连接超时")
+            }
+            return
         }
     }
 }
@@ -232,5 +233,29 @@ class LoginApi: PetRequest {
         LoginApi().request().success { (_, value) in
             
             }
+```  
+
+另外如果需要将成功的结果返回的时候转成对象，
+首先在处理
+```Swift
+func successParse(response: DataResponse<Any>) {
+           guard let value = response.result.value as? [String:Any] else{
+                return
+        }
+    //经过处理一系列结果
+    //...
+    //...
+    let modelJSON =  //...需要转换成对象的合法JSON字典
+        if let handler = self.successHandler {
+            handler(modelJSON,value)
+        }
+}
 ```
+然后可以写成这样:
+```Swift
+ListApi().request().success(ListModel.self) { (model,value) in
+
+}
+```  
+
 

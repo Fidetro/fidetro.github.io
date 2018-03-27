@@ -5,8 +5,8 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 21 Mar 2018 12:44:28 +0800</pubDate>
-    <lastBuildDate>Wed, 21 Mar 2018 12:44:28 +0800</lastBuildDate>
+    <pubDate>Tue, 27 Mar 2018 14:24:46 +0800</pubDate>
+    <lastBuildDate>Tue, 27 Mar 2018 14:24:46 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
@@ -211,10 +211,11 @@ func encoding() -&amp;gt; ParameterEncoding&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    func complete(_ completionHandler: @escaping ((DataResponse&amp;lt;Any&amp;gt;) -&amp;gt; ()))
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;    func complete(_ completionHandler: @escaping ((DataResponse&amp;lt;Any&amp;gt;) -&amp;gt; ()))&lt;/code&gt;是和&lt;code class=&quot;highlighter-rouge&quot;&gt;Alamofire&lt;/code&gt;接触，实现请求的方法&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    func successParse(response:DataResponse&amp;lt;Any&amp;gt;)
-    func errorParse(response:DataResponse&amp;lt;Any&amp;gt;)
-    func failureParse(response:DataResponse&amp;lt;Any&amp;gt;)
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    func successParse(response: DataResponse&amp;lt;Any&amp;gt;)
+    func errorParse(response: DataResponse&amp;lt;Any&amp;gt;)
+    func failureParse(response:DataResponse&amp;lt;Any&amp;gt;,error: Error)
 &lt;/code&gt;&lt;/pre&gt;
+
 &lt;p&gt;这三个是&lt;code class=&quot;highlighter-rouge&quot;&gt;protocol&lt;/code&gt;中的接口，需要遵循&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;的类去解析&lt;br /&gt;
 整个&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;目前100行代码不到，因为&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;只提供了把&lt;code class=&quot;highlighter-rouge&quot;&gt;Alamofire&lt;/code&gt;的用法转成的POP，具体涉及业务层是需要通过遵循&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;再衍生出一个业务类，还是废话少说，上代码。&lt;/p&gt;
 
@@ -282,15 +283,15 @@ public protocol PetRequest : PSea {
         }
     }
     //网络错误的解析
-    func failureParse(response:DataResponse&amp;lt;Any&amp;gt;) {
+    func failureParse(response: DataResponse&amp;lt;Any&amp;gt;, error: Error) {
         guard let _ = response.result.value as? [String:Any] else{
-                if let handler = self.failureHandler {
-                    handler(response,response.request,response.result.error)
-                }else{
-                    //不处理的时候会提示
-                    SVProgressHUD.showError(withStatus: &quot;网络连接超时&quot;)
-                }
-                return
+            if let handler = self.failureHandler {
+                handler(response,error)
+            }else{
+                //TODO: 提示请求超时
+                SVProgressHUD.showError(withStatus: &quot;网络连接超时&quot;)
+            }
+            return
         }
     }
 }
@@ -339,6 +340,27 @@ public protocol PetRequest : PSea {
         LoginApi().request().success { (_, value) in
             
             }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;另外如果需要将成功的结果返回的时候转成对象，
+首先在处理&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;func successParse(response: DataResponse&amp;lt;Any&amp;gt;) {
+           guard let value = response.result.value as? [String:Any] else{
+                return
+        }
+    //经过处理一系列结果
+    //...
+    //...
+    let modelJSON =  //...需要转换成对象的合法JSON字典
+        if let handler = self.successHandler {
+            handler(modelJSON,value)
+        }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后可以写成这样:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;ListApi().request().success(ListModel.self) { (model,value) in
+
+}
 &lt;/code&gt;&lt;/pre&gt;
 
 </description>

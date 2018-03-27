@@ -291,10 +291,11 @@ func encoding() -&gt; ParameterEncoding</p>
 <pre><code class="language-Swift">    func complete(_ completionHandler: @escaping ((DataResponse&lt;Any&gt;) -&gt; ()))
 </code></pre>
 <p><code class="highlighter-rouge">    func complete(_ completionHandler: @escaping ((DataResponse&lt;Any&gt;) -&gt; ()))</code>是和<code class="highlighter-rouge">Alamofire</code>接触，实现请求的方法</p>
-<pre><code class="language-Swift">    func successParse(response:DataResponse&lt;Any&gt;)
-    func errorParse(response:DataResponse&lt;Any&gt;)
-    func failureParse(response:DataResponse&lt;Any&gt;)
+<pre><code class="language-Swift">    func successParse(response: DataResponse&lt;Any&gt;)
+    func errorParse(response: DataResponse&lt;Any&gt;)
+    func failureParse(response:DataResponse&lt;Any&gt;,error: Error)
 </code></pre>
+
 <p>这三个是<code class="highlighter-rouge">protocol</code>中的接口，需要遵循<code class="highlighter-rouge">PSea</code>的类去解析<br />
 整个<code class="highlighter-rouge">PSea</code>目前100行代码不到，因为<code class="highlighter-rouge">PSea</code>只提供了把<code class="highlighter-rouge">Alamofire</code>的用法转成的POP，具体涉及业务层是需要通过遵循<code class="highlighter-rouge">PSea</code>再衍生出一个业务类，还是废话少说，上代码。</p>
 
@@ -362,15 +363,15 @@ public protocol PetRequest : PSea {
         }
     }
     //网络错误的解析
-    func failureParse(response:DataResponse&lt;Any&gt;) {
+    func failureParse(response: DataResponse&lt;Any&gt;, error: Error) {
         guard let _ = response.result.value as? [String:Any] else{
-                if let handler = self.failureHandler {
-                    handler(response,response.request,response.result.error)
-                }else{
-                    //不处理的时候会提示
-                    SVProgressHUD.showError(withStatus: "网络连接超时")
-                }
-                return
+            if let handler = self.failureHandler {
+                handler(response,error)
+            }else{
+                //TODO: 提示请求超时
+                SVProgressHUD.showError(withStatus: "网络连接超时")
+            }
+            return
         }
     }
 }
@@ -419,6 +420,27 @@ public protocol PetRequest : PSea {
         LoginApi().request().success { (_, value) in
             
             }
+</code></pre>
+
+<p>另外如果需要将成功的结果返回的时候转成对象，
+首先在处理</p>
+<pre><code class="language-Swift">func successParse(response: DataResponse&lt;Any&gt;) {
+           guard let value = response.result.value as? [String:Any] else{
+                return
+        }
+    //经过处理一系列结果
+    //...
+    //...
+    let modelJSON =  //...需要转换成对象的合法JSON字典
+        if let handler = self.successHandler {
+            handler(modelJSON,value)
+        }
+}
+</code></pre>
+<p>然后可以写成这样:</p>
+<pre><code class="language-Swift">ListApi().request().success(ListModel.self) { (model,value) in
+
+}
 </code></pre>
 
 
