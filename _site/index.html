@@ -221,12 +221,12 @@ SwiftFFDB
         <div class="post-content-preview">
             我从Objective-C转到Swift已经有好些时间了，Swift起码在iOS开发这块，开源组件已经很完善，为什么还要再造轮子呢？
 
-  目的只有一个，为了简化对业务层的操作。
+  目的只有一个，为了简化对业务层的操作。
 事实上，在写这篇文章的时候，这个轮子已经做好了,所以来聊聊他做了什么：
 在Objective-C时候我所遇到很多网络层都是这样的结构:
    ______________
 |              |
-| A...
+| AF...
         </div>
     </a>
     <p class="post-meta">
@@ -254,10 +254,10 @@ SwiftFFDB
 map
 let a = [1,2,3,4,5,6]
 
-如果要把这个数组中的元素每个都+1，按照以前的做法
+如果要把这个数组中的元素每个都+1，按照以前的做法
 var b = [Int]()
     for ele in a {
-        b.append(ele...
+        b.append(ele+1...
         </div>
     </a>
     <p class="post-meta">
@@ -277,13 +277,13 @@ var b = [Int]()
         </h3>
         
         <div class="post-content-preview">
-            在使用AVCaptureSession自定义相机的时候，发现无论横竖拍出来，照片的方向总是不对，参考了下面的两个链接的方法依旧行不通，然后自己想了个办法去解决。
+            在使用AVCaptureSession自定义相机的时候，发现无论横竖拍出来，照片的方向总是不对，参考了下面的两个链接的方法依旧行不通，然后自己想了个办法去解决。
 
 is-uiimage-imagewithciimagescaleorientation-broken-on-ios10
 
 how-to-rotate-a-uiimage-90-degrees
 
-通过使用重力加速计判断手机旋转的...
+通过使用重力加速计判断手机旋转的方向...
         </div>
     </a>
     <p class="post-meta">
@@ -303,13 +303,12 @@ how-to-rotate-a-uiimage-90-degrees
         </h3>
         
         <div class="post-content-preview">
-            
-在Objective-C中我们可以使调substringWithRange的方法达到截取字符串的效果
+            在Objective-C中我们可以使调substringWithRange的方法达到截取字符串的效果
 
 [@"123" substringWithRange:NSMakeRange(1, 2)];
 
 
-在Swift 4之前，也是有类似的方法"ss".substring(with: &lt;Range&lt;String.Index&gt;&gt;)  ,但是在Swift 4之后被弃用了...
+在Swift 4之前，也是有类似的方法"ss".substring(with: &lt;Range&lt;String.Index&gt;&gt;)  ,但是在Swift 4之后被弃用了，我们...
         </div>
     </a>
     <p class="post-meta">

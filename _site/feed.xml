@@ -5,8 +5,8 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 30 Mar 2018 14:17:03 +0800</pubDate>
-    <lastBuildDate>Fri, 30 Mar 2018 14:17:03 +0800</lastBuildDate>
+    <pubDate>Fri, 30 Mar 2018 14:28:29 +0800</pubDate>
+    <lastBuildDate>Fri, 30 Mar 2018 14:28:29 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
@@ -92,10 +92,10 @@
 &lt;p&gt;在2017年的9月，从深圳来到了广州，脱离了无休止的加班，来到万表之后终于有时间做自己的事情了。&lt;/p&gt;
 
 &lt;h1 id=&quot;swiftffdb&quot;&gt;SwiftFFDB&lt;/h1&gt;
-&lt;p&gt;空闲下来之后，基本全身心的放在了&lt;a href=&quot;https://github.com/fidetro/swift-ffdb&quot;&gt;SwiftFFDB&lt;/a&gt;身上，在做&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;的时候也暴露出swift不少的缺点，不够完善的反射，协议没办法像继承一样在方法推断返回self类型等等。当然，优点更大于缺点，协议编程，函数编程，extension，这些都是&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;所没有的。在设计&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;的时候，看过安卓的&lt;a href=&quot;https://github.com/LitePalFramework/LitePal&quot;&gt;LitePal&lt;/a&gt;,由于&lt;code class=&quot;highlighter-rouge&quot;&gt;Swift&lt;/code&gt;语言本身就非常适合链式编程，所以在&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;底层的时候，就参考了&lt;code class=&quot;highlighter-rouge&quot;&gt;LitePal&lt;/code&gt;,通过SQL语句中的增删改查的类组成。其余用起来和原本的OC版本是差不多的，也算在前天把该写的单元测试也写完了，感觉稍微满意了，发布了1.x版本，回头一看才发现，距离第一个release的版本已经半年了，OC版的已经快一年了，虽然没有很多人使用，只是自己圈子内的朋友在用，维护了这么久的一个项目，怎么说呢，还是挺有意思的，从一个数据库白痴，到了现在的数据库小白，跟着自己的项目一起成长。&lt;/p&gt;
+&lt;p&gt;空闲下来之后，基本全身心的放在了&lt;a href=&quot;https://github.com/fidetro/swift-ffdb&quot;&gt;SwiftFFDB&lt;/a&gt;身上，在做&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;的时候也暴露出swift不少的缺点，不够完善的反射，协议没办法像继承一样在方法推断返回self类型等等。当然，优点更大于缺点，协议编程，函数编程，extension，这些都是&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;所没有的。在设计&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;的时候，看过安卓的&lt;a href=&quot;https://github.com/LitePalFramework/LitePal&quot;&gt;LitePal&lt;/a&gt;,由于&lt;code class=&quot;highlighter-rouge&quot;&gt;Swift&lt;/code&gt;语言本身就非常适合链式编程，所以在&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;底层的时候，就参考了&lt;code class=&quot;highlighter-rouge&quot;&gt;LitePal&lt;/code&gt;,通过SQL语句中的增删改查的类组成。其余用起来和原本的OC版本是差不多的，也算在前天把该写的单元测试也写完了，感觉稍微满意了，发布了1.x版本，回头一看才发现，距离第一个release的版本已经半年了，OC版的已经快一年了，虽然没有很多人使用，只是自己圈子内的朋友在用，维护了这么久的一个项目，怎么说呢，还是挺有意思的，从一个数据库白痴，到了现在的数据库小白，跟着自己的项目一起成长。&lt;/p&gt;
 
 &lt;h1 id=&quot;成长&quot;&gt;成长&lt;/h1&gt;
-&lt;p&gt;当了程序员之后，就觉得自己学习没有停过，可有效的，可持续的使用的知识在最近这段时间却很少，一开始我以为只是因为自己的学习又出现了疲倦期，然后找了个周末去了趟珠海，坐在海边看了2天海，浮躁的心思的确平稳了下去。可回到来没几天，还是没静下心来。&lt;/p&gt;
+&lt;p&gt;当了程序员之后，就觉得自己学习没有停过，可有效的，可持续的使用的知识在最近这段时间却很少，一开始我以为只是因为自己的学习又出现了疲倦期，然后找了个周末去了趟珠海，坐在海边看了2天海，浮躁的心思的确平稳了下去。可回到来没几天，还是没静下心来。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/IMG_3620%2820180121-092122%29.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -103,7 +103,7 @@
 有想法去学这些，我觉得挺好的，但是想法变得太快，这几件事情都让我明白一点，自己现在的基础知识是有多么的匮乏。&lt;/p&gt;
 
 &lt;h1 id=&quot;三年&quot;&gt;三年&lt;/h1&gt;
-&lt;p&gt;很多人都说，程序员三年是一个转折点，从目前附近的朋友了解到的情况，似乎的确是这样的。我打算给自己立flag，距离自己三年，还差大概一年二个多月的样子，学习语言上，应该不再会被别的分心，专心的好好搞一下C，能读读源码的水平吧，基础上，希望半年内把«http权威指南»和«深入理解计算机系统»读完吧，今年一定填完上心留下的坑，希望到了三年的时候去BAT面试的自己，依旧能因为自身的水平，而保持过往面试的从容和自信，不留遗憾。&lt;/p&gt;
+&lt;p&gt;很多人都说，程序员三年是一个转折点，从目前附近的朋友了解到的情况，似乎的确是这样的。我打算给自己立flag，距离自己三年，还差大概一年二个多月的样子，学习语言上，应该不再会被别的分心，专心的好好搞一下C，能读读源码的水平吧，基础上，希望半年内把«http权威指南»和«深入理解计算机系统»读完吧，今年一定填完上心留下的坑，希望到了三年的时候去BAT面试的自己，依旧能因为自身的水平，而保持过往面试的从容和自信，不留遗憾。&lt;/p&gt;
 </description>
         <pubDate>Sun, 18 Mar 2018 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2018/03/18/2018/</link>
@@ -118,7 +118,7 @@
         <title>用Swift打造一个轻量级POP的网络请求库</title>
         <description>&lt;p&gt;我从&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;转到&lt;code class=&quot;highlighter-rouge&quot;&gt;Swift&lt;/code&gt;已经有好些时间了，&lt;code class=&quot;highlighter-rouge&quot;&gt;Swift&lt;/code&gt;起码在iOS开发这块，开源组件已经很完善，为什么还要再造轮子呢？&lt;/p&gt;
 &lt;blockquote&gt;
-  &lt;p&gt;目的只有一个，为了简化对业务层的操作。&lt;br /&gt;
+  &lt;p&gt;目的只有一个，为了简化对业务层的操作。&lt;br /&gt;
 事实上，在写这篇文章的时候，这个&lt;a href=&quot;https://github.com/Fidetro/PSea&quot;&gt;轮子&lt;/a&gt;已经做好了,所以来聊聊他做了什么：&lt;br /&gt;
 在&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;时候我所遇到很多网络层都是这样的结构:&lt;/p&gt;
   &lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt; ______________
@@ -142,9 +142,9 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;然后APIManager只管请求，然后回调都在Controller上处理&lt;/p&gt;
+&lt;p&gt;然后APIManager只管请求，然后回调都在Controller上处理&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;successHanlder:^(NSDictonary *dict){
-//转模型
+//转模型
 Model *model = [Model jsonToModel:dict];
 if (model.errorCode == 0) {
     //数据加工
@@ -161,15 +161,15 @@ if (model.errorCode == 0) {
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;总结一下关于业务层能抽象出来的部分有哪些呢？&lt;/p&gt;
 &lt;ol&gt;
-  &lt;li&gt;判断数据是否正确&lt;/li&gt;
+  &lt;li&gt;判断数据是否正确&lt;/li&gt;
   &lt;li&gt;转成数据模型&lt;/li&gt;
-  &lt;li&gt;处理业务错误&lt;/li&gt;
+  &lt;li&gt;处理业务错误&lt;/li&gt;
   &lt;li&gt;错误提示&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;知道要解决的问题之后，剩下就是怎么去解决了，还在用&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;的时候，使用过&lt;code class=&quot;highlighter-rouge&quot;&gt;YTKNetwork&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;YTKNetwork&lt;/code&gt;是用继承解决的，但是&lt;code class=&quot;highlighter-rouge&quot;&gt;Swift&lt;/code&gt;中更推荐使用&lt;code class=&quot;highlighter-rouge&quot;&gt;protocol&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;extension&lt;/code&gt;这套组合拳来解决问题。&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;如果说是网络请求库可能不太准确，它更像是一种思想，它依赖&lt;code class=&quot;highlighter-rouge&quot;&gt;Alamofire&lt;/code&gt;,介于网络层和业务通用层之间的媒介。在这基础上，我给他增加了链式，让他更加Swifty一点。&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;如果说是网络请求库可能不太准确，它更像是一种思想，它依赖&lt;code class=&quot;highlighter-rouge&quot;&gt;Alamofire&lt;/code&gt;,介于网络层和业务通用层之间的媒介。在这基础上，我给他增加了链式，让他更加Swiftly一点。&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;
@@ -342,7 +342,7 @@ public protocol PetRequest : PSea {
             }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;另外如果需要将成功的结果返回的时候转成对象，
+&lt;p&gt;另外如果需要将成功的结果返回的时候转成对象，
 首先在处理&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;func successParse(response: DataResponse&amp;lt;Any&amp;gt;) {
            guard let value = response.result.value as? [String:Any] else{
@@ -385,7 +385,7 @@ public protocol PetRequest : PSea {
 &lt;h1 id=&quot;map&quot;&gt;map&lt;/h1&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;let a = [1,2,3,4,5,6]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果要把这个数组中的元素每个都+1，按照以前的做法&lt;/p&gt;
+&lt;p&gt;如果要把这个数组中的元素每个都+1，按照以前的做法&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;var b = [Int]()
     for ele in a {
         b.append(ele+1)
@@ -491,7 +491,7 @@ print(count)//28
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    let a = [1,2,3,4,3,6]
-    //按照3分割数组
+    //按照3分割数组
     let b =  a.split(separator: 3)
     print(b)//[ArraySlice([1, 2]), ArraySlice([4]), ArraySlice([6])]
 &lt;/code&gt;&lt;/pre&gt;
@@ -528,7 +528,7 @@ print(count)//28
     
       <item>
         <title>AVCaptureSession自定义相机获取的UIImage旋转无效</title>
-        <description>&lt;p&gt;在使用&lt;code class=&quot;highlighter-rouge&quot;&gt;AVCaptureSession&lt;/code&gt;自定义相机的时候，发现无论横竖拍出来，照片的方向总是不对，参考了下面的两个链接的方法依旧行不通，然后自己想了个办法去解决。&lt;/p&gt;
+        <description>&lt;p&gt;在使用&lt;code class=&quot;highlighter-rouge&quot;&gt;AVCaptureSession&lt;/code&gt;自定义相机的时候，发现无论横竖拍出来，照片的方向总是不对，参考了下面的两个链接的方法依旧行不通，然后自己想了个办法去解决。&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/39705993/is-uiimage-imagewithciimagescaleorientation-broken-on-ios10&quot;&gt;is-uiimage-imagewithciimagescaleorientation-broken-on-ios10&lt;/a&gt;&lt;/p&gt;
 
@@ -642,8 +642,7 @@ print(count)//28
     
       <item>
         <title>Swift-Tips String截取字符串</title>
-        <description>&lt;p&gt;
-在&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;中我们可以使调&lt;code class=&quot;highlighter-rouge&quot;&gt;substringWithRange&lt;/code&gt;的方法达到截取字符串的效果&lt;/p&gt;
+        <description>&lt;p&gt;在&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;中我们可以使调&lt;code class=&quot;highlighter-rouge&quot;&gt;substringWithRange&lt;/code&gt;的方法达到截取字符串的效果&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[@&quot;123&quot; substringWithRange:NSMakeRange(1, 2)];
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -759,17 +758,17 @@ print(&quot;12345678&quot;[100])  //nil
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1.随着版本更新，新的协议增加导致数据变得越来越庞大，接手的同学一脸懵逼;
 2.处理数据后，通知满天飞，甚至没有处理消息体直接丢;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;del&gt;对于第一个问题，我曾经有考虑过使用一门语言作出通用的解析库，硬件端、移动端、前端、后台如果需要解析这个数据，只需要传入传输层数据，返回的就是JSON对象这样的一个方案。想象中挺美好的，但是这样也会带来解析库的维护成本以及额外的文档，后来还是放弃了这个做法。&lt;/del&gt;&lt;br /&gt;
+&lt;p&gt;&lt;del&gt;对于第一个问题，我曾经有考虑过使用一门语言作出通用的解析库，硬件端、移动端、前端、后台如果需要解析这个数据，只需要传入传输层数据，返回的就是JSON对象这样的一个方案。想象中挺美好的，但是这样也会带来解析库的维护成本以及额外的文档，后来还是放弃了这个做法。&lt;/del&gt;&lt;br /&gt;
  在第一的问题上，最终还是老老实实的手动解析成model。&lt;br /&gt;
- 造成第二个问题，很大程度也是因为团队里没有约定很好的代码规范导致的。在当时，我还没有很深入的了解过AOP，选择的是在一开始处理完数据之后，会用另外一个model的block去接收，然后另外在controller去订阅，这种做法有个弊端就是代码量十分多，后来我了解到了&lt;code class=&quot;highlighter-rouge&quot;&gt;AOP&lt;/code&gt;之后，我强烈推荐使用&lt;code class=&quot;highlighter-rouge&quot;&gt;AOP&lt;/code&gt;去解决这个问题，这里用AOP好处是：&lt;/p&gt;
+ 造成第二个问题，很大程度也是因为团队里没有约定很好的代码规范导致的。在当时，我还没有很深入的了解过AOP，选择的是在一开始处理完数据之后，会用另外一个model的block去接收，然后另外在controller去订阅，这种做法有个弊端就是代码量十分多，后来我了解到了&lt;code class=&quot;highlighter-rouge&quot;&gt;AOP&lt;/code&gt;之后，我强烈推荐使用&lt;code class=&quot;highlighter-rouge&quot;&gt;AOP&lt;/code&gt;去解决这个问题，这里用AOP好处是：&lt;/p&gt;
 &lt;ol&gt;
-  &lt;li&gt;不需要再管理通知的监听和移除,也因此避免了通知带来的没有释放控制器的问题;&lt;/li&gt;
+  &lt;li&gt;不需要再管理通知的监听和移除,也因此避免了通知带来的没有释放控制器的问题;&lt;/li&gt;
   &lt;li&gt;通过&lt;code class=&quot;highlighter-rouge&quot;&gt;AOP&lt;/code&gt;，代码会变得更加整洁和少;&lt;br /&gt;
 空说无益，还是直接上图吧&lt;br /&gt;
 &lt;img src=&quot;http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/D45F4AE5-5D7F-4C98-9AB9-B26886FFC8FF.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AOP&lt;/code&gt;的框架，我看了网上也有很多，大部分是在&lt;a href=&quot;https://github.com/steipete/Aspects&quot;&gt;Aspects&lt;/a&gt;的基础上封装的，更推荐直接去使用&lt;code class=&quot;highlighter-rouge&quot;&gt;Aspects&lt;/code&gt;,像是一些发送队列，几秒内只接收一个，几秒内只处理最后一个这种需求，都比较方便，当然也用&lt;code class=&quot;highlighter-rouge&quot;&gt;RAC&lt;/code&gt;或者&lt;code class=&quot;highlighter-rouge&quot;&gt;RxSwift&lt;/code&gt;处理，见仁见智。&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AOP&lt;/code&gt;的框架，我看了网上也有很多，大部分是在&lt;a href=&quot;https://github.com/steipete/Aspects&quot;&gt;Aspects&lt;/a&gt;的基础上封装的，更推荐直接去使用&lt;code class=&quot;highlighter-rouge&quot;&gt;Aspects&lt;/code&gt;,像是一些发送队列，几秒内只接收一个，几秒内只处理最后一个这种需求，都比较方便，当然也用&lt;code class=&quot;highlighter-rouge&quot;&gt;RAC&lt;/code&gt;或者&lt;code class=&quot;highlighter-rouge&quot;&gt;RxSwift&lt;/code&gt;处理，见仁见智。&lt;/p&gt;
 
 &lt;p&gt;怕讲的太抽象，放一段使用&lt;code class=&quot;highlighter-rouge&quot;&gt;Aspects&lt;/code&gt;的伪代码：&lt;/p&gt;
 
@@ -786,7 +785,7 @@ print(&quot;12345678&quot;[100])  //nil
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Store的伪代码实现&lt;/p&gt;
+&lt;p&gt;Store的伪代码实现&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TStore&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;subscribe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;handler_block&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -800,7 +799,7 @@ print(&quot;12345678&quot;[100])  //nil
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;在Controller上，我们就只需要订阅Store的消息就可以了：&lt;/p&gt;
+&lt;p&gt;在Controller上，我们就只需要订阅Store的消息就可以了：&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ViewController&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;viewDidLoad&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
