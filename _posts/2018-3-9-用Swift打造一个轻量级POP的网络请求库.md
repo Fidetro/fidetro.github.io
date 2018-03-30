@@ -10,7 +10,7 @@ tags:
 - Swift
 ---
 我从`Objective-C`转到`Swift`已经有好些时间了，`Swift`起码在iOS开发这块，开源组件已经很完善，为什么还要再造轮子呢？  
-> 目的只有一个，为了简化对业务层的操作。  
+> 目的只有一个，为了简化对业务层的操作。  
 事实上，在写这篇文章的时候，这个[轮子](https://github.com/Fidetro/PSea)已经做好了,所以来聊聊他做了什么：  
 在`Objective-C`时候我所遇到很多网络层都是这样的结构:
 ```Objective-C
@@ -34,10 +34,10 @@ tags:
 |______________|        
 ```
 
-然后APIManager只管请求，然后回调都在Controller上处理
+然后APIManager只管请求，然后回调都在Controller上处理
 ```Objective-C
 successHanlder:^(NSDictonary *dict){
-//转模型
+//转模型
 Model *model = [Model jsonToModel:dict];
 if (model.errorCode == 0) {
     //数据加工
@@ -53,14 +53,14 @@ if (model.errorCode == 0) {
 
 ```
 总结一下关于业务层能抽象出来的部分有哪些呢？  
-1. 判断数据是否正确
+1. 判断数据是否正确
 2. 转成数据模型
-3. 处理业务错误
+3. 处理业务错误
 4. 错误提示  
 
 知道要解决的问题之后，剩下就是怎么去解决了，还在用`Objective-C`的时候，使用过`YTKNetwork`，`YTKNetwork`是用继承解决的，但是`Swift`中更推荐使用`protocol`和`extension`这套组合拳来解决问题。
 
-`PSea`如果说是网络请求库可能不太准确，它更像是一种思想，它依赖`Alamofire`,介于网络层和业务通用层之间的媒介。在这基础上，我给他增加了链式，让他更加Swifty一点。
+`PSea`如果说是网络请求库可能不太准确，它更像是一种思想，它依赖`Alamofire`,介于网络层和业务通用层之间的媒介。在这基础上，我给他增加了链式，让他更加Swiftly一点。
 
 1.  基本设置
 ```Swift
@@ -235,7 +235,7 @@ class LoginApi: PetRequest {
             }
 ```  
 
-另外如果需要将成功的结果返回的时候转成对象，
+另外如果需要将成功的结果返回的时候转成对象，
 首先在处理
 ```Swift
 func successParse(response: DataResponse<Any>) {

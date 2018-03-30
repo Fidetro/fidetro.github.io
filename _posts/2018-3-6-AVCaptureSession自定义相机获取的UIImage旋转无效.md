@@ -12,7 +12,7 @@ tags:
 
 
 
-在使用`AVCaptureSession`自定义相机的时候，发现无论横竖拍出来，照片的方向总是不对，参考了下面的两个链接的方法依旧行不通，然后自己想了个办法去解决。
+在使用`AVCaptureSession`自定义相机的时候，发现无论横竖拍出来，照片的方向总是不对，参考了下面的两个链接的方法依旧行不通，然后自己想了个办法去解决。
 
 [is-uiimage-imagewithciimagescaleorientation-broken-on-ios10](https://stackoverflow.com/questions/39705993/is-uiimage-imagewithciimagescaleorientation-broken-on-ios10)  
 
