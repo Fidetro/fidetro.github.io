@@ -8,7 +8,9 @@ header-img: "img/post-bg-old.jpg"
 tags:
 - Swift
 - iOS
----
+---  
+
+
 这个报错是在我写swift的FFDB时候遇到的，因为在做swift版的时候，考虑到SQL语句层是通用的，所以打算抽象出来复用在Perfect上，选择用结构体和协议的方式去做，在使用结构体的时候，发现会报错，用类是不会报这个错的。原因是这样：
 结构体中，func不可以改变self本身的成员变量，如果修改本身的成员变量，需要在func前加上`mutating`关键字
 ![1.png](http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/73AD1856-8075-4CFE-A530-7F3E0D547F06.png)
