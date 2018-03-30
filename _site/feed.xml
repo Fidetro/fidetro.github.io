@@ -5,8 +5,8 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 30 Mar 2018 14:28:29 +0800</pubDate>
-    <lastBuildDate>Fri, 30 Mar 2018 14:28:29 +0800</lastBuildDate>
+    <pubDate>Fri, 30 Mar 2018 15:11:16 +0800</pubDate>
+    <lastBuildDate>Fri, 30 Mar 2018 15:11:16 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
@@ -95,7 +95,7 @@
 &lt;p&gt;空闲下来之后，基本全身心的放在了&lt;a href=&quot;https://github.com/fidetro/swift-ffdb&quot;&gt;SwiftFFDB&lt;/a&gt;身上，在做&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;的时候也暴露出swift不少的缺点，不够完善的反射，协议没办法像继承一样在方法推断返回self类型等等。当然，优点更大于缺点，协议编程，函数编程，extension，这些都是&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;所没有的。在设计&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;的时候，看过安卓的&lt;a href=&quot;https://github.com/LitePalFramework/LitePal&quot;&gt;LitePal&lt;/a&gt;,由于&lt;code class=&quot;highlighter-rouge&quot;&gt;Swift&lt;/code&gt;语言本身就非常适合链式编程，所以在&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;底层的时候，就参考了&lt;code class=&quot;highlighter-rouge&quot;&gt;LitePal&lt;/code&gt;,通过SQL语句中的增删改查的类组成。其余用起来和原本的OC版本是差不多的，也算在前天把该写的单元测试也写完了，感觉稍微满意了，发布了1.x版本，回头一看才发现，距离第一个release的版本已经半年了，OC版的已经快一年了，虽然没有很多人使用，只是自己圈子内的朋友在用，维护了这么久的一个项目，怎么说呢，还是挺有意思的，从一个数据库白痴，到了现在的数据库小白，跟着自己的项目一起成长。&lt;/p&gt;
 
 &lt;h1 id=&quot;成长&quot;&gt;成长&lt;/h1&gt;
-&lt;p&gt;当了程序员之后，就觉得自己学习没有停过，可有效的，可持续的使用的知识在最近这段时间却很少，一开始我以为只是因为自己的学习又出现了疲倦期，然后找了个周末去了趟珠海，坐在海边看了2天海，浮躁的心思的确平稳了下去。可回到来没几天，还是没静下心来。&lt;/p&gt;
+&lt;p&gt;当了程序员之后，就觉得自己学习没有停过，可有效的，可持续的使用的知识在最近这段时间却很少，一开始我以为只是因为自己的学习又出现了疲倦期，然后找了个周末去了趟珠海，坐在海边看了2天海，浮躁的心思的确平稳了下去。可回到来没几天，还是没静下心来。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/IMG_3620%2820180121-092122%29.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -103,7 +103,7 @@
 有想法去学这些，我觉得挺好的，但是想法变得太快，这几件事情都让我明白一点，自己现在的基础知识是有多么的匮乏。&lt;/p&gt;
 
 &lt;h1 id=&quot;三年&quot;&gt;三年&lt;/h1&gt;
-&lt;p&gt;很多人都说，程序员三年是一个转折点，从目前附近的朋友了解到的情况，似乎的确是这样的。我打算给自己立flag，距离自己三年，还差大概一年二个多月的样子，学习语言上，应该不再会被别的分心，专心的好好搞一下C，能读读源码的水平吧，基础上，希望半年内把«http权威指南»和«深入理解计算机系统»读完吧，今年一定填完上心留下的坑，希望到了三年的时候去BAT面试的自己，依旧能因为自身的水平，而保持过往面试的从容和自信，不留遗憾。&lt;/p&gt;
+&lt;p&gt;很多人都说，程序员三年是一个转折点，从目前附近的朋友了解到的情况，似乎的确是这样的。我打算给自己立flag，距离自己三年，还差大概一年二个多月的样子，学习语言上，应该不再会被别的分心，专心的好好搞一下C，能读读源码的水平吧，基础上，希望半年内把«http权威指南»和«深入理解计算机系统»读完吧，今年一定填完上心留下的坑，希望到了三年的时候去BAT面试的自己，依旧能因为自身的水平，而保持过往面试的从容和自信，不留遗憾。&lt;/p&gt;
 </description>
         <pubDate>Sun, 18 Mar 2018 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2018/03/18/2018/</link>
@@ -405,7 +405,7 @@ public protocol PetRequest : PSea {
     print(b)//[2,3,4,5,6,7]
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h1 id=&quot;flatmap&quot;&gt;flatMap&lt;/h1&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;flatMap&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;map&lt;/code&gt;的用法很相像，通过对比两者的不难发现：&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;flatMap&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;map&lt;/code&gt;的用法很相像，通过对比两者的不难发现：&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;public func map&amp;lt;T&amp;gt;(_ transform: (Element) throws -&amp;gt; T) rethrows -&amp;gt; [T]
 
 public func flatMap(_ transform: (Element) throws -&amp;gt; String?) rethrows -&amp;gt; [String]
@@ -743,7 +743,7 @@ print(&quot;12345678&quot;[100])  //nil
 
 &lt;p&gt;为了下面的内容更好理解，避免和http请求的网络层混淆，我把这一层叫作&lt;code class=&quot;highlighter-rouge&quot;&gt;传输层&lt;/code&gt;。&lt;/p&gt;
 
-&lt;p&gt;在&lt;code class=&quot;highlighter-rouge&quot;&gt;网络层&lt;/code&gt;中，我们一般会根据业务对网络请求进行封装，避免重复写处理非正常结果时的代码，传输层中并不能像网络层一样能直接使用得到的数据，传输层中得到一般都是经过自定的协议包装加密过后的数据，而不像网络层使用JSON那么方便，抛开自定义的协议来讲，物联网中传输层最基本的内容都会由以下的组成：&lt;/p&gt;
+&lt;p&gt;在&lt;code class=&quot;highlighter-rouge&quot;&gt;网络层&lt;/code&gt;中，我们一般会根据业务对网络请求进行封装，避免重复写处理非正常结果时的代码，传输层中并不能像网络层一样能直接使用得到的数据，传输层中得到一般都是经过自定的协议包装加密过后的数据，而不像网络层使用JSON那么方便，抛开自定义的协议来讲，物联网中传输层最基本的内容都会由以下的组成：&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;传输层数据
 │
 ├────命令字(功能)
@@ -831,7 +831,7 @@ print(&quot;12345678&quot;[100])  //nil
       <item>
         <title>在UITableView中使用RunLoop遇到的坑</title>
         <description>&lt;blockquote&gt;
-  &lt;p&gt;在做Pet Day的时候，遇到一个这样的需求，假定&lt;code class=&quot;highlighter-rouge&quot;&gt;tableView&lt;/code&gt;中的section初始值为50,在往上或者往下的时候，需要通过计算得知更多的&lt;code class=&quot;highlighter-rouge&quot;&gt;dataSource&lt;/code&gt;&lt;/p&gt;
+  &lt;p&gt;在做Pet Day的时候，遇到一个这样的需求，假定&lt;code class=&quot;highlighter-rouge&quot;&gt;tableView&lt;/code&gt;中的section初始值为50,在往上或者往下的时候，需要通过计算得知更多的&lt;code class=&quot;highlighter-rouge&quot;&gt;dataSource&lt;/code&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;然后我一开始的做法，是在&lt;code class=&quot;highlighter-rouge&quot;&gt;- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;&lt;/code&gt;的方法在接近顶部或者接近底部的时候，进行计算&lt;/p&gt;
@@ -846,7 +846,7 @@ print(&quot;12345678&quot;[100])  //nil
     }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;hr /&gt;
-&lt;p&gt;&lt;strong&gt;但是，这样做会有问题&lt;/strong&gt;，在遇到向上刷新的时候，会多次调用&lt;code class=&quot;highlighter-rouge&quot;&gt;- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;&lt;/code&gt;的方法，导致数据突然增多。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;但是，这样做会有问题&lt;/strong&gt;，在遇到向上刷新的时候，会多次调用&lt;code class=&quot;highlighter-rouge&quot;&gt;- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;&lt;/code&gt;的方法，导致数据突然增多。&lt;/p&gt;
 
 &lt;p&gt;后来用定时器实现触发后0.5秒内拦截，代码如下：&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   guard share.operations.contains(tag) == false else {
@@ -870,8 +870,8 @@ print(&quot;12345678&quot;[100])  //nil
 …&lt;br /&gt;
 终于在停止刷新后，再往上刷，正常了&lt;/p&gt;
 
-&lt;p&gt;我自己的推测是因为tableView在刷新的过程中，tableView的刷新事件比定时器的事件先进，需要等刷新停止了，定时器才能执行&lt;br /&gt;
-然后换了另外一种实现方式就没问题了&lt;/p&gt;
+&lt;p&gt;我自己的推测是因为tableView在刷新的过程中，tableView的刷新事件比定时器的事件先进，需要等刷新停止了，定时器才能执行&lt;br /&gt;
+然后换了另外一种实现方式就没问题了&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;        
         guard share.operations.contains(tag) == false else {
             return
