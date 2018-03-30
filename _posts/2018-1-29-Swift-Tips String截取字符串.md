@@ -9,8 +9,8 @@ tags:
 - Swift-Tips
 - Swift
 ---
-
-在`Objective-C`中我们可以使调`substringWithRange`的方法达到截取字符串的效果
+
+在`Objective-C`中我们可以使调`substringWithRange`的方法达到截取字符串的效果
 
 ```
 [@"123" substringWithRange:NSMakeRange(1, 2)];
