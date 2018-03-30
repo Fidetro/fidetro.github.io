@@ -10,7 +10,7 @@ tags:
 - RunLoop
 - iOS
 ---
-> 在做Pet Day的时候，遇到一个这样的需求，假定`tableView`中的section初始值为50,在往上或者往下的时候，需要通过计算得知更多的`dataSource` 
+> 在做Pet Day的时候，遇到一个这样的需求，假定`tableView`中的section初始值为50,在往上或者往下的时候，需要通过计算得知更多的`dataSource` 
 
 然后我一开始的做法，是在`- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;`的方法在接近顶部或者接近底部的时候，进行计算
 ```
@@ -25,7 +25,7 @@ tags:
     }
 ```
 --------------------------------------
-**但是，这样做会有问题**，在遇到向上刷新的时候，会多次调用`- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;`的方法，导致数据突然增多。  
+**但是，这样做会有问题**，在遇到向上刷新的时候，会多次调用`- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;`的方法，导致数据突然增多。  
 
 后来用定时器实现触发后0.5秒内拦截，代码如下：
 ```
@@ -50,8 +50,8 @@ tags:
 ...  
 终于在停止刷新后，再往上刷，正常了
 
-我自己的推测是因为tableView在刷新的过程中，tableView的刷新事件比定时器的事件先进，需要等刷新停止了，定时器才能执行  
-然后换了另外一种实现方式就没问题了
+我自己的推测是因为tableView在刷新的过程中，tableView的刷新事件比定时器的事件先进，需要等刷新停止了，定时器才能执行  
+然后换了另外一种实现方式就没问题了
 ```
         
         guard share.operations.contains(tag) == false else {
