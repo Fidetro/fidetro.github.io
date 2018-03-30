@@ -165,13 +165,13 @@
         
         <div class="post-content-preview">
             
-  懒加载是为了保证属性只会初始化一次，同时在没有使用时，节能内存而使用的。苹果也非常推荐我们使用。但是今天在使用的时候，发现居然会懒加载了2次，为了更容易让别人看懂，我精炼了以下的代码，更好解释为什么会出现懒加载2次的情况。
+  懒加载是为了保证属性只会初始化一次，同时在没有使用时，节能内存而使用的。苹果也非常推荐我们使用。但是今天在使用的时候，发现居然会懒加载了2次，为了更容易让别人看懂，我精炼了以下的代码，更好解释为什么会出现懒加载2次的情况。
 
 
 class BViewController: UIViewController {
 
     lazy var bgView: UIView = {
-    ...
+     ...
         </div>
     </a>
     <p class="post-meta">
@@ -514,15 +514,6 @@ Note that at this time the Package Manager has no support for iOS, watchOS, or t
                         <!-- SNS Link -->
                         <ul class="list-inline">
                             
-                            <li>
-                                <a href="/feed.xml">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
                             
                             
                             
@@ -553,15 +544,6 @@ Note that at this time the Package Manager has no support for iOS, watchOS, or t
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <ul class="list-inline text-center">
-                    
-                    <li>
-                        <a href="/feed.xml">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
                     
                     
 

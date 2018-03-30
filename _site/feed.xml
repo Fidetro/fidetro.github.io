@@ -5,14 +5,14 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 30 Mar 2018 13:47:34 +0800</pubDate>
-    <lastBuildDate>Fri, 30 Mar 2018 13:47:34 +0800</lastBuildDate>
+    <pubDate>Fri, 30 Mar 2018 13:58:15 +0800</pubDate>
+    <lastBuildDate>Fri, 30 Mar 2018 13:58:15 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
         <title>引起懒加载多次的问题思考</title>
         <description>&lt;blockquote&gt;
-  &lt;p&gt;懒加载是为了保证属性只会初始化一次，同时在没有使用时，节能内存而使用的。苹果也非常推荐我们使用。但是今天在使用的时候，发现居然会懒加载了2次，为了更容易让别人看懂，我精炼了以下的代码，更好解释为什么会出现懒加载2次的情况。&lt;/p&gt;
+  &lt;p&gt;懒加载是为了保证属性只会初始化一次，同时在没有使用时，节能内存而使用的。苹果也非常推荐我们使用。但是今天在使用的时候，发现居然会懒加载了2次，为了更容易让别人看懂，我精炼了以下的代码，更好解释为什么会出现懒加载2次的情况。&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;class BViewController: UIViewController {
