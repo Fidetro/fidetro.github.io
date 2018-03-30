@@ -5,8 +5,8 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 30 Mar 2018 13:58:15 +0800</pubDate>
-    <lastBuildDate>Fri, 30 Mar 2018 13:58:15 +0800</lastBuildDate>
+    <pubDate>Fri, 30 Mar 2018 14:17:03 +0800</pubDate>
+    <lastBuildDate>Fri, 30 Mar 2018 14:17:03 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
@@ -42,13 +42,13 @@
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;假设这时候AController通过&lt;code class=&quot;highlighter-rouge&quot;&gt;init(color :UIColor)&lt;/code&gt;调用BController push进来&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;        let bvc = BViewController(color: .red)
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;        let bvc = BViewController(color: .red)
         present(bvc, animated: true, completion: nil)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;先来思考一下，bvc会是什么颜色？&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;答案是：黑色的(友情提示：Controller没有设置View颜色的时候，默认黑色)&lt;/p&gt;
+  &lt;p&gt;答案是:黑色的(友情提示：Controller没有设置View颜色的时候，默认黑色)&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;这时候看一下打印信息：&lt;/p&gt;
@@ -56,7 +56,7 @@
 &amp;lt;UIView: 0x7f97e06098b0; frame = (0 0; 0 0); layer = &amp;lt;CALayer: 0x60000022be60&amp;gt;&amp;gt;
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;原来是因为bgView进行了两次懒加载，先讲下怎么解决这个问题，后面会详细分析原因，引起这个问题的原因其实就是因为这一行&lt;code class=&quot;highlighter-rouge&quot;&gt;view.addSubview(bgView)&lt;/code&gt;,此时把&lt;code class=&quot;highlighter-rouge&quot;&gt;view.addSubview(bgView)&lt;/code&gt;放到&lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad()&lt;/code&gt;再次运行，打印信息如下：&lt;/p&gt;
+&lt;p&gt;原来是因为bgView进行了两次懒加载，先讲下怎么解决这个问题，后面会详细分析原因，引起这个问题的原因其实就是因为这一行&lt;code class=&quot;highlighter-rouge&quot;&gt;view.addSubview(bgView)&lt;/code&gt;,此时把&lt;code class=&quot;highlighter-rouge&quot;&gt;view.addSubview(bgView)&lt;/code&gt;放到&lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad()&lt;/code&gt;再次运行，打印信息如下：&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-LLVM&quot;&gt;&amp;lt;UIView: 0x7fb94ac0e6b0; frame = (0 0; 0 0); layer = &amp;lt;CALayer: 0x604000224020&amp;gt;&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;问题解决！&lt;br /&gt;
@@ -85,7 +85,7 @@
       <item>
         <title>2018</title>
         <description>&lt;blockquote&gt;
-  &lt;p&gt;正好今天跟前同事聊到工作的事情，前同事得到了阿里的面试，聊到还是得三年工作经验才能有BAT的面试，有感而发，想聊聊过去做了什么，未来想做什么，为后面的BAT做铺垫。&lt;/p&gt;
+  &lt;p&gt;正好今天跟前同事聊到工作的事情，前同事得到了阿里的面试，聊到还是得三年工作经验才能有BAT的面试，有感而发，想聊聊过去做了什么，未来想做什么，为后面的BAT做铺垫。&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;h1 id=&quot;工作&quot;&gt;工作&lt;/h1&gt;

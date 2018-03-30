@@ -229,13 +229,13 @@ border: none;
 </code></pre>
 
 <p>假设这时候AController通过<code class="highlighter-rouge">init(color :UIColor)</code>调用BController push进来</p>
-<pre><code class="language-Swift">        let bvc = BViewController(color: .red)
+<pre><code class="language-Swift">        let bvc = BViewController(color: .red)
         present(bvc, animated: true, completion: nil)
 </code></pre>
 <p>先来思考一下，bvc会是什么颜色？</p>
 
 <blockquote>
-  <p>答案是：黑色的(友情提示：Controller没有设置View颜色的时候，默认黑色)</p>
+  <p>答案是:黑色的(友情提示：Controller没有设置View颜色的时候，默认黑色)</p>
 </blockquote>
 
 <p>这时候看一下打印信息：</p>
@@ -243,7 +243,7 @@ border: none;
 &lt;UIView: 0x7f97e06098b0; frame = (0 0; 0 0); layer = &lt;CALayer: 0x60000022be60&gt;&gt;
 
 </code></pre>
-<p>原来是因为bgView进行了两次懒加载，先讲下怎么解决这个问题，后面会详细分析原因，引起这个问题的原因其实就是因为这一行<code class="highlighter-rouge">view.addSubview(bgView)</code>,此时把<code class="highlighter-rouge">view.addSubview(bgView)</code>放到<code class="highlighter-rouge">viewDidLoad()</code>再次运行，打印信息如下：</p>
+<p>原来是因为bgView进行了两次懒加载，先讲下怎么解决这个问题，后面会详细分析原因，引起这个问题的原因其实就是因为这一行<code class="highlighter-rouge">view.addSubview(bgView)</code>,此时把<code class="highlighter-rouge">view.addSubview(bgView)</code>放到<code class="highlighter-rouge">viewDidLoad()</code>再次运行，打印信息如下：</p>
 <pre><code class="language-LLVM">&lt;UIView: 0x7fb94ac0e6b0; frame = (0 0; 0 0); layer = &lt;CALayer: 0x604000224020&gt;&gt;
 </code></pre>
 <p>问题解决！<br />
@@ -417,6 +417,15 @@ border: none;
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
                     
                     
 
