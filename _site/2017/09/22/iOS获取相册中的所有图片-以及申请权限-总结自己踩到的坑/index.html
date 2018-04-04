@@ -276,43 +276,45 @@ Photos参考了这里<a href="http://www.jianshu.com/p/6bcda6b35801">获取系�
 <ol>
   <li>获取相册中的图片转成<code class="highlighter-rouge">NSData</code>得到<code class="highlighter-rouge">nil</code>
 我遇到的场景是：
-在获取了相册图片后，需要将<code class="highlighter-rouge">UIImage</code>转成<code class="highlighter-rouge">NSData</code>，但是会有少部分图片，使用下面的方法转成<code class="highlighter-rouge">NSData</code>会得到<code class="highlighter-rouge">nil</code>的情况
-    <pre><code class="language-Objective-C">NSData *jpegData = UIImageJPEGRepresentation(image, 0.2);
-NSData *pngData = UIImagePNGRepresentation(image);
-</code></pre>
-    <p>这种情况，可以通过重新绘制<code class="highlighter-rouge">UIImage</code>:<br />
-```Objective-C
-NSData *jpegData = UIImageJPEGRepresentation(image, 0.2);
-  if (jpegData == nil) {
-jpegData = image.generateJPEGRepresentation;
- if (jpegData == nil) {
-return ;
-  }
-}</p>
-  </li>
+在获取了相册图片后，需要将<code class="highlighter-rouge">UIImage</code>转成<code class="highlighter-rouge">NSData</code>，但是会有少部分图片，使用下面的方法转成<code class="highlighter-rouge">NSData</code>会得到<code class="highlighter-rouge">nil</code>的情况</li>
 </ol>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">```</span><span class="n">Objective</span><span class="o">-</span><span class="n">C</span>
-<span class="k">@implementation</span> <span class="nc">UIImage</span> <span class="p">(</span><span class="nl">FIDExtra</span><span class="p">)</span>
+<pre><code class="language-Objective-C">NSData *jpegData = UIImageJPEGRepresentation(image, 0.2);
+NSData *pngData = UIImagePNGRepresentation(image);
+</code></pre>
 
-<span class="k">-</span> <span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="n">generateJPEGRepresentation</span>
-<span class="p">{</span>
-    <span class="n">UIImage</span> <span class="o">*</span><span class="n">newImage</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">copyOriginalImage</span><span class="p">];</span>
-    <span class="n">NSData</span> <span class="o">*</span><span class="n">newData</span> <span class="o">=</span> <span class="n">UIImageJPEGRepresentation</span><span class="p">(</span><span class="n">newImage</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2</span><span class="p">);</span>
-    <span class="k">return</span> <span class="n">newData</span><span class="p">;</span>
-<span class="p">}</span>
+<p>这种情况，可以通过重新绘制<code class="highlighter-rouge">UIImage</code>:</p>
 
-<span class="o">-</span> <span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="n">copyOriginalImage</span>
-<span class="p">{</span>
-    <span class="n">UIGraphicsBeginImageContext</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">);</span>
-    <span class="p">[</span><span class="n">self</span> <span class="nf">drawInRect</span><span class="p">:</span><span class="n">CGRectMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">)];</span>
-    <span class="n">UIImage</span> <span class="o">*</span><span class="n">newImage</span> <span class="o">=</span> <span class="n">UIGraphicsGetImageFromCurrentImageContext</span><span class="p">();</span>
-    <span class="n">UIGraphicsEndImageContext</span><span class="p">();</span>
-    <span class="k">return</span> <span class="n">newImage</span><span class="p">;</span>
-<span class="p">}</span>
+<pre><code class="language-Objective-C">NSData *jpegData = UIImageJPEGRepresentation(image, 0.2);
+  if (jpegData == nil) {
+jpegData = image.generateJPEGRepresentation;
+    if (jpegData == nil) {
+return ;
+  }
+}
 
-<span class="k">@end</span>
-</code></pre></div></div>
+</code></pre>
+
+<pre><code class="language-Objective-C">@implementation UIImage (FIDExtra)
+
+- (NSData *)generateJPEGRepresentation
+{
+    UIImage *newImage = [self copyOriginalImage];
+    NSData *newData = UIImageJPEGRepresentation(newImage, 0.2);
+    return newData;
+}
+
+- (UIImage *)copyOriginalImage
+{
+    UIGraphicsBeginImageContext(self.size);
+    [self drawInRect:CGRectMake(0, 0, self.size.width, self.size.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+@end
+</code></pre>
 
 
 
@@ -480,15 +482,6 @@ return ;
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <ul class="list-inline text-center">
-                    
-                    <li>
-                        <a href="/feed.xml">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
                     
                     
 
