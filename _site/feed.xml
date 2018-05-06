@@ -5,9 +5,201 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 22 Apr 2018 21:21:05 +0800</pubDate>
-    <lastBuildDate>Sun, 22 Apr 2018 21:21:05 +0800</lastBuildDate>
+    <pubDate>Sun, 06 May 2018 17:35:40 +0800</pubDate>
+    <lastBuildDate>Sun, 06 May 2018 17:35:40 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
+    
+      <item>
+        <title>RxSwift从入门到放弃——开篇</title>
+        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+&lt;p&gt;最近正好在刚好被安排到用RxSwift开发一个小项目，借着这个机会学习了一下。在这之前也有断断续续用了几次，最后总会因为各种各样的Xcode问题弃坑，感觉能坚持下来真的是真爱啊。。主要学起来就是两个问题：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Xcode的自动补全十分不友好&lt;/li&gt;
+  &lt;li&gt;RxSwift学习曲线陡峭&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;自动补全的问题对刚入门的时候来说，真的影响很大，一开始对RxSwift的不了解，看了下网上的资料，准备大干一场的时候，写着写着，突然没补全，然后怀疑自己是不是哪里写错了，把网上的代码复制过来，又可以了，体验极其的差…&lt;/p&gt;
+
+&lt;p&gt;在学习RxSwift的时候，或者本来就有看过相关的资料，肯定会对下面这张图的名词有所听闻。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/rxswift-know.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;不了解的同学看完应该是这样的表情的：&lt;br /&gt;
+&lt;img src=&quot;https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/black_question.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;看不懂没关系，看完这个系列的文章之后，就会懂了。&lt;/p&gt;
+
+&lt;h1 id=&quot;疑问&quot;&gt;疑问&lt;/h1&gt;
+&lt;p&gt;在学RxSwift之前，先提个问题，为什么要学习RxSwift？&lt;br /&gt;
+这段是从RxSwift文档翻译过来的回答&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;可组合，因为Rx就是这个意思&lt;/li&gt;
+  &lt;li&gt;可复用，因为它是可组合的&lt;/li&gt;
+  &lt;li&gt;清晰，因为声明都是不可变的，改变的只有数据&lt;/li&gt;
+  &lt;li&gt;容易理解和简洁&lt;/li&gt;
+  &lt;li&gt;稳定&lt;/li&gt;
+  &lt;li&gt;没有状态，因为RxSwift将应用程序建模为单向数据流&lt;/li&gt;
+  &lt;li&gt;不会有内存管理问题，因为内存管理变得简单&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;总结：使用RxSwift可以简化代码，用更少而且清晰的代码，更专注于关心事件变化的本身&lt;/p&gt;
+
+&lt;p&gt;说了这么多，RxSwift其实到底干了什么？
+RxSwift将监听变化的&lt;code class=&quot;highlighter-rouge&quot;&gt;事件&lt;/code&gt;封装成了可观察的&lt;code class=&quot;highlighter-rouge&quot;&gt;序列&lt;/code&gt;，因此在编程的时候，通过框架已经帮我们创建好的序列或者自己创建的序列，实现对序列的监听，只关心序列的变化。&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;注&lt;br /&gt;
+可观察的事件：例如scrollView的contentOffset变化，textField每次输入时候变化的text等&lt;br /&gt;
+序列：一个可被观察的对象，后面会详细讲到。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
+
+&lt;p&gt;讲了这么多，talk is cheap,show me the code.&lt;/p&gt;
+
+&lt;p&gt;监听collectionView的contentOffset，没有引入RxSwift的时候，我们需要实现以下方法：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt; func scrollViewDidScroll(_ scrollView: UIScrollView) {
+     //...
+ }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;引入RxSwift之后&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    let disposeBag = DisposeBag()
+
+
+       collectionView.rx
+                    .contentOffset
+                    .subscribe(onNext: { (point) in
+            //do something
+        }).disposed(by: disposeBag)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;注&lt;br /&gt;
+disposeBag负责管理生命周期，相当于将当前的监听交给了disposeBag，大部分情况下disposeBag由Controller持有，并随控制器生命周期结束而结束&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;KVO:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;view.rx.observe(CGRect.self, &quot;frame&quot;)
+    .subscribe(onNext: { frame in
+        print(&quot;Got new frame \(frame)&quot;)
+    })
+    .disposed(by: disposeBag)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Target-Action:&lt;br /&gt;
+传统的实现方法:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    lazy var button: UIButton = {
+        var button = UIButton()
+        button.addTarget(self, action: #selector(click), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func click() {
+        // do something
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;button.rx
+    .controlEvent(.touchUpInside)
+    .subscribe(onNext: {  () in
+    //..touchUp
+
+        }).disposed(by: disposeBag)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;上面的都是简单的例子应用，下面直接用登录功能举例示例代码，&lt;a href=&quot;https://github.com/Fidetro/rx-sample-code&quot;&gt;代码&lt;/a&gt;已经传到GitHub上了。&lt;br /&gt;
+要实现的功能：点击按钮的时候，判断用户名和密码是否合法，然后请求，拿到结果。&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;创建一个ViewModel
+    &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;class LoginViewModel: NSObject {
+ //由Controller负责订阅loginResult，得到登录结果
+ let loginResult: Observable&amp;lt;Bool&amp;gt;
+}
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;初始化loginResult
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; init(input: (username: Observable&amp;lt;String&amp;gt;, password: Observable&amp;lt;String&amp;gt;, touchUp: ControlEvent&amp;lt;()&amp;gt;)) {
+     //将username和passowrd变形为Observable&amp;lt;(String,String)&amp;gt;
+     let usernameAndPassword = Observable.combineLatest(input.username, input.password) {
+         ($0, $1)
+     }
+     //初始化loginResult对象
+     loginResult = input.touchUp.withLatestFrom(usernameAndPassword).flatMap { (username,password) -&amp;gt; Observable&amp;lt;Bool&amp;gt; in  
+
+         //简单的对用户名和密码做校验
+         guard  username.count &amp;gt; 6 else{
+             return Observable.just(false)
+         }
+
+         guard  password.count &amp;gt; 6 else{
+             return Observable.just(false)
+         }
+
+         return Observable.create { (observer) -&amp;gt; Disposable in
+             //延时1s模拟异步请求登录成功
+             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                 observer.onNext(true)
+             })
+             return Disposables.create {}
+         }
+     }        
+ }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;在Controller监听点击后登录的结果：
+    &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt; @IBOutlet weak var loginButton: UIButton!
+ @IBOutlet weak var usernameTextField: UITextField!
+ @IBOutlet weak var passwordTextField: UITextField!
+ let disposeBag = DisposeBag()
+    
+    
+ override func viewDidLoad() {
+     super.viewDidLoad()
+     let viewModel = LoginViewModel.init(input: (username: usernameTextField.rx.text.orEmpty.asObservable(),
+                                                 password: passwordTextField.rx.text.orEmpty.asObservable(),
+                                                 touchUp: loginButton.rx.controlEvent(.touchUpInside)))
+        
+     viewModel.loginResult.subscribe(onNext: { (result) in
+         if result == true {
+             print(&quot;登录成功&quot;)
+         }else{
+             print(&quot;登录失败&quot;)
+         }
+     }).disposed(by: disposeBag)
+ }
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;这样一个登录功能就基本完成了，相信看完上面的代码，肯定也会有很多疑问。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Observable.just(...)&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;Observable.create { }&lt;/code&gt;是干什么用的？ &lt;br /&gt;
+这些方法都是拿来将对象包装成可观察的序列，更多的构建方法可以参考&lt;a href=&quot;https://beeth0ven.github.io/RxSwift-Chinese-Documentation/content/decision_tree.html&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;observer.onNext(...)&lt;/code&gt;又是干什么用的？&lt;br /&gt;
+observer是&lt;code class=&quot;highlighter-rouge&quot;&gt;AnyObserver&amp;lt;...&amp;gt;&lt;/code&gt;类型，当使用&lt;code class=&quot;highlighter-rouge&quot;&gt;Observable.create { }&lt;/code&gt;创建序列的时候，闭包内会返回&lt;code class=&quot;highlighter-rouge&quot;&gt;AnyObserver&amp;lt;...&amp;gt;&lt;/code&gt;对象,&lt;code class=&quot;highlighter-rouge&quot;&gt;AnyObserver&amp;lt;...&amp;gt;&lt;/code&gt;对象允许你通过&lt;code class=&quot;highlighter-rouge&quot;&gt;.onNext(...)&lt;/code&gt;发出一个元素，&lt;code class=&quot;highlighter-rouge&quot;&gt;onError(...)&lt;/code&gt;发出一个错误，&lt;code class=&quot;highlighter-rouge&quot;&gt;onCompleted()&lt;/code&gt;通知任务已经完成。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;参考&quot;&gt;参考&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Why.md&quot;&gt;RxSwift官方文档&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://beeth0ven.github.io/RxSwift-Chinese-Documentation/&quot;&gt;RxSwift中文文档&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 06 May 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/05/06/xSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/05/06/xSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/</guid>
+        
+        <category>RxSwift</category>
+        
+        <category>Swift</category>
+        
+        
+      </item>
     
       <item>
         <title>引起懒加载多次的问题思考</title>
@@ -947,134 +1139,6 @@ extension Request {
         <pubDate>Thu, 07 Dec 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/12/07/swift%E4%BD%BF%E7%94%A8protocol%E7%9A%84%E6%97%B6%E5%80%99%E5%87%BA%E7%8E%B0%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/12/07/swift%E4%BD%BF%E7%94%A8protocol%E7%9A%84%E6%97%B6%E5%80%99%E5%87%BA%E7%8E%B0%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8/</guid>
-        
-        <category>Swift</category>
-        
-        <category>iOS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>自己动手做Swift-Package-Manager</title>
-        <description>&lt;p&gt;Swift Package Manager是苹果自家的包管理工具，他和iOS开发中的Cocoapod或者Carthage类似，但是我们可以从他&lt;a href=&quot;https://github.com/apple/swift-package-manager&quot;&gt;GitHub&lt;/a&gt;文档看到&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Note that at this time the Package Manager has no support for iOS, watchOS, or tvOS platforms.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;就是SPM是不支持  iOS, watchOS, or tvOS 平台，不过如果你想在不是mac OS的系统下使用swift，那就能用到SPM了。&lt;/p&gt;
-
-&lt;p&gt;建立一个以下的目录&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;example[这是个文件夹，起什么名字都行]
-├── Sources[这是个文件夹，默认这个名字，里面放你需要生成库的.swift文件]
-│   ├── Person.swift
-│   ├── Cat.swift
-│   └── Dog.swift
-└── Package.swift[必须这个名字]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;然后在Package.swift中写上依赖的内容&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import PackageDescription
-
-let package = Package(
-    name: &quot;exmaple&quot; // 这里填你这个Package的名字
-)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;然后去github生成一个远程仓库，在example目录下&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git init
-$ git add *
-$ git commit -m &quot;SPM example&quot;
-$ git remote add origin git@github.com:xxx/example.git
-$ git push -u origin master
-$ git tag 1.0.0
-$ git push --tags
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;这时候就可以新建一个目录测试是否成功了&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ mkdir test
-$ cd test
-$ vim Package.swift
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;在Package.swift中输入&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import PackageDescription
-
-let package = Package(
-    name: &quot;test&quot;,
-    targets: [],
-    dependencies: [
-        .Package(url: &quot;https://github.com/xxx/example.git&quot;, 
-majorVersion: 1)
-        ]
-)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;在 test 目录下：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ swift build
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;这时候应该看到提示成功了，到这里已经完成了&lt;/p&gt;
-
-&lt;h2 id=&quot;附带一些自己踩过的坑&quot;&gt;附带一些自己踩过的坑&lt;/h2&gt;
-&lt;ol&gt;
-  &lt;li&gt;如果example的目录下有很多别的文件夹，在&lt;code class=&quot;highlighter-rouge&quot;&gt;$ swift build&lt;/code&gt;的时候有可能会出现这个错误
-&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;k&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;has&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;unsupported&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;layout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;multiple&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;roots&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;found&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;example
-├── Sources
-│   ├── Person.swift
-│   ├── Cat.swift
-│   └── Dog.swift
-└── Package.swift
-│── a[不需要参与编译的文件]
-│── b[不需要参与编译的文件]
-└── Package.swift
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;出现这个错误的时候example/Package.swift 需要这样写：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import PackageDescription
-
-let package = Package(
-    name: &quot;exmaple&quot;, // 这里填你这个Package的名字
-    exclude:[&quot;a&quot;,&quot;b&quot;]
-)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;如果你这个库还依赖了别的库，还可以这样写：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import PackageDescription
-
-let package = Package(
-    name: &quot;exmaple&quot;, // 这里填你这个Package的名字
-	dependencies: [
-		.Package(url: &quot;https://github.com/depend/depend.git&quot;, majorVersion: 0)
-	],
-    exclude:[&quot;a&quot;,&quot;b&quot;]
-)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;majorVersion只能是Int，我如果发布的不是整数tag怎么办？
-可以换成选择版本范围，默认是根据当前范围最高的版本更新的
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import PackageDescription
-let package = Package(
- name: &quot;test&quot;, 
- dependencies: [
-          .Package(url: &quot;https://github.com/xxx/example.git&quot;,versions: Version(0, 0, 0)..&amp;lt;Version(1, .max, .max))]
- ]
-)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;swift build了很久最后出现 error: reachedTimeLimit
-这种情况我之前遇到过，具体是为什么导致当时没留意，但是你可以从这几个方面排查：
-    &lt;ol&gt;
-      &lt;li&gt;Package指定的版本是否有错&lt;/li&gt;
-      &lt;li&gt;更新了新的版本，不能直接&lt;code class=&quot;highlighter-rouge&quot;&gt;$ swift build&lt;/code&gt;需要：
-        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ rm -rf .build/
-$ rm Package.resolved
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;dependencies是否有错&lt;/li&gt;
-  &lt;li&gt;如果有引入c文件还需要特殊处理，因为我还没试过，只是在看文档的时候发现有，如果工程中有使用可以去&lt;a href=&quot;https://swift.org/package-manager/&quot;&gt;Swift.org&lt;/a&gt;和&lt;a href=&quot;https://github.com/apple/swift-package-manager&quot;&gt;GitHub&lt;/a&gt;了解更多&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Sun, 22 Oct 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/10/22/%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%81%9ASwift-Package-Manager/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/10/22/%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%81%9ASwift-Package-Manager/</guid>
         
         <category>Swift</category>
         

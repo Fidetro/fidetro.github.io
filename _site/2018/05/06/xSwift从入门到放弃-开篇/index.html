@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>iOS获取相册中的所有图片，以及申请权限，总结自己踩到的坑 - fidetro | FoolishTalk Blog</title>
+    <title>RxSwift从入门到放弃——开篇 - fidetro | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/2017/09/22/iOS%E8%8E%B7%E5%8F%96%E7%9B%B8%E5%86%8C%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%9B%BE%E7%89%87-%E4%BB%A5%E5%8F%8A%E7%94%B3%E8%AF%B7%E6%9D%83%E9%99%90-%E6%80%BB%E7%BB%93%E8%87%AA%E5%B7%B1%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/">
+    <link rel="canonical" href="http://localhost:4000/2018/05/06/xSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -154,12 +154,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-unsplash.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-old.jpg')
+        background-image: url('/img/post-bg-unsplash.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -169,17 +169,17 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#问题随笔" title="问题随笔">问题随笔</a>
+                        <a class="tag" href="/tags/#RxSwift" title="RxSwift">RxSwift</a>
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
                         
                     </div>
-                    <h1>iOS获取相册中的所有图片，以及申请权限，总结自己踩到的坑</h1>
+                    <h1>RxSwift从入门到放弃——开篇</h1>
                     
                     
-                    <h2 class="subheading">iOS，相机，相册</h2>
+                    <h2 class="subheading">RxSwift</h2>
                     
-                    <span class="meta">Posted by Fidetro on September 22, 2017</span>
+                    <span class="meta">Posted by Fidetro on May 6, 2018</span>
                 </div>
             </div>
         </div>
@@ -196,125 +196,183 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>之前没做过这一块的，今天也是刚接触，上网查了一下主要是两个库iOS 8之前需要使用<code class="highlighter-rouge">AssetsLibrary .framework</code>,iOS 8之后使用<code class="highlighter-rouge">Photos.framework</code>
-想看详细讲解的，可以直接看<a href="http://kayosite.com/ios-development-and-detail-of-photo-framework.html">iOS 开发之照片框架详解</a>
-Photos参考了这里<a href="http://www.jianshu.com/p/6bcda6b35801">获取系统相册的所有照片</a></p>
-
-<p>在iOS 8以后，申请相册权限是可以得到回调的:</p>
-<pre><code class="language-Objective-C">[PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-        [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-            if (request_block)
-            {
-                if (status == PHAuthorizationStatusAuthorized) {
-                    request_block(YES);
-                }else{
-                    request_block(NO);
-                }
-                
-            }
-        }];
-      
-    }];
-</code></pre>
-<p>申请摄像头权限：</p>
-<pre><code class="language-Objective-C">[AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-        [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-            if (request_block)
-            {
-                    request_block(granted);
-            }
-        }];
-    }];
-</code></pre>
-
-<p>其实都是不太复杂的东西，网上看下就懂了，获取系统所有图片的时候得每个都转<code class="highlighter-rouge">UIImage</code>这点很不好用，我分别封装了一下<code class="highlighter-rouge">AssetsLibrary .framework</code>和<code class="highlighter-rouge">Photos.framework</code></p>
-
-<h4 id="全文重点来了github地址在这里">全文重点来了<a href="https://github.com/Fidetro/PhotoLibrary">Github地址在这里</a></h4>
-<p>但是在使用<code class="highlighter-rouge">AssetsLibrary</code>获取所有图片的时候会有很明显的卡顿，如果需要支持iOS 8之前的话，可以参考<a href="http://kayosite.com/ios-development-and-detail-of-photo-framework.html">iOS 开发之照片框架详解</a>提到的索引加载</p>
-
+				<h1 id="前言">前言</h1>
+<p>最近正好在刚好被安排到用RxSwift开发一个小项目，借着这个机会学习了一下。在这之前也有断断续续用了几次，最后总会因为各种各样的Xcode问题弃坑，感觉能坚持下来真的是真爱啊。。主要学起来就是两个问题：</p>
 <ul>
-  <li>踩到的坑
-    <ol>
-      <li>使用下面这个方法获取图片，会得到多次，首次加载的时候，会先得到一个相对模糊的图片，随后会再次得到一张清晰的图像，但是如果我要一开始就要得到是高清的图像呢？</li>
-    </ol>
-  </li>
+  <li>Xcode的自动补全十分不友好</li>
+  <li>RxSwift学习曲线陡峭</li>
 </ul>
 
-<pre><code class="language-Objective-C">//获取图片
-+ (void)accessToImageAccordingToTheAsset:(PHAsset *)asset size:(CGSize)size resizeMode:(PHImageRequestOptionsResizeMode)resizeMode completion:(void(^)(UIImage *image,NSDictionary *info))completion
-{
-    static PHImageRequestID requestID = -2;
-    
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGFloat width = MIN([UIScreen mainScreen].bounds.size.width, 500);
-    if (requestID &gt;= 1 &amp;&amp; size.width / width == scale) {
-        [[PHCachingImageManager defaultManager] cancelImageRequest:requestID];
-    }
-    PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
-    option.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
-    option.resizeMode = resizeMode;
- 
-    requestID = [[PHCachingImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeAspectFill options:option resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(result,info);
-        });
-    }];
-    
-}
-</code></pre>
-<p>原因是因为将<code class="highlighter-rouge">option.deliveryMode </code>设置成了<code class="highlighter-rouge">PHImageRequestOptionsDeliveryModeOpportunistic</code>,
-你以为只要把<code class="highlighter-rouge">option.deliveryMode </code>设置成了<code class="highlighter-rouge">PHImageRequestOptionsDeliveryModeFastFormat</code>就可以了吗？
-这时候还要设置<code class="highlighter-rouge">option.synchronous = YES;</code>
-但是这样设置后，获取图片会变成同步操作，如果直接获取相册中的所有照片，会造成卡顿。</p>
-<pre><code class="language-Objective-C">typedef NS_ENUM(NSInteger, PHImageRequestOptionsDeliveryMode) {
-    PHImageRequestOptionsDeliveryModeOpportunistic = 0, // client may get several image results when the call is asynchronous or will get one result when the call is synchronous
-    PHImageRequestOptionsDeliveryModeHighQualityFormat = 1, // client will get one result only and it will be as asked or better than asked (sync requests are automatically processed this way regardless of the specified mode)
-    PHImageRequestOptionsDeliveryModeFastFormat = 2 // client will get one result only and it may be degraded
-} PHOTOS_ENUM_AVAILABLE_IOS_TVOS(8_0, 10_0);
+<p>自动补全的问题对刚入门的时候来说，真的影响很大，一开始对RxSwift的不了解，看了下网上的资料，准备大干一场的时候，写着写着，突然没补全，然后怀疑自己是不是哪里写错了，把网上的代码复制过来，又可以了，体验极其的差…</p>
+
+<p>在学习RxSwift的时候，或者本来就有看过相关的资料，肯定会对下面这张图的名词有所听闻。</p>
+
+<p><img src="https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/rxswift-know.png" alt="" /></p>
+
+<p>不了解的同学看完应该是这样的表情的：<br />
+<img src="https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/black_question.png" alt="" /></p>
+
+<p>看不懂没关系，看完这个系列的文章之后，就会懂了。</p>
+
+<h1 id="疑问">疑问</h1>
+<p>在学RxSwift之前，先提个问题，为什么要学习RxSwift？<br />
+这段是从RxSwift文档翻译过来的回答</p>
+<ul>
+  <li>可组合，因为Rx就是这个意思</li>
+  <li>可复用，因为它是可组合的</li>
+  <li>清晰，因为声明都是不可变的，改变的只有数据</li>
+  <li>容易理解和简洁</li>
+  <li>稳定</li>
+  <li>没有状态，因为RxSwift将应用程序建模为单向数据流</li>
+  <li>不会有内存管理问题，因为内存管理变得简单</li>
+</ul>
+
+<p>总结：使用RxSwift可以简化代码，用更少而且清晰的代码，更专注于关心事件变化的本身</p>
+
+<p>说了这么多，RxSwift其实到底干了什么？
+RxSwift将监听变化的<code class="highlighter-rouge">事件</code>封装成了可观察的<code class="highlighter-rouge">序列</code>，因此在编程的时候，通过框架已经帮我们创建好的序列或者自己创建的序列，实现对序列的监听，只关心序列的变化。</p>
+<blockquote>
+  <p>注<br />
+可观察的事件：例如scrollView的contentOffset变化，textField每次输入时候变化的text等<br />
+序列：一个可被观察的对象，后面会详细讲到。</p>
+</blockquote>
+
+<h1 id="正文">正文</h1>
+
+<p>讲了这么多，talk is cheap,show me the code.</p>
+
+<p>监听collectionView的contentOffset，没有引入RxSwift的时候，我们需要实现以下方法：</p>
+<pre><code class="language-Swift"> func scrollViewDidScroll(_ scrollView: UIScrollView) {
+     //...
+ }
 </code></pre>
 
+<p>引入RxSwift之后</p>
+<pre><code class="language-Swift">    let disposeBag = DisposeBag()
+
+
+       collectionView.rx
+                    .contentOffset
+                    .subscribe(onNext: { (point) in
+            //do something
+        }).disposed(by: disposeBag)
+</code></pre>
+<blockquote>
+  <p>注<br />
+disposeBag负责管理生命周期，相当于将当前的监听交给了disposeBag，大部分情况下disposeBag由Controller持有，并随控制器生命周期结束而结束</p>
+</blockquote>
+
+<p>KVO:</p>
+<pre><code class="language-Swift">view.rx.observe(CGRect.self, "frame")
+    .subscribe(onNext: { frame in
+        print("Got new frame \(frame)")
+    })
+    .disposed(by: disposeBag)
+</code></pre>
+
+<p>Target-Action:<br />
+传统的实现方法:</p>
+
+<pre><code class="language-Swift">    lazy var button: UIButton = {
+        var button = UIButton()
+        button.addTarget(self, action: #selector(click), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func click() {
+        // do something
+    }
+</code></pre>
+
+<pre><code class="language-Swift">button.rx
+    .controlEvent(.touchUpInside)
+    .subscribe(onNext: {  () in
+    //..touchUp
+
+        }).disposed(by: disposeBag)
+
+</code></pre>
+
+<p>上面的都是简单的例子应用，下面直接用登录功能举例示例代码，<a href="https://github.com/Fidetro/rx-sample-code">代码</a>已经传到GitHub上了。<br />
+要实现的功能：点击按钮的时候，判断用户名和密码是否合法，然后请求，拿到结果。</p>
 <ol>
-  <li>获取相册中的图片转成<code class="highlighter-rouge">NSData</code>得到<code class="highlighter-rouge">nil</code>
-我遇到的场景是：
-在获取了相册图片后，需要将<code class="highlighter-rouge">UIImage</code>转成<code class="highlighter-rouge">NSData</code>，但是会有少部分图片，使用下面的方法转成<code class="highlighter-rouge">NSData</code>会得到<code class="highlighter-rouge">nil</code>的情况</li>
+  <li>创建一个ViewModel
+    <pre><code class="language-Swift">class LoginViewModel: NSObject {
+ //由Controller负责订阅loginResult，得到登录结果
+ let loginResult: Observable&lt;Bool&gt;
+}
+</code></pre>
+  </li>
+  <li>初始化loginResult
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> init(input: (username: Observable&lt;String&gt;, password: Observable&lt;String&gt;, touchUp: ControlEvent&lt;()&gt;)) {
+     //将username和passowrd变形为Observable&lt;(String,String)&gt;
+     let usernameAndPassword = Observable.combineLatest(input.username, input.password) {
+         ($0, $1)
+     }
+     //初始化loginResult对象
+     loginResult = input.touchUp.withLatestFrom(usernameAndPassword).flatMap { (username,password) -&gt; Observable&lt;Bool&gt; in  
+
+         //简单的对用户名和密码做校验
+         guard  username.count &gt; 6 else{
+             return Observable.just(false)
+         }
+
+         guard  password.count &gt; 6 else{
+             return Observable.just(false)
+         }
+
+         return Observable.create { (observer) -&gt; Disposable in
+             //延时1s模拟异步请求登录成功
+             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                 observer.onNext(true)
+             })
+             return Disposables.create {}
+         }
+     }        
+ }
+</code></pre></div>    </div>
+  </li>
+  <li>在Controller监听点击后登录的结果：
+    <pre><code class="language-Swift"> @IBOutlet weak var loginButton: UIButton!
+ @IBOutlet weak var usernameTextField: UITextField!
+ @IBOutlet weak var passwordTextField: UITextField!
+ let disposeBag = DisposeBag()
+    
+    
+ override func viewDidLoad() {
+     super.viewDidLoad()
+     let viewModel = LoginViewModel.init(input: (username: usernameTextField.rx.text.orEmpty.asObservable(),
+                                                 password: passwordTextField.rx.text.orEmpty.asObservable(),
+                                                 touchUp: loginButton.rx.controlEvent(.touchUpInside)))
+        
+     viewModel.loginResult.subscribe(onNext: { (result) in
+         if result == true {
+             print("登录成功")
+         }else{
+             print("登录失败")
+         }
+     }).disposed(by: disposeBag)
+ }
+</code></pre>
+  </li>
 </ol>
 
-<pre><code class="language-Objective-C">NSData *jpegData = UIImageJPEGRepresentation(image, 0.2);
-NSData *pngData = UIImagePNGRepresentation(image);
-</code></pre>
+<p>这样一个登录功能就基本完成了，相信看完上面的代码，肯定也会有很多疑问。</p>
 
-<p>这种情况，可以通过重新绘制<code class="highlighter-rouge">UIImage</code>:</p>
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">Observable.just(...)</code>和<code class="highlighter-rouge">Observable.create { }</code>是干什么用的？ <br />
+这些方法都是拿来将对象包装成可观察的序列，更多的构建方法可以参考<a href="https://beeth0ven.github.io/RxSwift-Chinese-Documentation/content/decision_tree.html">这里</a></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">observer.onNext(...)</code>又是干什么用的？<br />
+observer是<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>类型，当使用<code class="highlighter-rouge">Observable.create { }</code>创建序列的时候，闭包内会返回<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>对象,<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>对象允许你通过<code class="highlighter-rouge">.onNext(...)</code>发出一个元素，<code class="highlighter-rouge">onError(...)</code>发出一个错误，<code class="highlighter-rouge">onCompleted()</code>通知任务已经完成。</p>
+  </li>
+</ol>
 
-<pre><code class="language-Objective-C">NSData *jpegData = UIImageJPEGRepresentation(image, 0.2);
-  if (jpegData == nil) {
-jpegData = image.generateJPEGRepresentation;
-    if (jpegData == nil) {
-return ;
-  }
-}
-
-</code></pre>
-
-<pre><code class="language-Objective-C">@implementation UIImage (FIDExtra)
-
-- (NSData *)generateJPEGRepresentation
-{
-    UIImage *newImage = [self copyOriginalImage];
-    NSData *newData = UIImageJPEGRepresentation(newImage, 0.2);
-    return newData;
-}
-
-- (UIImage *)copyOriginalImage
-{
-    UIGraphicsBeginImageContext(self.size);
-    [self drawInRect:CGRectMake(0, 0, self.size.width, self.size.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-}
-
-@end
-</code></pre>
+<h1 id="参考">参考</h1>
+<p><a href="https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Why.md">RxSwift官方文档</a><br />
+<a href="https://beeth0ven.github.io/RxSwift-Chinese-Documentation/">RxSwift中文文档</a></p>
 
 
 
@@ -343,13 +401,9 @@ return ;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/09/21/iOS11-tableView%E8%AE%BE%E7%BD%AEsection%E5%A4%B4%E5%B0%BE%E9%AB%98%E5%BA%A6%E5%A4%B1%E6%95%88/" data-toggle="tooltip" data-placement="top" title="iOS11-tableView设置section头尾高度失效">&larr; Previous Post</a>
+                        <a href="/2018/03/21/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/" data-toggle="tooltip" data-placement="top" title="引起懒加载多次的问题思考">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/10/07/iPhoneX%E5%92%8CiOS-11%E7%9A%84%E9%80%82%E9%85%8D%E4%BD%A0%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/" data-toggle="tooltip" data-placement="top" title="iPhoneX和iOS-11的适配你可能会踩到的坑">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -462,8 +516,8 @@ return ;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2017/09/22/iOS获取相册中的所有图片，以及申请权限，总结自己踩到的坑";
-    var disqus_url = "http://localhost:4000/2017/09/22/iOS%E8%8E%B7%E5%8F%96%E7%9B%B8%E5%86%8C%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%9B%BE%E7%89%87-%E4%BB%A5%E5%8F%8A%E7%94%B3%E8%AF%B7%E6%9D%83%E9%99%90-%E6%80%BB%E7%BB%93%E8%87%AA%E5%B7%B1%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/";
+    var disqus_identifier = "/2018/05/06/xSwift从入门到放弃——开篇";
+    var disqus_url = "http://localhost:4000/2018/05/06/xSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
