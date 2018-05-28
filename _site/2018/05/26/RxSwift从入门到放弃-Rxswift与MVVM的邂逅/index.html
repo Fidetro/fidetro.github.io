@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>RxSwift从入门到放弃——开篇 - fidetro | FoolishTalk Blog</title>
+    <title>RxSwift从入门到放弃——Rxswift与MVVM的邂逅 - fidetro | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/2018/05/06/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/">
+    <link rel="canonical" href="http://localhost:4000/2018/05/26/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-Rxswift%E4%B8%8EMVVM%E7%9A%84%E9%82%82%E9%80%85/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -174,12 +174,12 @@ border: none;
                         <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
                         
                     </div>
-                    <h1>RxSwift从入门到放弃——开篇</h1>
+                    <h1>RxSwift从入门到放弃——Rxswift与MVVM的邂逅</h1>
                     
                     
                     <h2 class="subheading">Swift,RxSwift</h2>
                     
-                    <span class="meta">Posted by Fidetro on May 6, 2018</span>
+                    <span class="meta">Posted by Fidetro on May 26, 2018</span>
                 </div>
             </div>
         </div>
@@ -197,183 +197,86 @@ border: none;
                 post-container">
 
 				<h1 id="前言">前言</h1>
-<p>最近正好在刚好被安排到用RxSwift开发一个小项目，借着这个机会学习了一下。在这之前也有断断续续用了几次，最后总会因为各种各样的Xcode问题弃坑，感觉能坚持下来真的是真爱啊。。主要学起来就是两个问题：</p>
+<p>这篇出来的比较晚，最近事情也比较多，一直没时间写，这篇是作为开篇到RxSwift源码分析的过渡。<del>当然也是因为前几天我在公司内部分享ppt的内容也是这个</del>就把这篇当作番外篇看看好了[doge]</p>
+
+<h1 id="这篇聊点什么">这篇聊点什么？</h1>
 <ul>
-  <li>Xcode的自动补全十分不友好</li>
-  <li>RxSwift学习曲线陡峭</li>
+  <li>MVVM和RxSwift之间的关系</li>
+  <li>MVVM是什么？</li>
+  <li>RxSwift能解决MVVM什么问题？</li>
+  <li>RxSwift的看法</li>
 </ul>
 
-<p>自动补全的问题对刚入门的时候来说，真的影响很大，一开始对RxSwift的不了解，看了下网上的资料，准备大干一场的时候，写着写着，突然没补全，然后怀疑自己是不是哪里写错了，把网上的代码复制过来，又可以了，体验极其的差…</p>
+<h2 id="mvvm和rxswift之间的关系">MVVM和RxSwift之间的关系</h2>
+<p>我们在讲到RxSwift的时候，基本肯定会聊到MVVM，如果不太了解MVVM，可以先看后面<code class="highlighter-rouge">MVVM是什么？</code>。<br />
+首先MVVM需要有ViewModel，iOS原生并没有提供很好的数据绑定方式，使用RxSwift、RxCocoa提供了已经封装好了数据与UI绑定的方法，使得数据绑定简单了起来。<br />
+使用了RxSwift也并不是必须使用MVVM，使用MVVM架构，也并不是必须要使用RxSwift才能实现。</p>
 
-<p>在学习RxSwift的时候，或者本来就有看过相关的资料，肯定会对下面这张图的名词有所听闻。</p>
+<h2 id="mvvm是什么">MVVM是什么？</h2>
+<p>对于这个问题，我强烈推荐先去看看casa的<a href="http://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html">iOS应用架构谈 view层的组织和调用方案</a>，在这方面业内近年来已经都很少聊这方面的话题，我会讲讲我的看法，如果有什么错误，希望读者能在评论区指出。</p>
 
-<p><img src="https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/rxswift-know.png" alt="" /></p>
+<p>要聊MVVM是什么，就得先聊聊MVC。<br />
+<img src="https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/mvc.png" alt="" /></p>
 
-<p>不了解的同学看完应该是这样的表情的：<br />
-<img src="https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/black_question.png" alt="" /></p>
+<p>一张来自斯坦福大学iOS公开课很经典的图，每次第一节课，都会放上这张图，这个图已经很好说明了MVC的关系。</p>
 
-<p>看不懂没关系，看完这个系列的文章之后，就会懂了。</p>
-
-<h1 id="疑问">疑问</h1>
-<p>在学RxSwift之前，先提个问题，为什么要学习RxSwift？<br />
-这段是从RxSwift文档翻译过来的回答</p>
+<p>Model:</p>
 <ul>
-  <li>可组合，因为Rx就是这个意思</li>
-  <li>可复用，因为它是可组合的</li>
-  <li>清晰，因为声明都是不可变的，改变的只有数据</li>
-  <li>容易理解和简洁</li>
-  <li>稳定</li>
-  <li>没有状态，因为RxSwift将应用程序建模为单向数据流</li>
-  <li>不会有内存管理问题，因为内存管理变得简单</li>
+  <li>给Controller监听，提供数据</li>
 </ul>
 
-<p>总结：使用RxSwift可以简化代码，用更少而且清晰的代码，更专注于关心事件变化的本身</p>
+<p>View:</p>
+<ul>
+  <li>生成视图元素</li>
+  <li>处理内部和业务无关的逻辑、交互，以及动画</li>
+</ul>
 
-<p>说了这么多，RxSwift其实到底干了什么？
-RxSwift将监听变化的<code class="highlighter-rouge">事件</code>封装成了可观察的<code class="highlighter-rouge">序列</code>，因此在编程的时候，通过框架已经帮我们创建好的序列或者自己创建的序列，实现对序列的监听，只关心序列的变化。</p>
-<blockquote>
-  <p>注<br />
-可观察的事件：例如scrollView的contentOffset变化，textField每次输入时候变化的text等<br />
-序列：一个可被观察的对象，后面会详细讲到。</p>
-</blockquote>
+<p>Controller:</p>
+<ul>
+  <li>把View加载到Controller上</li>
+  <li>负责实现View的delegate、dataSource，拿到Model，做对应业务逻辑的处理</li>
+</ul>
 
-<h1 id="正文">正文</h1>
+<p>这种分工形成MVC的格局，然而在实际iOS开发中，往往会形成像下面的交互：<br />
+<img src="https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/mvcnotify.png" alt="" /><br />
+在一些业务、界面复杂，多逻辑交互的时候，View的地位很尴尬，他不能直接和Model通讯，只能依赖Controller，这样就导致大量的delegate、action都由Controller去实现，业务的代码放View里又不方便监听变化，这时候能怎么办？只能往Controller里面放，因为这样，Controller变得异常的庞大同时难以复用，也是因为这个原因，就有人提出MVVM，来帮Controller瘦身。<br />
+问题来了，MVVM是怎么帮Controller瘦身的呢？<br />
+<img src="https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/MCVMVMV.gif" alt="" /><br />
+通过这张图就可以看出，MVVM其实就是在MVC的基础上，抽离了Controller的业务逻辑，移到了ViewModel,他们之间其实是这样的关系：<br />
+<img src="https://foolishtalk.oss-cn-shenzhen.aliyuncs.com/mvvm_logic.png" alt="" /></p>
 
-<p>讲了这么多，talk is cheap,show me the code.</p>
+<p>View层和之前做的事情一样，Controller订阅viewModel的事件变化，将View绑定到ViewModel上，要注意在Rx的思想里，ViewModel并不是直接拿到View，而是View的观察者属性或者可观察的序列。另外Controller也会基于ViewModel事件的响应做对应的交互逻辑。</p>
 
-<p>监听collectionView的contentOffset，没有引入RxSwift的时候，我们需要实现以下方法：</p>
-<pre><code class="language-Swift"> func scrollViewDidScroll(_ scrollView: UIScrollView) {
-     //...
- }
-</code></pre>
-
-<p>引入RxSwift之后</p>
-<pre><code class="language-Swift">    let disposeBag = DisposeBag()
-
-
-       collectionView.rx
-                    .contentOffset
-                    .subscribe(onNext: { (point) in
-            //do something
-        }).disposed(by: disposeBag)
-</code></pre>
-<blockquote>
-  <p>注<br />
-disposeBag负责管理生命周期，相当于将当前的监听交给了disposeBag，大部分情况下disposeBag由Controller持有，并随控制器生命周期结束而结束</p>
-</blockquote>
-
-<p>KVO:</p>
-<pre><code class="language-Swift">view.rx.observe(CGRect.self, "frame")
-    .subscribe(onNext: { frame in
-        print("Got new frame \(frame)")
-    })
-    .disposed(by: disposeBag)
-</code></pre>
-
-<p>Target-Action:<br />
-传统的实现方法:</p>
-
-<pre><code class="language-Swift">    lazy var button: UIButton = {
-        var button = UIButton()
-        button.addTarget(self, action: #selector(click), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func click() {
-        // do something
+<h2 id="rxswift能解决mvvm什么问题">RxSwift能解决MVVM什么问题？</h2>
+<p>RxSwift为我们平时使用的UI控件提供了响应式函数，使用自带的响应式函数就能非常方便的进行数据绑定。 
+例如我们实现了一个选择体重尺子功能的View：<br />
+以前的做法：</p>
+<pre><code class="language-Swift">    func scrollRuleValue(collectionView: UICollectionView, value: CGFloat) {
+        if collectionView == containerView.weightRuleView.collectionView {
+            containerView.weightLabel.text = "\(value)kg"
+        }
     }
 </code></pre>
-
-<pre><code class="language-Swift">button.rx
-    .controlEvent(.touchUpInside)
-    .subscribe(onNext: {  () in
-    //..touchUp
-
-        }).disposed(by: disposeBag)
-
+<p>利用RxSwift的特性：</p>
+<pre><code class="language-Swift">        containerView.weightRuleView.observerValue.map { (value) -&gt; String in
+            return "\(value)kg"
+            }.bind(to: containerView.weightLabel.rx.text).disposed(by: disposeBag)
 </code></pre>
-
-<p>上面的都是简单的例子应用，下面直接用登录功能举例示例代码，<a href="https://github.com/Fidetro/rx-sample-code">代码</a>已经传到GitHub上了。<br />
-要实现的功能：点击按钮的时候，判断用户名和密码是否合法，然后请求，拿到结果。</p>
+<p>这行代码的意思：</p>
 <ol>
-  <li>创建一个ViewModel
-    <pre><code class="language-Swift">class LoginViewModel: NSObject {
- //由Controller负责订阅loginResult，得到登录结果
- let loginResult: Observable&lt;Bool&gt;
-}
-</code></pre>
-  </li>
-  <li>初始化loginResult
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> init(input: (username: Observable&lt;String&gt;, password: Observable&lt;String&gt;, touchUp: ControlEvent&lt;()&gt;)) {
-     //将username和passowrd变形为Observable&lt;(String,String)&gt;
-     let usernameAndPassword = Observable.combineLatest(input.username, input.password) {
-         ($0, $1)
-     }
-     //初始化loginResult对象
-     loginResult = input.touchUp.withLatestFrom(usernameAndPassword).flatMap { (username,password) -&gt; Observable&lt;Bool&gt; in  
-
-         //简单的对用户名和密码做校验
-         guard  username.count &gt; 6 else{
-             return Observable.just(false)
-         }
-
-         guard  password.count &gt; 6 else{
-             return Observable.just(false)
-         }
-
-         return Observable.create { (observer) -&gt; Disposable in
-             //延时1s模拟异步请求登录成功
-             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
-                 observer.onNext(true)
-             })
-             return Disposables.create {}
-         }
-     }        
- }
-</code></pre></div>    </div>
-  </li>
-  <li>在Controller监听点击后登录的结果：
-    <pre><code class="language-Swift"> @IBOutlet weak var loginButton: UIButton!
- @IBOutlet weak var usernameTextField: UITextField!
- @IBOutlet weak var passwordTextField: UITextField!
- let disposeBag = DisposeBag()
-    
-    
- override func viewDidLoad() {
-     super.viewDidLoad()
-     let viewModel = LoginViewModel.init(input: (username: usernameTextField.rx.text.orEmpty.asObservable(),
-                                                 password: passwordTextField.rx.text.orEmpty.asObservable(),
-                                                 touchUp: loginButton.rx.controlEvent(.touchUpInside)))
-        
-     viewModel.loginResult.subscribe(onNext: { (result) in
-         if result == true {
-             print("登录成功")
-         }else{
-             print("登录失败")
-         }
-     }).disposed(by: disposeBag)
- }
-</code></pre>
-  </li>
+  <li>监听ruleView的observerValue序列发送;</li>
+  <li>将发送变化的体重值从CGFloat类型格式化成我们需要的字符串;</li>
+  <li>将尺子滑动变化的序列绑定到需要显示体重的label上;</li>
 </ol>
 
-<p>这样一个登录功能就基本完成了，相信看完上面的代码，肯定也会有很多疑问。</p>
+<p>这是一个在Cocoa编程里最常见的委托代理模式，将视图变化交给Controller去处理，再去更新视图。而RxSwift只需要让ruleView创建一个发送数据的序列，再由Controller与需要更新的视图进行绑定，这样就能节省大量在写代理时候的代码。</p>
 
-<ol>
-  <li>
-    <p><code class="highlighter-rouge">Observable.just(...)</code>和<code class="highlighter-rouge">Observable.create { }</code>是干什么用的？ <br />
-这些方法都是拿来将对象包装成可观察的序列，更多的构建方法可以参考<a href="https://beeth0ven.github.io/RxSwift-Chinese-Documentation/content/decision_tree.html">这里</a></p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">observer.onNext(...)</code>又是干什么用的？<br />
-observer是<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>类型，当使用<code class="highlighter-rouge">Observable.create { }</code>创建序列的时候，闭包内会返回<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>对象,<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>对象允许你通过<code class="highlighter-rouge">.onNext(...)</code>发出一个元素，<code class="highlighter-rouge">onError(...)</code>发出一个错误，<code class="highlighter-rouge">onCompleted()</code>通知任务已经完成。</p>
-  </li>
-</ol>
+<p>利用已经提供好的属性，既避免了ViewModel直接拿到View，可以随意的更改View属性，同时还节省了大量代码。另外一方面，由于业务逻辑已经都移到了ViewModel，对于业务的单元测试也变得极其简单，对于RxSwift的单元测试，可以了解一下<code class="highlighter-rouge">RxTest</code>和<code class="highlighter-rouge">RxBlocking</code>，本文就不展开说了。</p>
 
-<h1 id="参考">参考</h1>
-<p><a href="https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Why.md">RxSwift官方文档</a><br />
-<a href="https://beeth0ven.github.io/RxSwift-Chinese-Documentation/">RxSwift中文文档</a></p>
-
+<h2 id="rxswift的看法">RxSwift的看法</h2>
+<p>个人觉得，RxSwift给我们带来最大影响的Reactive思想，OOP告诉我们，在编写应用程序的时候，要考虑的是对象有什么，对象做什么，对象与对象之间的联系，而Reactive思想将对象所做的都看成是数据流，我们关注的是事件本身的影响，学习一个新的编程范式，还是非常有意思的。<br />
+当然RxSwift也会有不好的地方，RxSwift对工程的侵入性非常的大，引入RxSwift会让整个程序代码都焕然一新，和过去Cocoa开发方式截然不同，这样也导致Rx新手难以理解其中代码，可以说是极度不友好了。<br />
+不过说了这么说，Reactive其中的响应式思想还是很值得我们去学习的，对于拿来开发项目，小项目可以拿来写着玩耍，体会新的编程范式，大型项目，就得做好踩坑的心理准备了。</p>
 
 
                 <hr>
@@ -401,13 +304,9 @@ observer是<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>类型�
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/03/21/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/" data-toggle="tooltip" data-placement="top" title="引起懒加载多次的问题思考">&larr; Previous Post</a>
+                        <a href="/2018/05/06/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/" data-toggle="tooltip" data-placement="top" title="RxSwift从入门到放弃——开篇">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2018/05/26/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-Rxswift%E4%B8%8EMVVM%E7%9A%84%E9%82%82%E9%80%85/" data-toggle="tooltip" data-placement="top" title="RxSwift从入门到放弃——Rxswift与MVVM的邂逅">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -524,8 +423,8 @@ observer是<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>类型�
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2018/05/06/RxSwift从入门到放弃——开篇";
-    var disqus_url = "http://localhost:4000/2018/05/06/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/";
+    var disqus_identifier = "/2018/05/26/RxSwift从入门到放弃——Rxswift与MVVM的邂逅";
+    var disqus_url = "http://localhost:4000/2018/05/26/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-Rxswift%E4%B8%8EMVVM%E7%9A%84%E9%82%82%E9%80%85/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

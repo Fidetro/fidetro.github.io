@@ -154,6 +154,31 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2017/12/07/swift%E4%BD%BF%E7%94%A8protocol%E7%9A%84%E6%97%B6%E5%80%99%E5%87%BA%E7%8E%B0%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8/">
+        <h2 class="post-title">
+            swift使用protocol的时候出现循环引用
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Swift，iOS，Protocol
+        </h3>
+        
+        <div class="post-content-preview">
+            在给Alamofire用protocol封装一层业务的时候，定义了以下的协议和方法
+protocol BaseRequest {
+}
+extension FIDRequest {
+    func complete(_ completionHandler: @escaping ((DataResponse&lt;Any&gt;) -&gt; ())) {
+        let url = ...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on December 7, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2017/10/22/%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%81%9ASwift-Package-Manager/">
         <h2 class="post-title">
             自己动手做Swift-Package-Manager
@@ -365,43 +390,6 @@ Photos参考了这里获取系统相册的所有照片
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2017/08/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E4%B8%8A%E9%83%A8%E7%BD%B2Perfect%E6%9C%8D%E5%8A%A1%E5%99%A8/">
-        <h2 class="post-title">
-            如何在阿里云上部署Perfect服务器
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Swift，Perfect-Server
-        </h3>
-        
-        <div class="post-content-preview">
-            
-  下面的文章是基于Perfect v2写的，支持的是swift 3，10月11号Perfect发布了v3版本，支持swift 4，如果希望服务器支持swift 4，可以配置部分参考Perfect v2版本服务器升级v3
-
-
-如何在阿里云上部署Perfect服务器
-阿里云地址
-
-  
-    登录自己阿里云的账号，进入控制台 
-
-  
-  
-    创建实例 
-
-  
-
-
-这篇相当于总结了...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Fidetro on August 21, 2017
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -464,7 +452,7 @@ Photos参考了这里获取系统相册的所有照片
                             
                         
                             
-                                <a href="/tags/#Swift" title="Swift" rel="11">
+                                <a href="/tags/#Swift" title="Swift" rel="12">
                                     Swift
                                 </a>
                             
@@ -489,6 +477,10 @@ Photos参考了这里获取系统相册的所有照片
                         
                             
                         
+                            
+                                <a href="/tags/#RxSwift" title="RxSwift" rel="2">
+                                    RxSwift
+                                </a>
                             
                         
                     </div>

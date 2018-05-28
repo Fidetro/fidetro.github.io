@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "RxSwift从入门到放弃——开篇"
-subtitle:   "RxSwift"
+subtitle:   "Swift,RxSwift"
 date:       2018-5-6
 author:     "Fidetro"
 header-img: "img/post-bg-unsplash.jpg"
