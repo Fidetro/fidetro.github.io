@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 26 Jun 2018 15:22:59 +0800</pubDate>
-    <lastBuildDate>Tue, 26 Jun 2018 15:22:59 +0800</lastBuildDate>
+    <pubDate>Tue, 26 Jun 2018 15:26:35 +0800</pubDate>
+    <lastBuildDate>Tue, 26 Jun 2018 15:26:35 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
@@ -650,8 +650,8 @@ public protocol PetRequest : PSea {
 
 </description>
         <pubDate>Fri, 09 Mar 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/03/09/aasdasd/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/03/09/aasdasd/</guid>
+        <link>http://www.foolishtalk.org/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/</guid>
         
         <category>Swift-Tips</category>
         
