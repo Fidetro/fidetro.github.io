@@ -12,7 +12,7 @@
 
     <title>用Swift打造一个轻量级POP的网络请求库 - fidetro | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2018/03/09/aasdasd/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -252,31 +252,29 @@ if (model.errorCode == 0) {
 <p><code class="highlighter-rouge">PSea</code>如果说是网络请求库可能不太准确，它更像是一种思想，它依赖<code class="highlighter-rouge">Alamofire</code>,介于网络层和业务通用层之间的媒介。在这基础上，我给他增加了链式，让他更加Swiftly一点。</p>
 
 <ol>
-  <li>
-    <p>基本设置
-```Swift
-public protocol PSea: class {</p>
-
-    <p>/// 请求方式
-func method() -&gt; HTTPMethod
-/// 设置域名
-func baseURL() -&gt; String
-/// 请求路由
-func requestURI() -&gt; String
-/// 请求参数
-func parameters() -&gt; Parameters?
-/// 请求头
-func headers() -&gt; HTTPHeaders?
-/// 参数编码
-func encoding() -&gt; ParameterEncoding</p>
-  </li>
+  <li>基本设置</li>
 </ol>
 
-<p>}</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-这部分是http最基本的支持，用法如下：
-```Swift
-    public func headers() -&gt; HTTPHeaders? {
+<pre><code class="language-Swift">public protocol PSea: class {
+
+    /// 请求方式
+    func method() -&gt; HTTPMethod
+    /// 设置域名
+    func baseURL() -&gt; String
+    /// 请求路由
+    func requestURI() -&gt; String
+    /// 请求参数
+    func parameters() -&gt; Parameters?
+    /// 请求头
+    func headers() -&gt; HTTPHeaders?
+    /// 参数编码
+    func encoding() -&gt; ParameterEncoding
+    
+}
+</code></pre>
+
+<p>这部分是http最基本的支持，用法如下：</p>
+<pre><code class="language-Swift">    public func headers() -&gt; HTTPHeaders? {
         return ["Content-type":"application/json",
                 "Accept":"application/json"]
     }
@@ -286,7 +284,7 @@ func encoding() -&gt; ParameterEncoding</p>
     public func parameters() -&gt; Parameters? {
         return ["hello":"world"]
     }
-</code></pre></div></div>
+</code></pre>
 
 <pre><code class="language-Swift">    func complete(_ completionHandler: @escaping ((DataResponse&lt;Any&gt;) -&gt; ()))
 </code></pre>
@@ -593,8 +591,8 @@ public protocol PetRequest : PSea {
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2018/03/09/用Swift打造一个轻量级POP的网络请求库";
-    var disqus_url = "http://www.foolishtalk.org/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/";
+    var disqus_identifier = "/2018/03/09/aasdasd";
+    var disqus_url = "http://www.foolishtalk.org/2018/03/09/aasdasd/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

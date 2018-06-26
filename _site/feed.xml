@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 29 May 2018 17:22:31 +0800</pubDate>
-    <lastBuildDate>Tue, 29 May 2018 17:22:31 +0800</lastBuildDate>
+    <pubDate>Tue, 26 Jun 2018 15:22:59 +0800</pubDate>
+    <lastBuildDate>Tue, 26 Jun 2018 15:22:59 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
@@ -459,31 +459,29 @@ if (model.errorCode == 0) {
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;PSea&lt;/code&gt;如果说是网络请求库可能不太准确，它更像是一种思想，它依赖&lt;code class=&quot;highlighter-rouge&quot;&gt;Alamofire&lt;/code&gt;,介于网络层和业务通用层之间的媒介。在这基础上，我给他增加了链式，让他更加Swiftly一点。&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;基本设置
-```Swift
-public protocol PSea: class {&lt;/p&gt;
-
-    &lt;p&gt;/// 请求方式
-func method() -&amp;gt; HTTPMethod
-/// 设置域名
-func baseURL() -&amp;gt; String
-/// 请求路由
-func requestURI() -&amp;gt; String
-/// 请求参数
-func parameters() -&amp;gt; Parameters?
-/// 请求头
-func headers() -&amp;gt; HTTPHeaders?
-/// 参数编码
-func encoding() -&amp;gt; ParameterEncoding&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;基本设置&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;}&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-这部分是http最基本的支持，用法如下：
-```Swift
-    public func headers() -&amp;gt; HTTPHeaders? {
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;public protocol PSea: class {
+
+    /// 请求方式
+    func method() -&amp;gt; HTTPMethod
+    /// 设置域名
+    func baseURL() -&amp;gt; String
+    /// 请求路由
+    func requestURI() -&amp;gt; String
+    /// 请求参数
+    func parameters() -&amp;gt; Parameters?
+    /// 请求头
+    func headers() -&amp;gt; HTTPHeaders?
+    /// 参数编码
+    func encoding() -&amp;gt; ParameterEncoding
+    
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这部分是http最基本的支持，用法如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    public func headers() -&amp;gt; HTTPHeaders? {
         return [&quot;Content-type&quot;:&quot;application/json&quot;,
                 &quot;Accept&quot;:&quot;application/json&quot;]
     }
@@ -493,7 +491,7 @@ func encoding() -&amp;gt; ParameterEncoding&lt;/p&gt;
     public func parameters() -&amp;gt; Parameters? {
         return [&quot;hello&quot;:&quot;world&quot;]
     }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    func complete(_ completionHandler: @escaping ((DataResponse&amp;lt;Any&amp;gt;) -&amp;gt; ()))
 &lt;/code&gt;&lt;/pre&gt;
@@ -652,8 +650,8 @@ public protocol PetRequest : PSea {
 
 </description>
         <pubDate>Fri, 09 Mar 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/</guid>
+        <link>http://www.foolishtalk.org/2018/03/09/aasdasd/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/03/09/aasdasd/</guid>
         
         <category>Swift-Tips</category>
         
