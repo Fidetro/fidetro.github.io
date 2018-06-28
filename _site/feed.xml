@@ -3,10 +3,10 @@
   <channel>
     <title>FoolishTalk</title>
     <description></description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 28 Jun 2018 10:24:47 +0800</pubDate>
-    <lastBuildDate>Thu, 28 Jun 2018 10:24:47 +0800</lastBuildDate>
+    <link>http://www.foolishtalk.org/</link>
+    <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Thu, 28 Jun 2018 11:34:37 +0800</pubDate>
+    <lastBuildDate>Thu, 28 Jun 2018 11:34:37 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
@@ -126,8 +126,8 @@
 &lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-14.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 27 Jun 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/06/27/%E4%BD%BF%E7%94%A8Perfect%E9%83%A8%E7%BD%B2iOS%E6%8E%A8%E9%80%81/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/06/27/%E4%BD%BF%E7%94%A8Perfect%E9%83%A8%E7%BD%B2iOS%E6%8E%A8%E9%80%81/</guid>
+        <link>http://www.foolishtalk.org/2018/06/27/%E4%BD%BF%E7%94%A8Perfect%E9%83%A8%E7%BD%B2iOS%E6%8E%A8%E9%80%81/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/06/27/%E4%BD%BF%E7%94%A8Perfect%E9%83%A8%E7%BD%B2iOS%E6%8E%A8%E9%80%81/</guid>
         
         <category>Perfect-Server</category>
         
@@ -221,8 +221,8 @@
 不过说了这么说，Reactive其中的响应式思想还是很值得我们去学习的，对于拿来开发项目，小项目可以拿来写着玩耍，体会新的编程范式，大型项目，就得做好踩坑的心理准备了。&lt;/p&gt;
 </description>
         <pubDate>Sat, 26 May 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/05/26/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-Rxswift%E4%B8%8EMVVM%E7%9A%84%E9%82%82%E9%80%85/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/05/26/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-Rxswift%E4%B8%8EMVVM%E7%9A%84%E9%82%82%E9%80%85/</guid>
+        <link>http://www.foolishtalk.org/2018/05/26/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-Rxswift%E4%B8%8EMVVM%E7%9A%84%E9%82%82%E9%80%85/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/05/26/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-Rxswift%E4%B8%8EMVVM%E7%9A%84%E9%82%82%E9%80%85/</guid>
         
         <category>RxSwift</category>
         
@@ -413,8 +413,8 @@ observer是&lt;code class=&quot;highlighter-rouge&quot;&gt;AnyObserver&amp;lt;..
 
 </description>
         <pubDate>Sun, 06 May 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/05/06/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/05/06/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/</guid>
+        <link>http://www.foolishtalk.org/2018/05/06/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/05/06/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/</guid>
         
         <category>RxSwift</category>
         
@@ -484,8 +484,8 @@ observer是&lt;code class=&quot;highlighter-rouge&quot;&gt;AnyObserver&amp;lt;..
 &lt;p&gt;从这个问题，可以猜测Controller的view在生成的时候就会触发&lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt;,为了避免出现这样的问题，还是应该尽量少在Controller的初始化方法里进行操作。&lt;/p&gt;
 </description>
         <pubDate>Wed, 21 Mar 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/03/21/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/03/21/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/</guid>
+        <link>http://www.foolishtalk.org/2018/03/21/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/03/21/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/</guid>
         
         <category>问题随笔</category>
         
@@ -520,8 +520,8 @@ observer是&lt;code class=&quot;highlighter-rouge&quot;&gt;AnyObserver&amp;lt;..
 &lt;p&gt;很多人都说，程序员三年是一个转折点，从目前附近的朋友了解到的情况，似乎的确是这样的。我打算给自己立flag，距离自己三年，还差大概一年二个多月的样子，学习语言上，应该不再会被别的分心，专心的好好搞一下C，能读读源码的水平吧，基础上，希望半年内把«http权威指南»和«深入理解计算机系统»读完吧，今年一定填完上心留下的坑，希望到了三年的时候去BAT面试的自己，依旧能因为自身的水平，而保持过往面试的从容和自信，不留遗憾。&lt;/p&gt;
 </description>
         <pubDate>Sun, 18 Mar 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/03/18/2018/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/03/18/2018/</guid>
+        <link>http://www.foolishtalk.org/2018/03/18/2018/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/03/18/2018/</guid>
         
         <category>杂谈</category>
         
@@ -777,8 +777,8 @@ public protocol PetRequest : PSea {
 
 </description>
         <pubDate>Fri, 09 Mar 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/</guid>
+        <link>http://www.foolishtalk.org/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/</guid>
         
         <category>Swift-Tips</category>
         
@@ -928,8 +928,8 @@ print(count)//28
 &lt;/code&gt;&lt;/pre&gt;
 </description>
         <pubDate>Tue, 06 Mar 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/03/06/Swift%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/03/06/Swift%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+        <link>http://www.foolishtalk.org/2018/03/06/Swift%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/03/06/Swift%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
         
         <category>Swift-Tips</category>
         
@@ -1042,8 +1042,8 @@ print(count)//28
 &lt;/code&gt;&lt;/pre&gt;
 </description>
         <pubDate>Tue, 06 Mar 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/03/06/AVCaptureSession%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%B8%E6%9C%BA%E8%8E%B7%E5%8F%96%E7%9A%84UIImage%E6%97%8B%E8%BD%AC%E6%97%A0%E6%95%88/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/03/06/AVCaptureSession%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%B8%E6%9C%BA%E8%8E%B7%E5%8F%96%E7%9A%84UIImage%E6%97%8B%E8%BD%AC%E6%97%A0%E6%95%88/</guid>
+        <link>http://www.foolishtalk.org/2018/03/06/AVCaptureSession%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%B8%E6%9C%BA%E8%8E%B7%E5%8F%96%E7%9A%84UIImage%E6%97%8B%E8%BD%AC%E6%97%A0%E6%95%88/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/03/06/AVCaptureSession%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%B8%E6%9C%BA%E8%8E%B7%E5%8F%96%E7%9A%84UIImage%E6%97%8B%E8%BD%AC%E6%97%A0%E6%95%88/</guid>
         
         <category>iOS</category>
         
@@ -1114,8 +1114,8 @@ print(&quot;12345678&quot;[100])  //nil
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Mon, 29 Jan 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+        <link>http://www.foolishtalk.org/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
         
         <category>Swift-Tips</category>
         
@@ -1228,8 +1228,8 @@ print(&quot;12345678&quot;[100])  //nil
 &lt;p&gt;物联网除了还会有很多关于网络层的小坑以外，别的就和其他领域的也差不多了，所以也不想说太多老生常谈的东西，就这样。&lt;/p&gt;
 </description>
         <pubDate>Tue, 16 Jan 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/01/16/%E6%B5%85%E8%B0%88iOS%E5%9C%A8%E7%89%A9%E8%81%94%E7%BD%91%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E6%9E%B6%E6%9E%84/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/01/16/%E6%B5%85%E8%B0%88iOS%E5%9C%A8%E7%89%A9%E8%81%94%E7%BD%91%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E6%9E%B6%E6%9E%84/</guid>
+        <link>http://www.foolishtalk.org/2018/01/16/%E6%B5%85%E8%B0%88iOS%E5%9C%A8%E7%89%A9%E8%81%94%E7%BD%91%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E6%9E%B6%E6%9E%84/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/01/16/%E6%B5%85%E8%B0%88iOS%E5%9C%A8%E7%89%A9%E8%81%94%E7%BD%91%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E6%9E%B6%E6%9E%84/</guid>
         
         <category>架构</category>
         
