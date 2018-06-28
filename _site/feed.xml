@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 28 Jun 2018 09:37:48 +0800</pubDate>
-    <lastBuildDate>Thu, 28 Jun 2018 09:37:48 +0800</lastBuildDate>
+    <pubDate>Thu, 28 Jun 2018 10:18:48 +0800</pubDate>
+    <lastBuildDate>Thu, 28 Jun 2018 10:18:48 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
@@ -22,39 +22,39 @@
 &lt;ol&gt;
   &lt;li&gt;
     &lt;p&gt;如果没创建app id，先去把app id创建好&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-1.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-1.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;创建推送证书&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-3.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-3.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;然后下一步，选择刚刚对应创建的app id&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;到了这步之后需要在自己电脑上创建CSR文件&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-6.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-6.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;选择刚刚创建的证书，然后下一步，下载下来  &lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-8.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-8.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;双击打开刚刚下载下来的证书,进入钥匙串访问，导出秘钥&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-9.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-9.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;创建auth key和记录key id(后面要用),下载下来会得到一个xx.p8的文件&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-10.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-11.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-10.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-11.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;去&lt;a href=&quot;https://developer.apple.com/account&quot;&gt;Account&lt;/a&gt;页面记录team id(后面要用)&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-12.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-12.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
@@ -99,7 +99,7 @@
 &lt;ol&gt;
   &lt;li&gt;
     &lt;p&gt;接下来在iOS的app上打开消息推送选项：
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-13.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-13.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;在Appdelegate请求权限
     &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt; func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -&amp;gt; Bool {
@@ -123,7 +123,7 @@
 &lt;/ol&gt;
 
 &lt;p&gt;大功告成！
-&lt;img src=&quot;http://photocloud.foolishtalk.org/perfect-notification-14.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-14.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 27 Jun 2018 00:00:00 +0800</pubDate>
         <link>http://www.foolishtalk.org/2018/06/27/%E4%BD%BF%E7%94%A8Perfect%E9%83%A8%E7%BD%B2iOS%E6%8E%A8%E9%80%81/</link>
@@ -158,7 +158,7 @@
 &lt;p&gt;对于这个问题，我强烈推荐先去看看casa的&lt;a href=&quot;http://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html&quot;&gt;iOS应用架构谈 view层的组织和调用方案&lt;/a&gt;，在这方面业内近年来已经都很少聊这方面的话题，我会讲讲我的看法，如果有什么错误，希望读者能在评论区指出。&lt;/p&gt;
 
 &lt;p&gt;要聊MVVM是什么，就得先聊聊MVC。&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/mvc.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/mvc.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;一张来自斯坦福大学iOS公开课很经典的图，每次第一节课，都会放上这张图，这个图已经很好说明了MVC的关系。&lt;/p&gt;
 
@@ -180,12 +180,12 @@
 &lt;/ul&gt;
 
 &lt;p&gt;这种分工形成MVC的格局，然而在实际iOS开发中，往往会形成像下面的交互：&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/mvcnotify.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/mvcnotify.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
 在一些业务、界面复杂，多逻辑交互的时候，View的地位很尴尬，他不能直接和Model通讯，只能依赖Controller，这样就导致大量的delegate、action都由Controller去实现，业务的代码放View里又不方便监听变化，这时候能怎么办？只能往Controller里面放，因为这样，Controller变得异常的庞大同时难以复用，也是因为这个原因，就有人提出MVVM，来帮Controller瘦身。&lt;br /&gt;
 问题来了，MVVM是怎么帮Controller瘦身的呢？&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/MCVMVMV.gif&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/MCVMVMV.gif&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
 通过这张图就可以看出，MVVM其实就是在MVC的基础上，抽离了Controller的业务逻辑，移到了ViewModel,他们之间其实是这样的关系：&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/mvvm_logic.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/mvvm_logic.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;View层和之前做的事情一样，Controller订阅viewModel的事件变化，将View绑定到ViewModel上，要注意在Rx的思想里，ViewModel并不是直接拿到View，而是View的观察者属性或者可观察的序列。另外Controller也会基于ViewModel事件的响应做对应的交互逻辑。&lt;/p&gt;
 
@@ -244,10 +244,10 @@
 
 &lt;p&gt;在学习RxSwift的时候，或者本来就有看过相关的资料，肯定会对下面这张图的名词有所听闻。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://photocloud.foolishtalk.org/rxswift-know.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/rxswift-know.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;不了解的同学看完应该是这样的表情的：&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/black_question.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/black_question.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;看不懂没关系，看完这个系列的文章之后，就会懂了。&lt;/p&gt;
 
@@ -475,11 +475,11 @@ observer是&lt;code class=&quot;highlighter-rouge&quot;&gt;AnyObserver&amp;lt;..
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;问题解决！&lt;br /&gt;
 为了方便解释，我特地画了个图来解释第一次代码的生命周期：&lt;br /&gt;
-&lt;img src=&quot;http://photocloud.foolishtalk.org/2018-3-21-lazy-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/2018-3-21-lazy-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;换到第二个方式之后，就简单多了：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://photocloud.foolishtalk.org/2018-3-21-lazy-2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/2018-3-21-lazy-2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;从这个问题，可以猜测Controller的view在生成的时候就会触发&lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt;,为了避免出现这样的问题，还是应该尽量少在Controller的初始化方法里进行操作。&lt;/p&gt;
 </description>
@@ -511,7 +511,7 @@ observer是&lt;code class=&quot;highlighter-rouge&quot;&gt;AnyObserver&amp;lt;..
 &lt;h1 id=&quot;成长&quot;&gt;成长&lt;/h1&gt;
 &lt;p&gt;当了程序员之后，就觉得自己学习没有停过，可有效的，可持续的使用的知识在最近这段时间却很少，一开始我以为只是因为自己的学习又出现了疲倦期，然后找了个周末去了趟珠海，坐在海边看了2天海，浮躁的心思的确平稳了下去。可回到来没几天，还是没静下心来。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/IMG_3620%2820180121-092122%29.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/IMG_3620%2820180121-092122%29.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;现在想想，还是学习方法出了问题。最初因为在弄swift服务端的时候，学了下shell，觉得脚本很方便，然后跑去看了几天python，后来微信的&lt;code class=&quot;highlighter-rouge&quot;&gt;WCDB&lt;/code&gt;Swift版也出来了，据说还是改了sqlite源码上做的，比起自己在&lt;code class=&quot;highlighter-rouge&quot;&gt;FMDB&lt;/code&gt;基础上做要厉害多了，然后又跑去系统的学了下C语言，打算阅读源码，后来刚好自己的SS客户端出了问题，那时候在想，如果这客户端是我写的多好，那样我就知道是哪里出问题了，抱着这个想法又去写了个SS客户端，在写的时候才真正认识到自己在网络编程这一块的知识是有多么的薄弱，很多没有概念，然后又下决心去补网络编程，最后虽然是借助&lt;code class=&quot;highlighter-rouge&quot;&gt;NEKit&lt;/code&gt;完成了，然而原理都不懂。&lt;br /&gt;
 有想法去学这些，我觉得挺好的，但是想法变得太快，这几件事情都让我明白一点，自己现在的基础知识是有多么的匮乏。&lt;/p&gt;
@@ -1135,10 +1135,10 @@ print(&quot;12345678&quot;[100])  //nil
   &lt;li&gt;WiFi&lt;/li&gt;
   &lt;li&gt;蓝牙&lt;br /&gt;
 而这两种表现形式，在做的事情无非就是：&lt;br /&gt;
-&lt;img src=&quot;http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/2345604-7134da016a716ebf.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/2345604-7134da016a716ebf.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/0C1F4A7B-90A5-4CB1-B51A-A06A48116480.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/0C1F4A7B-90A5-4CB1-B51A-A06A48116480.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;硬件和App之间如何通讯实现交互不属于本文讨论的范畴，因为其表现形式都会像上图一样。从代码层上来讲，通讯这部分都应该封装成一个类，外部无需知道内容是如何实现，业务方只需要得到设备返回的数据以及将数据发送给设备就可以了，类似于下面这样:&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@protocol&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DeviceDataManagerDelegate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
@@ -1177,7 +1177,7 @@ print(&quot;12345678&quot;[100])  //nil
   &lt;li&gt;不需要再管理通知的监听和移除,也因此避免了通知带来的没有释放控制器的问题;&lt;/li&gt;
   &lt;li&gt;通过&lt;code class=&quot;highlighter-rouge&quot;&gt;AOP&lt;/code&gt;，代码会变得更加整洁和少;&lt;br /&gt;
 空说无益，还是直接上图吧&lt;br /&gt;
-&lt;img src=&quot;http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/D45F4AE5-5D7F-4C98-9AB9-B26886FFC8FF.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/D45F4AE5-5D7F-4C98-9AB9-B26886FFC8FF.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AOP&lt;/code&gt;的框架，我看了网上也有很多，大部分是在&lt;a href=&quot;https://github.com/steipete/Aspects&quot;&gt;Aspects&lt;/a&gt;的基础上封装的，更推荐直接去使用&lt;code class=&quot;highlighter-rouge&quot;&gt;Aspects&lt;/code&gt;,像是一些发送队列，几秒内只接收一个，几秒内只处理最后一个这种需求，都比较方便，当然也用&lt;code class=&quot;highlighter-rouge&quot;&gt;RAC&lt;/code&gt;或者&lt;code class=&quot;highlighter-rouge&quot;&gt;RxSwift&lt;/code&gt;处理，见仁见智。&lt;/p&gt;

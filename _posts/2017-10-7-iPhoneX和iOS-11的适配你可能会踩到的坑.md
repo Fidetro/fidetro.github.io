@@ -10,15 +10,15 @@ tags:
 - iOS
 ---
 这几天都在看关于适配的问题，看WWDC的时候，哇这个功能好酷炫，API变得好方便，适配一定很方便，然后自己用的时候一看这些方法后面带着`API_AVAILABLE(ios(11.0),tvos(11.0))`
-![](http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/2357E228-C575-46EF-AFEF-C28514BBD380.png)
+![](http://images.foolishtalk.org/2357E228-C575-46EF-AFEF-C28514BBD380.png)
 那么iPhone X究竟给我们带来了什么，导致适配变得麻烦呢？凶手就是这个刘海！
-![](http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/C4439A59-7652-49B4-A437-31D56F8744AA.png)
+![](http://images.foolishtalk.org/C4439A59-7652-49B4-A437-31D56F8744AA.png)
 
 在没有iPhoneX的时代，我们的statusBar是20pt，navigationBar是44pt，iPhone X的statusBar变成了44pt，navigationBar是44pt
 
-![](http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/0B24C760-58CD-40DB-B212-A1DF9A65ED40.png)
+![](http://images.foolishtalk.org/0B24C760-58CD-40DB-B212-A1DF9A65ED40.png)
 为了方便我们适配，引入了`Safe Area`的概念，根据苹果最新的[人机交互指南](https://developer.apple.com/ios/human-interface-guidelines/overview/iphone-x/)中我们布局UI时候应该在`Safe Area`中而不应该超出`Safe Area`的范围
-![](http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/764E4AA7-A3BE-4782-AACF-69E4EBE4CAF7.png)
+![](http://images.foolishtalk.org/764E4AA7-A3BE-4782-AACF-69E4EBE4CAF7.png)
 说完这些坑之后，也该讲讲怎么适配了，talk is cheap，show me the code！
  在iOS 11发布后，Masonry也更新了最新适配的方法，增加了以下属性方便我们适配
 ```
@@ -36,9 +36,9 @@ tags:
 ```
 但是这些属性只有在iOS 11中才可以使用，所以如果要适配从iOS 8开始，做下面的效果得写判断
 
-![](http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/E6C62EB6-71E0-4253-80FC-EFBEE4657537.png)
+![](http://images.foolishtalk.org/E6C62EB6-71E0-4253-80FC-EFBEE4657537.png)
 
-![](http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/C9391B5F-D768-48F7-B003-0E7964D48820.png)
+![](http://images.foolishtalk.org/C9391B5F-D768-48F7-B003-0E7964D48820.png)
 
 ```
 - (void)viewDidLoad {
@@ -60,8 +60,8 @@ tags:
 `@available(iOS 11.0, *)`只是判断iOS系统版本，并不是判断是否iPhoneX，即时是iPhoneX以下，只要升到了iOS11也是可以用`SafeArea`的
 在iOS 11之前，ViewController中的`automaticallyAdjustsScrollViewInsets`是默认`YES`的，这样会导致在有导航栏的情况下，第一个subView如果`UIScrollView`的子类，例如`UITableView`的时候，`TableView`的本身不会做偏移，但是`UITableViewWrapperView`会往下偏移到导航栏下面，让导航栏不会发生挡住TableView内容的情况。但是在iOS11后，`automaticallyAdjustsScrollViewInsets`被废弃了，这个属性被移到了`UIScrollView`中的`contentInsetAdjustmentBehavior`，大家应该都遇过导航栏是透明的但是导航栏的Item是显示的需求，如果要做这种效果
 
-![](http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/5759B33B-9C3F-485A-801C-32C421E0023F.png)
-![](http://foolishtalk.oss-cn-shenzhen.aliyuncs.com/B7D623C5-CBF1-47A8-9D07-3EA684D8BBD9.png)
+![](http://images.foolishtalk.org/5759B33B-9C3F-485A-801C-32C421E0023F.png)
+![](http://images.foolishtalk.org/B7D623C5-CBF1-47A8-9D07-3EA684D8BBD9.png)
 ```
 - (void)viewDidLoad {
     [super viewDidLoad];

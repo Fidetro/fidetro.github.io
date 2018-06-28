@@ -28,7 +28,7 @@ tags:
 对于这个问题，我强烈推荐先去看看casa的[iOS应用架构谈 view层的组织和调用方案](http://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html)，在这方面业内近年来已经都很少聊这方面的话题，我会讲讲我的看法，如果有什么错误，希望读者能在评论区指出。  
 
 要聊MVVM是什么，就得先聊聊MVC。  
-![](http://photocloud.foolishtalk.org/mvc.png)    
+![](http://images.foolishtalk.org/mvc.png)    
 
 一张来自斯坦福大学iOS公开课很经典的图，每次第一节课，都会放上这张图，这个图已经很好说明了MVC的关系。  
 
@@ -44,12 +44,12 @@ Controller:
 - 负责实现View的delegate、dataSource，拿到Model，做对应业务逻辑的处理  
  
 这种分工形成MVC的格局，然而在实际iOS开发中，往往会形成像下面的交互：  
-![](http://photocloud.foolishtalk.org/mvcnotify.png)  
+![](http://images.foolishtalk.org/mvcnotify.png)  
 在一些业务、界面复杂，多逻辑交互的时候，View的地位很尴尬，他不能直接和Model通讯，只能依赖Controller，这样就导致大量的delegate、action都由Controller去实现，业务的代码放View里又不方便监听变化，这时候能怎么办？只能往Controller里面放，因为这样，Controller变得异常的庞大同时难以复用，也是因为这个原因，就有人提出MVVM，来帮Controller瘦身。  
 问题来了，MVVM是怎么帮Controller瘦身的呢？  
-![](http://photocloud.foolishtalk.org/MCVMVMV.gif)  
+![](http://images.foolishtalk.org/MCVMVMV.gif)  
 通过这张图就可以看出，MVVM其实就是在MVC的基础上，抽离了Controller的业务逻辑，移到了ViewModel,他们之间其实是这样的关系：  
-![](http://photocloud.foolishtalk.org/mvvm_logic.png)  
+![](http://images.foolishtalk.org/mvvm_logic.png)  
 
 View层和之前做的事情一样，Controller订阅viewModel的事件变化，将View绑定到ViewModel上，要注意在Rx的思想里，ViewModel并不是直接拿到View，而是View的观察者属性或者可观察的序列。另外Controller也会基于ViewModel事件的响应做对应的交互逻辑。  
 
