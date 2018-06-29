@@ -197,43 +197,43 @@ border: none;
                 post-container">
 
 				<p>swift3的时候，如果想使用KVC需要把类声明是<code class="highlighter-rouge">@objcMembers</code>,和将成员变量声明为<code class="highlighter-rouge">dynamic</code>,然后就可以使用objc中的<code class="highlighter-rouge">value(forKey key: String)</code>和<code class="highlighter-rouge">setValue(_ value: Any?, forKey key: String)</code>,但是只支持继承<code class="highlighter-rouge">NSObject</code>的类，换句话说，是不支持<code class="highlighter-rouge">struct</code>的</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@objcMembers class Kid: NSObject {
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">@objcMembers</span> <span class="kd">class</span> <span class="kt">Kid</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span>
     
-  dynamic  var name = String()
+  <span class="kd">dynamic</span>  <span class="k">var</span> <span class="nv">name</span> <span class="o">=</span> <span class="kt">String</span><span class="p">()</span>
     
-}
-var kid = Kid()
-kid.name = "张三"
-print(kid.value(forKey: "name")!)
-kid.setValue("李四", forKey: "name")
-print(kid.value(forKey: "name")!)
+<span class="p">}</span>
+<span class="k">var</span> <span class="nv">kid</span> <span class="o">=</span> <span class="kt">Kid</span><span class="p">()</span>
+<span class="n">kid</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">"张三"</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">kid</span><span class="o">.</span><span class="nf">value</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="s">"name"</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+<span class="n">kid</span><span class="o">.</span><span class="nf">setValue</span><span class="p">(</span><span class="s">"李四"</span><span class="p">,</span> <span class="nv">forKey</span><span class="p">:</span> <span class="s">"name"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">kid</span><span class="o">.</span><span class="nf">value</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="s">"name"</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
 </code></pre></div></div>
 <p>在swift4中，可以通过<code class="highlighter-rouge">KeyPath</code>间接访问成员变量，达到KVC的效果。</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  let person = Person() //结构体
-  let name = person[keyPath:\Person.name] //get
-  person[keyPath:\Person.name] = "张三" //set
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">let</span> <span class="nv">person</span> <span class="o">=</span> <span class="kt">Person</span><span class="p">()</span> <span class="c1">//结构体</span>
+  <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="n">person</span><span class="p">[</span><span class="nv">keyPath</span><span class="p">:</span><span class="err">\</span><span class="kt">Person</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="c1">//get</span>
+  <span class="n">person</span><span class="p">[</span><span class="nv">keyPath</span><span class="p">:</span><span class="err">\</span><span class="kt">Person</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="s">"张三"</span> <span class="c1">//set</span>
 </code></pre></div></div>
 
 <p>KVO的使用也是基于KVC的<code class="highlighter-rouge">KeyPath</code>基础上使用</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> class ViewController: UIViewController {
-    var kid = Kid()
-    var observation: Any? = nil //负责监听kid
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">kid</span> <span class="o">=</span> <span class="kt">Kid</span><span class="p">()</span>
+    <span class="k">var</span> <span class="nv">observation</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span> <span class="c1">//负责监听kid</span>
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        //监听kid的name
-        self.observation = kid.observe(\Kid.name, changeHandler: { (object, change) in
-            debugPrint("\(object) + \(change)")
-        })
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    override func touchesBegan(_ touches: Set&lt;UITouch&gt;, with event: UIEvent?) {
-    kid.name = "hello"
+    <span class="kd">required</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">coder</span><span class="p">:</span> <span class="n">aDecoder</span><span class="p">)</span>
+        <span class="c1">//监听kid的name</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">observation</span> <span class="o">=</span> <span class="n">kid</span><span class="o">.</span><span class="nf">observe</span><span class="p">(</span><span class="err">\</span><span class="kt">Kid</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">changeHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">change</span><span class="p">)</span> <span class="k">in</span>
+            <span class="nf">debugPrint</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">object</span><span class="se">)</span><span class="s"> + </span><span class="se">\(</span><span class="n">change</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">touchesBegan</span><span class="p">(</span><span class="n">_</span> <span class="nv">touches</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">UITouch</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">with</span> <span class="nv">event</span><span class="p">:</span> <span class="kt">UIEvent</span><span class="p">?)</span> <span class="p">{</span>
+    <span class="n">kid</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">"hello"</span>
    
-    }
-}
+    <span class="p">}</span>
+<span class="p">}</span>
 
 </code></pre></div></div>
 

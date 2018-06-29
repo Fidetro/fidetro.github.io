@@ -115,7 +115,7 @@ class LoginViewModel: NSObject {
 }
 ```  
 2. 初始化loginResult     
-```
+```swift
     init(input: (username: Observable<String>, password: Observable<String>, touchUp: ControlEvent<()>)) {
         //将username和passowrd变形为Observable<(String,String)>
         let usernameAndPassword = Observable.combineLatest(input.username, input.password) {

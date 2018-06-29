@@ -17,7 +17,7 @@ tags:
 2017-03-27 11:12:20.903366 DTSampleLight[1480:432147] Make a symbolic breakpoint at UICollectionViewFlowLayoutBreakForInvalidSizes to catch this in the debugger.
 ```
 ### 解决方法
-```
+```objc
 - (void)viewWillLayoutSubviews {
     [self.containerView.collectionView.collectionViewLayout invalidateLayout];
 }

@@ -10,7 +10,7 @@ tags:
 - iOS
 ---
 在iOS 11之前，直接通过这两个代理，就可以修改section的高度
-```
+```objc
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return CGFLOAT_MIN;
@@ -22,7 +22,7 @@ tags:
 }
 ```
 今天在适配iOS 11的时候发现，这两个代理方法都没走，解决方法：
-```
+```objc
 //先设置默认高度，然后再通过代理修改
     self.tableView.sectionFooterHeight = CGFLOAT_MIN;
     self.tableView.sectionHeaderHeight = CGFLOAT_MIN;

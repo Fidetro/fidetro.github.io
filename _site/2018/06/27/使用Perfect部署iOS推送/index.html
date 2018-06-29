@@ -244,7 +244,7 @@ border: none;
 </ol>
 
 <p>好了。。终于把前面的准备工作做好了，在Package.swift中引入</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Package(url:"https://github.com/PerfectlySoft/Perfect-Notifications.git", majorVersion: 3)
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="kt">Package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span><span class="s">"https://github.com/PerfectlySoft/Perfect-Notifications.git"</span><span class="p">,</span> <span class="nv">majorVersion</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>配置推送设置：</p>
@@ -269,16 +269,16 @@ border: none;
 </code></pre></div></div>
 
 <p>在需要推送的地方写上：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    let deviceIds: [String] = ["xxx"]//需要推送的deviceId
-    let n = NotificationPusher(apnsTopic: notificationsAppId)
-    n.pushAPNS(
-        configurationName: notificationsAppId,
-        deviceTokens: deviceIds,
-        notificationItems: [.alertBody("Hello!"), .sound("default")]) {
-            responses in
-            print("\(responses)")
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">deviceIds</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"xxx"</span><span class="p">]</span><span class="c1">//需要推送的deviceId</span>
+    <span class="k">let</span> <span class="nv">n</span> <span class="o">=</span> <span class="kt">NotificationPusher</span><span class="p">(</span><span class="nv">apnsTopic</span><span class="p">:</span> <span class="n">notificationsAppId</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="nf">pushAPNS</span><span class="p">(</span>
+        <span class="nv">configurationName</span><span class="p">:</span> <span class="n">notificationsAppId</span><span class="p">,</span>
+        <span class="nv">deviceTokens</span><span class="p">:</span> <span class="n">deviceIds</span><span class="p">,</span>
+        <span class="nv">notificationItems</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="nf">alertBody</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">),</span> <span class="o">.</span><span class="nf">sound</span><span class="p">(</span><span class="s">"default"</span><span class="p">)])</span> <span class="p">{</span>
+            <span class="n">responses</span> <span class="k">in</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">responses</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
             
-    }
+    <span class="p">}</span>
 </code></pre></div></div>
 
 <ol>
@@ -300,9 +300,9 @@ border: none;
 </code></pre></div>    </div>
   </li>
   <li>获取deviceToken
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-     print(deviceToken.hexEncodedString())
- }
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didRegisterForRemoteNotificationsWithDeviceToken</span> <span class="nv">deviceToken</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nf">print</span><span class="p">(</span><span class="n">deviceToken</span><span class="o">.</span><span class="nf">hexEncodedString</span><span class="p">())</span>
+ <span class="p">}</span>
 </code></pre></div>    </div>
   </li>
 </ol>

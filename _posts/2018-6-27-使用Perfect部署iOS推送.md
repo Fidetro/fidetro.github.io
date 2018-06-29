@@ -48,7 +48,7 @@ Perfect已经提供了现成的组件[Perfect-Notifications](https://github.com/
 
 
 好了。。终于把前面的准备工作做好了，在Package.swift中引入  
-```
+```swift
 .Package(url:"https://github.com/PerfectlySoft/Perfect-Notifications.git", majorVersion: 3)
 ```
 
@@ -75,7 +75,7 @@ Perfect已经提供了现成的组件[Perfect-Notifications](https://github.com/
 ```
 
 在需要推送的地方写上：  
-```
+```swift
     let deviceIds: [String] = ["xxx"]//需要推送的deviceId
     let n = NotificationPusher(apnsTopic: notificationsAppId)
     n.pushAPNS(
@@ -107,7 +107,7 @@ Perfect已经提供了现成的组件[Perfect-Notifications](https://github.com/
 ```  
 
 3. 获取deviceToken  
-```
+```swift
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         print(deviceToken.hexEncodedString())
     }

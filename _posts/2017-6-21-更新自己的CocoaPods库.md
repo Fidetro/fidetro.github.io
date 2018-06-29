@@ -15,7 +15,7 @@ tags:
 
 以自己写的一个库为例子
 
-```
+```ruby
 Pod::Spec.new do |s|
 
   s.name         = "FFDB"

@@ -202,9 +202,9 @@ border: none;
 2017-03-27 11:12:20.903366 DTSampleLight[1480:432147] Make a symbolic breakpoint at UICollectionViewFlowLayoutBreakForInvalidSizes to catch this in the debugger.
 </code></pre></div></div>
 <h3 id="解决方法">解决方法</h3>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- (void)viewWillLayoutSubviews {
-    [self.containerView.collectionView.collectionViewLayout invalidateLayout];
-}
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewWillLayoutSubviews</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">containerView</span><span class="p">.</span><span class="n">collectionView</span><span class="p">.</span><span class="n">collectionViewLayout</span> <span class="nf">invalidateLayout</span><span class="p">];</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <blockquote>

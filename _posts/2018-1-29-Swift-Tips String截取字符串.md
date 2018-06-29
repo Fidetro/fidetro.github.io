@@ -12,13 +12,13 @@ tags:
 
 在`Objective-C`中我们可以使调`substringWithRange`的方法达到截取字符串的效果
 
-```
+```objc
 [@"123" substringWithRange:NSMakeRange(1, 2)];
 ```
 
 在Swift 4之前，也是有类似的方法`"ss".substring(with: <Range<String.Index>>)`  ,但是在Swift 4之后被弃用了，我们可以通过用`extension`的方法去给他增加截取字符串的方法
 
-```
+```swift
 extension String{
     func to(_ index:Int) -> String? {
         let toIndex = String.Index.init(encodedOffset: index)
@@ -43,7 +43,7 @@ extension String{
 ```
 
 现在又可以方便的截取字符串了
-```
+```swift
 print("12345678".to(3)) //Optional("1234")  
 
 print("12345678".from(3)) //Optional("45678")  
@@ -52,7 +52,7 @@ print("12345678".subString(3, to: 5))  //Optional("456")
 ```
 
 另外我们还可以结合Swift下标的特性，达到通过取字符串下标截取字符串   
-```
+```swift
 extension String{
     subscript(index:Int) -> String? {
         return subString(index, to: index)
@@ -66,7 +66,7 @@ extension String{
 }
 ```   
 
-```
+```swift
 print("12345678"[2])  //Optional("3")  
 
 print("12345678"[3...5])  //Optional("456")

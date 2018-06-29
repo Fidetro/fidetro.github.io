@@ -26,7 +26,7 @@ example[这是个文件夹，起什么名字都行]
 ```
 
 然后在Package.swift中写上依赖的内容
-```
+```swift
 import PackageDescription
 
 let package = Package(
@@ -34,7 +34,7 @@ let package = Package(
 )
 ```
 然后去github生成一个远程仓库，在example目录下
-```
+```swift
 $ git init
 $ git add *
 $ git commit -m "SPM example"
@@ -50,7 +50,7 @@ $ cd test
 $ vim Package.swift
 ```
 在Package.swift中输入
-```
+```iswift
 import PackageDescription
 
 let package = Package(
@@ -84,7 +84,7 @@ example
 └── Package.swift
 ```
 出现这个错误的时候example/Package.swift 需要这样写：
-```
+```swift
 import PackageDescription
 
 let package = Package(
@@ -93,7 +93,7 @@ let package = Package(
 )
 ```
 如果你这个库还依赖了别的库，还可以这样写：
-```
+```swift
 import PackageDescription
 
 let package = Package(
@@ -107,7 +107,7 @@ let package = Package(
 
 2. majorVersion只能是Int，我如果发布的不是整数tag怎么办？
 可以换成选择版本范围，默认是根据当前范围最高的版本更新的
-```
+```swift
 import PackageDescription
 let package = Package(
     name: "test", 

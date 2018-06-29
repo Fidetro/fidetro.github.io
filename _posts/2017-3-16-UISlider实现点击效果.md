@@ -13,7 +13,7 @@ tags:
 找了很久网上文章都是各种复制，而且不管用，最后在stackOverFlow找到怎么解决，记录一下[链接](http://stackoverflow.com/questions/22717167/how-to-enable-tap-and-slide-in-a-uislider)
 
 关键是用UILongPressGestureRecognizer，实现拖动和点击
-```
+```objc
 - (void)actionLongGesture:(UILongPressGestureRecognizer *)sender {
     
     if (sender.state == UIGestureRecognizerStateBegan) {

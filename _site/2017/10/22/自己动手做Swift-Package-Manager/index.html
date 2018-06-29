@@ -211,20 +211,20 @@ border: none;
 </code></pre></div></div>
 
 <p>然后在Package.swift中写上依赖的内容</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import PackageDescription
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">PackageDescription</span>
 
-let package = Package(
-    name: "exmaple" // 这里填你这个Package的名字
-)
+<span class="k">let</span> <span class="nv">package</span> <span class="o">=</span> <span class="kt">Package</span><span class="p">(</span>
+    <span class="nv">name</span><span class="p">:</span> <span class="s">"exmaple"</span> <span class="c1">// 这里填你这个Package的名字</span>
+<span class="p">)</span>
 </code></pre></div></div>
 <p>然后去github生成一个远程仓库，在example目录下</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git init
-$ git add *
-$ git commit -m "SPM example"
-$ git remote add origin git@github.com:xxx/example.git
-$ git push -u origin master
-$ git tag 1.0.0
-$ git push --tags
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">git</span> <span class="kd">init</span>
+<span class="err">$</span> <span class="n">git</span> <span class="n">add</span> <span class="o">*</span>
+<span class="err">$</span> <span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s">"SPM example"</span>
+<span class="err">$</span> <span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">origin</span> <span class="n">git</span><span class="kd">@github</span><span class="o">.</span><span class="nv">com</span><span class="p">:</span><span class="n">xxx</span><span class="o">/</span><span class="n">example</span><span class="o">.</span><span class="n">git</span>
+<span class="err">$</span> <span class="n">git</span> <span class="n">push</span> <span class="o">-</span><span class="n">u</span> <span class="n">origin</span> <span class="n">master</span>
+<span class="err">$</span> <span class="n">git</span> <span class="n">tag</span> <span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
+<span class="err">$</span> <span class="n">git</span> <span class="n">push</span> <span class="o">--</span><span class="n">tags</span>
 </code></pre></div></div>
 <p>这时候就可以新建一个目录测试是否成功了</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mkdir test
@@ -232,7 +232,7 @@ $ cd test
 $ vim Package.swift
 </code></pre></div></div>
 <p>在Package.swift中输入</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import PackageDescription
+<pre><code class="language-iswift">import PackageDescription
 
 let package = Package(
     name: "test",
@@ -242,7 +242,7 @@ let package = Package(
 majorVersion: 1)
         ]
 )
-</code></pre></div></div>
+</code></pre>
 <p>在 test 目录下：</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ swift build
 </code></pre></div></div>
@@ -265,35 +265,35 @@ majorVersion: 1)
 └── Package.swift
 </code></pre></div></div>
 <p>出现这个错误的时候example/Package.swift 需要这样写：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import PackageDescription
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">PackageDescription</span>
 
-let package = Package(
-    name: "exmaple", // 这里填你这个Package的名字
-    exclude:["a","b"]
-)
+<span class="k">let</span> <span class="nv">package</span> <span class="o">=</span> <span class="kt">Package</span><span class="p">(</span>
+    <span class="nv">name</span><span class="p">:</span> <span class="s">"exmaple"</span><span class="p">,</span> <span class="c1">// 这里填你这个Package的名字</span>
+    <span class="nv">exclude</span><span class="p">:[</span><span class="s">"a"</span><span class="p">,</span><span class="s">"b"</span><span class="p">]</span>
+<span class="p">)</span>
 </code></pre></div></div>
 <p>如果你这个库还依赖了别的库，还可以这样写：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import PackageDescription
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">PackageDescription</span>
 
-let package = Package(
-    name: "exmaple", // 这里填你这个Package的名字
-	dependencies: [
-		.Package(url: "https://github.com/depend/depend.git", majorVersion: 0)
-	],
-    exclude:["a","b"]
-)
+<span class="k">let</span> <span class="nv">package</span> <span class="o">=</span> <span class="kt">Package</span><span class="p">(</span>
+    <span class="nv">name</span><span class="p">:</span> <span class="s">"exmaple"</span><span class="p">,</span> <span class="c1">// 这里填你这个Package的名字</span>
+	<span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
+		<span class="o">.</span><span class="kt">Package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/depend/depend.git"</span><span class="p">,</span> <span class="nv">majorVersion</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+	<span class="p">],</span>
+    <span class="nv">exclude</span><span class="p">:[</span><span class="s">"a"</span><span class="p">,</span><span class="s">"b"</span><span class="p">]</span>
+<span class="p">)</span>
 </code></pre></div></div>
 
 <ol>
   <li>majorVersion只能是Int，我如果发布的不是整数tag怎么办？
 可以换成选择版本范围，默认是根据当前范围最高的版本更新的
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import PackageDescription
-let package = Package(
- name: "test", 
- dependencies: [
-          .Package(url: "https://github.com/xxx/example.git",versions: Version(0, 0, 0)..&lt;Version(1, .max, .max))]
- ]
-)
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">PackageDescription</span>
+<span class="k">let</span> <span class="nv">package</span> <span class="o">=</span> <span class="kt">Package</span><span class="p">(</span>
+ <span class="nv">name</span><span class="p">:</span> <span class="s">"test"</span><span class="p">,</span> 
+ <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
+          <span class="o">.</span><span class="kt">Package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/xxx/example.git"</span><span class="p">,</span><span class="nv">versions</span><span class="p">:</span> <span class="kt">Version</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">..&lt;</span><span class="kt">Version</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="o">.</span><span class="n">max</span><span class="p">))]</span>
+ <span class="p">]</span>
+<span class="p">)</span>
 </code></pre></div>    </div>
   </li>
   <li>swift build了很久最后出现 error: reachedTimeLimit

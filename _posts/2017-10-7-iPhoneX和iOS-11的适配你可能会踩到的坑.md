@@ -21,7 +21,7 @@ tags:
 ![](http://images.foolishtalk.org/764E4AA7-A3BE-4782-AACF-69E4EBE4CAF7.png)
 说完这些坑之后，也该讲讲怎么适配了，talk is cheap，show me the code！
  在iOS 11发布后，Masonry也更新了最新适配的方法，增加了以下属性方便我们适配
-```
+```objc
 @property (nonatomic, strong, readonly) MASViewAttribute *mas_safeAreaLayoutGuide NS_AVAILABLE_IOS(11.0);
 @property (nonatomic, strong, readonly) MASViewAttribute *mas_safeAreaLayoutGuideLeading NS_AVAILABLE_IOS(11.0);
 @property (nonatomic, strong, readonly) MASViewAttribute *mas_safeAreaLayoutGuideTrailing NS_AVAILABLE_IOS(11.0);
@@ -40,7 +40,7 @@ tags:
 
 ![](http://images.foolishtalk.org/C9391B5F-D768-48F7-B003-0E7964D48820.png)
 
-```
+```objc
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"First";
@@ -62,7 +62,7 @@ tags:
 
 ![](http://images.foolishtalk.org/5759B33B-9C3F-485A-801C-32C421E0023F.png)
 ![](http://images.foolishtalk.org/B7D623C5-CBF1-47A8-9D07-3EA684D8BBD9.png)
-```
+```objc
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor greenColor];
@@ -92,7 +92,7 @@ tags:
 }
 ```
 或者使用scrollView的contentInset
-```
+```objc
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor greenColor];

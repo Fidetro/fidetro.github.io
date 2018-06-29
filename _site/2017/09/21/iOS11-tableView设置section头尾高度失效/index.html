@@ -197,20 +197,20 @@ border: none;
                 post-container">
 
 				<p>在iOS 11之前，直接通过这两个代理，就可以修改section的高度</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return CGFLOAT_MIN;
-}
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">heightForHeaderInSection</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">CGFLOAT_MIN</span><span class="p">;</span>
+<span class="p">}</span>
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return CGFLOAT_MIN;
-}
+<span class="k">-</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">heightForFooterInSection</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">CGFLOAT_MIN</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div></div>
 <p>今天在适配iOS 11的时候发现，这两个代理方法都没走，解决方法：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//先设置默认高度，然后再通过代理修改
-    self.tableView.sectionFooterHeight = CGFLOAT_MIN;
-    self.tableView.sectionHeaderHeight = CGFLOAT_MIN;
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//先设置默认高度，然后再通过代理修改
+</span>    <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">sectionFooterHeight</span> <span class="o">=</span> <span class="n">CGFLOAT_MIN</span><span class="p">;</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">sectionHeaderHeight</span> <span class="o">=</span> <span class="n">CGFLOAT_MIN</span><span class="p">;</span>
 </code></pre></div></div>
 <p>目前这个问题，只有纯代码的时候使用才会出现这个问题，如果是使用storyboard的tableView，是不会出现这个问题的，原因还没时间去查，等有空的时候查了会更新文章</p>
 

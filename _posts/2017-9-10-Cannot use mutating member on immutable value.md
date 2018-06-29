@@ -20,7 +20,7 @@ tags:
 ![2.png](http://images.foolishtalk.org/0D9699AB-D8DB-4341-B1AF-7ACD8C56D082.png)
 
 然后我改成这样就可以了，也不需要`mutating`修饰
-```
+```swift
      func into(_ tableClass:FFDataBaseModel.Type) -> Insert {
         var insert = self
         

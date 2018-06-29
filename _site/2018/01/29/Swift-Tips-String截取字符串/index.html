@@ -198,61 +198,61 @@ border: none;
 
 				<p>在<code class="highlighter-rouge">Objective-C</code>中我们可以使调<code class="highlighter-rouge">substringWithRange</code>的方法达到截取字符串的效果</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[@"123" substringWithRange:NSMakeRange(1, 2)];
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="s">@"123"</span> <span class="nf">substringWithRange</span><span class="p">:</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)];</span>
 </code></pre></div></div>
 
 <p>在Swift 4之前，也是有类似的方法<code class="highlighter-rouge">"ss".substring(with: &lt;Range&lt;String.Index&gt;&gt;)</code>  ,但是在Swift 4之后被弃用了，我们可以通过用<code class="highlighter-rouge">extension</code>的方法去给他增加截取字符串的方法</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>extension String{
-    func to(_ index:Int) -&gt; String? {
-        let toIndex = String.Index.init(encodedOffset: index)
-        guard toIndex &lt; self.endIndex else { return nil }
-        return String(self[...toIndex])
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">String</span><span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">to</span><span class="p">(</span><span class="n">_</span> <span class="nv">index</span><span class="p">:</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">toIndex</span> <span class="o">=</span> <span class="kt">String</span><span class="o">.</span><span class="kt">Index</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">encodedOffset</span><span class="p">:</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">guard</span> <span class="n">toIndex</span> <span class="o">&lt;</span> <span class="k">self</span><span class="o">.</span><span class="n">endIndex</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
+        <span class="k">return</span> <span class="kt">String</span><span class="p">(</span><span class="k">self</span><span class="p">[</span><span class="o">...</span><span class="n">toIndex</span><span class="p">])</span>
         
-    }
-    func from(_ index:Int) -&gt; String? {
-        let fromIndex = String.Index.init(encodedOffset: index)
-        guard fromIndex &lt; self.endIndex else { return nil }
-        return String(self[fromIndex..&lt;self.endIndex])
-    }
-    func subString(_ from:Int,to:Int) -&gt; String? {
-        let toIndex = String.Index.init(encodedOffset: from)
-        let fromIndex = String.Index.init(encodedOffset: to)
-        guard toIndex &lt; self.endIndex,
-            fromIndex &lt; self.endIndex,
-            toIndex &lt;= fromIndex else { return nil }
-        return String(self[toIndex...fromIndex])
-    }
-}
+    <span class="p">}</span>
+    <span class="kd">func</span> <span class="nf">from</span><span class="p">(</span><span class="n">_</span> <span class="nv">index</span><span class="p">:</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">fromIndex</span> <span class="o">=</span> <span class="kt">String</span><span class="o">.</span><span class="kt">Index</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">encodedOffset</span><span class="p">:</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">guard</span> <span class="n">fromIndex</span> <span class="o">&lt;</span> <span class="k">self</span><span class="o">.</span><span class="n">endIndex</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
+        <span class="k">return</span> <span class="kt">String</span><span class="p">(</span><span class="k">self</span><span class="p">[</span><span class="n">fromIndex</span><span class="o">..&lt;</span><span class="k">self</span><span class="o">.</span><span class="n">endIndex</span><span class="p">])</span>
+    <span class="p">}</span>
+    <span class="kd">func</span> <span class="nf">subString</span><span class="p">(</span><span class="n">_</span> <span class="nv">from</span><span class="p">:</span><span class="kt">Int</span><span class="p">,</span><span class="nv">to</span><span class="p">:</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">toIndex</span> <span class="o">=</span> <span class="kt">String</span><span class="o">.</span><span class="kt">Index</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">encodedOffset</span><span class="p">:</span> <span class="n">from</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">fromIndex</span> <span class="o">=</span> <span class="kt">String</span><span class="o">.</span><span class="kt">Index</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">encodedOffset</span><span class="p">:</span> <span class="n">to</span><span class="p">)</span>
+        <span class="k">guard</span> <span class="n">toIndex</span> <span class="o">&lt;</span> <span class="k">self</span><span class="o">.</span><span class="n">endIndex</span><span class="p">,</span>
+            <span class="n">fromIndex</span> <span class="o">&lt;</span> <span class="k">self</span><span class="o">.</span><span class="n">endIndex</span><span class="p">,</span>
+            <span class="n">toIndex</span> <span class="o">&lt;=</span> <span class="n">fromIndex</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
+        <span class="k">return</span> <span class="kt">String</span><span class="p">(</span><span class="k">self</span><span class="p">[</span><span class="n">toIndex</span><span class="o">...</span><span class="n">fromIndex</span><span class="p">])</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>现在又可以方便的截取字符串了</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print("12345678".to(3)) //Optional("1234")  
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="o">.</span><span class="nf">to</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1">//Optional("1234")  </span>
 
-print("12345678".from(3)) //Optional("45678")  
+<span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="o">.</span><span class="nf">from</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1">//Optional("45678")  </span>
 
-print("12345678".subString(3, to: 5))  //Optional("456")  
+<span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="o">.</span><span class="nf">subString</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1">//Optional("456")  </span>
 </code></pre></div></div>
 
 <p>另外我们还可以结合Swift下标的特性，达到通过取字符串下标截取字符串</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>extension String{
-    subscript(index:Int) -&gt; String? {
-        return subString(index, to: index)
-    }
-    subscript (bounds: CountableClosedRange&lt;Int&gt;) -&gt; String? {
-        return subString( bounds.lowerBound, to: bounds.upperBound)
-    }
-    subscript (bounds: CountableRange&lt;Int&gt;) -&gt; String? {
-        return subString( bounds.lowerBound, to: bounds.upperBound)
-    }   
-}
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">String</span><span class="p">{</span>
+    <span class="nf">subscript</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nf">subString</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="n">index</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nf">subscript</span> <span class="p">(</span><span class="nv">bounds</span><span class="p">:</span> <span class="kt">CountableClosedRange</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nf">subString</span><span class="p">(</span> <span class="n">bounds</span><span class="o">.</span><span class="n">lowerBound</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="n">bounds</span><span class="o">.</span><span class="n">upperBound</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nf">subscript</span> <span class="p">(</span><span class="nv">bounds</span><span class="p">:</span> <span class="kt">CountableRange</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nf">subString</span><span class="p">(</span> <span class="n">bounds</span><span class="o">.</span><span class="n">lowerBound</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="n">bounds</span><span class="o">.</span><span class="n">upperBound</span><span class="p">)</span>
+    <span class="p">}</span>   
+<span class="p">}</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print("12345678"[2])  //Optional("3")  
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>  <span class="c1">//Optional("3")  </span>
 
-print("12345678"[3...5])  //Optional("456")
+<span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="p">[</span><span class="mi">3</span><span class="o">...</span><span class="mi">5</span><span class="p">])</span>  <span class="c1">//Optional("456")</span>
 
-print("12345678"[100])  //nil
+<span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="p">[</span><span class="mi">100</span><span class="p">])</span>  <span class="c1">//nil</span>
 </code></pre></div></div>
 
 

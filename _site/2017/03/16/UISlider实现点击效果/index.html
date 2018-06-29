@@ -199,23 +199,23 @@ border: none;
 				<p>找了很久网上文章都是各种复制，而且不管用，最后在stackOverFlow找到怎么解决，记录一下<a href="http://stackoverflow.com/questions/22717167/how-to-enable-tap-and-slide-in-a-uislider">链接</a></p>
 
 <p>关键是用UILongPressGestureRecognizer，实现拖动和点击</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- (void)actionLongGesture:(UILongPressGestureRecognizer *)sender {
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">actionLongGesture</span><span class="p">:(</span><span class="n">UILongPressGestureRecognizer</span> <span class="o">*</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
     
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        CGPoint touchPoint = [sender locationInView:self.progressSlider];
-        CGFloat value = (self.progressSlider.maximumValue - self.progressSlider.minimumValue) * (touchPoint.x / self.progressSlider.frame.size.width );
-        NSInteger index = (NSInteger)(value + 0.5);
-        [self.progressSlider setValue:index animated:NO];
-        [self valueChange:self.progressSlider];
-    }else if (sender.state == UIGestureRecognizerStateChanged){
-        CGPoint touchPoint = [sender locationInView:self.progressSlider];
-        CGFloat value = (self.progressSlider.maximumValue - self.progressSlider.minimumValue) * (touchPoint.x / self.progressSlider.frame.size.width );
-        NSInteger index = (NSInteger)(value + 0.5);
-        [self.progressSlider setValue:index animated:NO];
-        [self valueChange:self.progressSlider];
-    }
+    <span class="k">if</span> <span class="p">(</span><span class="n">sender</span><span class="p">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">UIGestureRecognizerStateBegan</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">CGPoint</span> <span class="n">touchPoint</span> <span class="o">=</span> <span class="p">[</span><span class="n">sender</span> <span class="nf">locationInView</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">];</span>
+        <span class="n">CGFloat</span> <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">.</span><span class="n">maximumValue</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">.</span><span class="n">minimumValue</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">touchPoint</span><span class="p">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="p">);</span>
+        <span class="n">NSInteger</span> <span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)(</span><span class="n">value</span> <span class="o">+</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">);</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span> <span class="nf">setValue</span><span class="p">:</span><span class="n">index</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">NO</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">valueChange</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">];</span>
+    <span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">sender</span><span class="p">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">UIGestureRecognizerStateChanged</span><span class="p">){</span>
+        <span class="n">CGPoint</span> <span class="n">touchPoint</span> <span class="o">=</span> <span class="p">[</span><span class="n">sender</span> <span class="nf">locationInView</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">];</span>
+        <span class="n">CGFloat</span> <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">.</span><span class="n">maximumValue</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">.</span><span class="n">minimumValue</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">touchPoint</span><span class="p">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="p">);</span>
+        <span class="n">NSInteger</span> <span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)(</span><span class="n">value</span> <span class="o">+</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">);</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span> <span class="nf">setValue</span><span class="p">:</span><span class="n">index</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">NO</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">valueChange</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">];</span>
+    <span class="p">}</span>
  
-}
+<span class="p">}</span>
 </code></pre></div></div>
 
 

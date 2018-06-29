@@ -10,7 +10,7 @@ tags:
 - iOS
 ---
 在给Alamofire用protocol封装一层业务的时候，定义了以下的协议和方法
-```
+```swift
 protocol BaseRequest {
 }
 extension FIDRequest {
@@ -34,7 +34,7 @@ extension Request {
 ```
 这时候问题就来了，正常情况下，应该使用`[weak self]`就可以解决了，但是在使用`protocol`的时候，是无法使用`[weak self]`的，然后就会有以下的报错
 `'weak' may only be applied to class and class-bound protocol types, not 'Self'`
-```
+```swift
     func request() -> WBBaseRequest {
             complete {  (response) [weak self]  in //这个地方会报错 'weak' may only be applied to class and class-bound protocol types, not 'Self'
 //这里还有段代码造成循环引用
@@ -43,7 +43,7 @@ extension Request {
 ```
 
 直接解决这个问题的方式是，将 `BaseRequest`声明为只有类才可以使用
-```
+```swift
 protocol BaseRequest : class {
 }
 ```

@@ -304,32 +304,32 @@ disposeBag负责管理生命周期，相当于将当前的监听交给了dispose
 </code></pre></div>    </div>
   </li>
   <li>初始化loginResult
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> init(input: (username: Observable&lt;String&gt;, password: Observable&lt;String&gt;, touchUp: ControlEvent&lt;()&gt;)) {
-     //将username和passowrd变形为Observable&lt;(String,String)&gt;
-     let usernameAndPassword = Observable.combineLatest(input.username, input.password) {
-         ($0, $1)
-     }
-     //初始化loginResult对象
-     loginResult = input.touchUp.withLatestFrom(usernameAndPassword).flatMap { (username,password) -&gt; Observable&lt;Bool&gt; in  
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nf">init</span><span class="p">(</span><span class="nv">input</span><span class="p">:</span> <span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">touchUp</span><span class="p">:</span> <span class="kt">ControlEvent</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="p">))</span> <span class="p">{</span>
+     <span class="c1">//将username和passowrd变形为Observable&lt;(String,String)&gt;</span>
+     <span class="k">let</span> <span class="nv">usernameAndPassword</span> <span class="o">=</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">combineLatest</span><span class="p">(</span><span class="n">input</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">input</span><span class="o">.</span><span class="n">password</span><span class="p">)</span> <span class="p">{</span>
+         <span class="p">(</span><span class="nv">$0</span><span class="p">,</span> <span class="nv">$1</span><span class="p">)</span>
+     <span class="p">}</span>
+     <span class="c1">//初始化loginResult对象</span>
+     <span class="n">loginResult</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="n">touchUp</span><span class="o">.</span><span class="nf">withLatestFrom</span><span class="p">(</span><span class="n">usernameAndPassword</span><span class="p">)</span><span class="o">.</span><span class="n">flatMap</span> <span class="p">{</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span> <span class="k">in</span>  
 
-         //简单的对用户名和密码做校验
-         guard  username.count &gt; 6 else{
-             return Observable.just(false)
-         }
+         <span class="c1">//简单的对用户名和密码做校验</span>
+         <span class="k">guard</span>  <span class="n">username</span><span class="o">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">6</span> <span class="k">else</span><span class="p">{</span>
+             <span class="k">return</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">just</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+         <span class="p">}</span>
 
-         guard  password.count &gt; 6 else{
-             return Observable.just(false)
-         }
+         <span class="k">guard</span>  <span class="n">password</span><span class="o">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">6</span> <span class="k">else</span><span class="p">{</span>
+             <span class="k">return</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">just</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+         <span class="p">}</span>
 
-         return Observable.create { (observer) -&gt; Disposable in
-             //延时1s模拟异步请求登录成功
-             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
-                 observer.onNext(true)
-             })
-             return Disposables.create {}
-         }
-     }        
- }
+         <span class="k">return</span> <span class="kt">Observable</span><span class="o">.</span><span class="n">create</span> <span class="p">{</span> <span class="p">(</span><span class="n">observer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Disposable</span> <span class="k">in</span>
+             <span class="c1">//延时1s模拟异步请求登录成功</span>
+             <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="nf">asyncAfter</span><span class="p">(</span><span class="nv">deadline</span><span class="p">:</span> <span class="kt">DispatchTime</span><span class="o">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">execute</span><span class="p">:</span> <span class="p">{</span>
+                 <span class="n">observer</span><span class="o">.</span><span class="nf">onNext</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+             <span class="p">})</span>
+             <span class="k">return</span> <span class="kt">Disposables</span><span class="o">.</span><span class="n">create</span> <span class="p">{}</span>
+         <span class="p">}</span>
+     <span class="p">}</span>        
+ <span class="p">}</span>
 </code></pre></div>    </div>
   </li>
   <li>在Controller监听点击后登录的结果：
