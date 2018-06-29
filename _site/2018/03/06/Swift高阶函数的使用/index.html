@@ -229,17 +229,18 @@ border: none;
 
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">flatMap</span><span class="p">(</span><span class="n">_</span> <span class="nv">transform</span><span class="p">:</span> <span class="p">(</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?)</span> <span class="k">rethrows</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
 </code></pre></div></div>
+
 <ol>
   <li><code class="highlighter-rouge">flatMap</code>允许返回<code class="highlighter-rouge">nil</code>值，对元素进行过滤再变形</li>
-  <li><code class="highlighter-rouge">flatMap</code>可以将多维数组转成一维数组
-    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span>
- <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">flatMap</span> <span class="p">{</span>
-     <span class="nv">$0</span>
- <span class="p">}</span>
- <span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="c1">//[1,2,3,4,5,6]</span>
-</code></pre></div>    </div>
-  </li>
+  <li><code class="highlighter-rouge">flatMap</code>可以将多维数组转成一维数组</li>
 </ol>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span>
+    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">flatMap</span> <span class="p">{</span>
+        <span class="nv">$0</span>
+    <span class="p">}</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="c1">//[1,2,3,4,5,6]</span>
+</code></pre></div></div>
 
 <h1 id="filter">filter</h1>
 <p><code class="highlighter-rouge">filter</code>用于过滤元素</p>

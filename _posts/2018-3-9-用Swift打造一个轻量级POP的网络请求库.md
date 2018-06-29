@@ -35,16 +35,21 @@ tags:
 ```
 
 然后APIManager只管请求，然后回调都在Controller上处理
-```objc
+```swift
 successHanlder:^(NSDictonary *dict){
-//转模型   
+//转模型  
+
 Model *model = [Model jsonToModel:dict];
-if (model.errorCode == 0) {
+if (model.errorCode == 0) {  
+
     //数据加工  
-    //刷新页面  
-}else{
-    //处理错误  
-    //错误显示  
+    //刷新页面    
+
+}else{  
+
+    //处理错误    
+    //错误显示    
+
 }
 
 } errorHanlder:^(NSDictionry *dict,NSError *error){

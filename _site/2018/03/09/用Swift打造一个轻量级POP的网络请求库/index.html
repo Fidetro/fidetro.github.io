@@ -223,18 +223,23 @@ border: none;
 </blockquote>
 
 <p>然后APIManager只管请求，然后回调都在Controller上处理</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">successHanlder:</span><span class="o">^</span><span class="p">(</span><span class="n">NSDictonary</span> <span class="o">*</span><span class="n">dict</span><span class="p">){</span>
-<span class="c1">//转模型   
-</span><span class="n">Model</span> <span class="o">*</span><span class="n">model</span> <span class="o">=</span> <span class="p">[</span><span class="n">Model</span> <span class="nf">jsonToModel</span><span class="p">:</span><span class="n">dict</span><span class="p">];</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">errorCode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">//数据加工  
-</span>    <span class="c1">//刷新页面  
-</span><span class="p">}</span><span class="k">else</span><span class="p">{</span>
-    <span class="c1">//处理错误  
-</span>    <span class="c1">//错误显示  
-</span><span class="p">}</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">successHanlder</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="kt">NSDictonary</span> <span class="o">*</span><span class="n">dict</span><span class="p">){</span>
+<span class="c1">//转模型  </span>
 
-<span class="p">}</span> <span class="n">errorHanlder</span><span class="o">:^</span><span class="p">(</span><span class="n">NSDictionry</span> <span class="o">*</span><span class="n">dict</span><span class="p">,</span><span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">){</span>
+<span class="kt">Model</span> <span class="o">*</span><span class="n">model</span> <span class="o">=</span> <span class="p">[</span><span class="kt">Model</span> <span class="nv">jsonToModel</span><span class="p">:</span><span class="n">dict</span><span class="p">];</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">errorCode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>  
+
+    <span class="c1">//数据加工  </span>
+    <span class="c1">//刷新页面    </span>
+
+<span class="p">}</span><span class="k">else</span><span class="p">{</span>  
+
+    <span class="c1">//处理错误    </span>
+    <span class="c1">//错误显示    </span>
+
+<span class="p">}</span>
+
+<span class="p">}</span> <span class="nv">errorHanlder</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="kt">NSDictionry</span> <span class="o">*</span><span class="n">dict</span><span class="p">,</span><span class="kt">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">){</span>
 
 <span class="p">};</span>
 
