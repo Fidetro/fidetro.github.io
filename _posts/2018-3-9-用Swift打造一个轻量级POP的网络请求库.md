@@ -37,14 +37,14 @@ tags:
 然后APIManager只管请求，然后回调都在Controller上处理
 ```objc
 successHanlder:^(NSDictonary *dict){
-//转模型
+//转模型   
 Model *model = [Model jsonToModel:dict];
 if (model.errorCode == 0) {
-    //数据加工
-    //刷新页面
+    //数据加工  
+    //刷新页面  
 }else{
-    //处理错误
-    //错误显示
+    //处理错误  
+    //错误显示  
 }
 
 } errorHanlder:^(NSDictionry *dict,NSError *error){
@@ -230,7 +230,7 @@ class LoginApi: PetRequest {
                 
         }
 
-然后又因为failure和error都已经经过业务层做处理了，不是特殊情况下，不需要额外做处理，又可以简写成
+//然后又因为failure和error都已经经过业务层做处理了，不是特殊情况下，不需要额外做处理，又可以简写成
         LoginApi().request().success { (_, value) in
             
             }

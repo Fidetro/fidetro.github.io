@@ -224,14 +224,14 @@ border: none;
 
 <p>然后APIManager只管请求，然后回调都在Controller上处理</p>
 <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">successHanlder:</span><span class="o">^</span><span class="p">(</span><span class="n">NSDictonary</span> <span class="o">*</span><span class="n">dict</span><span class="p">){</span>
-<span class="c1">//转模型
+<span class="c1">//转模型   
 </span><span class="n">Model</span> <span class="o">*</span><span class="n">model</span> <span class="o">=</span> <span class="p">[</span><span class="n">Model</span> <span class="nf">jsonToModel</span><span class="p">:</span><span class="n">dict</span><span class="p">];</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">errorCode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">//数据加工
-</span>    <span class="c1">//刷新页面
+    <span class="c1">//数据加工  
+</span>    <span class="c1">//刷新页面  
 </span><span class="p">}</span><span class="k">else</span><span class="p">{</span>
-    <span class="c1">//处理错误
-</span>    <span class="c1">//错误显示
+    <span class="c1">//处理错误  
+</span>    <span class="c1">//错误显示  
 </span><span class="p">}</span>
 
 <span class="p">}</span> <span class="n">errorHanlder</span><span class="o">:^</span><span class="p">(</span><span class="n">NSDictionry</span> <span class="o">*</span><span class="n">dict</span><span class="p">,</span><span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">){</span>
@@ -414,7 +414,7 @@ border: none;
                 
         <span class="p">}</span>
 
-<span class="n">然后又因为failure和error都已经经过业务层做处理了</span><span class="err">，</span><span class="n">不是特殊情况下</span><span class="err">，</span><span class="n">不需要额外做处理</span><span class="err">，</span><span class="n">又可以简写成</span>
+<span class="c1">//然后又因为failure和error都已经经过业务层做处理了，不是特殊情况下，不需要额外做处理，又可以简写成</span>
         <span class="kt">LoginApi</span><span class="p">()</span><span class="o">.</span><span class="nf">request</span><span class="p">()</span><span class="o">.</span><span class="n">success</span> <span class="p">{</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">in</span>
             
             <span class="p">}</span>
