@@ -20,7 +20,7 @@ tags:
 
  
 通过使用重力加速计判断手机旋转的方向，再去设置`AVCaptureConnection`的`videoOrientation`属性，代码如下：  
-```Objective-C
+```objc
 @interface FIDCameraHelper ()
 @property (nonatomic,strong) CMMotionManager *motionManager;
 @property (nonatomic,assign) UIImageOrientation orientation;

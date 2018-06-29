@@ -242,66 +242,66 @@ RxSwift将监听变化的<code class="highlighter-rouge">事件</code>封装成�
 <p>讲了这么多，talk is cheap,show me the code.</p>
 
 <p>监听collectionView的contentOffset，没有引入RxSwift的时候，我们需要实现以下方法：</p>
-<pre><code class="language-Swift"> func scrollViewDidScroll(_ scrollView: UIScrollView) {
-     //...
- }
-</code></pre>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">func</span> <span class="nf">scrollViewDidScroll</span><span class="p">(</span><span class="n">_</span> <span class="nv">scrollView</span><span class="p">:</span> <span class="kt">UIScrollView</span><span class="p">)</span> <span class="p">{</span>
+     <span class="c1">//...</span>
+ <span class="p">}</span>
+</code></pre></div></div>
 
 <p>引入RxSwift之后</p>
-<pre><code class="language-Swift">    let disposeBag = DisposeBag()
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">disposeBag</span> <span class="o">=</span> <span class="kt">DisposeBag</span><span class="p">()</span>
 
 
-       collectionView.rx
-                    .contentOffset
-                    .subscribe(onNext: { (point) in
-            //do something
-        }).disposed(by: disposeBag)
-</code></pre>
+       <span class="n">collectionView</span><span class="o">.</span><span class="n">rx</span>
+                    <span class="o">.</span><span class="n">contentOffset</span>
+                    <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="k">in</span>
+            <span class="c1">//do something</span>
+        <span class="p">})</span><span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
+</code></pre></div></div>
 <blockquote>
   <p>注<br />
 disposeBag负责管理生命周期，相当于将当前的监听交给了disposeBag，大部分情况下disposeBag由Controller持有，并随控制器生命周期结束而结束</p>
 </blockquote>
 
 <p>KVO:</p>
-<pre><code class="language-Swift">view.rx.observe(CGRect.self, "frame")
-    .subscribe(onNext: { frame in
-        print("Got new frame \(frame)")
-    })
-    .disposed(by: disposeBag)
-</code></pre>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">view</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="nf">observe</span><span class="p">(</span><span class="kt">CGRect</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="s">"frame"</span><span class="p">)</span>
+    <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span> <span class="n">frame</span> <span class="k">in</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Got new frame </span><span class="se">\(</span><span class="n">frame</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">})</span>
+    <span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
+</code></pre></div></div>
 
 <p>Target-Action:<br />
 传统的实现方法:</p>
 
-<pre><code class="language-Swift">    lazy var button: UIButton = {
-        var button = UIButton()
-        button.addTarget(self, action: #selector(click), for: .touchUpInside)
-        return button
-    }()
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">button</span><span class="p">:</span> <span class="kt">UIButton</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">button</span> <span class="o">=</span> <span class="kt">UIButton</span><span class="p">()</span>
+        <span class="n">button</span><span class="o">.</span><span class="nf">addTarget</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">#selector(</span><span class="nf">click</span><span class="kd">)</span><span class="p">,</span> <span class="nv">for</span><span class="p">:</span> <span class="o">.</span><span class="n">touchUpInside</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">button</span>
+    <span class="p">}()</span>
     
-    @objc func click() {
-        // do something
-    }
-</code></pre>
+    <span class="kd">@objc</span> <span class="kd">func</span> <span class="nf">click</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// do something</span>
+    <span class="p">}</span>
+</code></pre></div></div>
 
-<pre><code class="language-Swift">button.rx
-    .controlEvent(.touchUpInside)
-    .subscribe(onNext: {  () in
-    //..touchUp
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">button</span><span class="o">.</span><span class="n">rx</span>
+    <span class="o">.</span><span class="nf">controlEvent</span><span class="p">(</span><span class="o">.</span><span class="n">touchUpInside</span><span class="p">)</span>
+    <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span>  <span class="p">()</span> <span class="k">in</span>
+    <span class="c1">//..touchUp</span>
 
-        }).disposed(by: disposeBag)
+        <span class="p">})</span><span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
 
-</code></pre>
+</code></pre></div></div>
 
 <p>上面的都是简单的例子应用，下面直接用登录功能举例示例代码，<a href="https://github.com/Fidetro/rx-sample-code">代码</a>已经传到GitHub上了。<br />
 要实现的功能：点击按钮的时候，判断用户名和密码是否合法，然后请求，拿到结果。</p>
 <ol>
   <li>创建一个ViewModel
-    <pre><code class="language-Swift">class LoginViewModel: NSObject {
- //由Controller负责订阅loginResult，得到登录结果
- let loginResult: Observable&lt;Bool&gt;
-}
-</code></pre>
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">LoginViewModel</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span>
+ <span class="c1">//由Controller负责订阅loginResult，得到登录结果</span>
+ <span class="k">let</span> <span class="nv">loginResult</span><span class="p">:</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
   </li>
   <li>初始化loginResult
     <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> init(input: (username: Observable&lt;String&gt;, password: Observable&lt;String&gt;, touchUp: ControlEvent&lt;()&gt;)) {
@@ -333,27 +333,27 @@ disposeBag负责管理生命周期，相当于将当前的监听交给了dispose
 </code></pre></div>    </div>
   </li>
   <li>在Controller监听点击后登录的结果：
-    <pre><code class="language-Swift"> @IBOutlet weak var loginButton: UIButton!
- @IBOutlet weak var usernameTextField: UITextField!
- @IBOutlet weak var passwordTextField: UITextField!
- let disposeBag = DisposeBag()
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">@IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">loginButton</span><span class="p">:</span> <span class="kt">UIButton</span><span class="o">!</span>
+ <span class="kd">@IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">usernameTextField</span><span class="p">:</span> <span class="kt">UITextField</span><span class="o">!</span>
+ <span class="kd">@IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">passwordTextField</span><span class="p">:</span> <span class="kt">UITextField</span><span class="o">!</span>
+ <span class="k">let</span> <span class="nv">disposeBag</span> <span class="o">=</span> <span class="kt">DisposeBag</span><span class="p">()</span>
     
     
- override func viewDidLoad() {
-     super.viewDidLoad()
-     let viewModel = LoginViewModel.init(input: (username: usernameTextField.rx.text.orEmpty.asObservable(),
-                                                 password: passwordTextField.rx.text.orEmpty.asObservable(),
-                                                 touchUp: loginButton.rx.controlEvent(.touchUpInside)))
+ <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+     <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+     <span class="k">let</span> <span class="nv">viewModel</span> <span class="o">=</span> <span class="kt">LoginViewModel</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">input</span><span class="p">:</span> <span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="n">usernameTextField</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">orEmpty</span><span class="o">.</span><span class="nf">asObservable</span><span class="p">(),</span>
+                                                 <span class="nv">password</span><span class="p">:</span> <span class="n">passwordTextField</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">orEmpty</span><span class="o">.</span><span class="nf">asObservable</span><span class="p">(),</span>
+                                                 <span class="nv">touchUp</span><span class="p">:</span> <span class="n">loginButton</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="nf">controlEvent</span><span class="p">(</span><span class="o">.</span><span class="n">touchUpInside</span><span class="p">)))</span>
         
-     viewModel.loginResult.subscribe(onNext: { (result) in
-         if result == true {
-             print("登录成功")
-         }else{
-             print("登录失败")
-         }
-     }).disposed(by: disposeBag)
- }
-</code></pre>
+     <span class="n">viewModel</span><span class="o">.</span><span class="n">loginResult</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
+         <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="kc">true</span> <span class="p">{</span>
+             <span class="nf">print</span><span class="p">(</span><span class="s">"登录成功"</span><span class="p">)</span>
+         <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+             <span class="nf">print</span><span class="p">(</span><span class="s">"登录失败"</span><span class="p">)</span>
+         <span class="p">}</span>
+     <span class="p">})</span><span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
+ <span class="p">}</span>
+</code></pre></div>    </div>
   </li>
 </ol>
 

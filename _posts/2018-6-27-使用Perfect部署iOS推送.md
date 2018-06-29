@@ -53,7 +53,7 @@ Perfect已经提供了现成的组件[Perfect-Notifications](https://github.com/
 ```
 
 配置推送设置：  
-```Swift
+```swift
     //app的bundle id
     let notificationsAppId = "com.Fidetro.iOS-PetDay"
     //auth key id
@@ -93,7 +93,7 @@ Perfect已经提供了现成的组件[Perfect-Notifications](https://github.com/
 
 
 2. 在Appdelegate请求权限
-```Swift
+```swift
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     
         let center = UNUserNotificationCenter.current()

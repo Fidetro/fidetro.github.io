@@ -248,25 +248,25 @@ border: none;
 </code></pre></div></div>
 
 <p>配置推送设置：</p>
-<pre><code class="language-Swift">    //app的bundle id
-    let notificationsAppId = "com.Fidetro.iOS-PetDay"
-    //auth key id
-    let apnsKeyIdentifier = "F6S4LA6KT7"
-    //开发者账号的team id
-    let apnsTeamIdentifier = "J3BJ7G2PUN"
-    //auth key
-    let apnsPrivateKeyFilePath = "./AuthKey_F6S4LA6KT7.p8"
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">//app的bundle id</span>
+    <span class="k">let</span> <span class="nv">notificationsAppId</span> <span class="o">=</span> <span class="s">"com.Fidetro.iOS-PetDay"</span>
+    <span class="c1">//auth key id</span>
+    <span class="k">let</span> <span class="nv">apnsKeyIdentifier</span> <span class="o">=</span> <span class="s">"F6S4LA6KT7"</span>
+    <span class="c1">//开发者账号的team id</span>
+    <span class="k">let</span> <span class="nv">apnsTeamIdentifier</span> <span class="o">=</span> <span class="s">"J3BJ7G2PUN"</span>
+    <span class="c1">//auth key</span>
+    <span class="k">let</span> <span class="nv">apnsPrivateKeyFilePath</span> <span class="o">=</span> <span class="s">"./AuthKey_F6S4LA6KT7.p8"</span>
     
     
-    NotificationPusher.addConfigurationAPNS(
-        name: notificationsAppId,
-        production: false, // should be false when running pre-release app in debugger
-        keyId: apnsKeyIdentifier,
-        teamId: apnsTeamIdentifier,
-        privateKeyPath: apnsPrivateKeyFilePath)
+    <span class="kt">NotificationPusher</span><span class="o">.</span><span class="nf">addConfigurationAPNS</span><span class="p">(</span>
+        <span class="nv">name</span><span class="p">:</span> <span class="n">notificationsAppId</span><span class="p">,</span>
+        <span class="nv">production</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// should be false when running pre-release app in debugger</span>
+        <span class="nv">keyId</span><span class="p">:</span> <span class="n">apnsKeyIdentifier</span><span class="p">,</span>
+        <span class="nv">teamId</span><span class="p">:</span> <span class="n">apnsTeamIdentifier</span><span class="p">,</span>
+        <span class="nv">privateKeyPath</span><span class="p">:</span> <span class="n">apnsPrivateKeyFilePath</span><span class="p">)</span>
     
-    NotificationPusher.development = true // 打开APNS沙箱服务器开关
-</code></pre>
+    <span class="kt">NotificationPusher</span><span class="o">.</span><span class="n">development</span> <span class="o">=</span> <span class="kc">true</span> <span class="c1">// 打开APNS沙箱服务器开关</span>
+</code></pre></div></div>
 
 <p>在需要推送的地方写上：</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    let deviceIds: [String] = ["xxx"]//需要推送的deviceId
@@ -287,17 +287,17 @@ border: none;
 <img src="http://images.foolishtalk.org/perfect-notification-13.png" alt="" /></p>
   </li>
   <li>在Appdelegate请求权限
-    <pre><code class="language-Swift"> func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -&gt; Bool {
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
     
-     let center = UNUserNotificationCenter.current()
-     center.requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
-         print(error)
-     }
-     application.registerForRemoteNotifications()
+     <span class="k">let</span> <span class="nv">center</span> <span class="o">=</span> <span class="kt">UNUserNotificationCenter</span><span class="o">.</span><span class="nf">current</span><span class="p">()</span>
+     <span class="n">center</span><span class="o">.</span><span class="nf">requestAuthorization</span><span class="p">(</span><span class="nv">options</span><span class="p">:[</span><span class="o">.</span><span class="n">badge</span><span class="p">,</span> <span class="o">.</span><span class="n">alert</span><span class="p">,</span> <span class="o">.</span><span class="n">sound</span><span class="p">])</span> <span class="p">{</span> <span class="p">(</span><span class="n">granted</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="k">in</span>
+         <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+     <span class="p">}</span>
+     <span class="n">application</span><span class="o">.</span><span class="nf">registerForRemoteNotifications</span><span class="p">()</span>
 
-     return true
- }
-</code></pre>
+     <span class="k">return</span> <span class="kc">true</span>
+ <span class="p">}</span>
+</code></pre></div>    </div>
   </li>
   <li>获取deviceToken
     <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

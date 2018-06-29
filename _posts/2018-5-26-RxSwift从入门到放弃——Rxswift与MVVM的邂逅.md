@@ -57,7 +57,7 @@ View层和之前做的事情一样，Controller订阅viewModel的事件变化，
 RxSwift为我们平时使用的UI控件提供了响应式函数，使用自带的响应式函数就能非常方便的进行数据绑定。 
 例如我们实现了一个选择体重尺子功能的View：  
 以前的做法：
-```Swift
+```swift
     func scrollRuleValue(collectionView: UICollectionView, value: CGFloat) {
         if collectionView == containerView.weightRuleView.collectionView {
             containerView.weightLabel.text = "\(value)kg"
@@ -65,7 +65,7 @@ RxSwift为我们平时使用的UI控件提供了响应式函数，使用自带�
     }
 ```  
 利用RxSwift的特性：
-```Swift
+```swift
         containerView.weightRuleView.observerValue.map { (value) -> String in
             return "\(value)kg"
             }.bind(to: containerView.weightLabel.rx.text).disposed(by: disposeBag)

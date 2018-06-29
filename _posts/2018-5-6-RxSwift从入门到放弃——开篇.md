@@ -51,14 +51,14 @@ RxSwift将监听变化的`事件`封装成了可观察的`序列`，因此在编
 讲了这么多，talk is cheap,show me the code.  
 
 监听collectionView的contentOffset，没有引入RxSwift的时候，我们需要实现以下方法：  
-```Swift  
+```swift  
  func scrollViewDidScroll(_ scrollView: UIScrollView) {
      //...
  }
 ```
 
 引入RxSwift之后
-```Swift  
+```swift  
     let disposeBag = DisposeBag()
 
 
@@ -72,7 +72,7 @@ RxSwift将监听变化的`事件`封装成了可观察的`序列`，因此在编
 disposeBag负责管理生命周期，相当于将当前的监听交给了disposeBag，大部分情况下disposeBag由Controller持有，并随控制器生命周期结束而结束  
 
 KVO:  
-```Swift
+```swift
 view.rx.observe(CGRect.self, "frame")
     .subscribe(onNext: { frame in
         print("Got new frame \(frame)")
@@ -83,7 +83,7 @@ view.rx.observe(CGRect.self, "frame")
 Target-Action:  
 传统的实现方法:
 
-```Swift
+```swift
     lazy var button: UIButton = {
         var button = UIButton()
         button.addTarget(self, action: #selector(click), for: .touchUpInside)
@@ -95,7 +95,7 @@ Target-Action:
     }
 ```
 
-```Swift
+```swift
 button.rx
     .controlEvent(.touchUpInside)
     .subscribe(onNext: {  () in
@@ -108,7 +108,7 @@ button.rx
 上面的都是简单的例子应用，下面直接用登录功能举例示例代码，[代码](https://github.com/Fidetro/rx-sample-code)已经传到GitHub上了。  
 要实现的功能：点击按钮的时候，判断用户名和密码是否合法，然后请求，拿到结果。
 1. 创建一个ViewModel  
-```Swift
+```swift
 class LoginViewModel: NSObject {
     //由Controller负责订阅loginResult，得到登录结果
     let loginResult: Observable<Bool>
@@ -144,7 +144,7 @@ class LoginViewModel: NSObject {
     }
 ```  
 3. 在Controller监听点击后登录的结果：  
-```Swift
+```swift
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!

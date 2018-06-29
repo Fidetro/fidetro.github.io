@@ -201,31 +201,31 @@ border: none;
 Photos参考了这里<a href="http://www.jianshu.com/p/6bcda6b35801">获取系统相册的所有照片</a></p>
 
 <p>在iOS 8以后，申请相册权限是可以得到回调的:</p>
-<pre><code class="language-Objective-C">[PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-        [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-            if (request_block)
-            {
-                if (status == PHAuthorizationStatusAuthorized) {
-                    request_block(YES);
-                }else{
-                    request_block(NO);
-                }
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">PHPhotoLibrary</span> <span class="nf">requestAuthorization</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">PHAuthorizationStatus</span> <span class="n">status</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">[[</span><span class="n">NSOperationQueue</span> <span class="nf">mainQueue</span><span class="p">]</span><span class="nf">addOperationWithBlock</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">request_block</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">==</span> <span class="n">PHAuthorizationStatusAuthorized</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">request_block</span><span class="p">(</span><span class="nb">YES</span><span class="p">);</span>
+                <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                    <span class="n">request_block</span><span class="p">(</span><span class="nb">NO</span><span class="p">);</span>
+                <span class="p">}</span>
                 
-            }
-        }];
+            <span class="p">}</span>
+        <span class="p">}];</span>
       
-    }];
-</code></pre>
+    <span class="p">}];</span>
+</code></pre></div></div>
 <p>申请摄像头权限：</p>
-<pre><code class="language-Objective-C">[AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-        [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-            if (request_block)
-            {
-                    request_block(granted);
-            }
-        }];
-    }];
-</code></pre>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">AVCaptureDevice</span> <span class="nf">requestAccessForMediaType</span><span class="p">:</span><span class="n">AVMediaTypeVideo</span> <span class="nf">completionHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">BOOL</span> <span class="n">granted</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">[[</span><span class="n">NSOperationQueue</span> <span class="nf">mainQueue</span><span class="p">]</span><span class="nf">addOperationWithBlock</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">request_block</span><span class="p">)</span>
+            <span class="p">{</span>
+                    <span class="n">request_block</span><span class="p">(</span><span class="n">granted</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}];</span>
+    <span class="p">}];</span>
+</code></pre></div></div>
 
 <p>其实都是不太复杂的东西，网上看下就懂了，获取系统所有图片的时候得每个都转<code class="highlighter-rouge">UIImage</code>这点很不好用，我分别封装了一下<code class="highlighter-rouge">AssetsLibrary .framework</code>和<code class="highlighter-rouge">Photos.framework</code></p>
 
@@ -240,38 +240,38 @@ Photos参考了这里<a href="http://www.jianshu.com/p/6bcda6b35801">获取系�
   </li>
 </ul>
 
-<pre><code class="language-Objective-C">//获取图片
-+ (void)accessToImageAccordingToTheAsset:(PHAsset *)asset size:(CGSize)size resizeMode:(PHImageRequestOptionsResizeMode)resizeMode completion:(void(^)(UIImage *image,NSDictionary *info))completion
-{
-    static PHImageRequestID requestID = -2;
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//获取图片
+</span><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">accessToImageAccordingToTheAsset</span><span class="p">:(</span><span class="n">PHAsset</span> <span class="o">*</span><span class="p">)</span><span class="nv">asset</span> <span class="nf">size</span><span class="p">:(</span><span class="n">CGSize</span><span class="p">)</span><span class="nv">size</span> <span class="nf">resizeMode</span><span class="p">:(</span><span class="n">PHImageRequestOptionsResizeMode</span><span class="p">)</span><span class="nv">resizeMode</span> <span class="nf">completion</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UIImage</span> <span class="o">*</span><span class="n">image</span><span class="p">,</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">info</span><span class="p">))</span><span class="nv">completion</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="n">PHImageRequestID</span> <span class="n">requestID</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span>
     
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGFloat width = MIN([UIScreen mainScreen].bounds.size.width, 500);
-    if (requestID &gt;= 1 &amp;&amp; size.width / width == scale) {
-        [[PHCachingImageManager defaultManager] cancelImageRequest:requestID];
-    }
-    PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
-    option.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
-    option.resizeMode = resizeMode;
+    <span class="n">CGFloat</span> <span class="n">scale</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIScreen</span> <span class="nf">mainScreen</span><span class="p">].</span><span class="n">scale</span><span class="p">;</span>
+    <span class="n">CGFloat</span> <span class="n">width</span> <span class="o">=</span> <span class="n">MIN</span><span class="p">([</span><span class="n">UIScreen</span> <span class="nf">mainScreen</span><span class="p">].</span><span class="n">bounds</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="mi">500</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">requestID</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">/</span> <span class="n">width</span> <span class="o">==</span> <span class="n">scale</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">[[</span><span class="n">PHCachingImageManager</span> <span class="nf">defaultManager</span><span class="p">]</span> <span class="nf">cancelImageRequest</span><span class="p">:</span><span class="n">requestID</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="n">PHImageRequestOptions</span> <span class="o">*</span><span class="n">option</span> <span class="o">=</span> <span class="p">[[</span><span class="n">PHImageRequestOptions</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="n">option</span><span class="p">.</span><span class="n">deliveryMode</span> <span class="o">=</span> <span class="n">PHImageRequestOptionsDeliveryModeOpportunistic</span><span class="p">;</span>
+    <span class="n">option</span><span class="p">.</span><span class="n">resizeMode</span> <span class="o">=</span> <span class="n">resizeMode</span><span class="p">;</span>
  
-    requestID = [[PHCachingImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeAspectFill options:option resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(result,info);
-        });
-    }];
+    <span class="n">requestID</span> <span class="o">=</span> <span class="p">[[</span><span class="n">PHCachingImageManager</span> <span class="nf">defaultManager</span><span class="p">]</span> <span class="nf">requestImageForAsset</span><span class="p">:</span><span class="n">asset</span> <span class="nf">targetSize</span><span class="p">:</span><span class="n">size</span> <span class="n">contentMode</span><span class="o">:</span><span class="n">PHImageContentModeAspectFill</span> <span class="n">options</span><span class="o">:</span><span class="n">option</span> <span class="n">resultHandler</span><span class="o">:^</span><span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">result</span><span class="p">,</span> <span class="n">NSDictionary</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">info</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+            <span class="n">completion</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="n">info</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}];</span>
     
-}
-</code></pre>
+<span class="p">}</span>
+</code></pre></div></div>
 <p>原因是因为将<code class="highlighter-rouge">option.deliveryMode </code>设置成了<code class="highlighter-rouge">PHImageRequestOptionsDeliveryModeOpportunistic</code>,
 你以为只要把<code class="highlighter-rouge">option.deliveryMode </code>设置成了<code class="highlighter-rouge">PHImageRequestOptionsDeliveryModeFastFormat</code>就可以了吗？
 这时候还要设置<code class="highlighter-rouge">option.synchronous = YES;</code>
 但是这样设置后，获取图片会变成同步操作，如果直接获取相册中的所有照片，会造成卡顿。</p>
-<pre><code class="language-Objective-C">typedef NS_ENUM(NSInteger, PHImageRequestOptionsDeliveryMode) {
-    PHImageRequestOptionsDeliveryModeOpportunistic = 0, // client may get several image results when the call is asynchronous or will get one result when the call is synchronous
-    PHImageRequestOptionsDeliveryModeHighQualityFormat = 1, // client will get one result only and it will be as asked or better than asked (sync requests are automatically processed this way regardless of the specified mode)
-    PHImageRequestOptionsDeliveryModeFastFormat = 2 // client will get one result only and it may be degraded
-} PHOTOS_ENUM_AVAILABLE_IOS_TVOS(8_0, 10_0);
-</code></pre>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">typedef</span> <span class="nf">NS_ENUM</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">,</span> <span class="n">PHImageRequestOptionsDeliveryMode</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">PHImageRequestOptionsDeliveryModeOpportunistic</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">// client may get several image results when the call is asynchronous or will get one result when the call is synchronous
+</span>    <span class="n">PHImageRequestOptionsDeliveryModeHighQualityFormat</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">// client will get one result only and it will be as asked or better than asked (sync requests are automatically processed this way regardless of the specified mode)
+</span>    <span class="n">PHImageRequestOptionsDeliveryModeFastFormat</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">// client will get one result only and it may be degraded
+</span><span class="p">}</span> <span class="n">PHOTOS_ENUM_AVAILABLE_IOS_TVOS</span><span class="p">(</span><span class="mi">8</span><span class="n">_0</span><span class="p">,</span> <span class="mi">10</span><span class="n">_0</span><span class="p">);</span>
+</code></pre></div></div>
 
 <ol>
   <li>获取相册中的图片转成<code class="highlighter-rouge">NSData</code>得到<code class="highlighter-rouge">nil</code>
@@ -279,42 +279,42 @@ Photos参考了这里<a href="http://www.jianshu.com/p/6bcda6b35801">获取系�
 在获取了相册图片后，需要将<code class="highlighter-rouge">UIImage</code>转成<code class="highlighter-rouge">NSData</code>，但是会有少部分图片，使用下面的方法转成<code class="highlighter-rouge">NSData</code>会得到<code class="highlighter-rouge">nil</code>的情况</li>
 </ol>
 
-<pre><code class="language-Objective-C">NSData *jpegData = UIImageJPEGRepresentation(image, 0.2);
-NSData *pngData = UIImagePNGRepresentation(image);
-</code></pre>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">NSData</span> <span class="o">*</span><span class="n">jpegData</span> <span class="o">=</span> <span class="n">UIImageJPEGRepresentation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">NSData</span> <span class="o">*</span><span class="n">pngData</span> <span class="o">=</span> <span class="n">UIImagePNGRepresentation</span><span class="p">(</span><span class="n">image</span><span class="p">);</span>
+</code></pre></div></div>
 
 <p>这种情况，可以通过重新绘制<code class="highlighter-rouge">UIImage</code>:</p>
 
-<pre><code class="language-Objective-C">NSData *jpegData = UIImageJPEGRepresentation(image, 0.2);
-  if (jpegData == nil) {
-jpegData = image.generateJPEGRepresentation;
-    if (jpegData == nil) {
-return ;
-  }
-}
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">NSData</span> <span class="o">*</span><span class="n">jpegData</span> <span class="o">=</span> <span class="n">UIImageJPEGRepresentation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">jpegData</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
+<span class="n">jpegData</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">generateJPEGRepresentation</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">jpegData</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">return</span> <span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 
-</code></pre>
+</code></pre></div></div>
 
-<pre><code class="language-Objective-C">@implementation UIImage (FIDExtra)
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@implementation</span> <span class="nc">UIImage</span> <span class="p">(</span><span class="nl">FIDExtra</span><span class="p">)</span>
 
-- (NSData *)generateJPEGRepresentation
-{
-    UIImage *newImage = [self copyOriginalImage];
-    NSData *newData = UIImageJPEGRepresentation(newImage, 0.2);
-    return newData;
-}
+<span class="k">-</span> <span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="n">generateJPEGRepresentation</span>
+<span class="p">{</span>
+    <span class="n">UIImage</span> <span class="o">*</span><span class="n">newImage</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">copyOriginalImage</span><span class="p">];</span>
+    <span class="n">NSData</span> <span class="o">*</span><span class="n">newData</span> <span class="o">=</span> <span class="n">UIImageJPEGRepresentation</span><span class="p">(</span><span class="n">newImage</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">newData</span><span class="p">;</span>
+<span class="p">}</span>
 
-- (UIImage *)copyOriginalImage
-{
-    UIGraphicsBeginImageContext(self.size);
-    [self drawInRect:CGRectMake(0, 0, self.size.width, self.size.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-}
+<span class="o">-</span> <span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="n">copyOriginalImage</span>
+<span class="p">{</span>
+    <span class="n">UIGraphicsBeginImageContext</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">);</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">drawInRect</span><span class="p">:</span><span class="n">CGRectMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">)];</span>
+    <span class="n">UIImage</span> <span class="o">*</span><span class="n">newImage</span> <span class="o">=</span> <span class="n">UIGraphicsGetImageFromCurrentImageContext</span><span class="p">();</span>
+    <span class="n">UIGraphicsEndImageContext</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">newImage</span><span class="p">;</span>
+<span class="p">}</span>
 
-@end
-</code></pre>
+<span class="k">@end</span>
+</code></pre></div></div>
 
 
 
