@@ -50,8 +50,10 @@ tags:
 ...  
 终于在停止刷新后，再往上刷，正常了
 
-我自己的推测是因为tableView在刷新的过程中，tableView的刷新事件比定时器的事件先进，需要等刷新停止了，定时器才能执行  
-然后换了另外一种实现方式就没问题了
+原因是TableView在滑动的时候，主线程的Runloop会切换到UITrackingRunLoopMode，这时候只会执行UITrackingRunLoopMode下的任务，等UITrackingRunLoopMode的任务执行完了，再切换到NSDefaultRunLoopMode才会执行定时器。  
+想解决这个问题，可以把加入到定时器的时候将Runloop设置为NSRunLoopCommonModes
+```swift
+或者改用GCD实现
 ```swift
         
         guard share.operations.contains(tag) == false else {
