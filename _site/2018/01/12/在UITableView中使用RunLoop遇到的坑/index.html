@@ -240,9 +240,10 @@ border: none;
 
 <p>原因是TableView在滑动的时候，主线程的Runloop会切换到UITrackingRunLoopMode，这时候只会执行UITrackingRunLoopMode下的任务，等UITrackingRunLoopMode的任务执行完了，再切换到NSDefaultRunLoopMode才会执行定时器。<br />
 想解决这个问题，可以把加入到定时器的时候将Runloop设置为NSRunLoopCommonModes</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">或者改用GCD实现</span>
-<span class="err">```</span><span class="n">swift</span>
-        
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">runLoop</span><span class="o">.</span><span class="nf">add</span><span class="p">(</span><span class="kt">NSMachPort</span><span class="p">(),</span> <span class="nv">forMode</span><span class="p">:</span> <span class="o">.</span><span class="n">commonModes</span><span class="p">)</span>
+</code></pre></div></div>
+<p>或者改用GCD实现</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        
         <span class="k">guard</span> <span class="n">share</span><span class="o">.</span><span class="n">operations</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span> <span class="o">==</span> <span class="kc">false</span> <span class="k">else</span> <span class="p">{</span>
             <span class="k">return</span>
         <span class="p">}</span>

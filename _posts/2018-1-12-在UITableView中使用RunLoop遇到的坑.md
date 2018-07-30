@@ -53,7 +53,9 @@ tags:
 原因是TableView在滑动的时候，主线程的Runloop会切换到UITrackingRunLoopMode，这时候只会执行UITrackingRunLoopMode下的任务，等UITrackingRunLoopMode的任务执行完了，再切换到NSDefaultRunLoopMode才会执行定时器。  
 想解决这个问题，可以把加入到定时器的时候将Runloop设置为NSRunLoopCommonModes
 ```swift
-或者改用GCD实现
+runLoop.add(NSMachPort(), forMode: .commonModes)
+```  
+或者改用GCD实现  
 ```swift
         
         guard share.operations.contains(tag) == false else {
