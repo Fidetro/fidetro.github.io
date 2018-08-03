@@ -14,7 +14,7 @@ tags:
 之前一直忙着工作的业务代码，Perfect系列的文章有段时间没有更新了。Perfect-CRUD也是最近才对外公布的一套ORM组件，支持sqlite、MySQL、Postgres，在这之前一直都是用自己的Perfect-FFDB，看了下Perfect-CRUD的文档之后，感觉还不错，这两天抽时间把之前用Perfect写的一个小项目，从自己的Perfect-FFDB迁移到使用Perfect-CRUD上，有点扯远了。。还是说回推送吧。  
 
 # 正文  
-当iOS app要使用远程推送的时候，经常会选接入一些第三方平台的消息推送服务，下面就是讲怎么通过Perfect自己搭消息推送服务。  
+当iOS app要使用远程推送的时候，经常会选接入一些第三方平台的消息推送服务，下面就是讲怎么通过Perfect自己搭消息推送服务。  
 
 Perfect已经提供了现成的组件[Perfect-Notifications](https://github.com/PerfectlySoft/Perfect-Notifications)可以让我们快速的实现消息推送，所以在这之前，先把去准备好推送证书。  
 
@@ -33,7 +33,7 @@ Perfect已经提供了现成的组件[Perfect-Notifications](https://github.com/
 ![](http://images.foolishtalk.org/perfect-notification-6.png)  
 ![](http://images.foolishtalk.org/perfect-notification-7.png)  
 
-5. 选择刚刚创建的证书，然后下一步，下载下来    
+5. 选择刚刚创建的证书，然后下一步，下载下来    
 ![](http://images.foolishtalk.org/perfect-notification-8.png)  
 
 6. 双击打开刚刚下载下来的证书,进入钥匙串访问，导出秘钥  
@@ -47,7 +47,7 @@ Perfect已经提供了现成的组件[Perfect-Notifications](https://github.com/
 ![](http://images.foolishtalk.org/perfect-notification-12.png)  
 
 
-好了。。终于把前面的准备工作做好了，在Package.swift中引入  
+好了。。终于把前面的准备工作做好了，在Package.swift中引入  
 ```swift
 .Package(url:"https://github.com/PerfectlySoft/Perfect-Notifications.git", majorVersion: 3)
 ```
