@@ -5,12 +5,12 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 30 Jul 2018 15:14:29 +0800</pubDate>
-    <lastBuildDate>Mon, 30 Jul 2018 15:14:29 +0800</lastBuildDate>
+    <pubDate>Fri, 03 Aug 2018 09:11:48 +0800</pubDate>
+    <lastBuildDate>Fri, 03 Aug 2018 09:11:48 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
-        <title>使用Perfect部署iOS推送</title>
+        <title>使用Perfect部署APNS推送</title>
         <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
 &lt;p&gt;之前一直忙着工作的业务代码，Perfect系列的文章有段时间没有更新了。Perfect-CRUD也是最近才对外公布的一套ORM组件，支持sqlite、MySQL、Postgres，在这之前一直都是用自己的Perfect-FFDB，看了下Perfect-CRUD的文档之后，感觉还不错，这两天抽时间把之前用Perfect写的一个小项目，从自己的Perfect-FFDB迁移到使用Perfect-CRUD上，有点扯远了。。还是说回推送吧。&lt;/p&gt;
 
@@ -126,8 +126,8 @@
 &lt;img src=&quot;http://images.foolishtalk.org/perfect-notification-14.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 27 Jun 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/06/27/%E4%BD%BF%E7%94%A8Perfect%E9%83%A8%E7%BD%B2iOS%E6%8E%A8%E9%80%81/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/06/27/%E4%BD%BF%E7%94%A8Perfect%E9%83%A8%E7%BD%B2iOS%E6%8E%A8%E9%80%81/</guid>
+        <link>http://www.foolishtalk.org/2018/06/27/%E4%BD%BF%E7%94%A8Perfect%E9%83%A8%E7%BD%B2APNS%E6%8E%A8%E9%80%81/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/06/27/%E4%BD%BF%E7%94%A8Perfect%E9%83%A8%E7%BD%B2APNS%E6%8E%A8%E9%80%81/</guid>
         
         <category>Perfect-Server</category>
         

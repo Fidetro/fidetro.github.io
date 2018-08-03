@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "使用Perfect部署iOS推送"
+title:      "使用Perfect部署APNS推送"
 subtitle:   "Swift，Perfect-Server"
 date:       2018-6-27
 author:     "Fidetro"
