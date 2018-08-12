@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>2016年的一些小事 - fidetro | FoolishTalk Blog</title>
+    <title>iOS绘制方案调研（上） - fidetro | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/01/02/2016%E5%B9%B4%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E4%BA%8B/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2018/08/12/iOS%E7%BB%98%E5%88%B6%E6%96%B9%E6%A1%88%E8%B0%83%E7%A0%94-%E4%B8%8A/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -169,15 +169,17 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Code-Life" title="Code-Life">Code-Life</a>
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
                         
                     </div>
-                    <h1>2016年的一些小事</h1>
+                    <h1>iOS绘制方案调研（上）</h1>
                     
                     
-                    <h2 class="subheading">生活</h2>
+                    <h2 class="subheading">iOS，绘制，截图</h2>
                     
-                    <span class="meta">Posted by Fidetro on January 2, 2017</span>
+                    <span class="meta">Posted by Fidetro on August 12, 2018</span>
                 </div>
             </div>
         </div>
@@ -194,24 +196,58 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>在3月底，我投了200来份简历，我在5月2号那一天终于面试了第一份工作，也就是我的第一份iOS工作，那时候的我对自己的技术算是很满意的，面试我的人，也不会iOS，只是自学过一段时间，能做出app这样，目测是个40多岁左右，也是我们的CTO，后来一面试就成了。<br />
-在没工作的时候，我总是憧憬着，公司会有很厉害的大牛，很牛b的架构，和我很多不懂的技术，去到那公司的时候，我心里还是有点落差的。当时的团队只有，老板，CTO，两个安卓，一个前端，一个后台，和两个UI，还有一个要离开的iOS，因为他离开，所以招了我，当时刚刚工作，也不清楚要了解什么，但是想想，1个多月没有一次面试，我还是干了下来。一上来就是独立开发，其实也不是怕做不出来东西，就怕是做不出好的东西，这里的好，指的是代码结构等一些开发上应该做，而我当时不知道的东西。在那里的工作，相对是比较轻松的，每天8点上班，晚上6点还是5点半下班，基本加班还是比较少的，利用平时空闲的时间，我也没闲下来，当时很清楚，待在这只是一个权宜之计，我如果想技术上有所提升必须靠着自己，毕竟在这，没有能教到我这方面的东西，不过也很开心，我说离开的时候，很突然，老板还以为我会留的更久，我们的相处也很和谐，在提出离开之后的时候，还有一段交接期，那段时间Pokemon go很火，当时老板跑过来跟我聊这个，就跟很多网上别人说的创业老板一样，做这个能不能做，我说类似的低水平一点，我能做，后来就有了<a href="http://www.jianshu.com/p/e14c48c643dc">这一篇</a> ，也因为这个算法，他们从物联网转型到AR了，不讨论他们成功与否，我觉得我在技术这块自己还是挺满意的。<br />
-最后我始终选择了离开，在8月25号晚上，我跟老板和华哥道别，而且向他们深深鞠了一躬，内心真的很感谢他们给我这次工作机会，你很难想象200多封简历只有一个面试，没有造假没有什么水分的简历，其实的确很正常吧。<br />
-离职后的那段时间，一边把驾照剩下的科目考完，一边冷静了下来重新审视自己追求的东西。我不想当一个混子，程序员应该算是一个比较容易混着混着，就能在毕业初期甚至在工作年限高了之后，能拿到不错薪水的职业。但是那样真的不是我想要的，起码现在来说，我还算年轻，我有冲劲，我愿意去学习更多我没接触的过东西，我非常的渴望提升，而且这种愿意学习，愿意钻研的时光，我认为是很重要的，如果一旦停止了，可能再也不会能提得起精神去努力了，在这之后的所有日子，你都是在赌博自己的青春，努力或颓废，就看自己的选择了。<br />
-另一方面，技术技术，我追求的技术究竟是什么，我把我不懂的称为技术，像是苹果很多framework我都没用过，CoreImage，CoreVideo等，我所用到的估计只有1%，每天想到这点，就告诫自己戒骄戒躁，但是这些的学习和深度的使用都是需要有项目去支持的，还有设计模式、算法，我会用，但不代表我懂，想懂了这些之后，我重新开始了新的一轮投简历，不过这次很快。<br />
-我大约投了一周后，我就收到了面试，在中秋之前，我遇到了我现在的老大，面试比较简单，技术的问题也基本没什么，看了一下我的简历和之前写的app，交流了一下对物联网的看法，和我上面所说对技术的态度，虽然在跟管理层面试谈薪水的时候遭了一波严重打压，但是心想如果能接触到水平更高的人，低就低吧的想法，我选择入职了。我入职定在了中秋放假后，满怀信心觉得终于遇到正规化开发的公司，入职后发现，其实是外包，每天8点半上班，9点或更晚下班，而且也都是独立开发，研发整个团队有20多人，刚来的那段时间，的确接触到了更多正规化的开发，虽然不是代码上，但是对业务的流程，也比之前清晰多了。<br />
-就这么忙了近4个月，迎来了2017年，现在的公司不能谈的太多，毕竟还在这工作着，稍微谈谈外包公司对码农带来的影响。
-一、外包肯定能保证你不会闲着，做多了业务代码会更熟练，但是业务代码的熟练肯定是有一个峰值的，超过这个峰值，你所能得到的提升会少之又少，所以不建议一直呆在外包。<br />
-二、外包据说会来钱比较快，会有项目奖金之类的，反正我也没有，所以不太清楚。</p>
+				<h1 id="前言">前言</h1>
+<p>在最初写这篇的时候，并没有考虑到要写「iOS绘制方案调研」为题的一篇的文章，原来只是想记录在悦跑圈4.0开发中遇到的一个关于截图耗时特别长的一个问题，随即在写问题记录的时候，写下来的模拟demo结果却出乎意料，然后决定写下这一篇「iOS绘制方案调研」。</p>
+<h1 id="正文">正文</h1>
+<p>在开发悦跑圈4.0版本的时候，遇到了一个很有意思的问题，需要将跑步路线的经纬度在View上绘制一段轨迹，这里的一个原来的做法是先轨迹绘制在一个View上，然后截图传给水印相机的VC。</p>
 
-<p>最后来谈谈自己对码农的一些想法吧。<br />
-在我看来，码农分三种状态。</p>
-<ol>
-  <li>混，该完成的完成划水的划水，等工作年限上去了，跳槽拿更高的工资，对自己的技术没有什么特别的追求。</li>
-  <li>按照需求遇到不会的东西，起码自己有梯子知道要怎样才可能解决，但基本不会花平时的时间去学习更多提升自己的水平。</li>
-  <li>生命不息，学习不止（折腾不止，这种其实就这意思，我现在就处于这种状态，而且这辈估计只会往技术岗上走了（笑 <br />
-无论处于哪种状态，不要骄傲自满，固步自封都是很重要的，比你厉害的人，多的去了，你凭什么能有这种自信。（起码对我来说是这样的</li>
-</ol>
+<p>主要的几个方法如下：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">override</span> <span class="kd">func</span> <span class="nf">draw</span><span class="p">(</span><span class="n">_</span> <span class="nv">rect</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">let</span> <span class="nv">bezier</span> <span class="o">=</span> <span class="nf">setupPath</span><span class="p">()</span>
+        <span class="n">bezier</span><span class="o">.</span><span class="n">lineWidth</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="kt">UIColor</span><span class="o">.</span><span class="n">black</span><span class="o">.</span><span class="nf">setStroke</span><span class="p">()</span>
+        <span class="n">bezier</span><span class="o">.</span><span class="n">lineJoinStyle</span> <span class="o">=</span> <span class="o">.</span><span class="n">round</span>
+        <span class="n">bezier</span><span class="o">.</span><span class="n">lineCapStyle</span> <span class="o">=</span> <span class="o">.</span><span class="n">round</span>
+        <span class="n">bezier</span><span class="o">.</span><span class="nf">stroke</span><span class="p">()</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     <span class="kd">func</span> <span class="nf">getImageForView</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UIImage</span><span class="p">?</span> <span class="p">{</span>
+        <span class="kt">UIGraphicsBeginImageContext</span><span class="p">(</span><span class="n">bounds</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">context</span> <span class="o">=</span> <span class="kt">UIGraphicsGetCurrentContext</span><span class="p">()</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
+        <span class="n">layer</span><span class="o">.</span><span class="nf">render</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="n">context</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">image</span> <span class="o">=</span> <span class="kt">UIGraphicsGetImageFromCurrentImageContext</span><span class="p">()</span>
+        <span class="kt">UIGraphicsEndImageContext</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">image</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+<p>这时候问题就来了，测试同学反馈某条测试数据卡顿高达5、6分钟，在iPhone6以下的机型大概出现闪退的情况。 
+debug一轮后，发现问题是卡顿是出在获取图片的方法：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">layer</span><span class="o">.</span><span class="nf">render</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="n">context</span><span class="p">)</span>
+</code></pre></div></div>
+<p>在调用这个方法的时候，CPU使用率长期在90%以上<br />
+至于原因，在stackoverflow上已经有人给出的答案了，<code class="highlighter-rouge">renderInContext:</code>是在CPU上运行的，在iOS 7之后使用<code class="highlighter-rouge">drawHierarchy(in: , afterScreenUpdates: )</code>会更快。<a href="https://stackoverflow.com/a/19067099/6202715">参考链接</a><br />
+将原来的截图方法，换成了</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">func</span> <span class="nf">getImageForView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span><span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIImage</span><span class="p">?</span> <span class="p">{</span>
+        <span class="kt">UIGraphicsBeginImageContextWithOptions</span><span class="p">(</span><span class="n">bounds</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="nf">drawHierarchy</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="n">bounds</span><span class="p">,</span> <span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="n">afterScreenUpdates</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">image</span> <span class="o">=</span> <span class="kt">UIGraphicsGetImageFromCurrentImageContext</span><span class="p">()</span>
+        <span class="kt">UIGraphicsEndImageContext</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">image</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+<p>效果依旧不明显，还是非常耗时。<br />
+搜索一番后，没有找到合适的解决方法后，我决定开始自己定位问题，寻找解决方案。<br />
+原来的绘制是使用<code class="highlighter-rouge">drawRect(_ rect:)</code>，要知道<code class="highlighter-rouge">drawRect(_ rect:)</code>的绘制是调用<code class="highlighter-rouge">Core Graphics</code>的方法实现，<code class="highlighter-rouge">Core Graphics</code>占用CPU和消耗内存。<br />
+像是绘制这种轨迹的需求，其实除了drawRect以外，还有一个方案，那就是<code class="highlighter-rouge">CAShapeLayer</code>。<br />
+CAShapeLayer需要通过贝塞尔曲线的CGPath，然后提交到GPU上渲染。<br />
+<code class="highlighter-rouge">CAShapeLayer</code>通过GPU渲染图形，不消耗内存。<br />
+另外有部分文章指出：</p>
+<blockquote>
+  <p>“CAShapeLayer使用了硬件加速，绘制同一图形会比用Core Graphics快很多。”</p>
+</blockquote>
+
+<p>这一点，在我写demo的时候发现了并不是这样，即使是相同的path，drawRect也是有可能会比CAShapeLayer要快的。关于这一点，我会把这点放在iOS绘制方案调研（下）去讲。<br />
+在使用<code class="highlighter-rouge">CAShapeLayer</code>和<code class="highlighter-rouge">drawHierarchy(in: , afterScreenUpdates: )</code>之后，原本一段需要5、6分钟才能生成的轨迹，现在只需要1秒就就可以生成出来了。业务问题的确已经解决了，但是绘制的问题并没有结束，我在文章开头就已经写了，在写这个Demo的时候，测试的结果确出乎意料，这部分的讨论将会放在下篇去讨论。</p>
 
 
                 <hr>
@@ -239,13 +275,9 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2016/10/27/UICollectionView-cellForItemAtIndexPath%E4%B8%8D%E6%89%A7%E8%A1%8C/" data-toggle="tooltip" data-placement="top" title="UICollectionView-cellForItemAtIndexPath不执行">&larr; Previous Post</a>
+                        <a href="/2018/06/27/%E4%BD%BF%E7%94%A8Perfect%E9%83%A8%E7%BD%B2APNS%E6%8E%A8%E9%80%81/" data-toggle="tooltip" data-placement="top" title="使用Perfect部署APNS推送">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/03/16/UISlider%E5%AE%9E%E7%8E%B0%E7%82%B9%E5%87%BB%E6%95%88%E6%9E%9C/" data-toggle="tooltip" data-placement="top" title="UISlider实现点击效果">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -362,8 +394,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2017/01/02/2016年的一些小事";
-    var disqus_url = "http://www.foolishtalk.org/2017/01/02/2016%E5%B9%B4%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E4%BA%8B/";
+    var disqus_identifier = "/2018/08/12/iOS绘制方案调研（上）";
+    var disqus_url = "http://www.foolishtalk.org/2018/08/12/iOS%E7%BB%98%E5%88%B6%E6%96%B9%E6%A1%88%E8%B0%83%E7%A0%94-%E4%B8%8A/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
