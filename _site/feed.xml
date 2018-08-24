@@ -5,14 +5,14 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 12 Aug 2018 20:35:48 +0800</pubDate>
-    <lastBuildDate>Sun, 12 Aug 2018 20:35:48 +0800</lastBuildDate>
+    <pubDate>Fri, 24 Aug 2018 10:05:09 +0800</pubDate>
+    <lastBuildDate>Fri, 24 Aug 2018 10:05:09 +0800</lastBuildDate>
     <generator>Jekyll v3.7.0</generator>
     
       <item>
-        <title>iOS绘制方案调研（上）</title>
+        <title>iOS截图引起的思考</title>
         <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
-&lt;p&gt;在最初写这篇的时候，并没有考虑到要写「iOS绘制方案调研」为题的一篇的文章，原来只是想记录在悦跑圈4.0开发中遇到的一个关于截图耗时特别长的一个问题，随即在写问题记录的时候，写下来的模拟demo结果却出乎意料，然后决定写下这一篇「iOS绘制方案调研」。&lt;/p&gt;
+&lt;p&gt;在最初写这篇的时候，并没有考虑到要写「iOS绘制方案调研」为题的一篇的文章，原来只是想记录在悦跑圈4.0开发中遇到的一个关于截图耗时特别长的一个问题，随即在写问题记录的时候，写下来的模拟demo结果却出乎意料，然后决定在以后会写一篇「iOS绘制方案调研」。&lt;/p&gt;
 &lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
 &lt;p&gt;在开发悦跑圈4.0版本的时候，遇到了一个很有意思的问题，需要将跑步路线的经纬度在View上绘制一段轨迹，这里的一个原来的做法是先轨迹绘制在一个View上，然后截图传给水印相机的VC。&lt;/p&gt;
 
@@ -61,12 +61,12 @@ CAShapeLayer需要通过贝塞尔曲线的CGPath，然后提交到GPU上渲染�
   &lt;p&gt;“CAShapeLayer使用了硬件加速，绘制同一图形会比用Core Graphics快很多。”&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;这一点，在我写demo的时候发现了并不是这样，即使是相同的path，drawRect也是有可能会比CAShapeLayer要快的。关于这一点，我会把这点放在iOS绘制方案调研（下）去讲。&lt;br /&gt;
+&lt;p&gt;这一点，在我写demo的时候发现了并不是这样，即使是相同的path，drawRect也是有可能会比CAShapeLayer要快的。关于这一点，我会把这点放在iOS绘制方案调研去讲。&lt;br /&gt;
 在使用&lt;code class=&quot;highlighter-rouge&quot;&gt;CAShapeLayer&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;drawHierarchy(in: , afterScreenUpdates: )&lt;/code&gt;之后，原本一段需要5、6分钟才能生成的轨迹，现在只需要1秒就就可以生成出来了。业务问题的确已经解决了，但是绘制的问题并没有结束，我在文章开头就已经写了，在写这个Demo的时候，测试的结果确出乎意料，这部分的讨论将会放在下篇去讨论。&lt;/p&gt;
 </description>
         <pubDate>Sun, 12 Aug 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/08/12/iOS%E7%BB%98%E5%88%B6%E6%96%B9%E6%A1%88%E8%B0%83%E7%A0%94-%E4%B8%8A/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/08/12/iOS%E7%BB%98%E5%88%B6%E6%96%B9%E6%A1%88%E8%B0%83%E7%A0%94-%E4%B8%8A/</guid>
+        <link>http://www.foolishtalk.org/2018/08/12/iOS%E6%88%AA%E5%9B%BE%E5%BC%95%E8%B5%B7%E7%9A%84%E6%80%9D%E8%80%83/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/08/12/iOS%E6%88%AA%E5%9B%BE%E5%BC%95%E8%B5%B7%E7%9A%84%E6%80%9D%E8%80%83/</guid>
         
         <category>iOS</category>
         
