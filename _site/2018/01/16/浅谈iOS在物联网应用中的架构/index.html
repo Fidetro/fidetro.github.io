@@ -214,8 +214,8 @@ border: none;
 
 <p>硬件和App之间如何通讯实现交互不属于本文讨论的范畴，因为其表现形式都会像上图一样。从代码层上来讲，通讯这部分都应该封装成一个类，外部无需知道内容是如何实现，业务方只需要得到设备返回的数据以及将数据发送给设备就可以了，类似于下面这样:</p>
 <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">DeviceDataManagerDelegate</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
-<span class="c1">//  这里的device他可以是蓝牙的外设，也可以是能某种能标示设备的tag，能get到点就可以了
-</span><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">readData</span><span class="o">:</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="n">data</span> <span class="n">device</span><span class="o">:</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">device</span><span class="p">;</span>
+<span class="c1">//  这里的device他可以是蓝牙的外设，也可以是能某种能标示设备的tag，能get到点就可以了</span>
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">readData</span><span class="o">:</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="n">data</span> <span class="n">device</span><span class="o">:</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">device</span><span class="p">;</span>
 <span class="k">@end</span>
 
 <span class="k">@interface</span> <span class="nc">DeviceDataManager</span> <span class="p">:</span> <span class="nc">NSObject</span>
@@ -263,8 +263,8 @@ border: none;
 
 <span class="k">+</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">parse</span><span class="p">:(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span>
 <span class="p">{</span>
-  <span class="c1">//处理数据
-</span>
+  <span class="c1">//处理数据</span>
+
     <span class="k">return</span> <span class="s">@"hello action"</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="k">@end</span>
@@ -364,7 +364,7 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="22">
+                				<a href="/tags/#iOS" title="iOS" rel="23">
                                     iOS
                                 </a>
                             
@@ -390,7 +390,7 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#Swift" title="Swift" rel="14">
+                				<a href="/tags/#Swift" title="Swift" rel="15">
                                     Swift
                                 </a>
                             

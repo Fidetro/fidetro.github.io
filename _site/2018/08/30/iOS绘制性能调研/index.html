@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>iOS绘制性能调研 - Karim | FoolishTalk Blog</title>
+
+    <link rel="canonical" href="http://www.foolishtalk.org/2018/08/30/iOS%E7%BB%98%E5%88%B6%E6%80%A7%E8%83%BD%E8%B0%83%E7%A0%94/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">FoolishTalk</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <style type="text/css">
+/* 新浪微博 */
+.-mob-share-weibo {
+background-image: url("http://images.foolishtalk.org/sina_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+/* 微信 */
+.-mob-share-weixin {
+background-image: url("http://images.foolishtalk.org/wechat_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+/* QQ */
+.-mob-share-qq {
+background-image: url("http://images.foolishtalk.org/qq_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+</style>
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-ismael.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-ismael.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        
+                    </div>
+                    <h1>iOS绘制性能调研</h1>
+                    
+                    
+                    <h2 class="subheading">iOS，绘制</h2>
+                    
+                    <span class="meta">Posted by Fidetro on August 30, 2018</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">            
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h1 id="前言">前言</h1>
+<p>在上篇<a href="http://www.foolishtalk.org/2018/08/12/iOS%E6%88%AA%E5%9B%BE%E5%BC%95%E8%B5%B7%E7%9A%84%E6%80%9D%E8%80%83/">iOS截图引起的思考</a>留下了一些疑问，会在这篇全部解开。<br />
+在上一篇结尾的时候，我提出了：</p>
+<blockquote>
+  <p>即使是相同的path，drawRect也是有可能会比CAShapeLayer要快的。</p>
+</blockquote>
+
+<h1 id="正文">正文</h1>
+
+<p>先来看两段贝塞尔画出来的路径：</p>
+<ol>
+  <li>这一段路径是在悦跑圈实际遇到的轨迹情况
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">setupAPath</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UIBezierPath</span> <span class="p">{</span>
+ <span class="k">let</span> <span class="nv">bezier</span> <span class="o">=</span> <span class="kt">UIBezierPath</span><span class="p">()</span>
+ <span class="c1">//https://github.com/Fidetro/drawPath/blob/master/DrawPath/test.plist</span>
+ <span class="k">let</span> <span class="nv">plistPath</span> <span class="o">=</span> <span class="kt">Bundle</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="nf">path</span><span class="p">(</span><span class="nv">forResource</span><span class="p">:</span> <span class="s">"test"</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="s">"plist"</span><span class="p">)</span><span class="o">!</span>
+ <span class="k">let</span> <span class="nv">points</span> <span class="o">=</span> <span class="p">(</span><span class="kt">NSArray</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">contentsOfFile</span><span class="p">:</span> <span class="n">plistPath</span><span class="p">)</span> <span class="k">as!</span> <span class="p">[</span><span class="kt">String</span><span class="p">])</span><span class="o">.</span><span class="n">map</span><span class="p">{</span><span class="kt">CGPointFromString</span><span class="p">(</span><span class="nv">$0</span><span class="p">)}</span>
+ <span class="k">for</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">point</span><span class="p">)</span> <span class="k">in</span> <span class="n">points</span><span class="o">.</span><span class="nf">enumerated</span><span class="p">()</span> <span class="p">{</span>
+     <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+         <span class="n">bezier</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="n">point</span><span class="p">)</span>
+     <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+         <span class="n">bezier</span><span class="o">.</span><span class="nf">addLine</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="n">point</span><span class="p">)</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="k">return</span> <span class="n">bezier</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>这一段路径是两点之间来回绘制5000次
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">setupBPath</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UIBezierPath</span> <span class="p">{</span>
+ <span class="k">let</span> <span class="nv">bezier</span> <span class="o">=</span> <span class="kt">UIBezierPath</span><span class="p">()</span>
+ <span class="k">for</span> <span class="n">index</span> <span class="k">in</span> <span class="mi">0</span><span class="o">..&lt;</span><span class="mi">10000</span> <span class="p">{</span>
+     <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+         <span class="n">bezier</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">))</span>
+     <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+         <span class="k">let</span> <span class="nv">point</span> <span class="o">=</span> <span class="n">index</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span> <span class="p">?</span> <span class="kt">CGPoint</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span> <span class="p">:</span> <span class="kt">CGPoint</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+         <span class="n">bezier</span><span class="o">.</span><span class="nf">addLine</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="n">point</span><span class="p">)</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="k">return</span> <span class="n">bezier</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>这两段路径分别使用<code class="highlighter-rouge">CAShapeLayer</code>和<code class="highlighter-rouge">CGContext</code>绘制，下面是粗略统计的耗时时间：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">耗时</th>
+      <th style="text-align: center">APath</th>
+      <th style="text-align: center">BPath</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">CAShapeLayer</td>
+      <td style="text-align: center">3~4s</td>
+      <td style="text-align: center">5~6min</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">drawRect</td>
+      <td style="text-align: center">4~5min</td>
+      <td style="text-align: center">5~6s</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>这里有一点要注意的是，<code class="highlighter-rouge">CGContext</code>会消耗CPU和内存，使用Xcode或者Instruments可以发现，在绘制APath的时候CPU使用率基本在90%以上，CAShapeLayer使用GPU绘制，但仍然会造成卡顿。（还没找到监测GPU使用的方法，如果有可以评论告诉我。</p>
+
+<p>要了解造成这两者之间差异的原因，就得知道<code class="highlighter-rouge">CAShapeLayer</code>和<code class="highlighter-rouge">CGContext</code>的由来。</p>
+
+<p>在上一篇中已经简单介绍过，从官方文档中可以得知，CAShapeLayer是基于Core Animation上封装的类，用于绘制抗锯齿形状图层。而<code class="highlighter-rouge">CGContext</code>是使用<code class="highlighter-rouge">Core Graphics</code>。光知道他们调用是底层是什么，并不能够解决现在的问题，还需要更深入去了解<code class="highlighter-rouge">Core Animation</code>和<code class="highlighter-rouge">Core Graphics</code>。</p>
+
+<h1 id="core-animation">Core Animation</h1>
+<p><img src="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Art/ca_architecture_2x.png" alt="" /></p>
+
+<p><code class="highlighter-rouge">Core Animation</code>是<code class="highlighter-rouge">Metal</code>和<code class="highlighter-rouge">Core Graphics</code>更上层的框架。使用<code class="highlighter-rouge">Core Animation</code>绘制，只需要设置一些参数（例如起点和终点），然后<code class="highlighter-rouge">Core Animation</code>会将绘制工作交给GPU去渲染。</p>
+
+<h2 id="cashapelayer">CAShapeLayer</h2>
+<p>同时关于<code class="highlighter-rouge">CAShapeLayer</code>，苹果更建议我们在一些简单的路径的时候去使用。<br />
+<code class="highlighter-rouge">CAShapeLayer</code>在合成的时候根据提供的路径去渲染位图，优势是尽可能的用更好的分辨率去绘制路径，但是这种优势是要以额外的渲染时间作为代价，如果提供的路径非常复杂，那么可能会导致栅格化的代价十分昂贵。同时如果图层大小不断变化，导致经常需要重新绘制，那么绘制花费的时间最终可能会变成性能瓶颈。</p>
+
+<h1 id="core-graphics">Core Graphics</h1>
+<p>Core Graphics也叫做Quartz 2D，是二维绘图引擎，Quartz 2D提供低级、轻量级2D渲染，很方便实现透明层，基于路径的绘图，离屏渲染，高级颜色管理，消除锯齿渲染以及PDF创建，显示和解析。</p>
+
+<p><code class="highlighter-rouge">Core Graphics</code>建议我们在遇到以下情况的时候使用<code class="highlighter-rouge">CGLayer</code>去绘制。</p>
+<ul>
+  <li>重复使用高质量的离屏渲染。例如你在构建一个需要复用的场景时候，将背景绘制在图层上，然后在需要的时候绘制图层。</li>
+  <li>重复绘制。如果你打算绘制一个由多个相同的项目组成的图层，将其绘制到CGLayer上，能得到性能提升。(参考下图)</li>
+  <li>缓冲。虽然你可能会因此使用layer，但是Quartz Compositor并不需要缓冲，如果你必须绘制到缓冲区，请使用layer而不是context。</li>
+</ul>
+
+<p><img src="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/stamp_layers.gif" alt="12-1" /></p>
+
+<p>使用<code class="highlighter-rouge">CGLayerRef</code>能实现最佳性能，Quartz会根据关联的图形上下文来缓存CGLayer。例与视显卡相关联的图形上下文可以缓存显卡上的图层，这会让绘制图层中的内容比从位图上下文构造的图像渲染的更快。因为，与位图图形上下文相比，Layer通常是离屏渲染的更好选择。</p>
+
+<p><code class="highlighter-rouge">CGLayerRef</code>的使用可以参考下面这段代码,CGLayerRef在swift中对应的是CGLayer</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="k">let</span> <span class="nv">context</span> <span class="o">=</span> <span class="kt">UIGraphicsGetCurrentContext</span><span class="p">()</span><span class="o">!</span>
+        <span class="k">let</span> <span class="nv">layer</span> <span class="o">=</span> <span class="kt">CGLayer</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="n">rect</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="nv">auxiliaryInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">layerCtx</span> <span class="o">=</span> <span class="n">layer</span><span class="o">!.</span><span class="n">context</span><span class="o">!</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">beginPath</span><span class="p">()</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">addLine</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">100</span><span class="p">))</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">setLineWidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">setStrokeColor</span><span class="p">(</span><span class="kt">UIColor</span><span class="o">.</span><span class="n">red</span><span class="o">.</span><span class="n">cgColor</span><span class="p">)</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">strokePath</span><span class="p">()</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">closePath</span><span class="p">()</span>
+        <span class="n">context</span><span class="o">.</span><span class="nf">draw</span><span class="p">(</span><span class="n">layer</span><span class="o">!</span><span class="p">,</span> <span class="nv">in</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">frame</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="总结">总结</h1>
+<p>通过两者文档的对比，似乎<code class="highlighter-rouge">CGLayerRef</code>比<code class="highlighter-rouge">CAShapLayer</code>要更好，但是实际上，在绘制复杂的路径的时候，个人还是更偏向使用<code class="highlighter-rouge">CAShapeLayer</code>，大部分情况下，CPU的性能比GPU的性能更加昂贵，在两者之间选择的时候，应该根据实际要求，如果需要更高质量的图形渲染，应该选择<code class="highlighter-rouge">Core Graphics</code>。<br />
+另外在刚开始的时候提出<code class="highlighter-rouge">CAShapeLayer</code>绘制BPath路径的时候会更加卡顿的问题，尽管苹果推荐我们<code class="highlighter-rouge">CAShapeLayer</code>应该去绘制简单的路径，但是苹果也在文档中给出了解决的方法：
+通过将复杂的形状分解成更简单的形状可以减少绘制花费的时间，将多个<code class="highlighter-rouge">CAShapeLayer</code>对象叠加在一起要比单独绘制一个<code class="highlighter-rouge">CAShapeLayer</code>对象快得多。因为绘制操作是在CPU上，而合成是在GPU上。但是这部分的性能优化，需要根据实际的情况去制定基线。</p>
+
+<h1 id="参考链接">参考链接</h1>
+
+<p><a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40004514">Core Animation Programming Guide</a><br />
+<a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Introduction/Introduction.html#//apple_ref/doc/uid/TP30001066">Quartz 2D Programming Guide</a><br />
+<a href="https://github.com/Fidetro/drawPath">示例Demo</a></p>
+
+
+
+                <hr>
+            <div>
+                <p>请保持转载后文章内容的完整，以及文章出处。本人保留所有版权相关权利。</p>
+                <!-- 要是你找到这个，想打赏就打赏吧 <p>如果你看了文章，觉得有收获，可以通过下面的支付宝二维码打赏。</p>
+                <b>
+                <img height="100" width="100" src="http://images.foolishtalk.org/qrcode.png">
+                </b> -->
+            </div>
+                <!-- 分享代码 -->                
+<div class="-foot-share-buttons">
+    <b>分享到：</b>
+    <button class="-mob-share-weibo"></button>
+    <button class="-mob-share-weixin"></button>
+    <button class="-mob-share-qq"></button>
+    <p>Disqus经常被墙，需要评论请科学上网</p>
+</div>
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=23ba60f5704b3"></script>
+                
+                <hr>
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2018/08/12/iOS%E6%88%AA%E5%9B%BE%E5%BC%95%E8%B5%B7%E7%9A%84%E6%80%9D%E8%80%83/" data-toggle="tooltip" data-placement="top" title="iOS截图引起的思考">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="23">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                                    问题随笔
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Code-Life" title="Code-Life" rel="2">
+                                    Code-Life
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#WWDC" title="WWDC" rel="2">
+                                    WWDC
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Swift" title="Swift" rel="15">
+                                    Swift
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
+                                    Perfect-Server
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Swift-Tips" title="Swift-Tips" rel="3">
+                                    Swift-Tips
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#RxSwift" title="RxSwift" rel="2">
+                                    RxSwift
+                                </a>
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="https://www.jianshu.com/u/e80ee6ad8f86">make</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "fidetro-github-io";
+    var disqus_identifier = "/2018/08/30/iOS绘制性能调研";
+    var disqus_url = "http://www.foolishtalk.org/2018/08/30/iOS%E7%BB%98%E5%88%B6%E6%80%A7%E8%83%BD%E8%B0%83%E7%A0%94/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/2095454814">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/fidetro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; FoolishTalk 2018
+                    <br>
+               
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+<script>
+    
+    var _gaId = 'UA-111166556-1';
+    var _gaDomain = 'foolishtalk.org';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script>
+    var _baId = '04196a2ea468bf450920ada8e098d8f7';
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?"+_baId;      
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="50" height="50" /> -->
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

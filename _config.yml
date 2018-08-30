@@ -30,9 +30,9 @@ anchorjs: false                          # if you want to customize anchor. chec
 
 
 
-# Gems
+# plugins
 # from PR#40, to support local preview for Jekyll 3.0
-gems: [jekyll-paginate]
+plugins: [jekyll-paginate]
 
 
 
