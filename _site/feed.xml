@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 10 Sep 2018 20:49:36 +0800</pubDate>
-    <lastBuildDate>Mon, 10 Sep 2018 20:49:36 +0800</lastBuildDate>
+    <pubDate>Mon, 10 Sep 2018 20:51:13 +0800</pubDate>
+    <lastBuildDate>Mon, 10 Sep 2018 20:51:13 +0800</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
     
       <item>
@@ -122,9 +122,9 @@
   &lt;li&gt;尽可能少调用&lt;code class=&quot;highlighter-rouge&quot;&gt;systemLayoutSizeFitting(_:)&lt;/code&gt;方法，它会临时创建一个引擎，然后返回size之后丢弃，频繁的调用，会造成性能下降。&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Sat, 01 Sep 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/09/01/High-Performance-Auto-Layout/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/09/01/High-Performance-Auto-Layout/</guid>
+        <pubDate>Mon, 10 Sep 2018 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2018/09/10/High-Performance-Auto-Layout/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/09/10/High-Performance-Auto-Layout/</guid>
         
         <category>iOS</category>
         
