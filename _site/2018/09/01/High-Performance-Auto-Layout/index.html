@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>WWDC-2018笔记---High Performance Auto Layout - Karim | FoolishTalk Blog</title>
+
+    <link rel="canonical" href="http://www.foolishtalk.org/2018/09/01/High-Performance-Auto-Layout/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">FoolishTalk</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <style type="text/css">
+/* 新浪微博 */
+.-mob-share-weibo {
+background-image: url("http://images.foolishtalk.org/sina_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+/* 微信 */
+.-mob-share-weixin {
+background-image: url("http://images.foolishtalk.org/wechat_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+/* QQ */
+.-mob-share-qq {
+background-image: url("http://images.foolishtalk.org/qq_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+</style>
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-ismael.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-ismael.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                    </div>
+                    <h1>WWDC-2018笔记---High Performance Auto Layout</h1>
+                    
+                    
+                    <h2 class="subheading">iOS，自动约束</h2>
+                    
+                    <span class="meta">Posted by Fidetro on September 1, 2018</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">            
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<p>最近总算有点时间写博客了，这次讲的是WWDC 2018中的<a href="https://developer.apple.com/videos/play/wwdc2018/220/">Session 220 High Performance Auto Layut</a></p>
+
+<p><code class="highlighter-rouge">AutoLayout</code>作为平时用的最多的布局方案，但是在性能上总是饱受病垢，通过这个session，我们可以了解到<code class="highlighter-rouge">AutoLayout</code>是怎么工作的，以及在iOS 12上<code class="highlighter-rouge">AutoLayout</code>得到了怎样的提升。</p>
+
+<h1 id="正文">正文</h1>
+
+<blockquote>
+  <p>talk is cheap,show me the code<br />
+先上来就是一段代码，告诉了我们，不要每次更新约束的时候，都把所有的约束移除，这样是错误的：</p>
+  <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Don’t do this! Removes and re-adds constraints potentially at 120 frames per second</span>
+<span class="k">override</span> <span class="kd">func</span> <span class="nf">updateConstraints</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">deactivate</span><span class="p">(</span><span class="n">myConstraints</span><span class="p">)</span>
+    <span class="n">myConstraints</span><span class="o">.</span><span class="nf">removeAll</span><span class="p">()</span>
+    <span class="k">let</span> <span class="nv">views</span> <span class="o">=</span> <span class="p">[</span><span class="s">"text1"</span><span class="p">:</span><span class="n">text1</span><span class="p">,</span> <span class="s">"text2"</span><span class="p">:</span><span class="n">text2</span><span class="p">]</span>
+    <span class="n">myConstraints</span> <span class="o">+=</span> <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">constraints</span><span class="p">(</span><span class="nv">withVisualFormat</span><span class="p">:</span> <span class="s">"H:|-[text1]-[text2]"</span><span class="p">,</span>
+                                                    <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="n">alignAllFirstBaseline</span><span class="p">],</span>
+                                                    <span class="n">myConstraints</span> <span class="o">+=</span> <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">constraints</span><span class="p">(</span><span class="nv">withVisualFormat</span><span class="p">:</span> <span class="s">"V:|-[text1]-|"</span><span class="p">,</span>
+                                                                                                    <span class="nv">metrics</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">views</span><span class="p">:</span> <span class="n">views</span><span class="p">)</span>
+        <span class="nv">options</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="nv">metrics</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">views</span><span class="p">:</span> <span class="n">views</span><span class="p">)</span>
+    <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">activate</span><span class="p">(</span><span class="n">myConstraints</span><span class="p">)</span>
+    <span class="k">super</span><span class="o">.</span><span class="nf">updateConstraints</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div>  </div>
+  <p>而且从这段注释就隐约透露了，尽管目前不能达到120fps，但是在未来的iPhone很有可能能达到120fps，所以并不建议我们这样操作。<br />
+正确的做法应该是通过懒加载的方式，如果已经添加了约束，就不需要再移除，再添加了：</p>
+  <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// This is ok! Doesn’t do anything unless self.myConstraints has been nil’d out</span>
+<span class="k">override</span> <span class="kd">func</span> <span class="nf">updateConstraints</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="k">self</span><span class="o">.</span><span class="n">myConstraints</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="kt">NSLayoutConstraint</span><span class="p">]()</span>
+        <span class="k">let</span> <span class="nv">views</span> <span class="o">=</span> <span class="p">[</span><span class="s">"text1"</span><span class="p">:</span><span class="n">text1</span><span class="p">,</span> <span class="s">"text2"</span><span class="p">:</span><span class="n">text2</span><span class="p">]</span>
+        <span class="n">constraints</span> <span class="o">+=</span> <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">constraints</span><span class="p">(</span><span class="nv">withVisualFormat</span><span class="p">:</span> <span class="s">"H:|-[text1]-[text2]"</span><span class="p">,</span>
+                                                      <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="n">alignAllFirstBaseline</span><span class="p">],</span>
+                                                      <span class="nv">metrics</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span>
+                                                      <span class="nv">views</span><span class="p">:</span> <span class="n">views</span><span class="p">)</span>
+        <span class="n">constraints</span> <span class="o">+=</span> <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">constraints</span><span class="p">(</span><span class="nv">withVisualFormat</span><span class="p">:</span> <span class="s">"V:|-[text1]-|"</span><span class="p">,</span>
+                                                      <span class="nv">options</span><span class="p">:</span> <span class="p">[],</span>
+                                                      <span class="nv">metrics</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span>
+                                                      <span class="nv">views</span><span class="p">:</span> <span class="n">views</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">activate</span><span class="p">(</span><span class="n">constraints</span><span class="p">)</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">myConstraints</span> <span class="o">=</span> <span class="n">constraints</span>
+    <span class="k">super</span><span class="o">.</span><span class="nf">updateConstraints</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<p>为了更好让我们理解“为什么要这么做”，而不是让我们知道“就是得这样做”，这个session给出了更详细的解释。</p>
+
+<p>当我们创建了一个View，给这个View去添加约束的时候，会创建一个和约束对应的等式，将其添加到计算约束的引擎中，引擎会将约束解释成视图的布局变量，最终设置视图的x，y，width，height。</p>
+
+<p>例如我们要创建下图的视图关系：<br />
+<img src="http://images.foolishtalk.org/2018_9_8_autolayout_1.png" alt="" /></p>
+
+<p>约束会转换成以下的等式：<br />
+<img src="http://images.foolishtalk.org/2018_9_8_autolayout_2.png" alt="" /></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text1</span><span class="o">.</span><span class="n">minX</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">text1</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">text2</span><span class="o">.</span><span class="n">minX</span> <span class="o">=</span> <span class="n">text1</span><span class="o">.</span><span class="n">minX</span> <span class="o">+</span> <span class="n">text1</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="mi">20</span>
+</code></pre></div></div>
+<p>最终将变量代入公式中得到最终的值：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text1</span><span class="o">.</span><span class="n">minX</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">text1</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">text2</span><span class="o">.</span><span class="n">minX</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">+</span> <span class="mi">20</span>
+<span class="n">text2</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">128</span>
+</code></pre></div></div>
+<p>到这里为止，引擎对这个布局的计算就已经完成了。<br />
+每当引擎将计算得到的值赋值给变量的时候，它会告诉视图，你的变量已经发生了改变，这时候视图则会调用<code class="highlighter-rouge">Superview.setNeedsLayout()</code>通知父视图发生了变化,然后视图会执行<code class="highlighter-rouge">layoutSubviews()</code>,同时询问引擎变化的值是什么，引擎告诉视图的值，就会调用<code class="highlighter-rouge">setBounds()</code>和<code class="highlighter-rouge">setCenter()</code>，然后完成整个布局的过程。</p>
+
+<p>如果希望在使用<code class="highlighter-rouge">AutoLayout</code>的时候，提高性能，在遇到一个视图，会发生改变的时候，不要<code class="highlighter-rouge">removeAll()</code>，这样会造成约束流失，导致性能下降。而是在不需要使用的时候，调用<code class="highlighter-rouge">deactivate()</code>使约束暂时失效,而再次需要用到的时候调用<code class="highlighter-rouge">activate()</code>再次激活。<br />
+我们在使用<code class="highlighter-rouge">AutoLayout</code>的时候，大多数会使用一些第三方库，而不会直接使用苹果原生提供的VFL或者其他原生api，在<code class="highlighter-rouge">Objective-C</code>中会使用<code class="highlighter-rouge">Masonry</code>，在<code class="highlighter-rouge">Swift</code>中会使用<code class="highlighter-rouge">SnapKit</code>，下面以<code class="highlighter-rouge">SnapKit</code>为例子：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="nv">firstConstraint</span><span class="p">:</span> <span class="kt">Constraint</span><span class="p">?</span>
+<span class="k">var</span> <span class="nv">secondConstraint</span><span class="p">:</span> <span class="kt">Constraint</span><span class="p">?</span>
+
+<span class="kd">func</span> <span class="nf">setupLayout</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">view</span><span class="o">.</span><span class="n">snp</span><span class="o">.</span><span class="n">makeConstraints</span> <span class="p">{</span> <span class="n">make</span> <span class="k">in</span> 
+     <span class="n">firstConstraint</span> <span class="o">=</span> <span class="n">make</span><span class="o">.</span><span class="n">bottom</span><span class="o">.</span><span class="nf">equalTo</span><span class="p">(</span><span class="n">otherView</span><span class="o">.</span><span class="n">snp</span><span class="o">.</span><span class="n">bottom</span><span class="p">)</span><span class="o">.</span><span class="n">constraint</span>
+     <span class="n">secondConstraint</span> <span class="o">=</span> <span class="n">make</span><span class="o">.</span><span class="n">bottom</span><span class="o">.</span><span class="nf">equalToSuperview</span><span class="p">()</span><span class="o">.</span><span class="n">constraint</span>
+  <span class="p">}</span>
+  <span class="n">firstConstraint</span><span class="p">?</span><span class="o">.</span><span class="nf">activate</span><span class="p">()</span>
+  <span class="n">secondConstraint</span><span class="p">?</span><span class="o">.</span><span class="nf">deactivate</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">updateLayout</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="nv">something</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="o">...</span>
+  <span class="k">if</span> <span class="n">something</span>  <span class="p">{</span>
+    <span class="n">firstConstraint</span><span class="p">?</span><span class="o">.</span><span class="nf">activate</span><span class="p">()</span>
+    <span class="n">secondConstraint</span><span class="p">?</span><span class="o">.</span><span class="nf">deactivate</span><span class="p">()</span>    
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">firstConstraint</span><span class="p">?</span><span class="o">.</span><span class="nf">deactivate</span><span class="p">()</span>
+    <span class="n">secondConstraint</span><span class="p">?</span><span class="o">.</span><span class="nf">activate</span><span class="p">()</span>
+  <span class="p">}</span>
+
+</code></pre></div></div>
+
+<h1 id="总结">总结</h1>
+<p>剩下一部分是比较零散的小技巧，所以放到总结中：</p>
+<ul>
+  <li>在使用优先级的时候，引擎会进行更多的计算，导致性能下降。</li>
+  <li>在视图中的子试图存在不同状态的时候，需要显示或移除的时候，可以优先考虑使用隐藏视图、激活约束、失效约束去避免约束流失。</li>
+  <li>部分控件是具有固定尺寸的，例如UIImageView会根据UIImage的大小去适应尺寸，原理也是通过UIView创建约束，你可以自己去设定大小，这样就会跳过系统计算约束的步骤，但是不要认为这样可以提高性能。但是有一种情况下是可以提高性能的，就是在使用UILabel的时候，如果你自己手动去计算label的size的时候，可以通过重写<code class="highlighter-rouge">var intrinsicContentSize: CGSize</code>属性,告诉系统不需要帮我们计算。
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">override</span> <span class="k">var</span> <span class="nv">intrinsicContentSize</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="kt">UIView</span><span class="o">.</span><span class="n">noIntrinsicMetric</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">UIView</span><span class="o">.</span><span class="n">noIntrinsicMetric</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>尽可能少调用<code class="highlighter-rouge">systemLayoutSizeFitting(_:)</code>方法，它会临时创建一个引擎，然后返回size之后丢弃，频繁的调用，会造成性能下降。</li>
+</ul>
+
+
+                <hr>
+            <div>
+                <p>请保持转载后文章内容的完整，以及文章出处。本人保留所有版权相关权利。</p>
+                <!-- 要是你找到这个，想打赏就打赏吧 <p>如果你看了文章，觉得有收获，可以通过下面的支付宝二维码打赏。</p>
+                <b>
+                <img height="100" width="100" src="http://images.foolishtalk.org/qrcode.png">
+                </b> -->
+            </div>
+                <!-- 分享代码 -->                
+<div class="-foot-share-buttons">
+    <b>分享到：</b>
+    <button class="-mob-share-weibo"></button>
+    <button class="-mob-share-weixin"></button>
+    <button class="-mob-share-qq"></button>
+    <p>Disqus经常被墙，需要评论请科学上网</p>
+</div>
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=23ba60f5704b3"></script>
+                
+                <hr>
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2018/08/30/iOS%E7%BB%98%E5%88%B6%E6%80%A7%E8%83%BD%E8%B0%83%E7%A0%94/" data-toggle="tooltip" data-placement="top" title="iOS绘制性能调研">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="24">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                                    问题随笔
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Code-Life" title="Code-Life" rel="2">
+                                    Code-Life
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#WWDC" title="WWDC" rel="2">
+                                    WWDC
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Swift" title="Swift" rel="15">
+                                    Swift
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
+                                    Perfect-Server
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Swift-Tips" title="Swift-Tips" rel="3">
+                                    Swift-Tips
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#RxSwift" title="RxSwift" rel="2">
+                                    RxSwift
+                                </a>
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="https://www.jianshu.com/u/e80ee6ad8f86">make</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "fidetro-github-io";
+    var disqus_identifier = "/2018/09/01/High Performance Auto Layout";
+    var disqus_url = "http://www.foolishtalk.org/2018/09/01/High-Performance-Auto-Layout/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/2095454814">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/fidetro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; FoolishTalk 2018
+                    <br>
+               
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+<script>
+    
+    var _gaId = 'UA-111166556-1';
+    var _gaDomain = 'foolishtalk.org';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script>
+    var _baId = '04196a2ea468bf450920ada8e098d8f7';
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?"+_baId;      
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="50" height="50" /> -->
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
