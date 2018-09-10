@@ -16,6 +16,7 @@ tags:
 # 正文  
 
 > talk is cheap,show me the code  
+ 
 先上来就是一段代码，告诉了我们，不要每次更新约束的时候，都把所有的约束移除，这样是错误的：  
 ```swift
 // Don’t do this! Removes and re-adds constraints potentially at 120 frames per second

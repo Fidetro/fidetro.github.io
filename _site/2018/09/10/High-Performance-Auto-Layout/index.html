@@ -201,9 +201,11 @@ border: none;
 <h1 id="正文">正文</h1>
 
 <blockquote>
-  <p>talk is cheap,show me the code<br />
-先上来就是一段代码，告诉了我们，不要每次更新约束的时候，都把所有的约束移除，这样是错误的：</p>
-  <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Don’t do this! Removes and re-adds constraints potentially at 120 frames per second</span>
+  <p>talk is cheap,show me the code</p>
+</blockquote>
+
+<p>先上来就是一段代码，告诉了我们，不要每次更新约束的时候，都把所有的约束移除，这样是错误的：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Don’t do this! Removes and re-adds constraints potentially at 120 frames per second</span>
 <span class="k">override</span> <span class="kd">func</span> <span class="nf">updateConstraints</span><span class="p">()</span> <span class="p">{</span>
     <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">deactivate</span><span class="p">(</span><span class="n">myConstraints</span><span class="p">)</span>
     <span class="n">myConstraints</span><span class="o">.</span><span class="nf">removeAll</span><span class="p">()</span>
@@ -217,10 +219,10 @@ border: none;
     <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">activate</span><span class="p">(</span><span class="n">myConstraints</span><span class="p">)</span>
     <span class="k">super</span><span class="o">.</span><span class="nf">updateConstraints</span><span class="p">()</span>
 <span class="p">}</span>
-</code></pre></div>  </div>
-  <p>而且从这段注释就隐约透露了，尽管目前不能达到120fps，但是在未来的iPhone很有可能能达到120fps，所以并不建议我们这样操作。<br />
+</code></pre></div></div>
+<p>而且从这段注释就隐约透露了，尽管目前不能达到120fps，但是在未来的iPhone很有可能能达到120fps，所以并不建议我们这样操作。<br />
 正确的做法应该是通过懒加载的方式，如果已经添加了约束，就不需要再移除，再添加了：</p>
-  <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// This is ok! Doesn’t do anything unless self.myConstraints has been nil’d out</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// This is ok! Doesn’t do anything unless self.myConstraints has been nil’d out</span>
 <span class="k">override</span> <span class="kd">func</span> <span class="nf">updateConstraints</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">if</span> <span class="k">self</span><span class="o">.</span><span class="n">myConstraints</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
         <span class="k">var</span> <span class="nv">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="kt">NSLayoutConstraint</span><span class="p">]()</span>
@@ -238,8 +240,7 @@ border: none;
     <span class="k">self</span><span class="o">.</span><span class="n">myConstraints</span> <span class="o">=</span> <span class="n">constraints</span>
     <span class="k">super</span><span class="o">.</span><span class="nf">updateConstraints</span><span class="p">()</span>
 <span class="p">}</span>
-</code></pre></div>  </div>
-</blockquote>
+</code></pre></div></div>
 
 <p>为了更好让我们理解“为什么要这么做”，而不是让我们知道“就是得这样做”，这个session给出了更详细的解释。</p>
 
