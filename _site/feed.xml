@@ -5,12 +5,12 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 19 Sep 2018 10:37:31 +0800</pubDate>
-    <lastBuildDate>Wed, 19 Sep 2018 10:37:31 +0800</lastBuildDate>
+    <pubDate>Wed, 19 Sep 2018 10:39:54 +0800</pubDate>
+    <lastBuildDate>Wed, 19 Sep 2018 10:39:54 +0800</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
     
       <item>
-        <title>实现隐藏状态栏动画</title>
+        <title>iOS实现隐藏状态栏动画</title>
         <description>&lt;p&gt;隐藏状态栏是一个相对比较常见的需求，为了让隐藏状态栏更加平滑过渡，我们会给他增加一个动画效果。像常见的渐变透明隐藏效果和上下滚动隐藏效果，系统已经提供好对应的api给我们使用了。在需要隐藏状态栏的Controller下使用这段代码就可以实现了：&lt;/p&gt;
 
 &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;k&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;touchesBegan&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;touches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UITouch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -42,8 +42,8 @@
 &lt;p&gt;这样就能完美解决隐藏导航栏动画的问题了，但是要注意这个方法在iOS 9后已经废弃，尽量还是使用第一种方法。&lt;/p&gt;
 </description>
         <pubDate>Wed, 19 Sep 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/09/19/%E5%AE%9E%E7%8E%B0%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E5%8A%A8%E7%94%BB/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/09/19/%E5%AE%9E%E7%8E%B0%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E5%8A%A8%E7%94%BB/</guid>
+        <link>http://www.foolishtalk.org/2018/09/19/iOS%E5%AE%9E%E7%8E%B0%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E5%8A%A8%E7%94%BB/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/09/19/iOS%E5%AE%9E%E7%8E%B0%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E5%8A%A8%E7%94%BB/</guid>
         
         <category>iOS</category>
         
