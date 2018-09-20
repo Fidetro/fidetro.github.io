@@ -5,25 +5,27 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 20 Sep 2018 11:12:50 +0800</pubDate>
-    <lastBuildDate>Thu, 20 Sep 2018 11:12:50 +0800</lastBuildDate>
+    <pubDate>Thu, 20 Sep 2018 11:15:55 +0800</pubDate>
+    <lastBuildDate>Thu, 20 Sep 2018 11:15:55 +0800</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
     
       <item>
         <title>NS_ASSUME_NONNULL_BEGIN &amp;&amp; NS_ASSUME_NONNULL_END</title>
         <description>&lt;p&gt;更新了Xcode 10之后在新建OC的类的时候，都会默认加上了&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_BEGIN&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_END&lt;/code&gt;。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;NS_ASSUME_NONNULL_BEGIN
+&lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;NS_ASSUME_NONNULL_BEGIN&lt;/span&gt;
 
-@interface Person : NSObject
+&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Person&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NSObject&lt;/span&gt;
 
-@end
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
 
-NS_ASSUME_NONNULL_END
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;在Objective-C中，是没有像swift中&lt;code class=&quot;highlighter-rouge&quot;&gt;!&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt;的概念，为了解决和swift混编的问题，增加了&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;___nonnull&lt;/code&gt;的关键字。 &lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;代表修饰的对象可以为nil。
-&lt;code class=&quot;highlighter-rouge&quot;&gt;___nonnull&lt;/code&gt;代表修饰的对象不可以为NULL或者为nil。&lt;br /&gt;
-当我们给类中其中一个对象声明&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;或&lt;code class=&quot;highlighter-rouge&quot;&gt;___nonnull&lt;/code&gt;时候，需要把所有的对象都加上&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;或&lt;code class=&quot;highlighter-rouge&quot;&gt;___nonnull&lt;/code&gt;。&lt;br /&gt;
-而&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_BEGIN&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_END&lt;/code&gt;中间声明的对象会把所有对象默认当作是&lt;code class=&quot;highlighter-rouge&quot;&gt;__nonnull&lt;/code&gt;，而我们只需要可能为nil的对象声明为&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;就可以了。&lt;/p&gt;
+&lt;span class=&quot;n&quot;&gt;NS_ASSUME_NONNULL_END&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;在Objective-C中，是没有像swift中&lt;code class=&quot;highlighter-rouge&quot;&gt;!&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt;的概念，为了解决和swift混编的问题，增加了&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;___nonnull&lt;/code&gt;的关键字。 &lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;代表修饰的对象可以为nil。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;___nonnull&lt;/code&gt;代表修饰的对象不可以为NULL或者为nil。&lt;br /&gt;
+当我们给类中其中一个对象声明&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;或&lt;code class=&quot;highlighter-rouge&quot;&gt;___nonnull&lt;/code&gt;时候，需要把所有的对象都加上&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;或&lt;code class=&quot;highlighter-rouge&quot;&gt;___nonnull&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;而&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_BEGIN&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_END&lt;/code&gt;中间声明的对象会把所有对象默认当作是&lt;code class=&quot;highlighter-rouge&quot;&gt;__nonnull&lt;/code&gt;，而我们只需要可能为nil的对象声明为&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;就可以了。&lt;/p&gt;
 </description>
         <pubDate>Wed, 19 Sep 2018 00:00:00 +0800</pubDate>
         <link>http://www.foolishtalk.org/2018/09/19/NS_ASSUME_NONNULL_BEGIN-&&-NS_ASSUME_NONNULL_END/</link>
