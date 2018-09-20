@@ -10,7 +10,7 @@ tags:
 ---
 
 更新了Xcode 10之后在新建OC的类的时候，都会默认加上了`NS_ASSUME_NONNULL_BEGIN`和`NS_ASSUME_NONNULL_END`。  
-```Objective-C
+```objc
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Person : NSObject
