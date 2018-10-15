@@ -5,16 +5,23 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 15 Oct 2018 22:36:41 +0800</pubDate>
-    <lastBuildDate>Mon, 15 Oct 2018 22:36:41 +0800</lastBuildDate>
+    <pubDate>Mon, 15 Oct 2018 22:39:10 +0800</pubDate>
+    <lastBuildDate>Mon, 15 Oct 2018 22:39:10 +0800</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
     
       <item>
         <title>24岁的杂谈</title>
-        <description>&lt;p&gt;昨天刚过完了自己24岁的生日，过了第一个在工作之后，没有在敲代码的生日，工作的第一年生日，写了FFDB，第二年的生日写了Swift-FFDB，尽管这两个库都不完美，但是都是花了非常多心思在里面，自己还是很满足的。&lt;br /&gt;
-今年的生日很特别，和我女朋友一起过的第一个生日，认识我的人都知道，以往的自己一直沉迷在写代码，完全不在乎身边的人和事，也不知道为什么，这次主动了起来抓住机会，说起来也很有巧合，我们是520那天认识的，总之如果哪天你看到了这篇，想跟你说句，余生请多指教:)&lt;br /&gt;
-其次是想聊聊未来博客的一些打算。工作上即将要被调到去处理悦跑圈的基础架构，可能关于技术这块的文章会逐渐减少，目前在打算会翻译一些国外我感兴趣的博客文章，像&lt;a href=&quot;https://swift.org/blog/how-mirror-works/&quot;&gt;How Mirror Works&lt;/a&gt;已经在翻译了，只是工作原因最快估计也得在这周末或下周才能见到，博客的服务器可能在未来会考虑搭建在国外VPS了，所以以后访问可能会稍微比较慢。原因就是今天买房了，突然压力好大T^T&lt;br /&gt;
-大概就是这些吧～&lt;/p&gt;
+        <description>&lt;hr /&gt;
+
+&lt;p&gt;昨天刚过完了自己24岁的生日，过了第一个在工作之后，没有在敲代码的生日，工作的第一年生日，写了FFDB，第二年的生日写了Swift-FFDB，尽管这两个库都不完美，但是都是花了非常多心思在里面，自己还是很满足的。&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;今年的生日很特别，和我女朋友一起过的第一个生日，认识我的人都知道，以往的自己一直沉迷在写代码，完全不在乎身边的人和事，也不知道为什么，这次主动了起来抓住机会，说起来也很有巧合，我们是520那天认识的，总之如果哪天你看到了这篇，想跟你说句，余生请多指教:)&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;其次是想聊聊未来博客的一些打算。工作上即将要被调到去处理悦跑圈的基础架构，可能关于技术这块的文章会逐渐减少，目前在打算会翻译一些国外我感兴趣的博客文章，像&lt;a href=&quot;https://swift.org/blog/how-mirror-works/&quot;&gt;How Mirror Works&lt;/a&gt;已经在翻译了，只是工作原因最快估计也得在这周末或下周才能见到，博客的服务器可能在未来会考虑搭建在国外VPS了，所以以后访问可能会稍微比较慢。原因就是今天买房了，突然压力好大T^T&lt;/p&gt;
+
+&lt;p&gt;大概就是这些吧～&lt;/p&gt;
 </description>
         <pubDate>Mon, 15 Oct 2018 00:00:00 +0800</pubDate>
         <link>http://www.foolishtalk.org/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/</link>
