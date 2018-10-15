@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>NS_ASSUME_NONNULL_BEGIN && NS_ASSUME_NONNULL_END - Karim | FoolishTalk Blog</title>
+    <title>24岁的杂谈 - Karim | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2018/09/19/NS_ASSUME_NONNULL_BEGIN-&&-NS_ASSUME_NONNULL_END/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -169,15 +169,15 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        <a class="tag" href="/tags/#杂谈" title="杂谈">杂谈</a>
                         
                     </div>
-                    <h1>NS_ASSUME_NONNULL_BEGIN && NS_ASSUME_NONNULL_END</h1>
+                    <h1>24岁的杂谈</h1>
                     
                     
-                    <h2 class="subheading">iOS，Xcode 10</h2>
+                    <h2 class="subheading">杂谈</h2>
                     
-                    <span class="meta">Posted by Fidetro on September 19, 2018</span>
+                    <span class="meta">Posted by Fidetro on October 15, 2018</span>
                 </div>
             </div>
         </div>
@@ -194,21 +194,10 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>更新了Xcode 10之后在新建OC的类的时候，都会默认加上了<code class="highlighter-rouge">NS_ASSUME_NONNULL_BEGIN</code>和<code class="highlighter-rouge">NS_ASSUME_NONNULL_END</code>。</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">NS_ASSUME_NONNULL_BEGIN</span>
-
-<span class="k">@interface</span> <span class="nc">Person</span> <span class="p">:</span> <span class="nc">NSObject</span>
-
-<span class="k">@end</span>
-
-<span class="n">NS_ASSUME_NONNULL_END</span>
-</code></pre></div></div>
-<p>在Objective-C中，是没有像swift中<code class="highlighter-rouge">!</code>和<code class="highlighter-rouge">?</code>的概念，为了解决和swift混编的问题，增加了<code class="highlighter-rouge">__nullable</code>和<code class="highlighter-rouge">___nonnull</code>的关键字。 <code class="highlighter-rouge">__nullable</code>代表修饰的对象可以为nil。</p>
-
-<p><code class="highlighter-rouge">___nonnull</code>代表修饰的对象不可以为NULL或者为nil。<br />
-当我们给类中其中一个对象声明<code class="highlighter-rouge">__nullable</code>或<code class="highlighter-rouge">___nonnull</code>时候，需要把所有的对象都加上<code class="highlighter-rouge">__nullable</code>或<code class="highlighter-rouge">___nonnull</code>。</p>
-
-<p>而<code class="highlighter-rouge">NS_ASSUME_NONNULL_BEGIN</code>和<code class="highlighter-rouge">NS_ASSUME_NONNULL_END</code>中间声明的对象会把所有对象默认当作是<code class="highlighter-rouge">__nonnull</code>，而我们只需要可能为nil的对象声明为<code class="highlighter-rouge">__nullable</code>就可以了。</p>
+				<p>昨天刚过完了自己24岁的生日，过了第一个在工作之后，没有在敲代码的生日，工作的第一年生日，写了FFDB，第二年的生日写了Swift-FFDB，尽管这两个库都不完美，但是都是花了非常多心思在里面，自己还是很满足的。<br />
+今年的生日很特别，和我女朋友一起过的第一个生日，认识我的人都知道，以往的自己一直沉迷在写代码，完全不在乎身边的人和事，也不知道为什么，这次主动了起来抓住机会，说起来也很有巧合，我们是520那天认识的，总之如果哪天你看到了这篇，想跟你说句，余生请多指教:)<br />
+其次是想聊聊未来博客的一些打算。工作上即将要被调到去处理悦跑圈的基础架构，可能关于技术这块的文章会逐渐减少，目前在打算会翻译一些国外我感兴趣的博客文章，像<a href="https://swift.org/blog/how-mirror-works/">How Mirror Works</a>已经在翻译了，只是工作原因最快估计也得在这周末或下周才能见到，博客的服务器可能在未来会考虑搭建在国外VPS了，所以以后访问可能会稍微比较慢。原因就是今天买房了，突然压力好大T^T<br />
+大概就是这些吧～</p>
 
 
                 <hr>
@@ -236,7 +225,7 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/09/19/iOS%E5%AE%9E%E7%8E%B0%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E5%8A%A8%E7%94%BB/" data-toggle="tooltip" data-placement="top" title="iOS实现隐藏状态栏动画">&larr; Previous Post</a>
+                        <a href="/2018/09/20/NS_ASSUME_NONNULL_BEGIN-&&-NS_ASSUME_NONNULL_END/" data-toggle="tooltip" data-placement="top" title="NS_ASSUME_NONNULL_BEGIN && NS_ASSUME_NONNULL_END">&larr; Previous Post</a>
                     </li>
                     
                     
@@ -321,6 +310,10 @@ border: none;
                             
         				
                             
+                				<a href="/tags/#杂谈" title="杂谈" rel="2">
+                                    杂谈
+                                </a>
+                            
         				
                             
                 				<a href="/tags/#RxSwift" title="RxSwift" rel="2">
@@ -357,8 +350,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2018/09/19/NS_ASSUME_NONNULL_BEGIN && NS_ASSUME_NONNULL_END";
-    var disqus_url = "http://www.foolishtalk.org/2018/09/19/NS_ASSUME_NONNULL_BEGIN-&&-NS_ASSUME_NONNULL_END/";
+    var disqus_identifier = "/2018/10/15/24岁的杂谈";
+    var disqus_url = "http://www.foolishtalk.org/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

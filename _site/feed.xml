@@ -5,9 +5,25 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 20 Sep 2018 11:15:55 +0800</pubDate>
-    <lastBuildDate>Thu, 20 Sep 2018 11:15:55 +0800</lastBuildDate>
+    <pubDate>Mon, 15 Oct 2018 22:36:41 +0800</pubDate>
+    <lastBuildDate>Mon, 15 Oct 2018 22:36:41 +0800</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
+    
+      <item>
+        <title>24岁的杂谈</title>
+        <description>&lt;p&gt;昨天刚过完了自己24岁的生日，过了第一个在工作之后，没有在敲代码的生日，工作的第一年生日，写了FFDB，第二年的生日写了Swift-FFDB，尽管这两个库都不完美，但是都是花了非常多心思在里面，自己还是很满足的。&lt;br /&gt;
+今年的生日很特别，和我女朋友一起过的第一个生日，认识我的人都知道，以往的自己一直沉迷在写代码，完全不在乎身边的人和事，也不知道为什么，这次主动了起来抓住机会，说起来也很有巧合，我们是520那天认识的，总之如果哪天你看到了这篇，想跟你说句，余生请多指教:)&lt;br /&gt;
+其次是想聊聊未来博客的一些打算。工作上即将要被调到去处理悦跑圈的基础架构，可能关于技术这块的文章会逐渐减少，目前在打算会翻译一些国外我感兴趣的博客文章，像&lt;a href=&quot;https://swift.org/blog/how-mirror-works/&quot;&gt;How Mirror Works&lt;/a&gt;已经在翻译了，只是工作原因最快估计也得在这周末或下周才能见到，博客的服务器可能在未来会考虑搭建在国外VPS了，所以以后访问可能会稍微比较慢。原因就是今天买房了，突然压力好大T^T&lt;br /&gt;
+大概就是这些吧～&lt;/p&gt;
+</description>
+        <pubDate>Mon, 15 Oct 2018 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/</guid>
+        
+        <category>杂谈</category>
+        
+        
+      </item>
     
       <item>
         <title>NS_ASSUME_NONNULL_BEGIN &amp;&amp; NS_ASSUME_NONNULL_END</title>
@@ -27,9 +43,9 @@
 
 &lt;p&gt;而&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_BEGIN&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_END&lt;/code&gt;中间声明的对象会把所有对象默认当作是&lt;code class=&quot;highlighter-rouge&quot;&gt;__nonnull&lt;/code&gt;，而我们只需要可能为nil的对象声明为&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;就可以了。&lt;/p&gt;
 </description>
-        <pubDate>Wed, 19 Sep 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/09/19/NS_ASSUME_NONNULL_BEGIN-&&-NS_ASSUME_NONNULL_END/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/09/19/NS_ASSUME_NONNULL_BEGIN-&&-NS_ASSUME_NONNULL_END/</guid>
+        <pubDate>Thu, 20 Sep 2018 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN-&&-NS_ASSUME_NONNULL_END/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN-&&-NS_ASSUME_NONNULL_END/</guid>
         
         <category>iOS</category>
         
@@ -888,38 +904,6 @@ observer是&lt;code class=&quot;highlighter-rouge&quot;&gt;AnyObserver&amp;lt;..
         <category>iOS</category>
         
         <category>Swift</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>2018</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;正好今天跟前同事聊到工作的事情，前同事得到了阿里的面试，聊到还是得三年工作经验才能有BAT的面试，有感而发，想聊聊过去做了什么，未来想做什么，为后面的BAT做铺垫。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;工作&quot;&gt;工作&lt;/h1&gt;
-&lt;p&gt;在2017年的9月，从深圳来到了广州，脱离了无休止的加班，来到万表之后终于有时间做自己的事情了。&lt;/p&gt;
-
-&lt;h1 id=&quot;swiftffdb&quot;&gt;SwiftFFDB&lt;/h1&gt;
-&lt;p&gt;空闲下来之后，基本全身心的放在了&lt;a href=&quot;https://github.com/fidetro/swift-ffdb&quot;&gt;SwiftFFDB&lt;/a&gt;身上，在做&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;的时候也暴露出swift不少的缺点，不够完善的反射，协议没办法像继承一样在方法推断返回self类型等等。当然，优点更大于缺点，协议编程，函数编程，extension，这些都是&lt;code class=&quot;highlighter-rouge&quot;&gt;Objective-C&lt;/code&gt;所没有的。在设计&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;的时候，看过安卓的&lt;a href=&quot;https://github.com/LitePalFramework/LitePal&quot;&gt;LitePal&lt;/a&gt;,由于&lt;code class=&quot;highlighter-rouge&quot;&gt;Swift&lt;/code&gt;语言本身就非常适合链式编程，所以在&lt;code class=&quot;highlighter-rouge&quot;&gt;SwiftFFDB&lt;/code&gt;底层的时候，就参考了&lt;code class=&quot;highlighter-rouge&quot;&gt;LitePal&lt;/code&gt;,通过SQL语句中的增删改查的类组成。其余用起来和原本的OC版本是差不多的，也算在前天把该写的单元测试也写完了，感觉稍微满意了，发布了1.x版本，回头一看才发现，距离第一个release的版本已经半年了，OC版的已经快一年了，虽然没有很多人使用，只是自己圈子内的朋友在用，维护了这么久的一个项目，怎么说呢，还是挺有意思的，从一个数据库白痴，到了现在的数据库小白，跟着自己的项目一起成长。&lt;/p&gt;
-
-&lt;h1 id=&quot;成长&quot;&gt;成长&lt;/h1&gt;
-&lt;p&gt;当了程序员之后，就觉得自己学习没有停过，可有效的，可持续的使用的知识在最近这段时间却很少，一开始我以为只是因为自己的学习又出现了疲倦期，然后找了个周末去了趟珠海，坐在海边看了2天海，浮躁的心思的确平稳了下去。可回到来没几天，还是没静下心来。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/IMG_3620%2820180121-092122%29.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;现在想想，还是学习方法出了问题。最初因为在弄swift服务端的时候，学了下shell，觉得脚本很方便，然后跑去看了几天python，后来微信的&lt;code class=&quot;highlighter-rouge&quot;&gt;WCDB&lt;/code&gt;Swift版也出来了，据说还是改了sqlite源码上做的，比起自己在&lt;code class=&quot;highlighter-rouge&quot;&gt;FMDB&lt;/code&gt;基础上做要厉害多了，然后又跑去系统的学了下C语言，打算阅读源码，后来刚好自己的SS客户端出了问题，那时候在想，如果这客户端是我写的多好，那样我就知道是哪里出问题了，抱着这个想法又去写了个SS客户端，在写的时候才真正认识到自己在网络编程这一块的知识是有多么的薄弱，很多没有概念，然后又下决心去补网络编程，最后虽然是借助&lt;code class=&quot;highlighter-rouge&quot;&gt;NEKit&lt;/code&gt;完成了，然而原理都不懂。&lt;br /&gt;
-有想法去学这些，我觉得挺好的，但是想法变得太快，这几件事情都让我明白一点，自己现在的基础知识是有多么的匮乏。&lt;/p&gt;
-
-&lt;h1 id=&quot;三年&quot;&gt;三年&lt;/h1&gt;
-&lt;p&gt;很多人都说，程序员三年是一个转折点，从目前附近的朋友了解到的情况，似乎的确是这样的。我打算给自己立flag，距离自己三年，还差大概一年二个多月的样子，学习语言上，应该不再会被别的分心，专心的好好搞一下C，能读读源码的水平吧，基础上，希望半年内把«http权威指南»和«深入理解计算机系统»读完吧，今年一定填完上心留下的坑，希望到了三年的时候去BAT面试的自己，依旧能因为自身的水平，而保持过往面试的从容和自信，不留遗憾。&lt;/p&gt;
-</description>
-        <pubDate>Sun, 18 Mar 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/03/18/2018/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/03/18/2018/</guid>
-        
-        <category>杂谈</category>
         
         
       </item>

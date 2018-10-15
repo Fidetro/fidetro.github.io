@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>在UITableView中使用RunLoop遇到的坑 - Karim | FoolishTalk Blog</title>
+    <title>NS_ASSUME_NONNULL_BEGIN && NS_ASSUME_NONNULL_END - Karim | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2018/01/12/%E5%9C%A8UITableView%E4%B8%AD%E4%BD%BF%E7%94%A8RunLoop%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN-&&-NS_ASSUME_NONNULL_END/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -154,12 +154,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-sea.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-ismael.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-sea.jpg')
+        background-image: url('/img/post-bg-ismael.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -169,19 +169,15 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#问题随笔" title="问题随笔">问题随笔</a>
-                        
-                        <a class="tag" href="/tags/#RunLoop" title="RunLoop">RunLoop</a>
-                        
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
                     </div>
-                    <h1>在UITableView中使用RunLoop遇到的坑</h1>
+                    <h1>NS_ASSUME_NONNULL_BEGIN && NS_ASSUME_NONNULL_END</h1>
                     
                     
-                    <h2 class="subheading">Swift，iOS，Objective-C</h2>
+                    <h2 class="subheading">iOS，Xcode 10</h2>
                     
-                    <span class="meta">Posted by Fidetro on January 12, 2018</span>
+                    <span class="meta">Posted by Fidetro on September 20, 2018</span>
                 </div>
             </div>
         </div>
@@ -198,63 +194,21 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<blockquote>
-  <p>在做Pet Day的时候，遇到一个这样的需求，假定<code class="highlighter-rouge">tableView</code>中的section初始值为50,在往上或者往下的时候，需要通过计算得知更多的<code class="highlighter-rouge">dataSource</code></p>
-</blockquote>
+				<p>更新了Xcode 10之后在新建OC的类的时候，都会默认加上了<code class="highlighter-rouge">NS_ASSUME_NONNULL_BEGIN</code>和<code class="highlighter-rouge">NS_ASSUME_NONNULL_END</code>。</p>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">NS_ASSUME_NONNULL_BEGIN</span>
 
-<p>然后我一开始的做法，是在<code class="highlighter-rouge">- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;</code>的方法在接近顶部或者接近底部的时候，进行计算</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span>
-                   <span class="n">willDisplay</span> <span class="nv">cell</span><span class="p">:</span> <span class="kt">UITableViewCell</span><span class="p">,</span>
-                   <span class="n">forRowAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">//如果大于数据源总数-30，需要开始计算后面的内容</span>
-        <span class="k">if</span> <span class="n">indexPath</span><span class="o">.</span><span class="n">section</span> <span class="o">&gt;</span> <span class="n">dataSource</span><span class="o">.</span><span class="n">count</span> <span class="o">-</span> <span class="mi">30</span> <span class="p">{</span>
-           
-        <span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="n">indexPath</span><span class="o">.</span><span class="n">section</span> <span class="o">&lt;</span> <span class="mi">30</span> <span class="p">{</span><span class="c1">//如果小于30，需要开始计算前面的内容</span>
-           
-    <span class="p">}</span>
+<span class="k">@interface</span> <span class="nc">Person</span> <span class="p">:</span> <span class="nc">NSObject</span>
+
+<span class="k">@end</span>
+
+<span class="n">NS_ASSUME_NONNULL_END</span>
 </code></pre></div></div>
-<hr />
-<p><strong>但是，这样做会有问题</strong>，在遇到向上刷新的时候，会多次调用<code class="highlighter-rouge">- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;</code>的方法，导致数据突然增多。</p>
+<p>在Objective-C中，是没有像swift中<code class="highlighter-rouge">!</code>和<code class="highlighter-rouge">?</code>的概念，为了解决和swift混编的问题，增加了<code class="highlighter-rouge">__nullable</code>和<code class="highlighter-rouge">___nonnull</code>的关键字。 <code class="highlighter-rouge">__nullable</code>代表修饰的对象可以为nil。</p>
 
-<p>后来用定时器实现触发后0.5秒内拦截，代码如下：</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">guard</span> <span class="n">share</span><span class="o">.</span><span class="n">operations</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span> <span class="o">==</span> <span class="kc">false</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
-        <span class="k">let</span> <span class="nv">timer</span> <span class="o">=</span> <span class="kt">Timer</span><span class="o">.</span><span class="nf">bs_scheduledTimer</span><span class="p">(</span><span class="nv">withTimeInterval</span><span class="p">:</span> <span class="n">interval</span><span class="p">,</span> <span class="nv">block</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">timer</span><span class="p">)</span> <span class="k">in</span>
-            <span class="k">weak</span> <span class="k">var</span> <span class="nv">weakTimer</span> <span class="o">=</span> <span class="n">timer</span>
+<p><code class="highlighter-rouge">___nonnull</code>代表修饰的对象不可以为NULL或者为nil。<br />
+当我们给类中其中一个对象声明<code class="highlighter-rouge">__nullable</code>或<code class="highlighter-rouge">___nonnull</code>时候，需要把所有的对象都加上<code class="highlighter-rouge">__nullable</code>或<code class="highlighter-rouge">___nonnull</code>。</p>
 
-            <span class="n">weakTimer</span><span class="p">?</span><span class="o">.</span><span class="nf">invalidate</span><span class="p">()</span>
-            <span class="n">weakTimer</span> <span class="o">=</span> <span class="kc">nil</span>
-        <span class="p">},</span> <span class="nv">repeats</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
-        <span class="n">share</span><span class="o">.</span><span class="n">operations</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-        <span class="n">timer</span><span class="o">.</span><span class="nf">fire</span><span class="p">()</span>
-        <span class="nf">shareRunLoop</span><span class="p">()</span><span class="o">.</span><span class="nf">add</span><span class="p">(</span><span class="n">timer</span><span class="p">,</span> <span class="nv">forMode</span><span class="p">:</span> <span class="o">.</span><span class="n">defaultRunLoopMode</span><span class="p">)</span>
-
-</code></pre></div></div>
-
-<h3 id="这时候runloop的坑就来了"><strong>这时候RunLoop的坑就来了</strong></h3>
-<p>第一次触发…正常<br />
-第二次触发…0.5秒过了，好几秒过去了，还是没有反应<br />
-…<br />
-终于在停止刷新后，再往上刷，正常了</p>
-
-<p>原因是TableView在滑动的时候，主线程的Runloop会切换到UITrackingRunLoopMode，这时候只会执行UITrackingRunLoopMode下的任务，等UITrackingRunLoopMode的任务执行完了，再切换到NSDefaultRunLoopMode才会执行定时器。<br />
-想解决这个问题，可以把加入到定时器的时候将Runloop设置为NSRunLoopCommonModes</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">runLoop</span><span class="o">.</span><span class="nf">add</span><span class="p">(</span><span class="kt">NSMachPort</span><span class="p">(),</span> <span class="nv">forMode</span><span class="p">:</span> <span class="o">.</span><span class="n">commonModes</span><span class="p">)</span>
-</code></pre></div></div>
-<p>或者改用GCD实现</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        
-        <span class="k">guard</span> <span class="n">share</span><span class="o">.</span><span class="n">operations</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span> <span class="o">==</span> <span class="kc">false</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
-            <span class="nf">operation</span><span class="p">()</span>
-        
-        <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="nf">asyncAfter</span><span class="p">(</span><span class="nv">deadline</span><span class="p">:</span> <span class="kt">DispatchTime</span><span class="o">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">interval</span><span class="p">,</span> <span class="nv">execute</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">share</span><span class="o">.</span><span class="n">operations</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-        <span class="p">})</span>
-        
-        <span class="n">share</span><span class="o">.</span><span class="n">operations</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-</code></pre></div></div>
+<p>而<code class="highlighter-rouge">NS_ASSUME_NONNULL_BEGIN</code>和<code class="highlighter-rouge">NS_ASSUME_NONNULL_END</code>中间声明的对象会把所有对象默认当作是<code class="highlighter-rouge">__nonnull</code>，而我们只需要可能为nil的对象声明为<code class="highlighter-rouge">__nullable</code>就可以了。</p>
 
 
                 <hr>
@@ -282,12 +236,12 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/12/07/swift%E4%BD%BF%E7%94%A8protocol%E7%9A%84%E6%97%B6%E5%80%99%E5%87%BA%E7%8E%B0%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8/" data-toggle="tooltip" data-placement="top" title="swift使用protocol的时候出现循环引用">&larr; Previous Post</a>
+                        <a href="/2018/09/19/iOS%E5%AE%9E%E7%8E%B0%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E5%8A%A8%E7%94%BB/" data-toggle="tooltip" data-placement="top" title="iOS实现隐藏状态栏动画">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2018/01/16/%E6%B5%85%E8%B0%88iOS%E5%9C%A8%E7%89%A9%E8%81%94%E7%BD%91%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E6%9E%B6%E6%9E%84/" data-toggle="tooltip" data-placement="top" title="浅谈iOS在物联网应用中的架构">Next Post &rarr;</a>
+                        <a href="/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/" data-toggle="tooltip" data-placement="top" title="24岁的杂谈">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -411,8 +365,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2018/01/12/在UITableView中使用RunLoop遇到的坑";
-    var disqus_url = "http://www.foolishtalk.org/2018/01/12/%E5%9C%A8UITableView%E4%B8%AD%E4%BD%BF%E7%94%A8RunLoop%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/";
+    var disqus_identifier = "/2018/09/20/NS_ASSUME_NONNULL_BEGIN && NS_ASSUME_NONNULL_END";
+    var disqus_url = "http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN-&&-NS_ASSUME_NONNULL_END/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
