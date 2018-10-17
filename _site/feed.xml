@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 17 Oct 2018 09:12:47 +0800</pubDate>
-    <lastBuildDate>Wed, 17 Oct 2018 09:12:47 +0800</lastBuildDate>
+    <pubDate>Wed, 17 Oct 2018 23:24:45 +0800</pubDate>
+    <lastBuildDate>Wed, 17 Oct 2018 23:24:45 +0800</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
     
       <item>
@@ -37,7 +37,12 @@
 
 &lt;h1 id=&quot;接口&quot;&gt;接口&lt;/h1&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Mirror(reflecting:)&lt;/code&gt;初始化接受一个任意值。生成的&lt;code class=&quot;highlighter-rouge&quot;&gt;Mirror&lt;/code&gt;实例提供该值的信息，主要是它的子项，一个由子项组成的值和可选的标签。你可以使用&lt;code class=&quot;highlighter-rouge&quot;&gt;Mirror&lt;/code&gt;去遍历整个对象，不需要在编译时知道它是什么类型。&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;Mirror&lt;/code&gt;允许类通过符合&lt;code class=&quot;highlighter-rouge&quot;&gt;CustomReflectable&lt;/code&gt;提供自定义表示。这在你想要返回比内省类型更好的类型的时候很有用。例如，&lt;code class=&quot;highlighter-rouge&quot;&gt;Array&lt;/code&gt;遵循&lt;code class=&quot;highlighter-rouge&quot;&gt;CustomReflectable&lt;/code&gt;协议和将数组的元素公开为未标记的子元素。&lt;code class=&quot;highlighter-rouge&quot;&gt;Dictionary&lt;/code&gt;&lt;/p&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Mirror&lt;/code&gt;允许类通过符合&lt;code class=&quot;highlighter-rouge&quot;&gt;CustomReflectable&lt;/code&gt;提供自定义表示。这在你想要返回比内省类型更好的类型的时候很有用。例如，&lt;code class=&quot;highlighter-rouge&quot;&gt;Array&lt;/code&gt;遵循&lt;code class=&quot;highlighter-rouge&quot;&gt;CustomReflectable&lt;/code&gt;协议和将数组的元素公开为未标记的子元素。&lt;code class=&quot;highlighter-rouge&quot;&gt;Dictionary&lt;/code&gt;使用它的键值对作为公开的子元素。&lt;br /&gt;
+对于其他所有的类型，&lt;code class=&quot;highlighter-rouge&quot;&gt;Mirror&lt;/code&gt;用了一些魔法根据值的实际内容提供一个子列表。对于结构体和类，它的存储属性为子元素。于元组，它是元组属性。枚举如果存在case和关联值，则显示case和关联值。&lt;br /&gt;
+这魔法是怎么运作的？让我们来看看吧！&lt;/p&gt;
+
+&lt;h1 id=&quot;结构体&quot;&gt;结构体&lt;/h1&gt;
+&lt;p&gt;反射的API部分在Swift中实现，部分在C++中实现。&lt;/p&gt;
 </description>
         <pubDate>Sun, 07 Oct 2018 00:00:00 +0800</pubDate>
         <link>http://www.foolishtalk.org/2018/10/07/How-Mirror-Works/</link>

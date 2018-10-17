@@ -203,7 +203,12 @@ border: none;
 
 <h1 id="接口">接口</h1>
 <p><code class="highlighter-rouge">Mirror(reflecting:)</code>初始化接受一个任意值。生成的<code class="highlighter-rouge">Mirror</code>实例提供该值的信息，主要是它的子项，一个由子项组成的值和可选的标签。你可以使用<code class="highlighter-rouge">Mirror</code>去遍历整个对象，不需要在编译时知道它是什么类型。<br />
-<code class="highlighter-rouge">Mirror</code>允许类通过符合<code class="highlighter-rouge">CustomReflectable</code>提供自定义表示。这在你想要返回比内省类型更好的类型的时候很有用。例如，<code class="highlighter-rouge">Array</code>遵循<code class="highlighter-rouge">CustomReflectable</code>协议和将数组的元素公开为未标记的子元素。<code class="highlighter-rouge">Dictionary</code></p>
+<code class="highlighter-rouge">Mirror</code>允许类通过符合<code class="highlighter-rouge">CustomReflectable</code>提供自定义表示。这在你想要返回比内省类型更好的类型的时候很有用。例如，<code class="highlighter-rouge">Array</code>遵循<code class="highlighter-rouge">CustomReflectable</code>协议和将数组的元素公开为未标记的子元素。<code class="highlighter-rouge">Dictionary</code>使用它的键值对作为公开的子元素。<br />
+对于其他所有的类型，<code class="highlighter-rouge">Mirror</code>用了一些魔法根据值的实际内容提供一个子列表。对于结构体和类，它的存储属性为子元素。于元组，它是元组属性。枚举如果存在case和关联值，则显示case和关联值。<br />
+这魔法是怎么运作的？让我们来看看吧！</p>
+
+<h1 id="结构体">结构体</h1>
+<p>反射的API部分在Swift中实现，部分在C++中实现。</p>
 
 
                 <hr>
