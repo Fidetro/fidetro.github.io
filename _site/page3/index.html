@@ -154,6 +154,30 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2017/10/21/Xcode%E5%88%A4%E6%96%AD%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/">
+        <h2 class="post-title">
+            Xcode判断编译环境
+        </h2>
+        
+        <h3 class="post-subtitle">
+            CocoaPod，Xcode
+        </h3>
+        
+        <div class="post-content-preview">
+            有个需要区分是命令行的编译环境还是iOS的环境，这种情况下我用了__APPLE__  、TARGET_IPHONE_SIMULATOR、TARGET_OS_IPHONE、TARGET_OS_MAC，居然都没判断进去iOS的环境？最后用了一个没怎么见过的宏
+#if os(iOS)
+#elseif os(Linux)//这个也可以判断是在Ubuntu环境
+#elseif os(macOS)
+#e...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on October 21, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2017/10/19/Perfect-v2%E7%89%88%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%87%E7%BA%A7v3/">
         <h2 class="post-title">
             Perfect-v2版本服务器升级v3
@@ -378,34 +402,6 @@ Photos参考了这里获取系统相册的所有照片
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2017/06/21/%E6%9B%B4%E6%96%B0%E8%87%AA%E5%B7%B1%E7%9A%84CocoaPods%E5%BA%93/">
-        <h2 class="post-title">
-            更新自己的CocoaPods库
-        </h2>
-        
-        <h3 class="post-subtitle">
-            CocoaPod，iOS
-        </h3>
-        
-        <div class="post-content-preview">
-            以自己写的一个库为例子
-
-Pod::Spec.new do |s|
-
-  s.name         = "FFDB"
-  s.version      = "1.7.0"
-  s.summary      = "easy to use FMDB"
-  s.homepage     = "https://github.com/Fidetro/FFDB"
-  s.license       ...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Fidetro on June 21, 2017
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -442,7 +438,7 @@ Pod::Spec.new do |s|
                             
                         
                             
-                                <a href="/tags/#iOS" title="iOS" rel="26">
+                                <a href="/tags/#iOS" title="iOS" rel="27">
                                     iOS
                                 </a>
                             
@@ -468,7 +464,7 @@ Pod::Spec.new do |s|
                             
                         
                             
-                                <a href="/tags/#Swift" title="Swift" rel="15">
+                                <a href="/tags/#Swift" title="Swift" rel="16">
                                     Swift
                                 </a>
                             

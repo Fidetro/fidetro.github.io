@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Cannot use mutating member on immutable value - Karim | FoolishTalk Blog</title>
+    <title>How Mirror Works - Karim | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/09/10/Cannot-use-mutating-member-on-immutable-value/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2018/10/07/How-Mirror-Works/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -154,12 +154,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-ismael.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-old.jpg')
+        background-image: url('/img/post-bg-ismael.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -169,17 +169,17 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
-                        
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
+                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        
                     </div>
-                    <h1>Cannot use mutating member on immutable value</h1>
+                    <h1>How Mirror Works</h1>
                     
                     
-                    <h2 class="subheading">Swift，iOS</h2>
+                    <h2 class="subheading">iOS，Swift，Mirror</h2>
                     
-                    <span class="meta">Posted by Fidetro on September 10, 2017</span>
+                    <span class="meta">Posted by Fidetro on October 7, 2018</span>
                 </div>
             </div>
         </div>
@@ -196,23 +196,14 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>这个报错是在我写swift的FFDB时候遇到的，因为在做swift版的时候，考虑到SQL语句层是通用的，所以打算抽象出来复用在Perfect上，选择用结构体和协议的方式去做，在使用结构体的时候，发现会报错，用类是不会报这个错的。原因是这样：
-结构体中，func不可以改变self本身的成员变量，如果修改本身的成员变量，需要在func前加上<code class="highlighter-rouge">mutating</code>关键字
-<img src="http://images.foolishtalk.org/73AD1856-8075-4CFE-A530-7F3E0D547F06.png" alt="1.png" /></p>
+				<p>Swift非常重视静态类型，但它也支持丰富元数据的类型，这允许代码在运行时检查和操作任意值。这是通过<code class="highlighter-rouge">Mirror</code>API向Swift程序员公开。有人可能会想，<code class="highlighter-rouge">Mirror</code>究竟是怎样在一个如此重视静态类型的语言中工作的？让我们来看看！</p>
 
-<p>加上了<code class="highlighter-rouge">mutating</code>之后本以为已经可以了，然后调这方法看看,报错来了，大概意思是不可以在一个不可变的值使用可以的成员，函数返回的是一个不可变的值，所以问题就出在函数的返回值</p>
+<h1 id="免责声明">免责声明</h1>
+<p>这里都是内部实现的细节。截至撰写本文时，是根据最新的代码写的，但可能会发生变化。（译注：这里指的是2018年9月26日之前）当ABI稳定的时候，元数据将成为一种可靠的格式，但现在依然可能发生改变。如果你在编写正常的Swift代码，请不要依赖这个类的代码。如果您正想要编写比Mirror提供的更复杂的反射的代码，这会给你一个起点，但是在ABI稳定之前，你需要保持持续更新（你的代码）。如果你想使用<code class="highlighter-rouge">Mirror</code>本身的代码，这会让你很好的理解到它们是如何组合起来的。但是记住，它可能会发生变化。</p>
 
-<p><img src="http://images.foolishtalk.org/0D9699AB-D8DB-4341-B1AF-7ACD8C56D082.png" alt="2.png" /></p>
-
-<p>然后我改成这样就可以了，也不需要<code class="highlighter-rouge">mutating</code>修饰</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     <span class="kd">func</span> <span class="nf">into</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableClass</span><span class="p">:</span><span class="kt">FFDataBaseModel</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Insert</span> <span class="p">{</span>
-        <span class="k">var</span> <span class="nv">insert</span> <span class="o">=</span> <span class="k">self</span>
-        
-        <span class="n">insert</span><span class="o">.</span><span class="n">sqlStatement</span><span class="p">?</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="s">" INSERT INTO "</span> <span class="o">+</span> <span class="n">tableClass</span><span class="o">.</span><span class="nf">tableName</span><span class="p">())</span>
-        
-            <span class="k">return</span> <span class="n">insert</span>
-        <span class="p">}</span>
-</code></pre></div></div>
+<h1 id="接口">接口</h1>
+<p><code class="highlighter-rouge">Mirror(reflecting:)</code>初始化接受一个任意值。生成的<code class="highlighter-rouge">Mirror</code>实例提供该值的信息，主要是它的子项，一个由子项组成的值和可选的标签。你可以使用<code class="highlighter-rouge">Mirror</code>去遍历整个对象，不需要在编译时知道它是什么类型。<br />
+<code class="highlighter-rouge">Mirror</code>允许类通过符合<code class="highlighter-rouge">CustomReflectable</code>提供自定义表示。这在你想要返回比内省类型更好的类型的时候很有用。例如，<code class="highlighter-rouge">Array</code>遵循<code class="highlighter-rouge">CustomReflectable</code>协议和将数组的元素公开为未标记的子元素。<code class="highlighter-rouge">Dictionary</code></p>
 
 
                 <hr>
@@ -240,12 +231,12 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/08/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E4%B8%8A%E9%83%A8%E7%BD%B2Perfect%E6%9C%8D%E5%8A%A1%E5%99%A8/" data-toggle="tooltip" data-placement="top" title="如何在阿里云上部署Perfect服务器">&larr; Previous Post</a>
+                        <a href="/2018/09/20/NS_ASSUME_NONNULL_BEGIN-&&-NS_ASSUME_NONNULL_END/" data-toggle="tooltip" data-placement="top" title="NS_ASSUME_NONNULL_BEGIN && NS_ASSUME_NONNULL_END">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/09/11/WWDC-2017%E7%AC%94%E8%AE%B0-KVC%E5%92%8CKVO/" data-toggle="tooltip" data-placement="top" title="WWDC-2017笔记---KVC和KVO">Next Post &rarr;</a>
+                        <a href="/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/" data-toggle="tooltip" data-placement="top" title="24岁的杂谈">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -369,8 +360,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2017/09/10/Cannot use mutating member on immutable value";
-    var disqus_url = "http://www.foolishtalk.org/2017/09/10/Cannot-use-mutating-member-on-immutable-value/";
+    var disqus_identifier = "/2018/10/07/How Mirror Works";
+    var disqus_url = "http://www.foolishtalk.org/2018/10/07/How-Mirror-Works/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
