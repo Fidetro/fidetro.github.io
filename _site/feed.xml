@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 17 Oct 2018 23:24:45 +0800</pubDate>
-    <lastBuildDate>Wed, 17 Oct 2018 23:24:45 +0800</lastBuildDate>
+    <pubDate>Fri, 19 Oct 2018 23:51:22 +0800</pubDate>
+    <lastBuildDate>Fri, 19 Oct 2018 23:51:22 +0800</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
     
       <item>
@@ -41,8 +41,8 @@
 对于其他所有的类型，&lt;code class=&quot;highlighter-rouge&quot;&gt;Mirror&lt;/code&gt;用了一些魔法根据值的实际内容提供一个子列表。对于结构体和类，它的存储属性为子元素。于元组，它是元组属性。枚举如果存在case和关联值，则显示case和关联值。&lt;br /&gt;
 这魔法是怎么运作的？让我们来看看吧！&lt;/p&gt;
 
-&lt;h1 id=&quot;结构体&quot;&gt;结构体&lt;/h1&gt;
-&lt;p&gt;反射的API部分在Swift中实现，部分在C++中实现。&lt;/p&gt;
+&lt;h1 id=&quot;结构&quot;&gt;结构&lt;/h1&gt;
+&lt;p&gt;反射的API部分在Swift中实现，部分在C++中实现。Swift更适合实现Swifty接口，同时让许多任务变得简单。Swift的运行时底层是通过C++实现的，直接通过Swift访问这些C++类是不可能的。所以这层通过C去连接两者。Swift的实现是&lt;a href=&quot;https://github.com/apple/swift/blob/master/stdlib/public/core/ReflectionMirror.swift&quot;&gt;ReflectionMirror.swift&lt;/a&gt;，而C++的实现是&lt;a href=&quot;https://github.com/apple/swift/blob/master/stdlib/public/runtime/ReflectionMirror.mm&quot;&gt;ReflectionMirror.mm&lt;/a&gt;。&lt;/p&gt;
 </description>
         <pubDate>Sun, 07 Oct 2018 00:00:00 +0800</pubDate>
         <link>http://www.foolishtalk.org/2018/10/07/How-Mirror-Works/</link>

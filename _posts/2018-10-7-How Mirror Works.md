@@ -21,5 +21,5 @@ Swift非常重视静态类型，但它也支持丰富元数据的类型，这允
 对于其他所有的类型，`Mirror`用了一些魔法根据值的实际内容提供一个子列表。对于结构体和类，它的存储属性为子元素。于元组，它是元组属性。枚举如果存在case和关联值，则显示case和关联值。  
 这魔法是怎么运作的？让我们来看看吧！  
 
-# 结构体  
-反射的API部分在Swift中实现，部分在C++中实现。
+# 结构  
+反射的API部分在Swift中实现，部分在C++中实现。Swift更适合实现Swifty接口，同时让许多任务变得简单。Swift的运行时底层是通过C++实现的，直接通过Swift访问这些C++类是不可能的。所以这层通过C去连接两者。Swift的实现是[ReflectionMirror.swift](https://github.com/apple/swift/blob/master/stdlib/public/core/ReflectionMirror.swift)，而C++的实现是[ReflectionMirror.mm](https://github.com/apple/swift/blob/master/stdlib/public/runtime/ReflectionMirror.mm)。  
