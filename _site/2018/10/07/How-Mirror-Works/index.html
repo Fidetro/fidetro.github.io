@@ -210,6 +210,52 @@ border: none;
 <h1 id="结构">结构</h1>
 <p>反射的API部分在Swift中实现，部分在C++中实现。Swift更适合实现Swifty接口，同时让许多任务变得简单。Swift的运行时底层是通过C++实现的，直接通过Swift访问这些C++类是不可能的。所以这层通过C去连接两者。Swift的实现是<a href="https://github.com/apple/swift/blob/master/stdlib/public/core/ReflectionMirror.swift">ReflectionMirror.swift</a>，而C++的实现是<a href="https://github.com/apple/swift/blob/master/stdlib/public/runtime/ReflectionMirror.mm">ReflectionMirror.mm</a>。</p>
 
+<p>这两部分通过一小组的C++函数暴露给Swift通信，而不是使用Swift内置的C桥接，它们在Swift中使用指定的自定义符号的命令，然后这个名字的C++函数经过精心设计，可以让Swift直接调用。这允许两部分直接调用不用担心桥接会对值造成什么影响，但它必须知道Swift如何传递参数和返回值。除非你需要处理运行时代码，否则不要在家里运行这个。</p>
+
+<p>例如，请查看<code class="highlighter-rouge">ReflectionMirror.swift</code>的<code class="highlighter-rouge">_getChildCount</code>函数：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">@_silgen_name("swift_reflectionMirror_count")</span>
+<span class="kd">internal</span> <span class="kd">func</span> <span class="n">_getChildCount</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Any</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+</code></pre></div></div>
+<p><code class="highlighter-rouge">@_silgen_name</code>关键字通知Swift编译器将此函数映射到符号名为<code class="highlighter-rouge">swift_reflectionMirror_count</code>,而不是将Swift的<code class="highlighter-rouge">_getChildCount</code>替换，请注意，开头的下划线是表示此属性是为标准库保留的。在C++方面，该函数如下所示：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SWIFT_CC</span><span class="p">(</span><span class="n">swift</span><span class="p">)</span> <span class="n">SWIFT_RUNTIME_STDLIB_INTERFACE</span>
+<span class="kt">intptr_t</span> <span class="n">swift_reflectionMirror_count</span><span class="p">(</span><span class="n">OpaqueValue</span> <span class="o">*</span><span class="n">value</span><span class="p">,</span>
+                                      <span class="k">const</span> <span class="n">Metadata</span> <span class="o">*</span><span class="n">type</span><span class="p">,</span>
+                                      <span class="k">const</span> <span class="n">Metadata</span> <span class="o">*</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div></div>
+<p><code class="highlighter-rouge">SWIFT_CC(swift)</code>告诉编译器这个函数使用Swift约定而不是C/C++的约定。<code class="highlighter-rouge">SWIFT_RUNTIME_STDLIB_INTERFACE</code>标记为函数，而且它是Swif接口的一部分，并且具有将其标记为extern “C”避免C++名称修改的效果，确保此函数是Swift期望调用的符号名。C++参数会谨慎匹配基于Swift声明函数的调用，当Swift代码调用<code class="highlighter-rouge">_getChildCount</code>，调用C++函数的value包含一个指向Swift value的指针，<code class="highlighter-rouge">type</code>包含该值的参数类型，并且包含范型类型<T>。   
+`Swift`和`C++`部分之间的完整接口`Mirror`包含以下函数：</T></p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">@_silgen_name("swift_reflectionMirror_normalizedType")</span>
+<span class="kd">internal</span> <span class="kd">func</span> <span class="n">_getNormalizedType</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Any</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Any</span><span class="o">.</span><span class="k">Type</span>
+
+<span class="kd">@_silgen_name("swift_reflectionMirror_count")</span>
+<span class="kd">internal</span> <span class="kd">func</span> <span class="n">_getChildCount</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Any</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+
+<span class="kd">internal</span> <span class="kd">typealias</span> <span class="kt">NameFreeFunc</span> <span class="o">=</span> <span class="kd">@convention(c)</span> <span class="p">(</span><span class="kt">UnsafePointer</span><span class="o">&lt;</span><span class="kt">CChar</span><span class="o">&gt;</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span>
+
+<span class="kd">@_silgen_name("swift_reflectionMirror_subscript")</span>
+<span class="kd">internal</span> <span class="kd">func</span> <span class="n">_getChild</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span>
+  <span class="nv">of</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span>
+  <span class="nv">type</span><span class="p">:</span> <span class="kt">Any</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
+  <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
+  <span class="nv">outName</span><span class="p">:</span> <span class="kt">UnsafeMutablePointer</span><span class="o">&lt;</span><span class="kt">UnsafePointer</span><span class="o">&lt;</span><span class="kt">CChar</span><span class="o">&gt;</span><span class="p">?</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nv">outFreeFunc</span><span class="p">:</span> <span class="kt">UnsafeMutablePointer</span><span class="o">&lt;</span><span class="kt">NameFreeFunc</span><span class="p">?</span><span class="o">&gt;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Any</span>
+
+<span class="c1">// Returns 'c' (class), 'e' (enum), 's' (struct), 't' (tuple), or '\0' (none)</span>
+<span class="kd">@_silgen_name("swift_reflectionMirror_displayStyle")</span>
+<span class="kd">internal</span> <span class="kd">func</span> <span class="n">_getDisplayStyle</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CChar</span>
+
+<span class="kd">@_silgen_name("swift_reflectionMirror_quickLookObject")</span>
+<span class="kd">internal</span> <span class="kd">func</span> <span class="n">_getQuickLookObject</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnyObject</span><span class="p">?</span>
+
+<span class="kd">@_silgen_name("_swift_stdlib_NSObject_isKindOfClass")</span>
+<span class="kd">internal</span> <span class="kd">func</span> <span class="nf">_isImpl</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">,</span> <span class="nv">kindOf</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+</code></pre></div></div>
+<h1 id="动态调用做的很奇怪">动态调用做的很奇怪</h1>
+<p>没有一种通用方法可以从任何类型获取我们想要的信息。很多任务在元组、结构体、类和枚举都需要不同的代码，例如查找子项的数量。还有些微妙的地方，例如Swift和Objective-C之间类的处理。</p>
+
+<p>所有这些函数都需要根据动态检查的类型来解释不同实现的代码。</p>
+
 
                 <hr>
             <div>

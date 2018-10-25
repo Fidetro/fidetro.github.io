@@ -22,4 +22,53 @@ Swift非常重视静态类型，但它也支持丰富元数据的类型，这允
 这魔法是怎么运作的？让我们来看看吧！  
 
 # 结构  
-反射的API部分在Swift中实现，部分在C++中实现。Swift更适合实现Swifty接口，同时让许多任务变得简单。Swift的运行时底层是通过C++实现的，直接通过Swift访问这些C++类是不可能的。所以这层通过C去连接两者。Swift的实现是[ReflectionMirror.swift](https://github.com/apple/swift/blob/master/stdlib/public/core/ReflectionMirror.swift)，而C++的实现是[ReflectionMirror.mm](https://github.com/apple/swift/blob/master/stdlib/public/runtime/ReflectionMirror.mm)。  
+反射的API部分在Swift中实现，部分在C++中实现。Swift更适合实现Swifty接口，同时让许多任务变得简单。Swift的运行时底层是通过C++实现的，直接通过Swift访问这些C++类是不可能的。所以这层通过C去连接两者。Swift的实现是[ReflectionMirror.swift](https://github.com/apple/swift/blob/master/stdlib/public/core/ReflectionMirror.swift)，而C++的实现是[ReflectionMirror.mm](https://github.com/apple/swift/blob/master/stdlib/public/runtime/ReflectionMirror.mm)。   
+
+这两部分通过一小组的C++函数暴露给Swift通信，而不是使用Swift内置的C桥接，它们在Swift中使用指定的自定义符号的命令，然后这个名字的C++函数经过精心设计，可以让Swift直接调用。这允许两部分直接调用不用担心桥接会对值造成什么影响，但它必须知道Swift如何传递参数和返回值。除非你需要处理运行时代码，否则不要在家里运行这个。    
+
+例如，请查看`ReflectionMirror.swift`的`_getChildCount`函数：  
+```swift
+@_silgen_name("swift_reflectionMirror_count")
+internal func _getChildCount<T>(_: T, type: Any.Type) -> Int
+```  
+`@_silgen_name`关键字通知Swift编译器将此函数映射到符号名为`swift_reflectionMirror_count`,而不是将Swift的`_getChildCount`替换，请注意，开头的下划线是表示此属性是为标准库保留的。在C++方面，该函数如下所示：  
+```c++
+SWIFT_CC(swift) SWIFT_RUNTIME_STDLIB_INTERFACE
+intptr_t swift_reflectionMirror_count(OpaqueValue *value,
+                                      const Metadata *type,
+                                      const Metadata *T) {
+```  
+`SWIFT_CC(swift)`告诉编译器这个函数使用Swift约定而不是C/C++的约定。`SWIFT_RUNTIME_STDLIB_INTERFACE`标记为函数，而且它是Swif接口的一部分，并且具有将其标记为extern "C"避免C++名称修改的效果，确保此函数是Swift期望调用的符号名。C++参数会谨慎匹配基于Swift声明函数的调用，当Swift代码调用`_getChildCount`，调用C++函数的value包含一个指向Swift value的指针，`type`包含该值的参数类型，并且包含范型类型<T>。   
+`Swift`和`C++`部分之间的完整接口`Mirror`包含以下函数：  
+```swift  
+@_silgen_name("swift_reflectionMirror_normalizedType")
+internal func _getNormalizedType<T>(_: T, type: Any.Type) -> Any.Type
+
+@_silgen_name("swift_reflectionMirror_count")
+internal func _getChildCount<T>(_: T, type: Any.Type) -> Int
+
+internal typealias NameFreeFunc = @convention(c) (UnsafePointer<CChar>?) -> Void
+
+@_silgen_name("swift_reflectionMirror_subscript")
+internal func _getChild<T>(
+  of: T,
+  type: Any.Type,
+  index: Int,
+  outName: UnsafeMutablePointer<UnsafePointer<CChar>?>,
+  outFreeFunc: UnsafeMutablePointer<NameFreeFunc?>
+) -> Any
+
+// Returns 'c' (class), 'e' (enum), 's' (struct), 't' (tuple), or '\0' (none)
+@_silgen_name("swift_reflectionMirror_displayStyle")
+internal func _getDisplayStyle<T>(_: T) -> CChar
+
+@_silgen_name("swift_reflectionMirror_quickLookObject")
+internal func _getQuickLookObject<T>(_: T) -> AnyObject?
+
+@_silgen_name("_swift_stdlib_NSObject_isKindOfClass")
+internal func _isImpl(_ object: AnyObject, kindOf: AnyObject) -> Bool
+```  
+# 动态调用做的很奇怪  
+没有一种通用方法可以从任何类型获取我们想要的信息。很多任务在元组、结构体、类和枚举都需要不同的代码，例如查找子项的数量。还有些微妙的地方，例如Swift和Objective-C之间类的处理。  
+  
+所有这些函数都需要根据动态检查的类型来解释不同实现的代码。
