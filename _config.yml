@@ -11,10 +11,10 @@ baseurl: ""         # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 # SNS settings
-RSS: true
-weibo_username:     2095454814
+RSS: false
+#weibo_username:     2095454814
 #zhihu_username:     师霖风
-github_username:    fidetro
+#github_username:    fidetro
 #twitter_username:  fidetro
 #facebook_username:  
 
@@ -83,9 +83,9 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 
 
 # Friends
-friends: [
-    {
-        title: "make",
-        href: "https://www.jianshu.com/u/e80ee6ad8f86"
-    }
-]
+#friends: [
+#    {
+#        title: "make",
+#        href: "https://www.jianshu.com/u/e80ee6ad8f86"
+#    }
+#]

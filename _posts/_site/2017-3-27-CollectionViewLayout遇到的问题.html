@@ -1,0 +1,14 @@
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2017-03-27 11:12:20.902274 DTSampleLight[1480:432147] The behavior of the UICollectionViewFlowLayout is not defined because:
+2017-03-27 11:12:20.902372 DTSampleLight[1480:432147] the item height must be less than the height of the UICollectionView minus the section insets top and bottom values, minus the content insets top and bottom values.
+2017-03-27 11:12:20.903319 DTSampleLight[1480:432147] The relevant UICollectionViewFlowLayout instance is &lt;UICollectionViewFlowLayout: 0x1010c3170&gt;, and it is attached to &lt;UICollectionView: 0x1019c4e00; frame = (0 426; 320 78); clipsToBounds = YES; gestureRecognizers = &lt;NSArray: 0x17425ac70&gt;; layer = &lt;CALayer: 0x174425780&gt;; contentOffset: {0, 0}; contentSize: {132.74074073191042, 98}&gt; collection view layout: &lt;UICollectionViewFlowLayout: 0x1010c3170&gt;.
+2017-03-27 11:12:20.903366 DTSampleLight[1480:432147] Make a symbolic breakpoint at UICollectionViewFlowLayoutBreakForInvalidSizes to catch this in the debugger.
+</code></pre></div></div>
+<h3 id="解决方法">解决方法</h3>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewWillLayoutSubviews</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">containerView</span><span class="p">.</span><span class="n">collectionView</span><span class="p">.</span><span class="n">collectionViewLayout</span> <span class="nf">invalidateLayout</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><a href="http://stackoverflow.com/questions/16013209/uicollectionview-layout-issue">参考链接</a></p>
+</blockquote>

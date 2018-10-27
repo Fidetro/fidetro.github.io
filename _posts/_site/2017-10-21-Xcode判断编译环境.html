@@ -1,0 +1,11 @@
+<p>有个需要区分是命令行的编译环境还是iOS的环境，这种情况下我用了<code class="highlighter-rouge">__APPLE__</code>  、<code class="highlighter-rouge">TARGET_IPHONE_SIMULATOR</code>、<code class="highlighter-rouge">TARGET_OS_IPHONE</code>、<code class="highlighter-rouge">TARGET_OS_MAC</code>，居然都没判断进去iOS的环境？最后用了一个没怎么见过的宏</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#if os(iOS)</span>
+<span class="cp">#elseif os(Linux)//这个也可以判断是在Ubuntu环境</span>
+<span class="cp">#elseif os(macOS)</span>
+<span class="cp">#elseif os(watchOS)</span>
+<span class="cp">#elseif os(tvOS)</span>
+<span class="cp">#elseif os(Linux)</span>
+<span class="cp">#else</span>
+<span class="cp">#endif</span>
+</code></pre></div></div>
+<p>这种情况测试后发现，用swift<code class="highlighter-rouge">__APPLE__</code>会没法判断，但是oc是没问题的</p>

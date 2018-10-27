@@ -1,0 +1,113 @@
+<h1 id="前言">前言</h1>
+<p>之前一直忙着工作的业务代码，Perfect系列的文章有段时间没有更新了。Perfect-CRUD也是最近才对外公布的一套ORM组件，支持sqlite、MySQL、Postgres，在这之前一直都是用自己的Perfect-FFDB，看了下Perfect-CRUD的文档之后，感觉还不错，这两天抽时间把之前用Perfect写的一个小项目，从自己的Perfect-FFDB迁移到使用Perfect-CRUD上，有点扯远了。。还是说回推送吧。</p>
+
+<h1 id="正文">正文</h1>
+<p>当iOS app要使用远程推送的时候，经常会选接入一些第三方平台的消息推送服务，下面就是讲怎么通过Perfect自己搭消息推送服务。</p>
+
+<p>Perfect已经提供了现成的组件<a href="https://github.com/PerfectlySoft/Perfect-Notifications">Perfect-Notifications</a>可以让我们快速的实现消息推送，所以在这之前，先把去准备好推送证书。</p>
+
+<ol>
+  <li>
+    <p>如果没创建app id，先去把app id创建好<br />
+<img src="http://images.foolishtalk.org/perfect-notification-1.png" alt="" /><br />
+<img src="http://images.foolishtalk.org/perfect-notification-2.png" alt="" /></p>
+  </li>
+  <li>
+    <p>创建推送证书<br />
+<img src="http://images.foolishtalk.org/perfect-notification-3.png" alt="" /><br />
+<img src="http://images.foolishtalk.org/perfect-notification-4.png" alt="" /></p>
+  </li>
+  <li>
+    <p>然后下一步，选择刚刚对应创建的app id<br />
+<img src="http://images.foolishtalk.org/perfect-notification-5.png" alt="" /></p>
+  </li>
+  <li>
+    <p>到了这步之后需要在自己电脑上创建CSR文件<br />
+<img src="http://images.foolishtalk.org/perfect-notification-6.png" alt="" /><br />
+<img src="http://images.foolishtalk.org/perfect-notification-7.png" alt="" /></p>
+  </li>
+  <li>
+    <p>选择刚刚创建的证书，然后下一步，下载下来  <br />
+<img src="http://images.foolishtalk.org/perfect-notification-8.png" alt="" /></p>
+  </li>
+  <li>
+    <p>双击打开刚刚下载下来的证书,进入钥匙串访问，导出秘钥<br />
+<img src="http://images.foolishtalk.org/perfect-notification-9.png" alt="" /></p>
+  </li>
+  <li>
+    <p>创建auth key和记录key id(后面要用),下载下来会得到一个xx.p8的文件<br />
+<img src="http://images.foolishtalk.org/perfect-notification-10.png" alt="" /><br />
+<img src="http://images.foolishtalk.org/perfect-notification-11.png" alt="" /></p>
+  </li>
+  <li>
+    <p>去<a href="https://developer.apple.com/account">Account</a>页面记录team id(后面要用)<br />
+<img src="http://images.foolishtalk.org/perfect-notification-12.png" alt="" /></p>
+  </li>
+</ol>
+
+<p>好了。。终于把前面的准备工作做好了，在Package.swift中引入</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="kt">Package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span><span class="s">"https://github.com/PerfectlySoft/Perfect-Notifications.git"</span><span class="p">,</span> <span class="nv">majorVersion</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>配置推送设置：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">//app的bundle id</span>
+    <span class="k">let</span> <span class="nv">notificationsAppId</span> <span class="o">=</span> <span class="s">"com.Fidetro.iOS-PetDay"</span>
+    <span class="c1">//auth key id</span>
+    <span class="k">let</span> <span class="nv">apnsKeyIdentifier</span> <span class="o">=</span> <span class="s">"F6S4LA6KT7"</span>
+    <span class="c1">//开发者账号的team id</span>
+    <span class="k">let</span> <span class="nv">apnsTeamIdentifier</span> <span class="o">=</span> <span class="s">"J3BJ7G2PUN"</span>
+    <span class="c1">//auth key</span>
+    <span class="k">let</span> <span class="nv">apnsPrivateKeyFilePath</span> <span class="o">=</span> <span class="s">"./AuthKey_F6S4LA6KT7.p8"</span>
+    
+    
+    <span class="kt">NotificationPusher</span><span class="o">.</span><span class="nf">addConfigurationAPNS</span><span class="p">(</span>
+        <span class="nv">name</span><span class="p">:</span> <span class="n">notificationsAppId</span><span class="p">,</span>
+        <span class="nv">production</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// should be false when running pre-release app in debugger</span>
+        <span class="nv">keyId</span><span class="p">:</span> <span class="n">apnsKeyIdentifier</span><span class="p">,</span>
+        <span class="nv">teamId</span><span class="p">:</span> <span class="n">apnsTeamIdentifier</span><span class="p">,</span>
+        <span class="nv">privateKeyPath</span><span class="p">:</span> <span class="n">apnsPrivateKeyFilePath</span><span class="p">)</span>
+    
+    <span class="kt">NotificationPusher</span><span class="o">.</span><span class="n">development</span> <span class="o">=</span> <span class="kc">true</span> <span class="c1">// 打开APNS沙箱服务器开关</span>
+</code></pre></div></div>
+
+<p>在需要推送的地方写上：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">deviceIds</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"xxx"</span><span class="p">]</span><span class="c1">//需要推送的deviceId</span>
+    <span class="k">let</span> <span class="nv">n</span> <span class="o">=</span> <span class="kt">NotificationPusher</span><span class="p">(</span><span class="nv">apnsTopic</span><span class="p">:</span> <span class="n">notificationsAppId</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="nf">pushAPNS</span><span class="p">(</span>
+        <span class="nv">configurationName</span><span class="p">:</span> <span class="n">notificationsAppId</span><span class="p">,</span>
+        <span class="nv">deviceTokens</span><span class="p">:</span> <span class="n">deviceIds</span><span class="p">,</span>
+        <span class="nv">notificationItems</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="nf">alertBody</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">),</span> <span class="o">.</span><span class="nf">sound</span><span class="p">(</span><span class="s">"default"</span><span class="p">)])</span> <span class="p">{</span>
+            <span class="n">responses</span> <span class="k">in</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">responses</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+            
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>接下来在iOS的app上打开消息推送选项：
+<img src="http://images.foolishtalk.org/perfect-notification-13.png" alt="" /></p>
+  </li>
+  <li>在Appdelegate请求权限
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+    
+     <span class="k">let</span> <span class="nv">center</span> <span class="o">=</span> <span class="kt">UNUserNotificationCenter</span><span class="o">.</span><span class="nf">current</span><span class="p">()</span>
+     <span class="n">center</span><span class="o">.</span><span class="nf">requestAuthorization</span><span class="p">(</span><span class="nv">options</span><span class="p">:[</span><span class="o">.</span><span class="n">badge</span><span class="p">,</span> <span class="o">.</span><span class="n">alert</span><span class="p">,</span> <span class="o">.</span><span class="n">sound</span><span class="p">])</span> <span class="p">{</span> <span class="p">(</span><span class="n">granted</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="k">in</span>
+         <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+     <span class="p">}</span>
+     <span class="n">application</span><span class="o">.</span><span class="nf">registerForRemoteNotifications</span><span class="p">()</span>
+
+     <span class="k">return</span> <span class="kc">true</span>
+ <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>获取deviceToken
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didRegisterForRemoteNotificationsWithDeviceToken</span> <span class="nv">deviceToken</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nf">print</span><span class="p">(</span><span class="n">deviceToken</span><span class="o">.</span><span class="nf">hexEncodedString</span><span class="p">())</span>
+ <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>大功告成！
+<img src="http://images.foolishtalk.org/perfect-notification-14.png" alt="" /></p>

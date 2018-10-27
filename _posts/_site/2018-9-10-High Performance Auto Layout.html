@@ -1,0 +1,111 @@
+<p>最近总算有点时间写博客了，这次讲的是WWDC 2018中的<a href="https://developer.apple.com/videos/play/wwdc2018/220/">Session 220 High Performance Auto Layut</a></p>
+
+<p><code class="highlighter-rouge">AutoLayout</code>作为平时用的最多的布局方案，但是在性能上总是饱受病垢，通过这个session，我们可以了解到<code class="highlighter-rouge">AutoLayout</code>是怎么工作的，以及在iOS 12上<code class="highlighter-rouge">AutoLayout</code>得到了怎样的提升。</p>
+
+<h1 id="正文">正文</h1>
+
+<blockquote>
+  <p>talk is cheap,show me the code</p>
+</blockquote>
+
+<p>先上来就是一段代码，告诉了我们，不要每次更新约束的时候，都把所有的约束移除，这样是错误的：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Don’t do this! Removes and re-adds constraints potentially at 120 frames per second</span>
+<span class="k">override</span> <span class="kd">func</span> <span class="nf">updateConstraints</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">deactivate</span><span class="p">(</span><span class="n">myConstraints</span><span class="p">)</span>
+    <span class="n">myConstraints</span><span class="o">.</span><span class="nf">removeAll</span><span class="p">()</span>
+    <span class="k">let</span> <span class="nv">views</span> <span class="o">=</span> <span class="p">[</span><span class="s">"text1"</span><span class="p">:</span><span class="n">text1</span><span class="p">,</span> <span class="s">"text2"</span><span class="p">:</span><span class="n">text2</span><span class="p">]</span>
+    <span class="n">myConstraints</span> <span class="o">+=</span> <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">constraints</span><span class="p">(</span><span class="nv">withVisualFormat</span><span class="p">:</span> <span class="s">"H:|-[text1]-[text2]"</span><span class="p">,</span>
+                                                    <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="n">alignAllFirstBaseline</span><span class="p">],</span>
+                                                    <span class="n">myConstraints</span> <span class="o">+=</span> <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">constraints</span><span class="p">(</span><span class="nv">withVisualFormat</span><span class="p">:</span> <span class="s">"V:|-[text1]-|"</span><span class="p">,</span>
+                                                                                                    <span class="nv">metrics</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">views</span><span class="p">:</span> <span class="n">views</span><span class="p">)</span>
+        <span class="nv">options</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="nv">metrics</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">views</span><span class="p">:</span> <span class="n">views</span><span class="p">)</span>
+    <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">activate</span><span class="p">(</span><span class="n">myConstraints</span><span class="p">)</span>
+    <span class="k">super</span><span class="o">.</span><span class="nf">updateConstraints</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>而且从这段注释就隐约透露了，尽管目前不能达到120fps，但是在未来的iPhone很有可能能达到120fps，所以并不建议我们这样操作。<br />
+正确的做法应该是通过懒加载的方式，如果已经添加了约束，就不需要再移除，再添加了：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// This is ok! Doesn’t do anything unless self.myConstraints has been nil’d out</span>
+<span class="k">override</span> <span class="kd">func</span> <span class="nf">updateConstraints</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="k">self</span><span class="o">.</span><span class="n">myConstraints</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="kt">NSLayoutConstraint</span><span class="p">]()</span>
+        <span class="k">let</span> <span class="nv">views</span> <span class="o">=</span> <span class="p">[</span><span class="s">"text1"</span><span class="p">:</span><span class="n">text1</span><span class="p">,</span> <span class="s">"text2"</span><span class="p">:</span><span class="n">text2</span><span class="p">]</span>
+        <span class="n">constraints</span> <span class="o">+=</span> <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">constraints</span><span class="p">(</span><span class="nv">withVisualFormat</span><span class="p">:</span> <span class="s">"H:|-[text1]-[text2]"</span><span class="p">,</span>
+                                                      <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="n">alignAllFirstBaseline</span><span class="p">],</span>
+                                                      <span class="nv">metrics</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span>
+                                                      <span class="nv">views</span><span class="p">:</span> <span class="n">views</span><span class="p">)</span>
+        <span class="n">constraints</span> <span class="o">+=</span> <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">constraints</span><span class="p">(</span><span class="nv">withVisualFormat</span><span class="p">:</span> <span class="s">"V:|-[text1]-|"</span><span class="p">,</span>
+                                                      <span class="nv">options</span><span class="p">:</span> <span class="p">[],</span>
+                                                      <span class="nv">metrics</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span>
+                                                      <span class="nv">views</span><span class="p">:</span> <span class="n">views</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="kt">NSLayoutConstraint</span><span class="o">.</span><span class="nf">activate</span><span class="p">(</span><span class="n">constraints</span><span class="p">)</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">myConstraints</span> <span class="o">=</span> <span class="n">constraints</span>
+    <span class="k">super</span><span class="o">.</span><span class="nf">updateConstraints</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>为了更好让我们理解“为什么要这么做”，而不是让我们知道“就是得这样做”，这个session给出了更详细的解释。</p>
+
+<p>当我们创建了一个View，给这个View去添加约束的时候，会创建一个和约束对应的等式，将其添加到计算约束的引擎中，引擎会将约束解释成视图的布局变量，最终设置视图的x，y，width，height。</p>
+
+<p>例如我们要创建下图的视图关系：<br />
+<img src="http://images.foolishtalk.org/2018_9_8_autolayout_1.png" alt="" /></p>
+
+<p>约束会转换成以下的等式：<br />
+<img src="http://images.foolishtalk.org/2018_9_8_autolayout_2.png" alt="" /></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text1</span><span class="o">.</span><span class="n">minX</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">text1</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">text2</span><span class="o">.</span><span class="n">minX</span> <span class="o">=</span> <span class="n">text1</span><span class="o">.</span><span class="n">minX</span> <span class="o">+</span> <span class="n">text1</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="mi">20</span>
+</code></pre></div></div>
+<p>最终将变量代入公式中得到最终的值：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text1</span><span class="o">.</span><span class="n">minX</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">text1</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">text2</span><span class="o">.</span><span class="n">minX</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">+</span> <span class="mi">20</span>
+<span class="n">text2</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">128</span>
+</code></pre></div></div>
+<p>到这里为止，引擎对这个布局的计算就已经完成了。<br />
+每当引擎将计算得到的值赋值给变量的时候，它会告诉视图，你的变量已经发生了改变，这时候视图则会调用<code class="highlighter-rouge">Superview.setNeedsLayout()</code>通知父视图发生了变化,然后视图会执行<code class="highlighter-rouge">layoutSubviews()</code>,同时询问引擎变化的值是什么，引擎告诉视图的值，就会调用<code class="highlighter-rouge">setBounds()</code>和<code class="highlighter-rouge">setCenter()</code>，然后完成整个布局的过程。</p>
+
+<p>如果希望在使用<code class="highlighter-rouge">AutoLayout</code>的时候，提高性能，在遇到一个视图，会发生改变的时候，不要<code class="highlighter-rouge">removeAll()</code>，这样会造成约束流失，导致性能下降。而是在不需要使用的时候，调用<code class="highlighter-rouge">deactivate()</code>使约束暂时失效,而再次需要用到的时候调用<code class="highlighter-rouge">activate()</code>再次激活。<br />
+我们在使用<code class="highlighter-rouge">AutoLayout</code>的时候，大多数会使用一些第三方库，而不会直接使用苹果原生提供的VFL或者其他原生api，在<code class="highlighter-rouge">Objective-C</code>中会使用<code class="highlighter-rouge">Masonry</code>，在<code class="highlighter-rouge">Swift</code>中会使用<code class="highlighter-rouge">SnapKit</code>，下面以<code class="highlighter-rouge">SnapKit</code>为例子：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="nv">firstConstraint</span><span class="p">:</span> <span class="kt">Constraint</span><span class="p">?</span>
+<span class="k">var</span> <span class="nv">secondConstraint</span><span class="p">:</span> <span class="kt">Constraint</span><span class="p">?</span>
+
+<span class="kd">func</span> <span class="nf">setupLayout</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">view</span><span class="o">.</span><span class="n">snp</span><span class="o">.</span><span class="n">makeConstraints</span> <span class="p">{</span> <span class="n">make</span> <span class="k">in</span> 
+     <span class="n">firstConstraint</span> <span class="o">=</span> <span class="n">make</span><span class="o">.</span><span class="n">bottom</span><span class="o">.</span><span class="nf">equalTo</span><span class="p">(</span><span class="n">otherView</span><span class="o">.</span><span class="n">snp</span><span class="o">.</span><span class="n">bottom</span><span class="p">)</span><span class="o">.</span><span class="n">constraint</span>
+     <span class="n">secondConstraint</span> <span class="o">=</span> <span class="n">make</span><span class="o">.</span><span class="n">bottom</span><span class="o">.</span><span class="nf">equalToSuperview</span><span class="p">()</span><span class="o">.</span><span class="n">constraint</span>
+  <span class="p">}</span>
+  <span class="n">firstConstraint</span><span class="p">?</span><span class="o">.</span><span class="nf">activate</span><span class="p">()</span>
+  <span class="n">secondConstraint</span><span class="p">?</span><span class="o">.</span><span class="nf">deactivate</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">updateLayout</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="nv">something</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="o">...</span>
+  <span class="k">if</span> <span class="n">something</span>  <span class="p">{</span>
+    <span class="n">firstConstraint</span><span class="p">?</span><span class="o">.</span><span class="nf">activate</span><span class="p">()</span>
+    <span class="n">secondConstraint</span><span class="p">?</span><span class="o">.</span><span class="nf">deactivate</span><span class="p">()</span>    
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">firstConstraint</span><span class="p">?</span><span class="o">.</span><span class="nf">deactivate</span><span class="p">()</span>
+    <span class="n">secondConstraint</span><span class="p">?</span><span class="o">.</span><span class="nf">activate</span><span class="p">()</span>
+  <span class="p">}</span>
+
+</code></pre></div></div>
+
+<h1 id="总结">总结</h1>
+<p>剩下一部分是比较零散的小技巧，所以放到总结中：</p>
+<ul>
+  <li>在使用优先级的时候，引擎会进行更多的计算，导致性能下降。</li>
+  <li>在视图中的子试图存在不同状态的时候，需要显示或移除的时候，可以优先考虑使用隐藏视图、激活约束、失效约束去避免约束流失。</li>
+  <li>部分控件是具有固定尺寸的，例如UIImageView会根据UIImage的大小去适应尺寸，原理也是通过UIView创建约束，你可以自己去设定大小，这样就会跳过系统计算约束的步骤，但是不要认为这样可以提高性能。但是有一种情况下是可以提高性能的，就是在使用UILabel的时候，如果你自己手动去计算label的size的时候，可以通过重写<code class="highlighter-rouge">var intrinsicContentSize: CGSize</code>属性,告诉系统不需要帮我们计算。
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">override</span> <span class="k">var</span> <span class="nv">intrinsicContentSize</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="kt">UIView</span><span class="o">.</span><span class="n">noIntrinsicMetric</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">UIView</span><span class="o">.</span><span class="n">noIntrinsicMetric</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>尽可能少调用<code class="highlighter-rouge">systemLayoutSizeFitting(_:)</code>方法，它会临时创建一个引擎，然后返回size之后丢弃，频繁的调用，会造成性能下降。</li>
+</ul>

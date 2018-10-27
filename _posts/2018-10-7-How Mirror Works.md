@@ -38,7 +38,7 @@ intptr_t swift_reflectionMirror_count(OpaqueValue *value,
                                       const Metadata *type,
                                       const Metadata *T) {
 ```  
-`SWIFT_CC(swift)`告诉编译器这个函数使用Swift约定而不是C/C++的约定。`SWIFT_RUNTIME_STDLIB_INTERFACE`标记为函数，而且它是Swif接口的一部分，并且具有将其标记为extern "C"避免C++名称修改的效果，确保此函数是Swift期望调用的符号名。C++参数会谨慎匹配基于Swift声明函数的调用，当Swift代码调用`_getChildCount`，调用C++函数的value包含一个指向Swift value的指针，`type`包含该值的参数类型，并且包含范型类型<T>。   
+`SWIFT_CC(swift)`告诉编译器这个函数使用Swift约定而不是C/C++的约定。`SWIFT_RUNTIME_STDLIB_INTERFACE`标记为函数，而且它是Swif接口的一部分，并且具有将其标记为extern "C"避免C++名称修改的效果，确保此函数是Swift期望调用的符号名。C++参数会谨慎匹配基于Swift声明函数的调用，当Swift代码调用`_getChildCount`，调用C++函数的value包含一个指向Swift value的指针，`type`包含该值的参数类型，并且包含泛型类型<T>。   
 `Swift`和`C++`部分之间的完整接口`Mirror`包含以下函数：  
 ```swift  
 @_silgen_name("swift_reflectionMirror_normalizedType")
@@ -71,4 +71,45 @@ internal func _isImpl(_ object: AnyObject, kindOf: AnyObject) -> Bool
 # 动态调用做的很奇怪  
 没有一种通用方法可以从任何类型获取我们想要的信息。很多任务在元组、结构体、类和枚举都需要不同的代码，例如查找子项的数量。还有些微妙的地方，例如Swift和Objective-C之间类的处理。  
   
-所有这些函数都需要根据动态检查的类型来解释不同实现的代码。
+所有这些函数都需要根据动态检查的类型来解释不同实现的代码。这听起来很像方法的动态调用，检查方法方法使用对象的类比选择调用哪个实现更复杂。反射代码通过试图C++动态调度简化问题，该调度包含C++接口抽象基类和以及一系列涵盖所有各种情况的子类。单个函数将Swift类型C++类的实例。在实例调用方法的时候再调度到合适的实现上。  
+调用映射函数`call`，其声明如下所示：  
+```c++  
+template<typename F>
+auto call(OpaqueValue *passedValue, const Metadata *T, const Metadata *passedType,
+          const F &f) -> decltype(f(nullptr))
+```  
+`passedValue`指向实际传入Swift值的指针。`T`是该值的静态类型，它对应Swift的<T>泛型参数，`passedType`是一个由Swift明确传入并用来真正反射步骤上的类型。（当使用`Mirror`的超类去处理子类的实例时，这个类型和对象的实际运行时类型不同。）最后，`f`参数将会被调用，传入一个引用这个函数的实现对象。然后此函数在调用的时候返回任意值f，让用户更容易的获取返回值。  
+`call`的实现并不让人兴奋。主要是用了个很大的`switch`声明和一些扩展的代码用于处理额外的情况。有个重要的事情是，它最终会调用`f`的`ReflectionMirrorImpl`的实例，然后将调用该实例上的方法来完成实际工作。  
+这是`ReflectionMirrorImpl`,这是所有调用过的接口：  
+```c++  
+struct ReflectionMirrorImpl {
+  const Metadata *type;
+  OpaqueValue *value;
+
+  virtual char displayStyle() = 0;
+  virtual intptr_t count() = 0;
+  virtual AnyReturn subscript(intptr_t index, const char **outName,
+                              void (**outFreeFunc)(const char *)) = 0;
+  virtual const char *enumCaseName() { return nullptr; }
+
+#if SWIFT_OBJC_INTEROP
+  virtual id quickLookObject() { return nil; }
+#endif
+
+  virtual ~ReflectionMirrorImpl() {}
+};
+```  
+使用Swift和C++组件之间的接口`call`函数调用相应的方法。例如，这是`swift_reflectionMirror_count`如下：  
+```c++
+SWIFT_CC(swift) SWIFT_RUNTIME_STDLIB_INTERFACE
+intptr_t swift_reflectionMirror_count(OpaqueValue *value,
+                                      const Metadata *type,
+                                      const Metadata *T) {
+  return call(value, T, type, [](ReflectionMirrorImpl *impl) {
+    return impl->count();
+  });
+}
+```   
+  
+# 元组反射  
+让我们从元组反射开始，

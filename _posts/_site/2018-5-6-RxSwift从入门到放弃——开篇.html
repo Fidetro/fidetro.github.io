@@ -1,0 +1,178 @@
+<h1 id="前言">前言</h1>
+<p>最近正好在刚好被安排到用RxSwift开发一个小项目，借着这个机会学习了一下。在这之前也有断断续续用了几次，最后总会因为各种各样的Xcode问题弃坑，感觉能坚持下来真的是真爱啊。。主要学起来就是两个问题：</p>
+<ul>
+  <li>Xcode的自动补全十分不友好</li>
+  <li>RxSwift学习曲线陡峭</li>
+</ul>
+
+<p>自动补全的问题对刚入门的时候来说，真的影响很大，一开始对RxSwift的不了解，看了下网上的资料，准备大干一场的时候，写着写着，突然没补全，然后怀疑自己是不是哪里写错了，把网上的代码复制过来，又可以了，体验极其的差…</p>
+
+<p>在学习RxSwift的时候，或者本来就有看过相关的资料，肯定会对下面这张图的名词有所听闻。</p>
+
+<p><img src="http://images.foolishtalk.org/rxswift-know.png" alt="" /></p>
+
+<p>不了解的同学看完应该是这样的表情的：<br />
+<img src="http://images.foolishtalk.org/black_question.png" alt="" /></p>
+
+<p>看不懂没关系，看完这个系列的文章之后，就会懂了。</p>
+
+<h1 id="疑问">疑问</h1>
+<p>在学RxSwift之前，先提个问题，为什么要学习RxSwift？<br />
+这段是从RxSwift文档翻译过来的回答</p>
+<ul>
+  <li>可组合，因为Rx就是这个意思</li>
+  <li>可复用，因为它是可组合的</li>
+  <li>清晰，因为声明都是不可变的，改变的只有数据</li>
+  <li>容易理解和简洁</li>
+  <li>稳定</li>
+  <li>没有状态，因为RxSwift将应用程序建模为单向数据流</li>
+  <li>不会有内存管理问题，因为内存管理变得简单</li>
+</ul>
+
+<p>总结：使用RxSwift可以简化代码，用更少而且清晰的代码，更专注于关心事件变化的本身</p>
+
+<p>说了这么多，RxSwift其实到底干了什么？
+RxSwift将监听变化的<code class="highlighter-rouge">事件</code>封装成了可观察的<code class="highlighter-rouge">序列</code>，因此在编程的时候，通过框架已经帮我们创建好的序列或者自己创建的序列，实现对序列的监听，只关心序列的变化。</p>
+<blockquote>
+  <p>注<br />
+可观察的事件：例如scrollView的contentOffset变化，textField每次输入时候变化的text等<br />
+序列：一个可被观察的对象，后面会详细讲到。</p>
+</blockquote>
+
+<h1 id="正文">正文</h1>
+
+<p>讲了这么多，talk is cheap,show me the code.</p>
+
+<p>监听collectionView的contentOffset，没有引入RxSwift的时候，我们需要实现以下方法：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">func</span> <span class="nf">scrollViewDidScroll</span><span class="p">(</span><span class="n">_</span> <span class="nv">scrollView</span><span class="p">:</span> <span class="kt">UIScrollView</span><span class="p">)</span> <span class="p">{</span>
+     <span class="c1">//...</span>
+ <span class="p">}</span>
+</code></pre></div></div>
+
+<p>引入RxSwift之后</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">disposeBag</span> <span class="o">=</span> <span class="kt">DisposeBag</span><span class="p">()</span>
+
+
+       <span class="n">collectionView</span><span class="o">.</span><span class="n">rx</span>
+                    <span class="o">.</span><span class="n">contentOffset</span>
+                    <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="k">in</span>
+            <span class="c1">//do something</span>
+        <span class="p">})</span><span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
+</code></pre></div></div>
+<blockquote>
+  <p>注<br />
+disposeBag负责管理生命周期，相当于将当前的监听交给了disposeBag，大部分情况下disposeBag由Controller持有，并随控制器生命周期结束而结束</p>
+</blockquote>
+
+<p>KVO:</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">view</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="nf">observe</span><span class="p">(</span><span class="kt">CGRect</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="s">"frame"</span><span class="p">)</span>
+    <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span> <span class="n">frame</span> <span class="k">in</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Got new frame </span><span class="se">\(</span><span class="n">frame</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">})</span>
+    <span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Target-Action:<br />
+传统的实现方法:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">button</span><span class="p">:</span> <span class="kt">UIButton</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">button</span> <span class="o">=</span> <span class="kt">UIButton</span><span class="p">()</span>
+        <span class="n">button</span><span class="o">.</span><span class="nf">addTarget</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">#selector(</span><span class="nf">click</span><span class="kd">)</span><span class="p">,</span> <span class="nv">for</span><span class="p">:</span> <span class="o">.</span><span class="n">touchUpInside</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">button</span>
+    <span class="p">}()</span>
+    
+    <span class="kd">@objc</span> <span class="kd">func</span> <span class="nf">click</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// do something</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">button</span><span class="o">.</span><span class="n">rx</span>
+    <span class="o">.</span><span class="nf">controlEvent</span><span class="p">(</span><span class="o">.</span><span class="n">touchUpInside</span><span class="p">)</span>
+    <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span>  <span class="p">()</span> <span class="k">in</span>
+    <span class="c1">//..touchUp</span>
+
+        <span class="p">})</span><span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p>上面的都是简单的例子应用，下面直接用登录功能举例示例代码，<a href="https://github.com/Fidetro/rx-sample-code">代码</a>已经传到GitHub上了。<br />
+要实现的功能：点击按钮的时候，判断用户名和密码是否合法，然后请求，拿到结果。</p>
+<ol>
+  <li>创建一个ViewModel
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">LoginViewModel</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span>
+ <span class="c1">//由Controller负责订阅loginResult，得到登录结果</span>
+ <span class="k">let</span> <span class="nv">loginResult</span><span class="p">:</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>初始化loginResult
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nf">init</span><span class="p">(</span><span class="nv">input</span><span class="p">:</span> <span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">touchUp</span><span class="p">:</span> <span class="kt">ControlEvent</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="p">))</span> <span class="p">{</span>
+     <span class="c1">//将username和passowrd变形为Observable&lt;(String,String)&gt;</span>
+     <span class="k">let</span> <span class="nv">usernameAndPassword</span> <span class="o">=</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">combineLatest</span><span class="p">(</span><span class="n">input</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">input</span><span class="o">.</span><span class="n">password</span><span class="p">)</span> <span class="p">{</span>
+         <span class="p">(</span><span class="nv">$0</span><span class="p">,</span> <span class="nv">$1</span><span class="p">)</span>
+     <span class="p">}</span>
+     <span class="c1">//初始化loginResult对象</span>
+     <span class="n">loginResult</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="n">touchUp</span><span class="o">.</span><span class="nf">withLatestFrom</span><span class="p">(</span><span class="n">usernameAndPassword</span><span class="p">)</span><span class="o">.</span><span class="n">flatMap</span> <span class="p">{</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span> <span class="k">in</span>  
+
+         <span class="c1">//简单的对用户名和密码做校验</span>
+         <span class="k">guard</span>  <span class="n">username</span><span class="o">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">6</span> <span class="k">else</span><span class="p">{</span>
+             <span class="k">return</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">just</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+         <span class="p">}</span>
+
+         <span class="k">guard</span>  <span class="n">password</span><span class="o">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">6</span> <span class="k">else</span><span class="p">{</span>
+             <span class="k">return</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">just</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+         <span class="p">}</span>
+
+         <span class="k">return</span> <span class="kt">Observable</span><span class="o">.</span><span class="n">create</span> <span class="p">{</span> <span class="p">(</span><span class="n">observer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Disposable</span> <span class="k">in</span>
+             <span class="c1">//延时1s模拟异步请求登录成功</span>
+             <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="nf">asyncAfter</span><span class="p">(</span><span class="nv">deadline</span><span class="p">:</span> <span class="kt">DispatchTime</span><span class="o">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">execute</span><span class="p">:</span> <span class="p">{</span>
+                 <span class="n">observer</span><span class="o">.</span><span class="nf">onNext</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+             <span class="p">})</span>
+             <span class="k">return</span> <span class="kt">Disposables</span><span class="o">.</span><span class="n">create</span> <span class="p">{}</span>
+         <span class="p">}</span>
+     <span class="p">}</span>        
+ <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>在Controller监听点击后登录的结果：
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">@IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">loginButton</span><span class="p">:</span> <span class="kt">UIButton</span><span class="o">!</span>
+ <span class="kd">@IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">usernameTextField</span><span class="p">:</span> <span class="kt">UITextField</span><span class="o">!</span>
+ <span class="kd">@IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">passwordTextField</span><span class="p">:</span> <span class="kt">UITextField</span><span class="o">!</span>
+ <span class="k">let</span> <span class="nv">disposeBag</span> <span class="o">=</span> <span class="kt">DisposeBag</span><span class="p">()</span>
+    
+    
+ <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+     <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+     <span class="k">let</span> <span class="nv">viewModel</span> <span class="o">=</span> <span class="kt">LoginViewModel</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">input</span><span class="p">:</span> <span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="n">usernameTextField</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">orEmpty</span><span class="o">.</span><span class="nf">asObservable</span><span class="p">(),</span>
+                                                 <span class="nv">password</span><span class="p">:</span> <span class="n">passwordTextField</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">orEmpty</span><span class="o">.</span><span class="nf">asObservable</span><span class="p">(),</span>
+                                                 <span class="nv">touchUp</span><span class="p">:</span> <span class="n">loginButton</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="nf">controlEvent</span><span class="p">(</span><span class="o">.</span><span class="n">touchUpInside</span><span class="p">)))</span>
+        
+     <span class="n">viewModel</span><span class="o">.</span><span class="n">loginResult</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
+         <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="kc">true</span> <span class="p">{</span>
+             <span class="nf">print</span><span class="p">(</span><span class="s">"登录成功"</span><span class="p">)</span>
+         <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+             <span class="nf">print</span><span class="p">(</span><span class="s">"登录失败"</span><span class="p">)</span>
+         <span class="p">}</span>
+     <span class="p">})</span><span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
+ <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>这样一个登录功能就基本完成了，相信看完上面的代码，肯定也会有很多疑问。</p>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">Observable.just(...)</code>和<code class="highlighter-rouge">Observable.create { }</code>是干什么用的？ <br />
+这些方法都是拿来将对象包装成可观察的序列，更多的构建方法可以参考<a href="https://beeth0ven.github.io/RxSwift-Chinese-Documentation/content/decision_tree.html">这里</a></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">observer.onNext(...)</code>又是干什么用的？<br />
+observer是<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>类型，当使用<code class="highlighter-rouge">Observable.create { }</code>创建序列的时候，闭包内会返回<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>对象,<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>对象允许你通过<code class="highlighter-rouge">.onNext(...)</code>发出一个元素，<code class="highlighter-rouge">onError(...)</code>发出一个错误，<code class="highlighter-rouge">onCompleted()</code>通知任务已经完成。</p>
+  </li>
+</ol>
+
+<h1 id="参考">参考</h1>
+<p><a href="https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Why.md">RxSwift官方文档</a><br />
+<a href="https://beeth0ven.github.io/RxSwift-Chinese-Documentation/">RxSwift中文文档</a></p>
+
