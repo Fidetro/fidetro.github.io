@@ -222,8 +222,9 @@ border: none;
                                       <span class="k">const</span> <span class="n">Metadata</span> <span class="o">*</span><span class="n">type</span><span class="p">,</span>
                                       <span class="k">const</span> <span class="n">Metadata</span> <span class="o">*</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
 </code></pre></div></div>
-<p><code class="highlighter-rouge">SWIFT_CC(swift)</code>告诉编译器这个函数使用Swift约定而不是C/C++的约定。<code class="highlighter-rouge">SWIFT_RUNTIME_STDLIB_INTERFACE</code>标记为函数，而且它是Swif接口的一部分，并且具有将其标记为extern “C”避免C++名称修改的效果，确保此函数是Swift期望调用的符号名。C++参数会谨慎匹配基于Swift声明函数的调用，当Swift代码调用<code class="highlighter-rouge">_getChildCount</code>，调用C++函数的value包含一个指向Swift value的指针，<code class="highlighter-rouge">type</code>包含该值的参数类型，并且包含泛型类型<T>。   
-`Swift`和`C++`部分之间的完整接口`Mirror`包含以下函数：</T></p>
+<p><code class="highlighter-rouge">SWIFT_CC(swift)</code>告诉编译器这个函数使用Swift约定而不是C/C++的约定。<code class="highlighter-rouge">SWIFT_RUNTIME_STDLIB_INTERFACE</code>标记为函数，而且它是Swif接口的一部分，并且具有将其标记为extern “C”避免C++名称修改的效果，确保此函数是Swift期望调用的符号名。C++参数会谨慎匹配基于Swift声明函数的调用，当Swift代码调用<code class="highlighter-rouge">_getChildCount</code>，调用C++函数的value包含一个指向Swift value的指针，<code class="highlighter-rouge">type</code>包含该值的参数类型，并且包含泛型类型<T>。</T></p>
+
+<p><code class="highlighter-rouge">Swift</code>和<code class="highlighter-rouge">C++</code>部分之间的完整接口<code class="highlighter-rouge">Mirror</code>包含以下函数：</p>
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">@_silgen_name("swift_reflectionMirror_normalizedType")</span>
 <span class="kd">internal</span> <span class="kd">func</span> <span class="n">_getNormalizedType</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Any</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Any</span><span class="o">.</span><span class="k">Type</span>
 
@@ -260,9 +261,13 @@ border: none;
 <span class="k">auto</span> <span class="n">call</span><span class="p">(</span><span class="n">OpaqueValue</span> <span class="o">*</span><span class="n">passedValue</span><span class="p">,</span> <span class="k">const</span> <span class="n">Metadata</span> <span class="o">*</span><span class="n">T</span><span class="p">,</span> <span class="k">const</span> <span class="n">Metadata</span> <span class="o">*</span><span class="n">passedType</span><span class="p">,</span>
           <span class="k">const</span> <span class="n">F</span> <span class="o">&amp;</span><span class="n">f</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="nb">nullptr</span><span class="p">))</span>
 </code></pre></div></div>
-<p><code class="highlighter-rouge">passedValue</code>指向实际传入Swift值的指针。<code class="highlighter-rouge">T</code>是该值的静态类型，它对应Swift的<T>泛型参数，`passedType`是一个由Swift明确传入并用来真正反射步骤上的类型。（当使用`Mirror`的超类去处理子类的实例时，这个类型和对象的实际运行时类型不同。）最后，`f`参数将会被调用，传入一个引用这个函数的实现对象。然后此函数在调用的时候返回任意值f，让用户更容易的获取返回值。  
-`call`的实现并不让人兴奋。主要是用了个很大的`switch`声明和一些扩展的代码用于处理额外的情况。有个重要的事情是，它最终会调用`f`的`ReflectionMirrorImpl`的实例，然后将调用该实例上的方法来完成实际工作。  
-这是`ReflectionMirrorImpl`,这是所有调用过的接口：</T></p>
+
+<p><code class="highlighter-rouge">passedValue</code>指向实际传入Swift值的指针。<code class="highlighter-rouge">T</code>是该值的静态类型，它对应Swift的<T>泛型参数。</T></p>
+
+<p><code class="highlighter-rouge">passedType</code>是一个由Swift明确传入并用来真正反射步骤上的类型。（当使用<code class="highlighter-rouge">Mirror</code>的超类去处理子类的实例时，这个类型和对象的实际运行时类型不。）最后，<code class="highlighter-rouge">f</code>参数将会被调用，传入一个引用这个函数的实现对象。然后此函数在调用的时候返回任意值f，让用户更容易的获取返回值。<br />
+<code class="highlighter-rouge">call</code>的实现并不让人兴奋。主要是用了个很大的<code class="highlighter-rouge">switch</code>声明和一些扩展的代码用于处理额外的情况。有个重要的事情是，它最终会调用<code class="highlighter-rouge">f</code>的<code class="highlighter-rouge">ReflectionMirrorImpl</code>的实例，然后将调用该实例上的方法来完成实际工作。<br />
+这是<code class="highlighter-rouge">ReflectionMirrorImpl</code>,这是所有调用过的接口：</p>
+
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">ReflectionMirrorImpl</span> <span class="p">{</span>
   <span class="k">const</span> <span class="n">Metadata</span> <span class="o">*</span><span class="n">type</span><span class="p">;</span>
   <span class="n">OpaqueValue</span> <span class="o">*</span><span class="n">value</span><span class="p">;</span>
@@ -292,7 +297,57 @@ border: none;
 </code></pre></div></div>
 
 <h1 id="元组反射">元组反射</h1>
-<p>让我们从元组反射开始，</p>
+<p>让我们从元组反射开始，这可能是最简单的一个依然可以完成一些工作。它首先返回一个显示样式，<code class="highlighter-rouge">t</code>表明它是一个元组：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">TupleImpl</span> <span class="o">:</span> <span class="n">ReflectionMirrorImpl</span> <span class="p">{</span>
+  <span class="kt">char</span> <span class="n">displayStyle</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="sc">'t'</span><span class="p">;</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+<p>像这里这样使用硬编码是不正常的，但考虑到C++中只有一个位置和Swift中的一个位置引用了这个值，并且他们没有使用桥接进行通信，这是一个合理的选择。<br />
+接下来是<code class="highlighter-rouge">count</code>方法。在这点上，我们知道<code class="highlighter-rouge">type</code>是<code class="highlighter-rouge">TupleTypeMetadata *</code>而不仅是<code class="highlighter-rouge">Metadata *</code>.<code class="highlighter-rouge">TupleTypeMetadata</code>有一个<code class="highlighter-rouge">NumElements</code>字段，它保存元组中元素的数量，我们结束了：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kt">intptr_t</span> <span class="nf">count</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">Tuple</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">TupleTypeMetadata</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">type</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Tuple</span><span class="o">-&gt;</span><span class="n">NumElements</span><span class="p">;</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+<p><code class="highlighter-rouge">subscript</code>方法需要做更多的工作。它开始在同样的<code class="highlighter-rouge">static_cast</code>:</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">AnyReturn</span> <span class="nf">subscript</span><span class="p">(</span><span class="kt">intptr_t</span> <span class="n">i</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">outName</span><span class="p">,</span>
+                      <span class="kt">void</span> <span class="p">(</span><span class="o">**</span><span class="n">outFreeFunc</span><span class="p">)(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">Tuple</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">TupleTypeMetadata</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">type</span><span class="p">);</span>
+</code></pre></div></div>
+<p>下一步，边界检查确保调用者没有要求这个元组不能包含下标：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="n">i</span> <span class="o">&gt;</span> <span class="n">Tuple</span><span class="o">-&gt;</span><span class="n">NumElements</span><span class="p">)</span>
+      <span class="n">swift</span><span class="o">::</span><span class="n">crash</span><span class="p">(</span><span class="s">"Swift mirror subscript bounds check failure"</span><span class="p">);</span>
+</code></pre></div></div>
+<p>下标有两个工作：它检查值和符合的名字。对于结构体或者类，这个名字是存储属性的名字。对于元组来说，这个名字是可以是元组元素的标签，也可以是数字指示器，如果没有标签是<code class="highlighter-rouge">.0</code>。<br />
+标签以空格分割组成列表，存储在Label元数据字段中。这段代码跟踪第i个字符串在列表中：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// Determine whether there is a label.</span>
+    <span class="kt">bool</span> <span class="n">hasLabel</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">labels</span> <span class="o">=</span> <span class="n">Tuple</span><span class="o">-&gt;</span><span class="n">Labels</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">space</span> <span class="o">=</span> <span class="n">strchr</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="sc">' '</span><span class="p">);</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">intptr_t</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">i</span> <span class="o">&amp;&amp;</span> <span class="n">space</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">space</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">space</span> <span class="o">=</span> <span class="n">strchr</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="sc">' '</span><span class="p">);</span>
+      <span class="p">}</span>
+
+      <span class="c1">// If we have a label, create it.</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">labels</span> <span class="o">&amp;&amp;</span> <span class="n">space</span> <span class="o">&amp;&amp;</span> <span class="n">labels</span> <span class="o">!=</span> <span class="n">space</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">*</span><span class="n">outName</span> <span class="o">=</span> <span class="n">strndup</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">space</span> <span class="o">-</span> <span class="n">labels</span><span class="p">);</span>
+        <span class="n">hasLabel</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+<p>如果没有标签，请生成相应的数字名称：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">hasLabel</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// The name is the stringized element number '.0'.</span>
+      <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">;</span>
+      <span class="n">asprintf</span><span class="p">(</span><span class="o">&amp;</span><span class="n">str</span><span class="p">,</span> <span class="s">".%"</span> <span class="n">PRIdPTR</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+      <span class="o">*</span><span class="n">outName</span> <span class="o">=</span> <span class="n">str</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+<p>因为我们有相互调用Swift和C++，所以我们没有得到内存自动管理这种好东西，Swift有ARC，C++有RAII，但两者是独立的。<code class="highlighter-rouge">outFreeFunc</code>允许C++代码释放返回的名称调用者的功能，标签释放的时候需要调<code class="highlighter-rouge">free</code>，因此这代码设置值到<code class="highlighter-rouge">*outFreeFunc</code>。</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">*</span><span class="n">outFreeFunc</span> <span class="o">=</span> <span class="p">[](</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span> <span class="p">{</span> <span class="n">free</span><span class="p">(</span><span class="k">const_cast</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">str</span><span class="p">));</span> <span class="p">};</span>
+</code></pre></div></div>
 
 
                 <hr>

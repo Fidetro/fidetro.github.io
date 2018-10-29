@@ -39,6 +39,7 @@ intptr_t swift_reflectionMirror_count(OpaqueValue *value,
                                       const Metadata *T) {
 ```  
 `SWIFT_CC(swift)`告诉编译器这个函数使用Swift约定而不是C/C++的约定。`SWIFT_RUNTIME_STDLIB_INTERFACE`标记为函数，而且它是Swif接口的一部分，并且具有将其标记为extern "C"避免C++名称修改的效果，确保此函数是Swift期望调用的符号名。C++参数会谨慎匹配基于Swift声明函数的调用，当Swift代码调用`_getChildCount`，调用C++函数的value包含一个指向Swift value的指针，`type`包含该值的参数类型，并且包含泛型类型<T>。   
+
 `Swift`和`C++`部分之间的完整接口`Mirror`包含以下函数：  
 ```swift  
 @_silgen_name("swift_reflectionMirror_normalizedType")
@@ -77,10 +78,14 @@ internal func _isImpl(_ object: AnyObject, kindOf: AnyObject) -> Bool
 template<typename F>
 auto call(OpaqueValue *passedValue, const Metadata *T, const Metadata *passedType,
           const F &f) -> decltype(f(nullptr))
-```  
-`passedValue`指向实际传入Swift值的指针。`T`是该值的静态类型，它对应Swift的<T>泛型参数，`passedType`是一个由Swift明确传入并用来真正反射步骤上的类型。（当使用`Mirror`的超类去处理子类的实例时，这个类型和对象的实际运行时类型不同。）最后，`f`参数将会被调用，传入一个引用这个函数的实现对象。然后此函数在调用的时候返回任意值f，让用户更容易的获取返回值。  
+```   
+
+`passedValue`指向实际传入Swift值的指针。`T`是该值的静态类型，它对应Swift的<T>泛型参数。  
+
+`passedType`是一个由Swift明确传入并用来真正反射步骤上的类型。（当使用`Mirror`的超类去处理子类的实例时，这个类型和对象的实际运行时类型不。）最后，`f`参数将会被调用，传入一个引用这个函数的实现对象。然后此函数在调用的时候返回任意值f，让用户更容易的获取返回值。  
 `call`的实现并不让人兴奋。主要是用了个很大的`switch`声明和一些扩展的代码用于处理额外的情况。有个重要的事情是，它最终会调用`f`的`ReflectionMirrorImpl`的实例，然后将调用该实例上的方法来完成实际工作。  
 这是`ReflectionMirrorImpl`,这是所有调用过的接口：  
+
 ```c++  
 struct ReflectionMirrorImpl {
   const Metadata *type;
@@ -112,4 +117,61 @@ intptr_t swift_reflectionMirror_count(OpaqueValue *value,
 ```   
   
 # 元组反射  
-让我们从元组反射开始，
+让我们从元组反射开始，这可能是最简单的一个依然可以完成一些工作。它首先返回一个显示样式，`t`表明它是一个元组：  
+```c++
+struct TupleImpl : ReflectionMirrorImpl {
+  char displayStyle() {
+    return 't';
+  }
+```  
+像这里这样使用硬编码是不正常的，但考虑到C++中只有一个位置和Swift中的一个位置引用了这个值，并且他们没有使用桥接进行通信，这是一个合理的选择。  
+接下来是`count`方法。在这点上，我们知道`type`是`TupleTypeMetadata *`而不仅是`Metadata *`.`TupleTypeMetadata`有一个`NumElements`字段，它保存元组中元素的数量，我们结束了：  
+```c++
+  intptr_t count() {
+    auto *Tuple = static_cast<const TupleTypeMetadata *>(type);
+    return Tuple->NumElements;
+  }
+```  
+`subscript`方法需要做更多的工作。它开始在同样的`static_cast`:  
+```c++
+  AnyReturn subscript(intptr_t i, const char **outName,
+                      void (**outFreeFunc)(const char *)) {
+    auto *Tuple = static_cast<const TupleTypeMetadata *>(type);
+```  
+下一步，边界检查确保调用者没有要求这个元组不能包含下标：  
+```c++
+ if (i < 0 || (size_t)i > Tuple->NumElements)
+      swift::crash("Swift mirror subscript bounds check failure");
+```  
+下标有两个工作：它检查值和符合的名字。对于结构体或者类，这个名字是存储属性的名字。对于元组来说，这个名字是可以是元组元素的标签，也可以是数字指示器，如果没有标签是`.0`。  
+标签以空格分割组成列表，存储在Label元数据字段中。这段代码跟踪第i个字符串在列表中：  
+```c++
+  // Determine whether there is a label.
+    bool hasLabel = false;
+    if (const char *labels = Tuple->Labels) {
+      const char *space = strchr(labels, ' ');
+      for (intptr_t j = 0; j != i && space; ++j) {
+        labels = space + 1;
+        space = strchr(labels, ' ');
+      }
+
+      // If we have a label, create it.
+      if (labels && space && labels != space) {
+        *outName = strndup(labels, space - labels);
+        hasLabel = true;
+      }
+    }
+```  
+如果没有标签，请生成相应的数字名称：  
+```c++
+    if (!hasLabel) {
+      // The name is the stringized element number '.0'.
+      char *str;
+      asprintf(&str, ".%" PRIdPTR, i);
+      *outName = str;
+    }
+```  
+因为我们有相互调用Swift和C++，所以我们没有得到内存自动管理这种好东西，Swift有ARC，C++有RAII，但两者是独立的。`outFreeFunc`允许C++代码释放返回的名称调用者的功能，标签释放的时候需要调`free`，因此这代码设置值到`*outFreeFunc`。  
+```c++
+*outFreeFunc = [](const char *str) { free(const_cast<char *>(str)); };
+```
