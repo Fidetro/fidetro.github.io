@@ -285,7 +285,7 @@ border: none;
   <span class="k">virtual</span> <span class="o">~</span><span class="n">ReflectionMirrorImpl</span><span class="p">()</span> <span class="p">{}</span>
 <span class="p">};</span>
 </code></pre></div></div>
-<p>使用Swift和C++组件之间的接口<code class="highlighter-rouge">call</code>函数调用相应的方法。例如，这是<code class="highlighter-rouge">swift_reflectionMirror_count</code>如下：</p>
+<p>使用Swift和C++组件之间的接口<code class="highlighter-rouge">call</code>函数调用相应的方法。例如，<code class="highlighter-rouge">swift_reflectionMirror_count</code>如下：</p>
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SWIFT_CC</span><span class="p">(</span><span class="n">swift</span><span class="p">)</span> <span class="n">SWIFT_RUNTIME_STDLIB_INTERFACE</span>
 <span class="kt">intptr_t</span> <span class="n">swift_reflectionMirror_count</span><span class="p">(</span><span class="n">OpaqueValue</span> <span class="o">*</span><span class="n">value</span><span class="p">,</span>
                                       <span class="k">const</span> <span class="n">Metadata</span> <span class="o">*</span><span class="n">type</span><span class="p">,</span>
@@ -347,6 +347,95 @@ border: none;
 </code></pre></div></div>
 <p>因为我们有相互调用Swift和C++，所以我们没有得到内存自动管理这种好东西，Swift有ARC，C++有RAII，但两者是独立的。<code class="highlighter-rouge">outFreeFunc</code>允许C++代码释放返回的名称调用者的功能，标签释放的时候需要调<code class="highlighter-rouge">free</code>，因此这代码设置值到<code class="highlighter-rouge">*outFreeFunc</code>。</p>
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">*</span><span class="n">outFreeFunc</span> <span class="o">=</span> <span class="p">[](</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span> <span class="p">{</span> <span class="n">free</span><span class="p">(</span><span class="k">const_cast</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">str</span><span class="p">));</span> <span class="p">};</span>
+</code></pre></div></div>
+<p>这会处理这个名字。令人惊讶的是，这个值更加容易检索。<code class="highlighter-rouge">Tuple</code>元数据包含返回指定索引的元素信息的函数：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="o">&amp;</span><span class="n">elt</span> <span class="o">=</span> <span class="n">Tuple</span><span class="o">-&gt;</span><span class="n">getElement</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</code></pre></div></div>
+<p>elt 包含一个偏移量，可以应用于元组值用来获取指向元素值的指针：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="o">*</span><span class="n">bytes</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+<span class="k">auto</span> <span class="o">*</span><span class="n">eltData</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">OpaqueValue</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">bytes</span> <span class="o">+</span> <span class="n">elt</span><span class="p">.</span><span class="n">Offset</span><span class="p">);</span>
+</code></pre></div></div>
+<p><code class="highlighter-rouge">elt</code>也包含元素类型。使用类型和指向值的指针，可以构建一个新的Any包含这个值。该类型包含用于分配和初始化包含给定类型值的存储的函数指针。此代码使用这些函数将值复制到Any，然后返回Any给调用者：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">Any</span> <span class="n">result</span><span class="p">;</span>
+
+    <span class="n">result</span><span class="p">.</span><span class="n">Type</span> <span class="o">=</span> <span class="n">elt</span><span class="p">.</span><span class="n">Type</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">opaqueValueAddr</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="n">Type</span><span class="o">-&gt;</span><span class="n">allocateBoxForExistentialIn</span><span class="p">(</span><span class="o">&amp;</span><span class="n">result</span><span class="p">.</span><span class="n">Buffer</span><span class="p">);</span>
+    <span class="n">result</span><span class="p">.</span><span class="n">Type</span><span class="o">-&gt;</span><span class="n">vw_initializeWithCopy</span><span class="p">(</span><span class="n">opaqueValueAddr</span><span class="p">,</span>
+                                       <span class="k">const_cast</span><span class="o">&lt;</span><span class="n">OpaqueValue</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">eltData</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="n">AnyReturn</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+<p>这就是元组。</p>
+
+<h1 id="swift_getfieldat">swift_getFieldAt</h1>
+<p>目前在结构体、类和枚举查找元素相当复杂。这种复杂性很大程度上是由于这些类型与包含类型字段信息的字段描述符之间缺乏直接引用。一个叫<code class="highlighter-rouge">swift_getFieldAt</code>的辅助函数用于搜索特定类型的相应字段描述符。一旦添加了直接引用，这个函数就会消失。但在此期间, 它提供了一个有趣的现象，看看运行时代码如何能够使用语言的元数据来查找类型信息。<br />
+这个函数原型如下所示：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">swift</span><span class="o">::</span><span class="n">_swift_getFieldAt</span><span class="p">(</span>
+    <span class="k">const</span> <span class="n">Metadata</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">index</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">StringRef</span> <span class="n">name</span><span class="p">,</span> <span class="n">FieldType</span> <span class="n">fieldInfo</span><span class="p">)</span><span class="o">&gt;</span>
+        <span class="n">callback</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div></div>
+<p>它需要检查类型和查找字段索引，它还需要一个回调，它将使用它查找的信息调用。<br />
+第一个任务是获取这个类型的上下文描述，这个包含稍后将使用的类型的其他信息：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">auto</span> <span class="o">*</span><span class="n">baseDesc</span> <span class="o">=</span> <span class="n">base</span><span class="o">-&gt;</span><span class="n">getTypeContextDescriptor</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">baseDesc</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">;</span>
+</code></pre></div></div>
+<p>这个工作分为两部分，首先，查找类型的字段描述符，字段描述符包含有关该类型字段的所有信息。一旦字段描述符有效的，该函数就可以从描述符中查找必要的信息。<br />
+通过<code class="highlighter-rouge">getFieldAt</code>辅助函数从描述符中查找信息，其他代码在搜索到合适的字段描述符时，从不同的地方调用这个辅助函数。让我们从搜索开始吧。它首先得到一个demangler，它用于将受损的类型名称转换为实际的类型引用：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">auto</span> <span class="n">dem</span> <span class="o">=</span> <span class="n">getDemanglerForRuntimeTypeResolution</span><span class="p">();</span>
+</code></pre></div></div>
+<p>它还有一个缓存来加速多次搜索：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">auto</span> <span class="o">&amp;</span><span class="n">cache</span> <span class="o">=</span> <span class="n">FieldCache</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+</code></pre></div></div>
+<p>如果缓存已经有字段描述符，请<code class="highlighter-rouge">getFieldAt</code>使用它调用：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">if</span> <span class="p">(</span><span class="k">auto</span> <span class="n">Value</span> <span class="o">=</span> <span class="n">cache</span><span class="p">.</span><span class="n">FieldCache</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">base</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">getFieldAt</span><span class="p">(</span><span class="o">*</span><span class="n">Value</span><span class="o">-&gt;</span><span class="n">getDescription</span><span class="p">());</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+<p>为了让搜索代码变得更简单，有一个辅助器，它接受<code class="highlighter-rouge">FieldDescriptor</code>并检查它是否被搜索。如果描述符匹配，则将描述符放入缓存，调用getFieldAt，并将成功返回给调用者。匹配很复杂，但实际上归根结底是在比较损坏的名字：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">auto</span> <span class="n">isRequestedDescriptor</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">FieldDescriptor</span> <span class="o">&amp;</span><span class="n">descriptor</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">descriptor</span><span class="p">.</span><span class="n">hasMangledTypeName</span><span class="p">());</span>
+    <span class="k">auto</span> <span class="n">mangledName</span> <span class="o">=</span> <span class="n">descriptor</span><span class="p">.</span><span class="n">getMangledTypeName</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">_contextDescriptorMatchesMangling</span><span class="p">(</span><span class="n">baseDesc</span><span class="p">,</span>
+                                           <span class="n">dem</span><span class="p">.</span><span class="n">demangleType</span><span class="p">(</span><span class="n">mangledName</span><span class="p">)))</span>
+      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="n">cache</span><span class="p">.</span><span class="n">FieldCache</span><span class="p">.</span><span class="n">getOrInsert</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">descriptor</span><span class="p">);</span>
+    <span class="n">getFieldAt</span><span class="p">(</span><span class="n">descriptor</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">};</span>
+</code></pre></div></div>
+
+<p>字段描述符可以在运行时注册，也可以在构建时成二进制文件。这两个循环搜索所有已知的字段描述符以进行匹配：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">section</span> <span class="o">:</span> <span class="n">cache</span><span class="p">.</span><span class="n">DynamicSections</span><span class="p">.</span><span class="n">snapshot</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">*</span><span class="n">descriptor</span> <span class="o">:</span> <span class="n">section</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">isRequestedDescriptor</span><span class="p">(</span><span class="o">*</span><span class="n">descriptor</span><span class="p">))</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="n">section</span> <span class="o">:</span> <span class="n">cache</span><span class="p">.</span><span class="n">StaticSections</span><span class="p">.</span><span class="n">snapshot</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">descriptor</span> <span class="o">:</span> <span class="n">section</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">isRequestedDescriptor</span><span class="p">(</span><span class="n">descriptor</span><span class="p">))</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+<p>如果无法找到匹配的内容，记录警告并且使用空的元组回调，使用空的元组只是为了返回一些东西：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">auto</span> <span class="n">typeName</span> <span class="o">=</span> <span class="n">swift_getTypeName</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="cm">/*qualified*/</span> <span class="nb">true</span><span class="p">);</span>
+  <span class="n">warning</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">"SWIFT RUNTIME BUG: unable to find field metadata for type '%*s'</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
+             <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">typeName</span><span class="p">.</span><span class="n">length</span><span class="p">,</span> <span class="n">typeName</span><span class="p">.</span><span class="n">data</span><span class="p">);</span>
+  <span class="n">callback</span><span class="p">(</span><span class="s">"unknown"</span><span class="p">,</span>
+           <span class="n">FieldType</span><span class="p">()</span>
+             <span class="p">.</span><span class="n">withType</span><span class="p">(</span><span class="n">TypeInfo</span><span class="p">(</span><span class="o">&amp;</span><span class="n">METADATA_SYM</span><span class="p">(</span><span class="n">EMPTY_TUPLE_MANGLING</span><span class="p">),</span> <span class="p">{}))</span>
+             <span class="p">.</span><span class="n">withIndirect</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span>
+             <span class="p">.</span><span class="n">withWeak</span><span class="p">(</span><span class="nb">false</span><span class="p">));</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 

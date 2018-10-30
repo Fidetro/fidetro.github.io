@@ -104,7 +104,7 @@ struct ReflectionMirrorImpl {
   virtual ~ReflectionMirrorImpl() {}
 };
 ```  
-使用Swift和C++组件之间的接口`call`函数调用相应的方法。例如，这是`swift_reflectionMirror_count`如下：  
+使用Swift和C++组件之间的接口`call`函数调用相应的方法。例如，`swift_reflectionMirror_count`如下：  
 ```c++
 SWIFT_CC(swift) SWIFT_RUNTIME_STDLIB_INTERFACE
 intptr_t swift_reflectionMirror_count(OpaqueValue *value,
@@ -174,4 +174,104 @@ struct TupleImpl : ReflectionMirrorImpl {
 因为我们有相互调用Swift和C++，所以我们没有得到内存自动管理这种好东西，Swift有ARC，C++有RAII，但两者是独立的。`outFreeFunc`允许C++代码释放返回的名称调用者的功能，标签释放的时候需要调`free`，因此这代码设置值到`*outFreeFunc`。  
 ```c++
 *outFreeFunc = [](const char *str) { free(const_cast<char *>(str)); };
+```  
+这会处理这个名字。令人惊讶的是，这个值更加容易检索。`Tuple`元数据包含返回指定索引的元素信息的函数： 
+```c++
+auto &elt = Tuple->getElement(i);
+```   
+elt 包含一个偏移量，可以应用于元组值用来获取指向元素值的指针：  
+```c++
+auto *bytes = reinterpret_cast<const char *>(value);
+auto *eltData = reinterpret_cast<const OpaqueValue *>(bytes + elt.Offset);
+```  
+`elt`也包含元素类型。使用类型和指向值的指针，可以构建一个新的Any包含这个值。该类型包含用于分配和初始化包含给定类型值的存储的函数指针。此代码使用这些函数将值复制到Any，然后返回Any给调用者：  
+```c++
+    Any result;
+
+    result.Type = elt.Type;
+    auto *opaqueValueAddr = result.Type->allocateBoxForExistentialIn(&result.Buffer);
+    result.Type->vw_initializeWithCopy(opaqueValueAddr,
+                                       const_cast<OpaqueValue *>(eltData));
+
+    return AnyReturn(result);
+  }
+};
 ```
+这就是元组。  
+
+# swift_getFieldAt  
+目前在结构体、类和枚举查找元素相当复杂。这种复杂性很大程度上是由于这些类型与包含类型字段信息的字段描述符之间缺乏直接引用。一个叫`swift_getFieldAt`的辅助函数用于搜索特定类型的相应字段描述符。一旦添加了直接引用，这个函数就会消失。但在此期间, 它提供了一个有趣的现象，看看运行时代码如何能够使用语言的元数据来查找类型信息。  
+这个函数原型如下所示：  
+```c++
+void swift::_swift_getFieldAt(
+    const Metadata *base, unsigned index,
+    std::function<void(llvm::StringRef name, FieldType fieldInfo)>
+        callback) {
+```  
+它需要检查类型和查找字段索引，它还需要一个回调，它将使用它查找的信息调用。  
+第一个任务是获取这个类型的上下文描述，这个包含稍后将使用的类型的其他信息：  
+```c++
+  auto *baseDesc = base->getTypeContextDescriptor();
+  if (!baseDesc)
+    return;
+```  
+这个工作分为两部分，首先，查找类型的字段描述符，字段描述符包含有关该类型字段的所有信息。一旦字段描述符有效的，该函数就可以从描述符中查找必要的信息。  
+通过`getFieldAt`辅助函数从描述符中查找信息，其他代码在搜索到合适的字段描述符时，从不同的地方调用这个辅助函数。让我们从搜索开始吧。它首先得到一个demangler，它用于将受损的类型名称转换为实际的类型引用：  
+```c++
+  auto dem = getDemanglerForRuntimeTypeResolution();
+```  
+它还有一个缓存来加速多次搜索：  
+```c++
+  auto &cache = FieldCache.get();
+```  
+如果缓存已经有字段描述符，请`getFieldAt`使用它调用：  
+```c++  
+  if (auto Value = cache.FieldCache.find(base)) {
+    getFieldAt(*Value->getDescription());
+    return;
+  }
+```  
+为了让搜索代码变得更简单，有一个辅助器，它接受`FieldDescriptor`并检查它是否被搜索。如果描述符匹配，则将描述符放入缓存，调用getFieldAt，并将成功返回给调用者。匹配很复杂，但实际上归根结底是在比较损坏的名字：  
+```c++
+  auto isRequestedDescriptor = [&](const FieldDescriptor &descriptor) {
+    assert(descriptor.hasMangledTypeName());
+    auto mangledName = descriptor.getMangledTypeName(0);
+
+    if (!_contextDescriptorMatchesMangling(baseDesc,
+                                           dem.demangleType(mangledName)))
+      return false;
+
+    cache.FieldCache.getOrInsert(base, &descriptor);
+    getFieldAt(descriptor);
+    return true;
+  };
+```  
+
+字段描述符可以在运行时注册，也可以在构建时成二进制文件。这两个循环搜索所有已知的字段描述符以进行匹配：  
+```c++
+  for (auto &section : cache.DynamicSections.snapshot()) {
+    for (const auto *descriptor : section) {
+      if (isRequestedDescriptor(*descriptor))
+        return;
+    }
+  }
+
+  for (const auto &section : cache.StaticSections.snapshot()) {
+    for (auto &descriptor : section) {
+      if (isRequestedDescriptor(descriptor))
+        return;
+    }
+  }
+```  
+如果无法找到匹配的内容，记录警告并且使用空的元组回调，使用空的元组只是为了返回一些东西：  
+```c++
+  auto typeName = swift_getTypeName(base, /*qualified*/ true);
+  warning(0, "SWIFT RUNTIME BUG: unable to find field metadata for type '%*s'\n",
+             (int)typeName.length, typeName.data);
+  callback("unknown",
+           FieldType()
+             .withType(TypeInfo(&METADATA_SYM(EMPTY_TUPLE_MANGLING), {}))
+             .withIndirect(false)
+             .withWeak(false));
+}
+```  
