@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 30 Oct 2018 17:59:10 +0800</pubDate>
-    <lastBuildDate>Tue, 30 Oct 2018 17:59:10 +0800</lastBuildDate>
+    <pubDate>Mon, 05 Nov 2018 12:03:59 +0800</pubDate>
+    <lastBuildDate>Mon, 05 Nov 2018 12:03:59 +0800</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
     
       <item>
@@ -284,7 +284,7 @@
       </item>
     
       <item>
-        <title>NS_ASSUME_NONNULL_BEGIN &amp;&amp; NS_ASSUME_NONNULL_END</title>
+        <title>NS_ASSUME_NONNULL_BEGIN和NS_ASSUME_NONNULL_END</title>
         <description>&lt;p&gt;更新了Xcode 10之后在新建OC的类的时候，都会默认加上了&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_BEGIN&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_END&lt;/code&gt;。&lt;/p&gt;
 &lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;NS_ASSUME_NONNULL_BEGIN&lt;/span&gt;
 
@@ -302,8 +302,8 @@
 &lt;p&gt;而&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_BEGIN&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_END&lt;/code&gt;中间声明的对象会把所有对象默认当作是&lt;code class=&quot;highlighter-rouge&quot;&gt;__nonnull&lt;/code&gt;，而我们只需要可能为nil的对象声明为&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;就可以了。&lt;/p&gt;
 </description>
         <pubDate>Thu, 20 Sep 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN-&&-NS_ASSUME_NONNULL_END/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN-&&-NS_ASSUME_NONNULL_END/</guid>
+        <link>http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/</guid>
         
         <category>iOS</category>
         
