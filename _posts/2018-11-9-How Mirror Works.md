@@ -2,7 +2,7 @@
 layout:     post
 title:      "How Mirror Works"
 subtitle:   "iOS，Swift，Mirror"
-date:       2018-10-7
+date:       2018-11-9
 author:     "Fidetro"
 header-img: "img/post-bg-ismael.jpg"
 tags:
@@ -275,3 +275,94 @@ void swift::_swift_getFieldAt(
              .withWeak(false));
 }
 ```  
+这段负责搜索字段描述符。`getFieldAt`这个辅助方法将字段描述转换酲名字和字段类型然后传到`callback`中。它首先从字段描述符中获取请求的字段记录：  
+```c++
+  auto getFieldAt = [&](const FieldDescriptor &descriptor) {
+    auto &field = descriptor.getFields()[index];
+```  
+该名称可直接从记录中访问：  
+```c++
+    auto name = field.getFieldName(0);
+```  
+如果这个字段实际上是枚举，它可能没有类型。尽快检查并且调用`callback`:  
+```c++
+    if (!field.hasMangledTypeName()) {
+      callback(name, FieldType().withIndirect(field.isIndirectCase()));
+      return;
+    }
+```  
+字段记录将字段类型存储为受损名称。回调需要一个指向元数据的指针，所以损坏的名称必须解析为实际类型。`_getTypeByMangledName`函数会处理大部分工作，但调用者必须解析该范型参数的类型，Doing that requires pulling out all of the generic contexts that the type is nested in:  
+```c++
+    std::vector<const ContextDescriptor *> descriptorPath;
+    {
+      const auto *parent = reinterpret_cast<
+                              const ContextDescriptor *>(baseDesc);
+      while (parent) {
+        if (parent->isGeneric())
+          descriptorPath.push_back(parent);
+
+        parent = parent->Parent.get();
+      }
+    }
+```  
+现在获取受损的名称并获取类型，传递一个解析范型参数的匿名函数：  
+```c++
+    auto typeName = field.getMangledTypeName(0);
+
+    auto typeInfo = _getTypeByMangledName(
+        typeName,
+        [&](unsigned depth, unsigned index) -> const Metadata * {
+```  
+如果请求的深度超出了描述符路径的大小, 则失败：  
+```c++
+          if (depth >= descriptorPath.size())
+            return nullptr;
+```  
+否则，从包含该字段的类型中获取泛型参数。This requires converting the index and depth into a single flat index, which is done by walking up the descriptor path and adding the number of generic parameters at each stage until the given depth is reached:  
+```c++
+          unsigned currentDepth = 0;
+          unsigned flatIndex = index;
+          const ContextDescriptor *currentContext = descriptorPath.back();
+
+          for (const auto *context : llvm::reverse(descriptorPath)) {
+            if (currentDepth >= depth)
+              break;
+
+            flatIndex += context->getNumGenericParams();
+            currentContext = context;
+            ++currentDepth;
+          }
+```  
+如果索引超出范型参数给出的有效深度，则失败：  
+```c++
+          if (index >= currentContext->getNumGenericParams())
+            return nullptr;
+```  
+否则从基类中获取适当的泛型参数：  
+```c++
+          return base->getGenericArgs()[flatIndex];
+        });
+```  
+像以前一样，如果找不到类型，请使用空元组：  
+```c++
+    if (typeInfo == nullptr) {
+      typeInfo = TypeInfo(&METADATA_SYM(EMPTY_TUPLE_MANGLING), {});
+      warning(0, "SWIFT RUNTIME BUG: unable to demangle type of field '%*s'. "
+                 "mangled type name is '%*s'\n",
+                 (int)name.size(), name.data(),
+                 (int)typeName.size(), typeName.data());
+    }
+```  
+然后调用`callback`返回找到的：  
+```c++
+    callback(name, FieldType()
+                       .withType(typeInfo)
+                       .withIndirect(field.isIndirectCase())
+                       .withWeak(typeInfo.isWeak()));
+
+  };
+```  
+这就是`swift_getFieldAt`，有了这个辅助函数，让我们来看看其他反射实现。  
+
+# Structs  
+结构体的实现和元组的实现有点相似，但有一点复杂。有些结构类型根本不支持反射，在结构中查找名称和偏移需要花费更多精力，
