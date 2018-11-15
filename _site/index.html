@@ -154,29 +154,6 @@
             ">
     			
 <div class="post-preview">
-    <a href="/2018/11/09/How-Mirror-Works/">
-        <h2 class="post-title">
-            How Mirror Works
-        </h2>
-        
-        <h3 class="post-subtitle">
-            iOS，Swift，Mirror
-        </h3>
-        
-        <div class="post-content-preview">
-            Swift非常重视静态类型，但它也支持丰富元数据的类型，这允许代码在运行时检查和操作任意值。这是通过MirrorAPI向Swift程序员公开。有人可能会想，Mirror究竟是怎样在一个如此重视静态类型的语言中工作的？让我们来看看！
-
-免责声明
-这里都是内部实现的细节。截至撰写本文时，是根据最新的代码写的，但可能会发生变化。（译注：这里指的是2018年9月26日之前）当ABI稳定的时候，元数据...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Fidetro on November 9, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
     <a href="/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/">
         <h2 class="post-title">
             24岁的杂谈
@@ -412,6 +389,33 @@ MVVM和RxSwift之间的关系
 </div>
 <hr>
 
+<div class="post-preview">
+    <a href="/2018/03/21/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/">
+        <h2 class="post-title">
+            引起懒加载多次的问题思考
+        </h2>
+        
+        <h3 class="post-subtitle">
+            iOS，Swift，Tips，Lazy
+        </h3>
+        
+        <div class="post-content-preview">
+            
+  懒加载是为了保证属性只会初始化一次，同时在没有使用时，节能内存而使用的。苹果也非常推荐我们使用。但是今天在使用的时候，发现居然会懒加载了2次，为了更容易让别人看懂，我精炼了以下的代码，更好解释为什么会出现懒加载2次的情况。
+
+
+class BViewController: UIViewController {
+
+    lazy var bgView: UIView = {
+     ...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Fidetro on March 21, 2018
+    </p>
+</div>
+<hr>
+
 
 <!-- Pager -->
 
@@ -444,7 +448,7 @@ MVVM和RxSwift之间的关系
                             
                         
                             
-                                <a href="/tags/#iOS" title="iOS" rel="27">
+                                <a href="/tags/#iOS" title="iOS" rel="26">
                                     iOS
                                 </a>
                             
@@ -470,7 +474,7 @@ MVVM和RxSwift之间的关系
                             
                         
                             
-                                <a href="/tags/#Swift" title="Swift" rel="16">
+                                <a href="/tags/#Swift" title="Swift" rel="15">
                                     Swift
                                 </a>
                             
