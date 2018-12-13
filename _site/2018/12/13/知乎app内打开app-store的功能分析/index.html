@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>又大一岁，先聊聊编程，再聊聊生活，最后再聊回编程 - Karim | FoolishTalk Blog</title>
+    <title>知乎app内打开app store的功能分析 - Karim | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/10/14/%E5%8F%88%E5%A4%A7%E4%B8%80%E5%B2%81-%E5%85%88%E8%81%8A%E8%81%8A%E7%BC%96%E7%A8%8B-%E5%86%8D%E8%81%8A%E8%81%8A%E7%94%9F%E6%B4%BB-%E6%9C%80%E5%90%8E%E5%86%8D%E8%81%8A%E5%9B%9E%E7%BC%96%E7%A8%8B/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2018/12/13/%E7%9F%A5%E4%B9%8Eapp%E5%86%85%E6%89%93%E5%BC%80app-store%E7%9A%84%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -154,12 +154,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-sea.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-old.jpg')
+        background-image: url('/img/post-bg-sea.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -169,15 +169,17 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Code-Life" title="Code-Life">Code-Life</a>
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
                         
                     </div>
-                    <h1>又大一岁，先聊聊编程，再聊聊生活，最后再聊回编程</h1>
+                    <h1>知乎app内打开app store的功能分析</h1>
                     
                     
-                    <h2 class="subheading">生活</h2>
+                    <h2 class="subheading">iOS，动画，SKStoreProductViewController</h2>
                     
-                    <span class="meta">Posted by Fidetro on October 14, 2017</span>
+                    <span class="meta">Posted by Fidetro on December 13, 2018</span>
                 </div>
             </div>
         </div>
@@ -194,11 +196,54 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>算起来已经23岁了，iOS开发1年5个月了。<del>在上一间公司加班加到曾经一度认为自己已经24-25岁，开发了2年半。</del>
-现在回想起来，从2016年5月3日开始，我已经是一名iOS开发了，从那时候每天朝9晚6的工作，变成了到后来朝9晚8，晚9，晚10…偶尔晚到凌晨1点的工作，我想现在每天编程的时间应该是在10-12小时左右吧，如果把睡觉的时间去掉，平时coding的时间都要比生活的时间长，很庆幸自己是个热爱编程的人，在过去的一年里，我特别的执着于提升自己的编程水平，现在看来，这一年的提升还算满意，一个人在开发路上摸索碰了很多璧，但是也弄了很多很有意思的东西，<a href="https://github.com/Fidetro/FFDB">FFDB</a>应该是现在自己主力上维护的一个东西，虽然没什么人用233主要是一些以前同事在用，不过觉得ORM这个想法还是很nice的。我还记得开发FFDB2.0到3.0的那段时间，加班每天都是11-12点左右，但是回家了又很想重构到3.0（3.0是架构上很大的改动， 然后导致那一个星期都是3，4点，每天7点多又起床。。想想就觉得当时很疯狂。<br />
-生活上，过的很简单，编程睡觉编程睡觉，在今年3月份的时候曾经有过一段时间改变，那时候不知道怎么的，很想养一只猫，我觉得猫是一些比较独立的动物，当时就这么养了，刚养的时候还是很麻烦，怕他无聊，怕他到处大小便，怕他饿坏，后来还有了猫藓，而且那段时间加班加的很严重，周末早上他带看完病，下午又得去公司加班，连续上了3星期，特别是带了头套之后，当时猫太小，带着头套吃不了东西，每天很早起来喂他吃完，中午一下班就跑回家脱了头套看他吃饱了，又回公司，最后猫藓好了，猫也长大了，然后送了给高中的一个朋友。因为发现当时公司的加班情况，真的没有办法，太累了。<br />
-送完猫走之后，就想出去走走了，看看外边的世界，在外包做久了，感觉自己更加像是机器人，正好遇上@swift大会在深圳，见到了很多厉害的人，意识到自己的多么的渺小，但是更加的充满斗志。记得在上年，希望自己能开发个swift的app，虽然至今没有用swift开发过，刚好也应该算是碰上swift-server火的时候吧，平时的时间转而大部分花在开发perfect-server上，也因为这个，跟服务器搭边的前端呀，linux的一些常用的东西，都学了点，写了点html、css、js、shell，也顺便用swift写了swift的FFDB，摆脱了OC中的继承，转而用协议解决，挺满足的（尽管还是挺多没暴露的问题<br />
-今年感觉想要的想学的都有了，想想明年，也没有什么别的奢望了，感觉目前自己的水平不像以前一样提升的能快起来了，学的东西多，用起来学起来也容易乱，明年的话，要么会投入学细目前的领域，要么可能还是会再去把c捡起来吧，到时候再说吧。</p>
+				<h1 id="前言">前言</h1>
+
+<p>今天刚好有个朋友问了我一个像知乎那样，app内打开app store的app内容页面，上面还能播放视频这种是怎么实现的，虽然问题很简单，但是本着探讨功能实现的想法，记录了下来。知乎app内效果如下：<br />
+<img src="http://images.foolishtalk.org/2018-10-13-image-zhihu-ad.jpeg" alt="" /></p>
+
+<p>通过这个图可以看出，其实要做的事情很简单，就是把原来的view往下移一点，然后在上面放视频。<br />
+无非就是几个思路，先看看原来的vc是否有子view属性，通过继承去重写约束，其次就是使用一些比较hack的手段。</p>
+
+<h1 id="正文">正文</h1>
+<p>先从<code class="highlighter-rouge">SKStoreProductViewController</code>着手，不难发现，这个类并没有公开相关的属性，或者方法允许你直接改变原来的高度。<br />
+既然如此，我们就从<code class="highlighter-rouge">UIViewController</code>的view下手：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            <span class="k">let</span> <span class="nv">storeVC</span> <span class="o">=</span> <span class="kt">SKStoreProductViewController</span><span class="p">()</span>
+            <span class="n">storeVC</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
+                <span class="nf">present</span><span class="p">(</span><span class="n">storeVC</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">storeVC</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="mi">150</span>
+            <span class="p">})</span>
+</code></pre></div></div>
+<p>这时候，的确效果达到了，但是如果你试着把控件放在上面，会发现点击并没有反应，因为我们把控制器的view往下移动了，这时候我们添加的控件超出了父视图，是没有办法响应点击事件的。所以直接修改控制器view的y是不可行的。<br />
+另外一个思路是获取控制器上view的子视图，让它们所有都往下，这时候控制器的view的frame并没有改变，这样就能实现我们想要的效果了。</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            <span class="k">let</span> <span class="nv">storeVC</span> <span class="o">=</span> <span class="kt">SKStoreProductViewController</span><span class="p">()</span>
+            <span class="n">storeVC</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
+                <span class="nf">present</span><span class="p">(</span><span class="n">storeVC</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">{</span>
+                <span class="k">for</span> <span class="n">subview</span> <span class="k">in</span> <span class="n">storeVC</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">subviews</span> <span class="p">{</span>
+                    <span class="n">subview</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="mi">150</span> <span class="c1">////子view往下移</span>
+                <span class="p">}</span>
+                <span class="k">let</span> <span class="nv">button</span> <span class="o">=</span> <span class="kt">UIButton</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">width</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="o">.</span><span class="nf">screenWidth</span><span class="p">(),</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">150</span><span class="p">))</span>
+                <span class="n">button</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="o">.</span><span class="n">red</span>
+                <span class="n">storeVC</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
+            <span class="p">})</span>
+</code></pre></div></div>
+<p>效果如下:<br />
+<img src="http://images.foolishtalk.org/2018-10-13-image-yuepao-ad.jpeg" alt="" /></p>
+
+<p>到了这里，基本已经差不多了，但是其实还有些小细节要注意，这样直接修改的话，会发现没办法将页面滚到最底下。这时候还需要将view的高度减少：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            <span class="k">let</span> <span class="nv">storeVC</span> <span class="o">=</span> <span class="kt">SKStoreProductViewController</span><span class="p">()</span>
+            <span class="n">storeVC</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
+                <span class="nf">present</span><span class="p">(</span><span class="n">storeVC</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">{</span>
+                <span class="k">for</span> <span class="n">subview</span> <span class="k">in</span> <span class="n">storeVC</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">subviews</span> <span class="p">{</span>
+                    <span class="n">subview</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="mi">150</span> <span class="c1">//子view往下移</span>
+                <span class="p">}</span>
+                <span class="n">storeVC</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">height</span> <span class="o">-=</span> <span class="mi">150</span> <span class="c1">//将view的高度减少</span>
+                <span class="k">let</span> <span class="nv">button</span> <span class="o">=</span> <span class="kt">UIButton</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">width</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="o">.</span><span class="nf">screenWidth</span><span class="p">(),</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">150</span><span class="p">))</span>
+                <span class="n">button</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="o">.</span><span class="n">red</span>
+                <span class="n">storeVC</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
+            <span class="p">})</span>
+</code></pre></div></div>
+
+<p>另外知乎其实是先push到一个原来已经放着videoView的Controller，然后在<code class="highlighter-rouge">viewDidLoad</code>的时候再present到<code class="highlighter-rouge">SKStoreProductViewController</code>。只是一些交互上的细节，这点没有在上面分析。</p>
 
 
                 <hr>
@@ -226,13 +271,9 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/10/07/iPhoneX%E5%92%8CiOS-11%E7%9A%84%E9%80%82%E9%85%8D%E4%BD%A0%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/" data-toggle="tooltip" data-placement="top" title="iPhoneX和iOS-11的适配你可能会踩到的坑">&larr; Previous Post</a>
+                        <a href="/2018/12/10/%E8%81%8A%E8%81%8AReplayKit%E8%B8%A9%E8%BF%87%E6%9D%A5%E7%9A%84%E5%9D%91/" data-toggle="tooltip" data-placement="top" title="聊聊ReplayKit踩过来的坑">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/10/19/Perfect-v2%E7%89%88%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%87%E7%BA%A7v3/" data-toggle="tooltip" data-placement="top" title="Perfect-v2版本服务器升级v3">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -359,8 +400,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2017/10/14/又大一岁，先聊聊编程，再聊聊生活，最后再聊回编程";
-    var disqus_url = "http://www.foolishtalk.org/2017/10/14/%E5%8F%88%E5%A4%A7%E4%B8%80%E5%B2%81-%E5%85%88%E8%81%8A%E8%81%8A%E7%BC%96%E7%A8%8B-%E5%86%8D%E8%81%8A%E8%81%8A%E7%94%9F%E6%B4%BB-%E6%9C%80%E5%90%8E%E5%86%8D%E8%81%8A%E5%9B%9E%E7%BC%96%E7%A8%8B/";
+    var disqus_identifier = "/2018/12/13/知乎app内打开app store的功能分析";
+    var disqus_url = "http://www.foolishtalk.org/2018/12/13/%E7%9F%A5%E4%B9%8Eapp%E5%86%85%E6%89%93%E5%BC%80app-store%E7%9A%84%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
