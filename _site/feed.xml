@@ -5,9 +5,146 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 13 Dec 2018 22:10:09 +0800</pubDate>
-    <lastBuildDate>Thu, 13 Dec 2018 22:10:09 +0800</lastBuildDate>
+    <pubDate>Sun, 16 Dec 2018 21:48:19 +0800</pubDate>
+    <lastBuildDate>Sun, 16 Dec 2018 21:48:19 +0800</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
+    
+      <item>
+        <title>CloudKit实践</title>
+        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+
+&lt;p&gt;在iOS 11后，有个&lt;a href=&quot;https://support.apple.com/zh-cn/HT204681&quot;&gt;接力&lt;/a&gt;的功能非常好用，可以在iPhone和Mac上共享剪贴板等。但是自己用的时候，总有很多小问题，明明需要打开的都打开了接力失效、上一次复制的是图片后来复制的是文本，iPhone直接剪贴板都不出来了。经历了一顿需求分析之后，决定自己动手做一个。&lt;br /&gt;
+既然要实现跨平台，免不了要涉及到服务器，选择自己去写还是使用现有的云服务，成为了当前选择的最大问题。
+为了最快的解决安全&lt;del&gt;懒~~、&lt;/del&gt;快速~~的问题，我最终选择了苹果自带的&lt;code class=&quot;highlighter-rouge&quot;&gt;CloudKit&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h1 id=&quot;cloudkit&quot;&gt;CloudKit&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CloudKit&lt;/code&gt;是苹果在WWDC2014推出通过iCloud服务存储结构化应用程序和用户数据的框架，通过&lt;code class=&quot;highlighter-rouge&quot;&gt;CloudKit&lt;/code&gt;获取app现有数据并将其存储在云中，实现用户多设备访问。&lt;/p&gt;
+
+&lt;h2 id=&quot;容器containers&quot;&gt;容器（Containers）&lt;/h2&gt;
+
+&lt;p&gt;一个App可以创建和拥有多个容器：&lt;br /&gt;
+&lt;img src=&quot;https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitQuickStart/Art/3_specifycontainers2_2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//创建容器&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;container&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKContainer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;identifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;在Capabilities选择的容器identifier&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;一个容器中拥有&lt;code class=&quot;highlighter-rouge&quot;&gt;Public&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Private&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Shared&lt;/code&gt;三种数据库，通过&lt;code class=&quot;highlighter-rouge&quot;&gt;CKContainer&lt;/code&gt;的实例获取：&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;extension&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKContainer&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;privateCloudDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKDatabase&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;publicCloudDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKDatabase&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;@available(OSX 10.12, *)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;sharedCloudDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKDatabase&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;类型&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;占用用户iCloud容量&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;需要登录个人iCloud账号&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;访问&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;privateCloudDatabase&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;是&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;是&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;登录iCloud后允许访问，数据跟随iCloud账号&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;publicCloudDatabase&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;否，使用的是app的公共iCloud容量，app的公共容量会随用户增多而增多，具体可以参考&lt;a href=&quot;https://developer.apple.com/icloud/cloudkit/&quot;&gt;这里&lt;/a&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;否&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;允许不登录iCloud账号，但只能读取，不能写入，同bundle id下所有用户都能访问&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;sharedCloudDatabase&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;否&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;是&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;所有app都可以访问&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&quot;使用&quot;&gt;使用&lt;/h1&gt;
+
+&lt;h5 id=&quot;在写代码之前需要先去cloudkit-dashboard创建record-type同时在新建的record-type页面新增字段增加完字段之后记得要为字段添加recordname索引不然查询的时候会报错&quot;&gt;在写代码之前，需要先去&lt;a href=&quot;https://icloud.developer.apple.com/dashboard/&quot;&gt;CloudKit dashboard&lt;/a&gt;，创建&lt;code class=&quot;highlighter-rouge&quot;&gt;Record Type&lt;/code&gt;，同时在新建的Record Type页面新增字段，增加完字段之后，记得要为字段添加&lt;code class=&quot;highlighter-rouge&quot;&gt;recordName&lt;/code&gt;索引，不然查询的时候会报错。&lt;/h5&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitQuickStart/Art/2017RecordTypes_2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;创建指定唯一记录名称的记录ID。
+    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;artworkRecordID&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKRecordID&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recordName&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：“&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;115&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”）&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;创建一个记录对象。
+    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;artworkRecord&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKRecord&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recordType&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：“&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Artwork&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recordID&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;artworkRecordID&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;）&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;设置记录的字段
+    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;artworkRecord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;title&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;MacKerricher State Park&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;artworkRecord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;artist&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Mei Chen&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;artworkRecord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;address&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Fort Bragg, CA&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;初始化容器并获取数据库对象
+    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;myContainer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKContainer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;identifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;iCloud.com.example.ajohnson.GalleryShared&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//如果使用默认容器，CKContainer.default()  &lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;publicDatabase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myContainer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;publicCloudDatabase&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;保存对象
+    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;publicDatabase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;artworkRecord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;c1&quot;&gt;// 处理错误&lt;/span&gt;
+     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// ...保存成功之后的处理&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;查询
+    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;     &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;predicate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSPredicate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+     &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;recordType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Artwork&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;predicate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;predicate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+     &lt;span class=&quot;n&quot;&gt;myContainer&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;publicCloudDatabase&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;perform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;inZoneWith&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;completionHandler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Void&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
+         &lt;span class=&quot;kt&quot;&gt;OperationQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addOperation&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                 &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                   &lt;span class=&quot;c1&quot;&gt;// 处理错误&lt;/span&gt;
+                 &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;
+                 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+                 &lt;span class=&quot;c1&quot;&gt;// ...保存成功之后的处理&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;应用&quot;&gt;应用&lt;/h1&gt;
+&lt;p&gt;通过&lt;code class=&quot;highlighter-rouge&quot;&gt;CloudKit&lt;/code&gt;，我分别在iOS上使用Today Widget，在Mac上监听键盘组合键来实现了接力中的共享粘贴板功能，目前功能还比较简单，不过基本也满足了我自己的需求了，后续有时间还是会完善一下复制图片、预览这些小功能的，&lt;a href=&quot;https://github.com/Fidetro/KTCloud&quot;&gt;代码&lt;/a&gt;在这里，感兴趣可以看一下。&lt;/p&gt;
+
+&lt;h1 id=&quot;参考链接&quot;&gt;参考链接&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitQuickStart/Introduction/Introduction.html#//apple_ref/doc/uid/TP40014987-CH1-SW1&quot;&gt;CloudKit官方文档&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://developer.apple.com/documentation/cloudkit/ckcontainer&quot;&gt;CKcontainer官方文档&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 15 Dec 2018 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2018/12/15/CloudKit%E5%AE%9E%E8%B7%B5/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2018/12/15/CloudKit%E5%AE%9E%E8%B7%B5/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Swift</category>
+        
+        
+      </item>
     
       <item>
         <title>知乎app内打开app store的功能分析</title>
@@ -707,101 +844,6 @@ CAShapeLayer需要通过贝塞尔曲线的CGPath，然后提交到GPU上渲染�
         <guid isPermaLink="true">http://www.foolishtalk.org/2018/06/27/%E4%BD%BF%E7%94%A8Perfect%E9%83%A8%E7%BD%B2APNS%E6%8E%A8%E9%80%81/</guid>
         
         <category>Perfect-Server</category>
-        
-        <category>Swift</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>RxSwift从入门到放弃——Rxswift与MVVM的邂逅</title>
-        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
-&lt;p&gt;这篇出来的比较晚，最近事情也比较多，一直没时间写，这篇是作为开篇到RxSwift源码分析的过渡。&lt;del&gt;当然也是因为前几天我在公司内部分享ppt的内容也是这个&lt;/del&gt;就把这篇当作番外篇看看好了[doge]&lt;/p&gt;
-
-&lt;h1 id=&quot;这篇聊点什么&quot;&gt;这篇聊点什么？&lt;/h1&gt;
-&lt;ul&gt;
-  &lt;li&gt;MVVM和RxSwift之间的关系&lt;/li&gt;
-  &lt;li&gt;MVVM是什么？&lt;/li&gt;
-  &lt;li&gt;RxSwift能解决MVVM什么问题？&lt;/li&gt;
-  &lt;li&gt;RxSwift的看法&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;mvvm和rxswift之间的关系&quot;&gt;MVVM和RxSwift之间的关系&lt;/h2&gt;
-&lt;p&gt;我们在讲到RxSwift的时候，基本肯定会聊到MVVM，如果不太了解MVVM，可以先看后面&lt;code class=&quot;highlighter-rouge&quot;&gt;MVVM是什么？&lt;/code&gt;。&lt;br /&gt;
-首先MVVM需要有ViewModel，iOS原生并没有提供很好的数据绑定方式，使用RxSwift、RxCocoa提供了已经封装好了数据与UI绑定的方法，使得数据绑定简单了起来。&lt;br /&gt;
-使用了RxSwift也并不是必须使用MVVM，使用MVVM架构，也并不是必须要使用RxSwift才能实现。&lt;/p&gt;
-
-&lt;h2 id=&quot;mvvm是什么&quot;&gt;MVVM是什么？&lt;/h2&gt;
-&lt;p&gt;对于这个问题，我强烈推荐先去看看casa的&lt;a href=&quot;http://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html&quot;&gt;iOS应用架构谈 view层的组织和调用方案&lt;/a&gt;，在这方面业内近年来已经都很少聊这方面的话题，我会讲讲我的看法，如果有什么错误，希望读者能在评论区指出。&lt;/p&gt;
-
-&lt;p&gt;要聊MVVM是什么，就得先聊聊MVC。&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/mvc.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;一张来自斯坦福大学iOS公开课很经典的图，每次第一节课，都会放上这张图，这个图已经很好说明了MVC的关系。&lt;/p&gt;
-
-&lt;p&gt;Model:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;给Controller监听，提供数据&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;View:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;生成视图元素&lt;/li&gt;
-  &lt;li&gt;处理内部和业务无关的逻辑、交互，以及动画&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Controller:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;把View加载到Controller上&lt;/li&gt;
-  &lt;li&gt;负责实现View的delegate、dataSource，拿到Model，做对应业务逻辑的处理&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;这种分工形成MVC的格局，然而在实际iOS开发中，往往会形成像下面的交互：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/mvcnotify.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-在一些业务、界面复杂，多逻辑交互的时候，View的地位很尴尬，他不能直接和Model通讯，只能依赖Controller，这样就导致大量的delegate、action都由Controller去实现，业务的代码放View里又不方便监听变化，这时候能怎么办？只能往Controller里面放，因为这样，Controller变得异常的庞大同时难以复用，也是因为这个原因，就有人提出MVVM，来帮Controller瘦身。&lt;br /&gt;
-问题来了，MVVM是怎么帮Controller瘦身的呢？&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/MCVMVMV.gif&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-通过这张图就可以看出，MVVM其实就是在MVC的基础上，抽离了Controller的业务逻辑，移到了ViewModel,他们之间其实是这样的关系：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/mvvm_logic.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;View层和之前做的事情一样，Controller订阅viewModel的事件变化，将View绑定到ViewModel上，要注意在Rx的思想里，ViewModel并不是直接拿到View，而是View的观察者属性或者可观察的序列。另外Controller也会基于ViewModel事件的响应做对应的交互逻辑。&lt;/p&gt;
-
-&lt;h2 id=&quot;rxswift能解决mvvm什么问题&quot;&gt;RxSwift能解决MVVM什么问题？&lt;/h2&gt;
-&lt;p&gt;RxSwift为我们平时使用的UI控件提供了响应式函数，使用自带的响应式函数就能非常方便的进行数据绑定。 
-例如我们实现了一个选择体重尺子功能的View：&lt;br /&gt;
-以前的做法：&lt;/p&gt;
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;scrollRuleValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UICollectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CGFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;collectionView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;containerView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weightRuleView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;collectionView&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;containerView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weightLabel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;kg&quot;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;利用RxSwift的特性：&lt;/p&gt;
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;        &lt;span class=&quot;n&quot;&gt;containerView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weightRuleView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;observerValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;kg&quot;&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;containerView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weightLabel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;disposed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;disposeBag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;这行代码的意思：&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;监听ruleView的observerValue序列发送;&lt;/li&gt;
-  &lt;li&gt;将发送变化的体重值从CGFloat类型格式化成我们需要的字符串;&lt;/li&gt;
-  &lt;li&gt;将尺子滑动变化的序列绑定到需要显示体重的label上;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;这是一个在Cocoa编程里最常见的委托代理模式，将视图变化交给Controller去处理，再去更新视图。而RxSwift只需要让ruleView创建一个发送数据的序列，再由Controller与需要更新的视图进行绑定，这样就能节省大量在写代理时候的代码。&lt;/p&gt;
-
-&lt;p&gt;利用已经提供好的属性，既避免了ViewModel直接拿到View，可以随意的更改View属性，同时还节省了大量代码。另外一方面，由于业务逻辑已经都移到了ViewModel，对于业务的单元测试也变得极其简单，对于RxSwift的单元测试，可以了解一下&lt;code class=&quot;highlighter-rouge&quot;&gt;RxTest&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;RxBlocking&lt;/code&gt;，本文就不展开说了。&lt;/p&gt;
-
-&lt;h2 id=&quot;rxswift的看法&quot;&gt;RxSwift的看法&lt;/h2&gt;
-&lt;p&gt;个人觉得，RxSwift给我们带来最大影响的Reactive思想，OOP告诉我们，在编写应用程序的时候，要考虑的是对象有什么，对象做什么，对象与对象之间的联系，而Reactive思想将对象所做的都看成是数据流，我们关注的是事件本身的影响，学习一个新的编程范式，还是非常有意思的。&lt;br /&gt;
-当然RxSwift也会有不好的地方，RxSwift对工程的侵入性非常的大，引入RxSwift会让整个程序代码都焕然一新，和过去Cocoa开发方式截然不同，这样也导致Rx新手难以理解其中代码，可以说是极度不友好了。&lt;br /&gt;
-不过说了这么说，Reactive其中的响应式思想还是很值得我们去学习的，对于拿来开发项目，小项目可以拿来写着玩耍，体会新的编程范式，大型项目，就得做好踩坑的心理准备了。&lt;/p&gt;
-</description>
-        <pubDate>Sat, 26 May 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/05/26/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-Rxswift%E4%B8%8EMVVM%E7%9A%84%E9%82%82%E9%80%85/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/05/26/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-Rxswift%E4%B8%8EMVVM%E7%9A%84%E9%82%82%E9%80%85/</guid>
-        
-        <category>RxSwift</category>
         
         <category>Swift</category>
         
