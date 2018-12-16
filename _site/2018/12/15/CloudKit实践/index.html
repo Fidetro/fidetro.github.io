@@ -200,7 +200,7 @@ border: none;
 
 <p>在iOS 11后，有个<a href="https://support.apple.com/zh-cn/HT204681">接力</a>的功能非常好用，可以在iPhone和Mac上共享剪贴板等。但是自己用的时候，总有很多小问题，明明需要打开的都打开了接力失效、上一次复制的是图片后来复制的是文本，iPhone直接剪贴板都不出来了。经历了一顿需求分析之后，决定自己动手做一个。<br />
 既然要实现跨平台，免不了要涉及到服务器，选择自己去写还是使用现有的云服务，成为了当前选择的最大问题。
-为了最快的解决安全<del>懒~~、</del>快速~~的问题，我最终选择了苹果自带的<code class="highlighter-rouge">CloudKit</code>。</p>
+为了解决又快<del>懒~~又安全</del>懒~~的问题，我最终选择了苹果自带的<code class="highlighter-rouge">CloudKit</code>。</p>
 
 <h1 id="cloudkit">CloudKit</h1>
 <p><code class="highlighter-rouge">CloudKit</code>是苹果在WWDC2014推出通过iCloud服务存储结构化应用程序和用户数据的框架，通过<code class="highlighter-rouge">CloudKit</code>获取app现有数据并将其存储在云中，实现用户多设备访问。</p>
@@ -231,7 +231,7 @@ border: none;
     <tr>
       <th style="text-align: center">类型</th>
       <th style="text-align: center">占用用户iCloud容量</th>
-      <th style="text-align: center">需要登录个人iCloud账号</th>
+      <th style="text-align: center">需要登录iCloud</th>
       <th style="text-align: center">访问</th>
     </tr>
   </thead>
@@ -244,7 +244,7 @@ border: none;
     </tr>
     <tr>
       <td style="text-align: center">publicCloudDatabase</td>
-      <td style="text-align: center">否，使用的是app的公共iCloud容量，app的公共容量会随用户增多而增多，具体可以参考<a href="https://developer.apple.com/icloud/cloudkit/">这里</a></td>
+      <td style="text-align: center">否，使用的是app的公共iCloud容量，具体参考<a href="https://developer.apple.com/icloud/cloudkit/">这里</a></td>
       <td style="text-align: center">否</td>
       <td style="text-align: center">允许不登录iCloud账号，但只能读取，不能写入，同bundle id下所有用户都能访问</td>
     </tr>
@@ -259,7 +259,9 @@ border: none;
 
 <h1 id="使用">使用</h1>
 
-<h5 id="在写代码之前需要先去cloudkit-dashboard创建record-type同时在新建的record-type页面新增字段增加完字段之后记得要为字段添加recordname索引不然查询的时候会报错">在写代码之前，需要先去<a href="https://icloud.developer.apple.com/dashboard/">CloudKit dashboard</a>，创建<code class="highlighter-rouge">Record Type</code>，同时在新建的Record Type页面新增字段，增加完字段之后，记得要为字段添加<code class="highlighter-rouge">recordName</code>索引，不然查询的时候会报错。</h5>
+<blockquote>
+  <p>在写代码之前，需要先去<a href="https://icloud.developer.apple.com/dashboard/">CloudKit dashboard</a>，创建<code class="highlighter-rouge">Record Type</code>，同时在新建的Record Type页面新增字段，增加完字段之后，记得要为字段添加<code class="highlighter-rouge">recordName</code>索引，不然查询的时候会报错。</p>
+</blockquote>
 
 <p><img src="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitQuickStart/Art/2017RecordTypes_2x.png" alt="" /></p>
 

@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 16 Dec 2018 21:48:19 +0800</pubDate>
-    <lastBuildDate>Sun, 16 Dec 2018 21:48:19 +0800</lastBuildDate>
+    <pubDate>Sun, 16 Dec 2018 21:53:27 +0800</pubDate>
+    <lastBuildDate>Sun, 16 Dec 2018 21:53:27 +0800</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
     
       <item>
@@ -15,7 +15,7 @@
 
 &lt;p&gt;在iOS 11后，有个&lt;a href=&quot;https://support.apple.com/zh-cn/HT204681&quot;&gt;接力&lt;/a&gt;的功能非常好用，可以在iPhone和Mac上共享剪贴板等。但是自己用的时候，总有很多小问题，明明需要打开的都打开了接力失效、上一次复制的是图片后来复制的是文本，iPhone直接剪贴板都不出来了。经历了一顿需求分析之后，决定自己动手做一个。&lt;br /&gt;
 既然要实现跨平台，免不了要涉及到服务器，选择自己去写还是使用现有的云服务，成为了当前选择的最大问题。
-为了最快的解决安全&lt;del&gt;懒~~、&lt;/del&gt;快速~~的问题，我最终选择了苹果自带的&lt;code class=&quot;highlighter-rouge&quot;&gt;CloudKit&lt;/code&gt;。&lt;/p&gt;
+为了解决又快&lt;del&gt;懒~~又安全&lt;/del&gt;懒~~的问题，我最终选择了苹果自带的&lt;code class=&quot;highlighter-rouge&quot;&gt;CloudKit&lt;/code&gt;。&lt;/p&gt;
 
 &lt;h1 id=&quot;cloudkit&quot;&gt;CloudKit&lt;/h1&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CloudKit&lt;/code&gt;是苹果在WWDC2014推出通过iCloud服务存储结构化应用程序和用户数据的框架，通过&lt;code class=&quot;highlighter-rouge&quot;&gt;CloudKit&lt;/code&gt;获取app现有数据并将其存储在云中，实现用户多设备访问。&lt;/p&gt;
@@ -46,7 +46,7 @@
     &lt;tr&gt;
       &lt;th style=&quot;text-align: center&quot;&gt;类型&lt;/th&gt;
       &lt;th style=&quot;text-align: center&quot;&gt;占用用户iCloud容量&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;需要登录个人iCloud账号&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;需要登录iCloud&lt;/th&gt;
       &lt;th style=&quot;text-align: center&quot;&gt;访问&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
@@ -59,7 +59,7 @@
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;publicCloudDatabase&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;否，使用的是app的公共iCloud容量，app的公共容量会随用户增多而增多，具体可以参考&lt;a href=&quot;https://developer.apple.com/icloud/cloudkit/&quot;&gt;这里&lt;/a&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;否，使用的是app的公共iCloud容量，具体参考&lt;a href=&quot;https://developer.apple.com/icloud/cloudkit/&quot;&gt;这里&lt;/a&gt;&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;否&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;允许不登录iCloud账号，但只能读取，不能写入，同bundle id下所有用户都能访问&lt;/td&gt;
     &lt;/tr&gt;
@@ -74,7 +74,9 @@
 
 &lt;h1 id=&quot;使用&quot;&gt;使用&lt;/h1&gt;
 
-&lt;h5 id=&quot;在写代码之前需要先去cloudkit-dashboard创建record-type同时在新建的record-type页面新增字段增加完字段之后记得要为字段添加recordname索引不然查询的时候会报错&quot;&gt;在写代码之前，需要先去&lt;a href=&quot;https://icloud.developer.apple.com/dashboard/&quot;&gt;CloudKit dashboard&lt;/a&gt;，创建&lt;code class=&quot;highlighter-rouge&quot;&gt;Record Type&lt;/code&gt;，同时在新建的Record Type页面新增字段，增加完字段之后，记得要为字段添加&lt;code class=&quot;highlighter-rouge&quot;&gt;recordName&lt;/code&gt;索引，不然查询的时候会报错。&lt;/h5&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;在写代码之前，需要先去&lt;a href=&quot;https://icloud.developer.apple.com/dashboard/&quot;&gt;CloudKit dashboard&lt;/a&gt;，创建&lt;code class=&quot;highlighter-rouge&quot;&gt;Record Type&lt;/code&gt;，同时在新建的Record Type页面新增字段，增加完字段之后，记得要为字段添加&lt;code class=&quot;highlighter-rouge&quot;&gt;recordName&lt;/code&gt;索引，不然查询的时候会报错。&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitQuickStart/Art/2017RecordTypes_2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
