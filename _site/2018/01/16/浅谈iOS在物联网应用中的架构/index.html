@@ -200,19 +200,23 @@ border: none;
 
 				<p>这篇文章在很早之前就在酝酿，我目前的开发生涯中，在现在这间公司之前，都是和硬件打交道的，期间踩了很多坑，尝试了很多不同方式的写法和架构的改变，因此有了些经验，可能文中的一些点大家都比较熟悉，只是在处理上略有不同，接下来我会分享一下自己的做法，作为对自己在iOS物联网方面一个短暂的总结吧。如果有什么不同的意见，也可以在评论区留下评论，可以一起探讨一下问题。</p>
 
-<hr />
-
-<h2 id="物联网在ios上的表现无非两种">物联网在iOS上的表现，无非两种</h2>
+<h1 id="物联网都是些什么">物联网都是些什么？</h1>
+<p>物联网在iOS上的表现，无非两种：</p>
 <ul>
   <li>WiFi</li>
-  <li>蓝牙<br />
-而这两种表现形式，在做的事情无非就是：<br />
-<img src="http://images.foolishtalk.org/2345604-7134da016a716ebf.png" alt="" /></li>
+  <li>蓝牙</li>
 </ul>
+
+<blockquote>
+  <p>注：在这篇文章里，不会细致的讲到WiFi怎么样，蓝牙怎么样，不会去讨论这些，更多的是通用技巧。</p>
+</blockquote>
+
+<p>而这两种表现形式，在做的事情无非就是：<br />
+<img src="http://images.foolishtalk.org/2345604-7134da016a716ebf.png" alt="" /></p>
 
 <p><img src="http://images.foolishtalk.org/0C1F4A7B-90A5-4CB1-B51A-A06A48116480.png" alt="" /></p>
 
-<p>硬件和App之间如何通讯实现交互不属于本文讨论的范畴，因为其表现形式都会像上图一样。从代码层上来讲，通讯这部分都应该封装成一个类，外部无需知道内容是如何实现，业务方只需要得到设备返回的数据以及将数据发送给设备就可以了，类似于下面这样:</p>
+<p>硬件和App之间通过什么通讯方式交互不属于本文讨论的范畴，因为其表现形式都会像上图一样。从代码层上来讲，通讯这部分都应该封装成一个类，外部无需知道内容是如何实现，业务方只需要得到设备返回的数据以及将数据发送给设备就可以了，类似于下面这样:</p>
 <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">DeviceDataManagerDelegate</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
 <span class="c1">//  这里的device他可以是蓝牙的外设，也可以是能某种能标示设备的tag，能get到点就可以了</span>
 <span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">readData</span><span class="o">:</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="n">data</span> <span class="n">device</span><span class="o">:</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">device</span><span class="p">;</span>
@@ -222,8 +226,12 @@ border: none;
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sendData</span><span class="p">:(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span> <span class="nf">device</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">device</span><span class="p">;</span>
 <span class="k">@end</span>
 </code></pre></div></div>
+<p>但在实际开发中，并没有这么的简单。首先是App端的收发，发送消息对数据的拼装、硬件端是否在线、失败后的重连重发等，然后到接收消息时的数据解析、数据缓存、粘包等的情况发生，如果事先没有考虑好这些问题，开发的时候很容易写出灾难级的代码。
+——————————</p>
 
-<hr />
+<h1 id="聊聊传输协议">聊聊传输协议</h1>
+
+<p>如果你是直接和硬件进行通讯的，那免不了会接触到二进制协议，下面的都是围绕二进制协议讲讲自己的看法。</p>
 
 <p>为了下面的内容更好理解，避免和http请求的网络层混淆，我把这一层叫作<code class="highlighter-rouge">传输层</code>。</p>
 
@@ -258,14 +266,18 @@ border: none;
 
 <p>Action的伪实现</p>
 <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 
-
 <span class="k">@implementation</span> <span class="nc">TAction</span>
 
-<span class="k">+</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">parse</span><span class="p">:(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nf">parse</span><span class="p">:(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span>
 <span class="p">{</span>
-  <span class="c1">//处理数据</span>
+    <span class="cm">/*
+        校验..
+        解析..
+        处理数据..
 
-    <span class="k">return</span> <span class="s">@"hello action"</span><span class="p">;</span>
+    */</span>
+    <span class="k">return</span> <span class="p">@{</span><span class="s">@"data"</span><span class="o">:</span><span class="s">@"hello action"</span><span class="p">,</span>
+              <span class="s">@"code"</span><span class="o">:</span><span class="mi">0</span><span class="p">};</span>   <span class="c1">//不同的code标志不同的事件，例如返回的值为空、拿的是缓存的值、设备丢失连接等</span>
 <span class="p">}</span>
 <span class="k">@end</span>
 </code></pre></div></div>
@@ -274,10 +286,13 @@ border: none;
 <span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">subscribe</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">str</span><span class="p">))</span><span class="nv">handler_block</span>
 <span class="p">{</span>
     <span class="p">[</span><span class="n">object_getClass</span><span class="p">([</span><span class="n">TAction</span> <span class="nf">class</span><span class="p">])</span> <span class="nf">aspect_hookSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nf">parse</span><span class="p">:)</span> <span class="n">withOptions</span><span class="o">:</span><span class="n">AspectPositionAfter</span> <span class="n">usingBlock</span><span class="o">:^</span><span class="p">(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">AspectInfo</span><span class="o">&gt;</span> <span class="n">aspectInfo</span><span class="p">,</span><span class="n">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">NSString</span> <span class="o">*</span><span class="n">str</span><span class="p">;</span>
-        <span class="p">[</span><span class="n">aspectInfo</span><span class="p">.</span><span class="n">originalInvocation</span> <span class="nf">getReturnValue</span><span class="p">:</span><span class="o">&amp;</span><span class="n">str</span><span class="p">];</span>
+        <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">dict</span><span class="p">;</span>
+        <span class="p">[</span><span class="n">aspectInfo</span><span class="p">.</span><span class="n">originalInvocation</span> <span class="nf">getReturnValue</span><span class="p">:</span><span class="o">&amp;</span><span class="n">dict</span><span class="p">];</span>
+        <span class="cm">/*
+            对不同的code作出相应处理
+        */</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">handler_block</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">handler_block</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+            <span class="n">handler_block</span><span class="p">(</span><span class="n">dict</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span> <span class="n">error</span><span class="o">:</span><span class="nb">NULL</span><span class="p">];</span>
 <span class="p">}</span>
@@ -288,8 +303,8 @@ border: none;
 
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
     <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>    
-    <span class="p">[</span><span class="n">TStore</span> <span class="nf">subscribe</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,</span><span class="n">str</span><span class="p">);</span>
+    <span class="p">[</span><span class="n">TStore</span> <span class="nf">subscribe</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">dict</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,</span><span class="n">dict</span><span class="p">);</span>
     <span class="p">}];</span>    
 <span class="p">}</span>
 <span class="k">@end</span>
