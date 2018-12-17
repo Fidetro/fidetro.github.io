@@ -226,8 +226,9 @@ border: none;
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sendData</span><span class="p">:(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span> <span class="nf">device</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">device</span><span class="p">;</span>
 <span class="k">@end</span>
 </code></pre></div></div>
-<p>但在实际开发中，并没有这么的简单。首先是App端的收发，发送消息对数据的拼装、硬件端是否在线、失败后的重连重发等，然后到接收消息时的数据解析、数据缓存、粘包等的情况发生，如果事先没有考虑好这些问题，开发的时候很容易写出灾难级的代码。
-——————————</p>
+<p>但在实际开发中，并没有这么的简单。首先是App端的收发，发送消息对数据的拼装、硬件端是否在线、失败后的重连重发等，然后到接收消息时的数据解析、数据缓存、粘包等的情况发生，如果事先没有考虑好这些问题，开发的时候很容易写出灾难级的代码。</p>
+
+<hr />
 
 <h1 id="聊聊传输协议">聊聊传输协议</h1>
 
