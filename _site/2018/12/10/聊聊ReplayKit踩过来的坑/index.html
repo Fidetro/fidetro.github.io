@@ -213,10 +213,10 @@ border: none;
 </code></pre></div></div>
 <p>另外停止录制的时候，会返回一个系统的previewViewController，对此可以进行最基本视频剪辑的。<br />
 只需要在回调的时候调用一下：</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">previewViewController</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
 <span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">previewViewController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
 
-<span class="cp">#pragma mark - RPPreviewViewControllerDelegate
+<span class="cp">#pragma mark - RPPreviewViewControllerpreviewControllerDelegate
 </span><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">previewControllerDidFinish</span><span class="p">:(</span><span class="n">RPPreviewViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">previewController</span> <span class="p">{</span>
     <span class="c1">//处理dismiss回来的回调</span>
 <span class="p">}</span>
@@ -240,7 +240,7 @@ border: none;
      <span class="p">[[</span><span class="n">NSOperationQueue</span> <span class="nf">mainQueue</span><span class="p">]</span><span class="nf">addOperationWithBlock</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
          <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span> <span class="o">&amp;&amp;</span> <span class="n">previewViewController</span><span class="p">)</span> 
          <span class="p">{</span>
-             <span class="n">previewViewController</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+             <span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
              <span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">previewViewController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span> 
          <span class="p">}</span><span class="k">else</span>
          <span class="p">{</span>
@@ -258,13 +258,13 @@ border: none;
      <span class="n">CGFloat</span> <span class="n">scaleX</span> <span class="o">=</span> <span class="n">safeAreaWidth</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
  <span class="n">CGFloat</span> <span class="n">scaleY</span> <span class="o">=</span> <span class="n">safeAreaHeight</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
  <span class="n">CGFloat</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">MIN</span><span class="p">(</span><span class="n">scaleX</span><span class="p">,</span> <span class="n">scaleY</span><span class="p">);</span>
- <span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+ <span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerpreviewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
  <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">CGAffineTransformMakeScale</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">scale</span><span class="p">);</span>
  <span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">previewViewController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:^</span><span class="p">{</span>
      <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">x</span><span class="o">+</span><span class="n">safeArea</span><span class="p">.</span><span class="n">left</span><span class="p">,</span> <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span><span class="o">+</span><span class="n">safeArea</span><span class="p">.</span><span class="n">top</span><span class="p">,</span> <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">);</span>
  <span class="p">}];</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
- <span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+ <span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerpreviewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
  <span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">previewViewController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
 <span class="p">}</span>
 </code></pre></div>    </div>
@@ -503,7 +503,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2018
+                    Copyright &copy; FoolishTalk 2019
                     <br>
                 </p>
                 <p class="copyright text-muted">

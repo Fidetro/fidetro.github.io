@@ -30,10 +30,10 @@ tags:
 另外停止录制的时候，会返回一个系统的previewViewController，对此可以进行最基本视频剪辑的。  
 只需要在回调的时候调用一下：
 ```objc
-previewViewController.delegate = self;
+previewViewController.previewControllerDelegate = self;
 [self presentViewController:previewViewController animated:YES completion:nil];
 
-#pragma mark - RPPreviewViewControllerDelegate
+#pragma mark - RPPreviewViewControllerpreviewControllerDelegate
 - (void)previewControllerDidFinish:(RPPreviewViewController *)previewController {
     //处理dismiss回来的回调
 }
@@ -58,7 +58,7 @@ previewViewController.delegate = self;
         [[NSOperationQueue mainQueue]addOperationWithBlock:^{
             if (!error && previewViewController) 
             {
-                previewViewController.delegate = self;
+                previewViewController.previewControllerDelegate = self;
                 [self presentViewController:previewViewController animated:YES completion:nil]; 
             }else
             {
@@ -77,13 +77,13 @@ previewViewController.delegate = self;
         CGFloat scaleX = safeAreaWidth / self.view.frame.size.width;
     CGFloat scaleY = safeAreaHeight / self.view.frame.size.height;
     CGFloat scale = MIN(scaleX, scaleY);
-    previewViewController.previewControllerDelegate = self;
+    previewViewController.previewControllerpreviewControllerDelegate = self;
     previewViewController.view.transform = CGAffineTransformMakeScale(scale, scale);
     [self presentViewController:previewViewController animated:YES completion:^{
         previewViewController.view.frame = CGRectMake(previewViewController.view.frame.origin.x+safeArea.left, previewViewController.view.frame.origin.y+safeArea.top, previewViewController.view.frame.size.width, previewViewController.view.frame.size.height);
     }];
 } else {
-    previewViewController.previewControllerDelegate = self;
+    previewViewController.previewControllerpreviewControllerDelegate = self;
     [self presentViewController:previewViewController animated:YES completion:nil];
 }
 ```
