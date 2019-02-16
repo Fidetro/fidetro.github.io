@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>iOS多线程总结 - Karim | FoolishTalk Blog</title>
+
+    <link rel="canonical" href="http://www.foolishtalk.org/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">FoolishTalk</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <style type="text/css">
+/* 新浪微博 */
+.-mob-share-weibo {
+background-image: url("http://images.foolishtalk.org/sina_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+/* 微信 */
+.-mob-share-weixin {
+background-image: url("http://images.foolishtalk.org/wechat_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+/* QQ */
+.-mob-share-qq {
+background-image: url("http://images.foolishtalk.org/qq_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+</style>
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-andre-benz.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-andre-benz.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                    </div>
+                    <h1>iOS多线程总结</h1>
+                    
+                    
+                    <h2 class="subheading">iOS，多线程</h2>
+                    
+                    <span class="meta">Posted by Fidetro on February 16, 2019</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">            
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h1 id="ios多线程总结">iOS多线程总结</h1>
+
+<h2 id="碎碎念">碎碎念</h2>
+<p>这是2019的第一篇，虽然原来这篇大概在上年7、8月的时候就开始写了，但是因为各种生活+工作的事情，再加上对文章保持严谨的态度，在写之前写过很多测试代码，同时也顺便自己复习了一下，所以一直搁置到现在才写完。</p>
+
+<h2 id="前言">前言</h2>
+<p>最初写这一篇，是曾经被抛出过一个很泛的问题，“说说你知道的iOS多线程的知识点？”，对于一个iOS开发者来说，多线程绝对不陌生，而且经常会用到，但是遇到这个问题的时候，很容易想到什么就说什么，给别人一种“不熟悉”的感觉，所以借着这个原因，我也去梳理了一下关于多线程的知识，写下这篇文章，作为记录。</p>
+
+<h2 id="正文">正文</h2>
+<p>聊到多线程，肯定少不了要说说进程和线程之间的关系。</p>
+
+<h3 id="什么是进程">什么是进程？</h3>
+<p>在操作系统中，开启一个任务会开启一个进程。<br />
+在iOS上，一个app对应一个进程。每个进程运行在其专用且受保护的内存空间中。<br />
+例如在mac上打开终端，然后再输入<code class="highlighter-rouge">ps</code>就会看到开启了一条<code class="highlighter-rouge">bash</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MacdeMacBook-Pro:~ Fidetro$ ps
+  PID TTY           TIME CMD
+ 8329 ttys000    0:00.03 -bash
+</code></pre></div></div>
+<p>如果再开打开一个终端，再次输入<code class="highlighter-rouge">ps</code>就会看到开启了两个<code class="highlighter-rouge">bash</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MacdeMacBook-Pro:~ Karim$ ps
+  PID TTY           TIME CMD
+ 8329 ttys000    0:00.03 -bash
+ 8651 ttys001    0:00.02 -bash
+</code></pre></div></div>
+<p>一个进程中又至少会开启一条线程，在iOS中，我们把那条线程叫做主线程。一个进程可以开启多条线程。</p>
+<h3 id="什么是线程">什么是线程？</h3>
+
+<blockquote>
+  <p>线程是指给代码单独执行的通道。  —-翻译自<a href="https://developer.apple.com/library/archive/documentation/General/Conceptual/ConcurrencyProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008091-CH1-SW1">苹果文档</a></p>
+</blockquote>
+
+<p>iOS中提供了4个方案让我们使用多线程，分别是：</p>
+<ul>
+  <li>Pthreads</li>
+  <li>NSThread</li>
+  <li>GCD</li>
+  <li>NSOperation</li>
+</ul>
+
+<p>这篇主要是讲GCD，其他方案的资料，可以参考总结的图。</p>
+
+<h3 id="gcd">GCD</h3>
+<p>GCD是一套C语言编写的接口，其代码也是<a href="https://apple.github.io/swift-corelibs-libdispatch/">开源</a>,它为我们提供多线程技术，GCD中最核心的两个概念，任务和队列。</p>
+
+<p>在iOS中使用GCD创建队列，调用<code class="highlighter-rouge">dispatch_queue_t dispatch_queue_create(const char *label, dispatch_queue_attr_t attr);</code><br />
+第一个参数代表队列的名字，第二参数代表队列的类型，使用<code class="highlighter-rouge">DISPATCH_QUEUE_SERIAL</code>创建串行队列，使用<code class="highlighter-rouge">DISPATCH_QUEUE_CONCURRENT</code>创建并行队列。</p>
+
+<h4 id="串行队列">串行队列</h4>
+<p><img src="http://images.foolishtalk.org/2019-2-14-sync.png" alt="" /><br />
+串行队列，任务按照进入顺序执行。遵循FIFO（先进先出）原则。</p>
+
+<h4 id="并行队列">并行队列</h4>
+<p><img src="http://images.foolishtalk.org/2019-2-14-async.png" alt="" /><br />
+并行队列，任务会并行执行，无法保证任务完成的时机是添加的顺序。</p>
+
+<h4 id="异步">异步</h4>
+<p>异步执行不会等待内部代码全部执行完然后返回，而是直接往下执行。</p>
+
+<h4 id="同步">同步</h4>
+<p>同步执行会等待内部代码执行完毕之后，再往下执行。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">同步</th>
+      <th style="text-align: center">异步</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">串行队列</td>
+      <td style="text-align: center">不会创建新的线程，而是在当前线程执行。任务按顺序执行，等待内部代码执行完毕后往下执行。</td>
+      <td style="text-align: center">调用<code class="highlighter-rouge">dispatch_queue_create()</code>会创建新的线程，任务按顺序执行，不会等待内部代码全部执行完然后返回，而是直接往下执行。</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">并行队列</td>
+      <td style="text-align: center">与串行同步一致。</td>
+      <td style="text-align: center">调用<code class="highlighter-rouge">dispatch_async()</code>会创建新的线程，任务在不同的线程下执行。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="dispatch_after">dispatch_after</h4>
+
+<p><code class="highlighter-rouge">dispatch_after()</code>是iOS最常用的延时方法。</p>
+
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">dispatch_after</span><span class="p">(</span><span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">)),</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+        <span class="c1">//两秒后执行</span>
+    <span class="p">});</span>
+</code></pre></div></div>
+
+<h4 id="dispatch_group_t">dispatch_group_t</h4>
+
+<p><code class="highlighter-rouge">dispatch_group_t</code>用来监听多个异步任务的完成。<br />
+GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_t</code>完成的回调。<br />
+第一种是<code class="highlighter-rouge">dispatch_group_notify()</code>，不会阻塞当前线程，在所有任务完成后，回调到block；<br />
+第二种是<code class="highlighter-rouge">dispatch_group_wait()</code>，会阻塞当前线程，等待所有任务完成后才往下走，<strong><code class="highlighter-rouge">dispatch_group_wait()</code>不可以在主线程调用，否则会造成死锁。</strong></p>
+
+<p><code class="highlighter-rouge">dispatch_group_notify()</code>的例子如下：</p>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="n">dispatch_group_t</span> <span class="n">group</span> <span class="o">=</span> <span class="n">dispatch_group_create</span><span class="p">();</span>
+    <span class="n">dispatch_queue_t</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="o">^</span><span class="p">(){</span>
+        <span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">(){</span>
+            <span class="n">dispatch_group_enter</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
+            <span class="n">dispatch_after</span><span class="p">(</span><span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">)),</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+                <span class="n">NSLog</span><span class="p">(</span><span class="s">@"1"</span><span class="p">);</span>
+                <span class="n">dispatch_group_leave</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
+            <span class="p">});</span>
+        <span class="p">});</span>
+    <span class="p">});</span>
+    <span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="o">^</span><span class="p">(){</span>
+        <span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">(){</span>
+            <span class="n">dispatch_group_enter</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
+            <span class="n">dispatch_after</span><span class="p">(</span><span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)(</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">)),</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+                <span class="n">NSLog</span><span class="p">(</span><span class="s">@"2"</span><span class="p">);</span>
+                <span class="n">dispatch_group_leave</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
+            <span class="p">});</span>
+        <span class="p">});</span>
+    <span class="p">});</span>
+    
+    <span class="n">dispatch_group_notify</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">(){</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"3"</span><span class="p">);</span>
+    <span class="p">});</span>
+
+</code></pre></div></div>
+
+<p>输出结果：</p>
+<pre><code class="language-clang">2018-12-19 15:12:27.770146+0800 GCD[70391:2895561] 2
+2018-12-19 15:12:29.220584+0800 GCD[70391:2895561] 1
+2018-12-19 15:12:29.220987+0800 GCD[70391:2895561] 3
+</code></pre>
+
+<p><code class="highlighter-rouge">dispatch_group_wait()</code>例子如下：</p>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dispatch_queue_t</span> <span class="n">asyncQueue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">"com.group.queue"</span><span class="p">,</span> <span class="n">DISPATCH_QUEUE_CONCURRENT</span><span class="p">);</span>
+    <span class="n">dispatch_async</span><span class="p">(</span><span class="n">asyncQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+        <span class="n">dispatch_group_t</span> <span class="n">group</span> <span class="o">=</span> <span class="n">dispatch_group_create</span><span class="p">();</span>
+        <span class="n">dispatch_queue_t</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="o">^</span><span class="p">(){</span>
+            <span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">(){</span>
+                <span class="n">dispatch_group_enter</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
+                <span class="n">dispatch_after</span><span class="p">(</span><span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">)),</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+                    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"1"</span><span class="p">);</span>
+                    <span class="n">dispatch_group_leave</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
+                <span class="p">});</span>
+            <span class="p">});</span>
+        <span class="p">});</span>
+        <span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="o">^</span><span class="p">(){</span>
+            <span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">(){</span>
+                <span class="n">dispatch_group_enter</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
+                <span class="n">dispatch_after</span><span class="p">(</span><span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)(</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">)),</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+                    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"2"</span><span class="p">);</span>
+                    <span class="n">dispatch_group_leave</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
+                <span class="p">});</span>
+            <span class="p">});</span>
+        <span class="p">});</span>
+        <span class="n">dispatch_group_wait</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">DISPATCH_TIME_FOREVER</span><span class="p">);</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"3"</span><span class="p">);</span>
+    <span class="p">});</span>
+</code></pre></div></div>
+<p>输出结果：</p>
+<pre><code class="language-clang">2019-02-16 12:21:12.300569+0800 GCD[79234:3427553] 2
+2019-02-16 12:21:13.751251+0800 GCD[79234:3427553] 1
+2019-02-16 12:21:13.751419+0800 GCD[79234:3427633] 3
+</code></pre>
+
+<h4 id="dispatch_barrier_async">dispatch_barrier_async</h4>
+
+<p><code class="highlighter-rouge">dispatch_barrier</code>相当于一个“栅栏”的作用，在相同的队列中，会先执行在<code class="highlighter-rouge">dispatch_barrier</code>之前的任务，然后<code class="highlighter-rouge">dispatch_barrier</code>之后的任务，都需要等待<code class="highlighter-rouge">dispatch_barrier</code>完成之后，才会执行block里面的内容。</p>
+
+<p>另外苹果文档中有写道：</p>
+<blockquote>
+  <p>The queue you specify should be a concurrent queue that you create yourself using the dispatch_queue_create function. If the queue you pass to this function is a serial queue or one of the global concurrent queues, this function behaves like the dispatch_sync function.</p>
+</blockquote>
+
+<p>使用<code class="highlighter-rouge">dispatch_barrier_async</code>的时候，需要自定义队列才有效，如果使用全局队列或者同步队列，效果和<code class="highlighter-rouge">dispatch_sync()</code>同步函数一样。</p>
+
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">//防止文件读写冲突，可以创建一个串行队列，操作都在这个队列中进行，没有更新数据读用并行，写用串行。</span>
+    <span class="n">dispatch_queue_t</span> <span class="n">dataQueue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">"com.karim.gcd.dataqueue"</span><span class="p">,</span> <span class="n">DISPATCH_QUEUE_CONCURRENT</span><span class="p">);</span>
+    <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+        <span class="p">[</span><span class="n">NSThread</span> <span class="nf">sleepForTimeInterval</span><span class="p">:</span><span class="mi">2</span><span class="p">.</span><span class="n">f</span><span class="p">];</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"read data 1"</span><span class="p">);</span>
+    <span class="p">});</span>
+    <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"read data 2"</span><span class="p">);</span>
+    <span class="p">});</span>
+    <span class="c1">//等待前面的都完成，在执行barrier后面的</span>
+    <span class="n">dispatch_barrier_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"write data 1"</span><span class="p">);</span>
+        <span class="p">[</span><span class="n">NSThread</span> <span class="nf">sleepForTimeInterval</span><span class="p">:</span><span class="mi">1</span><span class="p">];</span>
+    <span class="p">});</span>
+    <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+        <span class="p">[</span><span class="n">NSThread</span> <span class="nf">sleepForTimeInterval</span><span class="p">:</span><span class="mi">1</span><span class="p">.</span><span class="n">f</span><span class="p">];</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"read data 3"</span><span class="p">);</span>
+    <span class="p">});</span>
+    <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"read data 4"</span><span class="p">);</span>
+    <span class="p">});</span>
+</code></pre></div></div>
+<p>输出结果如下：</p>
+<pre><code class="language-clang">2018-12-19 15:26:50.297477+0800 GCD[70716:2943544] read data 2
+2018-12-19 15:26:52.302570+0800 GCD[70716:2943541] read data 1
+2018-12-19 15:26:52.302925+0800 GCD[70716:2943541] write data 1
+2018-12-19 15:26:53.306632+0800 GCD[70716:2943544] read data 4
+2018-12-19 15:26:54.307808+0800 GCD[70716:2943541] read data 3
+</code></pre>
+
+<h3 id="总结">总结</h3>
+<p>我把一些关于多线程的知识点整理在这个图里了，如果有遗漏，可以联系我，我会即时补充上去。<br />
+<img src="http://images.foolishtalk.org/2019-2-16-iOS-thread.png" alt="" /></p>
+
+<h3 id="参考">参考</h3>
+
+<p><a href="https://github.com/ming1016/study/wiki/iOS%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B">iOS并发编程</a></p>
+
+<p><a href="http://liuyanwei.jumppo.com/2015/08/19/ios-ThreadAndAsynchronization.html">ios的线程和同步异步操作</a></p>
+
+
+                <hr>
+            <div>
+                <p>请保持转载后文章内容的完整，以及文章出处。本人保留所有版权相关权利。</p>
+                <!-- 要是你找到这个，想打赏就打赏吧 <p>如果你看了文章，觉得有收获，可以通过下面的支付宝二维码打赏。</p>
+                <b>
+                <img height="100" width="100" src="http://images.foolishtalk.org/qrcode.png">
+                </b> -->
+            </div>
+                <!-- 分享代码 -->                
+<div class="-foot-share-buttons">
+    <b>分享到：</b>
+    <button class="-mob-share-weibo"></button>
+    <button class="-mob-share-weixin"></button>
+    <button class="-mob-share-qq"></button>
+    <p>Disqus经常被墙，需要评论请科学上网</p>
+</div>
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=23ba60f5704b3"></script>
+                
+                <hr>
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2019/02/04/2019%E7%9A%84%E5%85%B3%E9%94%AE%E8%AF%8D/" data-toggle="tooltip" data-placement="top" title="2019的关键词">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#Objective-C" title="Objective-C" rel="2">
+                                    Objective-C
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="30">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                                    问题随笔
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Code-Life" title="Code-Life" rel="2">
+                                    Code-Life
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#WWDC" title="WWDC" rel="2">
+                                    WWDC
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Swift" title="Swift" rel="17">
+                                    Swift
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
+                                    Perfect-Server
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Swift-Tips" title="Swift-Tips" rel="3">
+                                    Swift-Tips
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#杂谈" title="杂谈" rel="3">
+                                    杂谈
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#RxSwift" title="RxSwift" rel="2">
+                                    RxSwift
+                                </a>
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="https://www.jianshu.com/u/e80ee6ad8f86">make</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "fidetro-github-io";
+    var disqus_identifier = "/2019/02/16/iOS多线程总结";
+    var disqus_url = "http://www.foolishtalk.org/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/2095454814">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/fidetro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; FoolishTalk 2019
+                    <br>
+                </p>
+                <p class="copyright text-muted">
+                    <a href="http://www.miitbeian.gov.cn">粤ICP备17090793号</a>
+                    </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+<script>
+    
+    var _gaId = 'UA-111166556-1';
+    var _gaDomain = 'foolishtalk.org';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script>
+    var _baId = '04196a2ea468bf450920ada8e098d8f7';
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?"+_baId;      
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="50" height="50" /> -->
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
