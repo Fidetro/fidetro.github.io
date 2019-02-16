@@ -260,20 +260,20 @@ border: none;
   <thead>
     <tr>
       <th style="text-align: center"> </th>
-      <th style="text-align: center">同步</th>
-      <th style="text-align: center">异步</th>
+      <th style="text-align: left">同步</th>
+      <th style="text-align: left">异步</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td style="text-align: center">串行队列</td>
-      <td style="text-align: center">不会创建新的线程，而是在当前线程执行。任务按顺序执行，等待内部代码执行完毕后往下执行。</td>
-      <td style="text-align: center">调用<code class="highlighter-rouge">dispatch_queue_create()</code>会创建新的线程，任务按顺序执行，不会等待内部代码全部执行完然后返回，而是直接往下执行。</td>
+      <td style="text-align: left">不会创建新的线程，而是在当前线程执行。任务按顺序执行，等待内部代码执行完毕后往下执行。</td>
+      <td style="text-align: left">调用<code class="highlighter-rouge">dispatch_queue_create()</code>会创建新的线程，任务按顺序执行，不会等待内部代码全部执行完然后返回，而是直接往下执行。</td>
     </tr>
     <tr>
       <td style="text-align: center">并行队列</td>
-      <td style="text-align: center">与串行同步一致。</td>
-      <td style="text-align: center">调用<code class="highlighter-rouge">dispatch_async()</code>会创建新的线程，任务在不同的线程下执行。</td>
+      <td style="text-align: left">与串行同步一致。</td>
+      <td style="text-align: left">调用<code class="highlighter-rouge">dispatch_async()</code>会创建新的线程，任务在不同的线程下执行。</td>
     </tr>
   </tbody>
 </table>

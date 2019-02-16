@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 16 Feb 2019 16:36:44 +0800</pubDate>
-    <lastBuildDate>Sat, 16 Feb 2019 16:36:44 +0800</lastBuildDate>
+    <pubDate>Sat, 16 Feb 2019 16:41:13 +0800</pubDate>
+    <lastBuildDate>Sat, 16 Feb 2019 16:41:13 +0800</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
     
       <item>
@@ -77,20 +77,20 @@
   &lt;thead&gt;
     &lt;tr&gt;
       &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;同步&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;异步&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;同步&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;异步&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;串行队列&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;不会创建新的线程，而是在当前线程执行。任务按顺序执行，等待内部代码执行完毕后往下执行。&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;调用&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_queue_create()&lt;/code&gt;会创建新的线程，任务按顺序执行，不会等待内部代码全部执行完然后返回，而是直接往下执行。&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;不会创建新的线程，而是在当前线程执行。任务按顺序执行，等待内部代码执行完毕后往下执行。&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;调用&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_queue_create()&lt;/code&gt;会创建新的线程，任务按顺序执行，不会等待内部代码全部执行完然后返回，而是直接往下执行。&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;并行队列&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;与串行同步一致。&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;调用&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async()&lt;/code&gt;会创建新的线程，任务在不同的线程下执行。&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;与串行同步一致。&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;调用&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async()&lt;/code&gt;会创建新的线程，任务在不同的线程下执行。&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
