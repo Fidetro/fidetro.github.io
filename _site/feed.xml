@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 16 Feb 2019 16:41:13 +0800</pubDate>
-    <lastBuildDate>Sat, 16 Feb 2019 16:41:13 +0800</lastBuildDate>
+    <pubDate>Sat, 16 Feb 2019 18:51:49 +0800</pubDate>
+    <lastBuildDate>Sat, 16 Feb 2019 18:51:49 +0800</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
     
       <item>
@@ -18,6 +18,8 @@
 
 &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 &lt;p&gt;最初写这一篇，是曾经被抛出过一个很泛的问题，“说说你知道的iOS多线程的知识点？”，对于一个iOS开发者来说，多线程绝对不陌生，而且经常会用到，但是遇到这个问题的时候，很容易想到什么就说什么，给别人一种“不熟悉”的感觉，所以借着这个原因，我也去梳理了一下关于多线程的知识，写下这篇文章，作为记录。&lt;/p&gt;
+
+&lt;p&gt;如果没有耐心看完，可以直接看&lt;a href=&quot;http://images.foolishtalk.org/2019-2-16-iOS-thread.png&quot;&gt;这里&lt;/a&gt;。&lt;/p&gt;
 
 &lt;h2 id=&quot;正文&quot;&gt;正文&lt;/h2&gt;
 &lt;p&gt;聊到多线程，肯定少不了要说说进程和线程之间的关系。&lt;/p&gt;
