@@ -5,9 +5,32 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 23 Feb 2019 22:09:07 +0800</pubDate>
-    <lastBuildDate>Sat, 23 Feb 2019 22:09:07 +0800</lastBuildDate>
+    <pubDate>Sat, 23 Feb 2019 22:12:55 +0800</pubDate>
+    <lastBuildDate>Sat, 23 Feb 2019 22:12:55 +0800</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
+    
+      <item>
+        <title>Swift闭包中weak多个对象</title>
+        <description>&lt;p&gt;无论是在OC还是Swift都会有在闭包中需要弱引用对象的时候，没有在Swift的文档中看到如何在闭包中对多个对象弱引用，最后在stackoverflow上&lt;a href=&quot;https://stackoverflow.com/questions/28015394/how-can-you-capture-multiple-arguments-weakly-in-a-swift-closure&quot;&gt;找到&lt;/a&gt;相关的资料：&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;weak&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;weak&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
+            
+    &lt;span class=&quot;c1&quot;&gt;//....&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sat, 23 Feb 2019 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2019/02/23/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2019/02/23/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Swift</category>
+        
+        <category>Swift-Tips</category>
+        
+        
+      </item>
     
       <item>
         <title>iOS多线程总结</title>
@@ -236,29 +259,6 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
         <guid isPermaLink="true">http://www.foolishtalk.org/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/</guid>
         
         <category>iOS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Swift闭包中weak多个对象</title>
-        <description>&lt;p&gt;无论是在OC还是Swift都会有在闭包中需要弱引用对象的时候，没有在Swift的文档中看到如何在闭包中对多个对象弱引用，最后在stackoverflow上&lt;a href=&quot;https://stackoverflow.com/questions/28015394/how-can-you-capture-multiple-arguments-weakly-in-a-swift-closure&quot;&gt;找到&lt;/a&gt;相关的资料：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;weak&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;weak&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
-            
-    &lt;span class=&quot;c1&quot;&gt;//....&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-        <pubDate>Wed, 13 Feb 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/02/13/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/02/13/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/</guid>
-        
-        <category>iOS</category>
-        
-        <category>Swift</category>
-        
-        <category>Swift-Tips</category>
         
         
       </item>
