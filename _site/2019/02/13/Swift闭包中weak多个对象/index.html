@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>iOS实现隐藏状态栏动画 - Karim | FoolishTalk Blog</title>
+    <title>Swift闭包中weak多个对象 - Karim | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2018/09/19/iOS%E5%AE%9E%E7%8E%B0%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E5%8A%A8%E7%94%BB/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2019/02/13/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -154,12 +154,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-ismael.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-andre-benz.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-ismael.jpg')
+        background-image: url('/img/post-bg-andre-benz.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -171,15 +171,17 @@ border: none;
                         
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
-                        <a class="tag" href="/tags/#动画" title="动画">动画</a>
+                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        
+                        <a class="tag" href="/tags/#Swift-Tips" title="Swift-Tips">Swift-Tips</a>
                         
                     </div>
-                    <h1>iOS实现隐藏状态栏动画</h1>
+                    <h1>Swift闭包中weak多个对象</h1>
                     
                     
-                    <h2 class="subheading">iOS，动画</h2>
+                    <h2 class="subheading">Swift，weak</h2>
                     
-                    <span class="meta">Posted by Fidetro on September 19, 2018</span>
+                    <span class="meta">Posted by Fidetro on February 13, 2019</span>
                 </div>
             </div>
         </div>
@@ -196,35 +198,13 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>隐藏状态栏是一个相对比较常见的需求，为了让隐藏状态栏更加平滑过渡，我们会给他增加一个动画效果。像常见的渐变透明隐藏效果和上下滚动隐藏效果，系统已经提供好对应的api给我们使用了。在需要隐藏状态栏的Controller下使用这段代码就可以实现了：</p>
+				<p>无论是在OC还是Swift都会有在闭包中需要弱引用对象的时候，没有在Swift的文档中看到如何在闭包中对多个对象弱引用，最后在stackoverflow上<a href="https://stackoverflow.com/questions/28015394/how-can-you-capture-multiple-arguments-weakly-in-a-swift-closure">找到</a>相关的资料：</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">override</span> <span class="kd">func</span> <span class="nf">touchesBegan</span><span class="p">(</span><span class="n">_</span> <span class="nv">touches</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">UITouch</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">with</span> <span class="nv">event</span><span class="p">:</span> <span class="kt">UIEvent</span><span class="p">?)</span> <span class="p">{</span>
-        <span class="n">isStatusBarHidden</span> <span class="o">=</span> <span class="o">!</span><span class="n">isStatusBarHidden</span>
-        <span class="kt">UIView</span><span class="o">.</span><span class="nf">animate</span><span class="p">(</span><span class="nv">withDuration</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">self</span><span class="o">.</span><span class="nf">setNeedsStatusBarAppearanceUpdate</span><span class="p">()</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    
-    <span class="k">override</span> <span class="k">var</span> <span class="nv">prefersStatusBarHidden</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">isStatusBarHidden</span>
-    <span class="p">}</span>
-
-    <span class="k">override</span> <span class="k">var</span> <span class="nv">preferredStatusBarUpdateAnimation</span><span class="p">:</span> <span class="kt">UIStatusBarAnimation</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="o">.</span><span class="n">slide</span>
-    <span class="p">}</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">,</span><span class="k">weak</span> <span class="n">sender</span><span class="p">]</span>  <span class="k">in</span>
+            
+    <span class="c1">//....</span>
+<span class="p">}</span>
 </code></pre></div></div>
-
-<p>如果是<code class="highlighter-rouge">present</code>过去ViewController还在<code class="highlighter-rouge">present</code>之前需要设置：</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vc</span><span class="o">.</span><span class="n">modalPresentationCapturesStatusBarAppearance</span> <span class="o">=</span> <span class="kc">true</span>
-</code></pre></div></div>
-
-<p>要注意的一点是，使用这个方法需要在<code class="highlighter-rouge">info.plist</code>中将<code class="highlighter-rouge">View controller-based status bar appearance</code>字段设置成<code class="highlighter-rouge">YES</code>。（PS:没有设置的默认为YES</p>
-
-<p>如果项目中<code class="highlighter-rouge">View controller-based status bar appearance</code>字段已经设置成了为<code class="highlighter-rouge">NO</code>,上面的方法是不会生效的，这时候可以使用：</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">UIApplication</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">setStatusBarHidden</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="nv">with</span><span class="p">:</span> <span class="o">.</span><span class="n">slide</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p>这样就能完美解决隐藏导航栏动画的问题了，但是要注意这个方法在iOS 9后已经废弃，尽量还是使用第一种方法。</p>
 
 
                 <hr>
@@ -252,12 +232,12 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/09/10/High-Performance-Auto-Layout/" data-toggle="tooltip" data-placement="top" title="WWDC-2018笔记---High Performance Auto Layout">&larr; Previous Post</a>
+                        <a href="/2019/02/04/2019%E7%9A%84%E5%85%B3%E9%94%AE%E8%AF%8D/" data-toggle="tooltip" data-placement="top" title="2019的关键词">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/" data-toggle="tooltip" data-placement="top" title="NS_ASSUME_NONNULL_BEGIN和NS_ASSUME_NONNULL_END">Next Post &rarr;</a>
+                        <a href="/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/" data-toggle="tooltip" data-placement="top" title="iOS多线程总结">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -385,8 +365,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2018/09/19/iOS实现隐藏状态栏动画";
-    var disqus_url = "http://www.foolishtalk.org/2018/09/19/iOS%E5%AE%9E%E7%8E%B0%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E5%8A%A8%E7%94%BB/";
+    var disqus_identifier = "/2019/02/13/Swift闭包中weak多个对象";
+    var disqus_url = "http://www.foolishtalk.org/2019/02/13/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
