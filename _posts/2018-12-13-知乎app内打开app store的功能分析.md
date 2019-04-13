@@ -3,7 +3,7 @@ layout:     post
 title:      "知乎app内打开app store的功能分析"
 subtitle:   "iOS，动画，SKStoreProductViewController"
 date:       2018-12-13
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-sea.jpg"
 tags:
 - iOS

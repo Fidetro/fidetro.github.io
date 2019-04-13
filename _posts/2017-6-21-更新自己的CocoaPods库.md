@@ -3,7 +3,7 @@ layout:     post
 title:      "更新自己的CocoaPods库"
 subtitle:   "CocoaPod，iOS"
 date:       2017-06-21
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-old.jpg"
 tags:
 - 问题随笔

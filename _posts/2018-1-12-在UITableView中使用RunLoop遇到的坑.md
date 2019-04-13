@@ -3,7 +3,7 @@ layout:     post
 title:      "在UITableView中使用RunLoop遇到的坑"
 subtitle:   "Swift，iOS，Objective-C"
 date:       2018-1-12
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-sea.jpg"
 tags:
 - 问题随笔

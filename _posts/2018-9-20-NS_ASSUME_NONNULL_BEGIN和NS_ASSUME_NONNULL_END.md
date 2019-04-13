@@ -3,7 +3,7 @@ layout:     post
 title:      "NS_ASSUME_NONNULL_BEGIN和NS_ASSUME_NONNULL_END"
 subtitle:   "iOS，Xcode 10"
 date:       2018-9-20
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-ismael.jpg"
 tags:
 - iOS

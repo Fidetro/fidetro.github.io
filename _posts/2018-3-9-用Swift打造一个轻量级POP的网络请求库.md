@@ -3,7 +3,7 @@ layout:     post
 title:      "用Swift打造一个轻量级POP的网络请求库"
 subtitle:   "Swift，Tips，Alamofire"
 date:       2018-3-9
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-sea.jpg"
 tags:
 - Swift-Tips

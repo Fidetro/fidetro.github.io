@@ -3,7 +3,7 @@ layout:     post
 title:      "AVCaptureSession自定义相机获取的UIImage旋转无效"
 subtitle:   "AVFoundation，Tips"
 date:       2018-3-6
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-sea.jpg"
 tags:
 - iOS

@@ -3,7 +3,7 @@ layout:     post
 title:      "使用Perfect部署APNS推送"
 subtitle:   "Swift，Perfect-Server，APNS，iOS"
 date:       2018-6-27
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-old.jpg"
 tags:
 - Perfect-Server

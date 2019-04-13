@@ -3,7 +3,7 @@ layout:     post
 title:      "Cannot use mutating member on immutable value"
 subtitle:   "Swift，iOS"
 date:       2017-9-10
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-old.jpg"
 tags:
 - Swift

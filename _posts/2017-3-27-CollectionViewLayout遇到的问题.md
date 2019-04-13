@@ -3,7 +3,7 @@ layout:     post
 title:      "CollectionViewLayout遇到的问题"
 subtitle:   "CocoaPod，iOS，UI"
 date:       2017-3-27
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-old.jpg"
 tags:
 - 问题随笔

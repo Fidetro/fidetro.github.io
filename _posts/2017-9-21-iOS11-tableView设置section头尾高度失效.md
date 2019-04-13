@@ -3,7 +3,7 @@ layout:     post
 title:      "iOS11-tableView设置section头尾高度失效"
 subtitle:   "CocoaPod，iOS，UI"
 date:       2017-9-21
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-old.jpg"
 tags:
 - 问题随笔

@@ -3,7 +3,7 @@ layout:     post
 title:      "Swift关键字-@escaping逃逸闭包"
 subtitle:   "Swift，iOS"
 date:       2017-7-2
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-old.jpg"
 tags:
 - Swift

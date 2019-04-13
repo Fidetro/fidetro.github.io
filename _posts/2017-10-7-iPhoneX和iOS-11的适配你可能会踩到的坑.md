@@ -3,7 +3,7 @@ layout:     post
 title:      "iPhoneX和iOS-11的适配你可能会踩到的坑"
 subtitle:   "iOS，UI"
 date:       2017-10-7
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-old.jpg"
 tags:
 - 问题随笔

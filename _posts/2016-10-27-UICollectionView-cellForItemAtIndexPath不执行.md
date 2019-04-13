@@ -3,7 +3,7 @@ layout:     post
 title:      "UICollectionView-cellForItemAtIndexPath不执行"
 subtitle:   "CocoaPod，iOS，UI"
 date:       2016-10-27
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-old.jpg"
 tags:
 - 问题随笔

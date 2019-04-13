@@ -3,7 +3,7 @@ layout:     post
 title:      "swift使用protocol的时候出现循环引用"
 subtitle:   "Swift，iOS，Protocol"
 date:       2017-12-7
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-old.jpg"
 tags:
 - Swift

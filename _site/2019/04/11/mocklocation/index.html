@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>记录点自己做CocoaPod时遇到的坑 - Karim | FoolishTalk Blog</title>
+    <title>iOS模拟移动定位 - Karim | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/06/19/%E8%AE%B0%E5%BD%95%E7%82%B9%E8%87%AA%E5%B7%B1%E5%81%9ACocoaPod%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2019/04/11/mocklocation/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -154,12 +154,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-andre-benz.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-old.jpg')
+        background-image: url('/img/post-bg-andre-benz.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -169,17 +169,17 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#问题随笔" title="问题随笔">问题随笔</a>
-                        
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
+                        <a class="tag" href="/tags/#Xcode" title="Xcode">Xcode</a>
+                        
                     </div>
-                    <h1>记录点自己做CocoaPod时遇到的坑</h1>
+                    <h1>iOS模拟移动定位</h1>
                     
                     
-                    <h2 class="subheading">CocoaPod，iOS</h2>
+                    <h2 class="subheading">Xcode，iOS，定位</h2>
                     
-                    <span class="meta">Posted by Karim on June 19, 2017</span>
+                    <span class="meta">Posted by Karim on April 11, 2019</span>
                 </div>
             </div>
         </div>
@@ -196,14 +196,46 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[!] The spec did not pass validation, due to 1 error.
-[!] The validator for Swift projects uses Swift 3.0 by default, if you are using a different version of swift you can use a `.swift-version` file to set the version for your Pod. For example to use Swift 2.3, run: 
-    `echo "2.3" &gt; .swift-version`.
+				<h1 id="前言">前言</h1>
+<p>在阅读这篇文章之前，先保证你必须符合以下几个条件：</p>
+<ul>
+  <li>有台Mac可以使用</li>
+  <li>有一定的编程经验（如果你愿意折腾，没有经验也是可以的）</li>
+</ul>
 
-</code></pre></div></div>
-<p>这是因为需要知道支持哪个swift版本，一般来讲现在都是支持Swift3的，输入这段就好了</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "3.0" &gt; .swift-version
-</code></pre></div></div>
+<h1 id="正文">正文</h1>
+<p>先打开Mac应用虚拟定位，可以看到以下的界面，可以在这里下载（应用还在审核，审核完再补链接）：</p>
+
+<p><img src="http://images.foolishtalk.org/mock_location_1.png" alt="" /></p>
+
+<ol>
+  <li>双击选择你要定位的位置点；</li>
+  <li>在左上角填速度，每个点之间移动的速度会根据这个速度移动；</li>
+  <li>右上角保存会生成出一个gpx文件；</li>
+</ol>
+
+<p>先用Xcode新建一个工程，按照以下步骤操作，Xcode可以在App Store下载：</p>
+
+<p><img src="http://images.foolishtalk.org/mock_location_2.png" alt="" /></p>
+
+<ol>
+  <li>选择创建iOS App：<br />
+<img src="http://images.foolishtalk.org/mock_location_3.png" alt="" /></li>
+  <li>输入工程名：<br />
+<img src="http://images.foolishtalk.org/mock_location_4.png" alt="" /></li>
+  <li>按照以下步骤，选择工程，然后添加账号，这里填你苹果账号：<br />
+<img src="http://images.foolishtalk.org/mock_location_5.png" alt="" /></li>
+  <li>把刚刚生成的GPX文件拖进去工程目录中：<br />
+<img src="http://images.foolishtalk.org/mock_location_6.png" alt="" /><br />
+<img src="http://images.foolishtalk.org/mock_location_7.png" alt="" /></li>
+  <li>把手机连到Mac上，然后选中你的手机：<br />
+<img src="http://images.foolishtalk.org/mock_location_8.png" alt="" /></li>
+  <li>点击运行：<br />
+<img src="http://images.foolishtalk.org/mock_location_9.png" alt="" /></li>
+  <li>选中你拖进去gpx文件名字的选项：<br />
+<img src="http://images.foolishtalk.org/mock_location_10.png" alt="" /></li>
+  <li>这时候你会发现定位已经改变了，但是要注意，这时候手机和Mac是不能断开连接的，以及运行的App不能被杀死，否则定位修改都会失败。</li>
+</ol>
 
 
                 <hr>
@@ -231,13 +263,9 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/04/02/%E7%97%9B%E8%8B%A6%E9%80%A0%E5%B0%B1%E6%80%A7%E6%A0%BC/" data-toggle="tooltip" data-placement="top" title="痛苦造就性格">&larr; Previous Post</a>
+                        <a href="/2019/03/05/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-toggle="tooltip" data-placement="top" title="音视频学习笔记">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/06/21/WWDC-2017%E7%AC%94%E8%AE%B0-Codable/" data-toggle="tooltip" data-placement="top" title="WWDC-2017笔记---Codable">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -368,8 +396,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2017/06/19/记录点自己做CocoaPod时遇到的坑";
-    var disqus_url = "http://www.foolishtalk.org/2017/06/19/%E8%AE%B0%E5%BD%95%E7%82%B9%E8%87%AA%E5%B7%B1%E5%81%9ACocoaPod%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/";
+    var disqus_identifier = "/2019/04/11/mocklocation";
+    var disqus_url = "http://www.foolishtalk.org/2019/04/11/mocklocation/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

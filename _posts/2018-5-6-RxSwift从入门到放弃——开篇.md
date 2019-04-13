@@ -3,7 +3,7 @@ layout:     post
 title:      "RxSwift从入门到放弃——开篇"
 subtitle:   "Swift,RxSwift"
 date:       2018-5-6
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-unsplash.jpg"
 tags:
 - RxSwift

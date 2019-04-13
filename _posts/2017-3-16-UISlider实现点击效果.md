@@ -3,7 +3,7 @@ layout:     post
 title:      "UISlider实现点击效果"
 subtitle:   "CocoaPod，iOS，UI"
 date:       2017-3-16
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-old.jpg"
 tags:
 - 问题随笔

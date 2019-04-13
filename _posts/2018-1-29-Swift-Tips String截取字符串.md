@@ -3,7 +3,7 @@ layout:     post
 title:      "Swift-Tips String截取字符串"
 subtitle:   "Swift，Tips"
 date:       2018-1-29
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-sea.jpg"
 tags:
 - Swift-Tips

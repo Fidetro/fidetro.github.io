@@ -3,7 +3,7 @@ layout:     post
 title:      "WWDC-2018笔记---High Performance Auto Layout"
 subtitle:   "iOS，自动约束"
 date:       2018-9-10
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-ismael.jpg"
 tags:
 - iOS

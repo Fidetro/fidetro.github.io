@@ -5,9 +5,63 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 14 Mar 2019 23:04:12 +0800</pubDate>
-    <lastBuildDate>Thu, 14 Mar 2019 23:04:12 +0800</lastBuildDate>
-    <generator>Jekyll v3.8.3</generator>
+    <pubDate>Sat, 13 Apr 2019 20:25:49 +0800</pubDate>
+    <lastBuildDate>Sat, 13 Apr 2019 20:25:49 +0800</lastBuildDate>
+    <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>iOS模拟移动定位</title>
+        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+&lt;p&gt;在阅读这篇文章之前，先保证你必须符合以下几个条件：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;有台Mac可以使用&lt;/li&gt;
+  &lt;li&gt;有一定的编程经验（如果你愿意折腾，没有经验也是可以的）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
+&lt;p&gt;先打开Mac应用虚拟定位，可以看到以下的界面，可以在这里下载（应用还在审核，审核完再补链接）：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/mock_location_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;双击选择你要定位的位置点；&lt;/li&gt;
+  &lt;li&gt;在左上角填速度，每个点之间移动的速度会根据这个速度移动；&lt;/li&gt;
+  &lt;li&gt;右上角保存会生成出一个gpx文件；&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;先用Xcode新建一个工程，按照以下步骤操作，Xcode可以在App Store下载：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/mock_location_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;选择创建iOS App：&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/mock_location_3.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;输入工程名：&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/mock_location_4.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;按照以下步骤，选择工程，然后添加账号，这里填你苹果账号：&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/mock_location_5.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;把刚刚生成的GPX文件拖进去工程目录中：&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/mock_location_6.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/mock_location_7.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;把手机连到Mac上，然后选中你的手机：&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/mock_location_8.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;点击运行：&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/mock_location_9.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;选中你拖进去gpx文件名字的选项：&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/mock_location_10.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;这时候你会发现定位已经改变了，但是要注意，这时候手机和Mac是不能断开连接的，以及运行的App不能被杀死，否则定位修改都会失败。&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Thu, 11 Apr 2019 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2019/04/11/mocklocation/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2019/04/11/mocklocation/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Xcode</category>
+        
+        
+      </item>
     
       <item>
         <title>音视频学习笔记</title>
@@ -797,49 +851,6 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
         <guid isPermaLink="true">http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/</guid>
         
         <category>iOS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>iOS实现隐藏状态栏动画</title>
-        <description>&lt;p&gt;隐藏状态栏是一个相对比较常见的需求，为了让隐藏状态栏更加平滑过渡，我们会给他增加一个动画效果。像常见的渐变透明隐藏效果和上下滚动隐藏效果，系统已经提供好对应的api给我们使用了。在需要隐藏状态栏的Controller下使用这段代码就可以实现了：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;k&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;touchesBegan&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;touches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UITouch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;isStatusBarHidden&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isStatusBarHidden&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;UIView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;animate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;withDuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;setNeedsStatusBarAppearanceUpdate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    
-    &lt;span class=&quot;k&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;prefersStatusBarHidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Bool&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isStatusBarHidden&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;preferredStatusBarUpdateAnimation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIStatusBarAnimation&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;slide&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;如果是&lt;code class=&quot;highlighter-rouge&quot;&gt;present&lt;/code&gt;过去ViewController还在&lt;code class=&quot;highlighter-rouge&quot;&gt;present&lt;/code&gt;之前需要设置：&lt;/p&gt;
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;vc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;modalPresentationCapturesStatusBarAppearance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;要注意的一点是，使用这个方法需要在&lt;code class=&quot;highlighter-rouge&quot;&gt;info.plist&lt;/code&gt;中将&lt;code class=&quot;highlighter-rouge&quot;&gt;View controller-based status bar appearance&lt;/code&gt;字段设置成&lt;code class=&quot;highlighter-rouge&quot;&gt;YES&lt;/code&gt;。（PS:没有设置的默认为YES&lt;/p&gt;
-
-&lt;p&gt;如果项目中&lt;code class=&quot;highlighter-rouge&quot;&gt;View controller-based status bar appearance&lt;/code&gt;字段已经设置成了为&lt;code class=&quot;highlighter-rouge&quot;&gt;NO&lt;/code&gt;,上面的方法是不会生效的，这时候可以使用：&lt;/p&gt;
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;UIApplication&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shared&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;setStatusBarHidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;slide&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;这样就能完美解决隐藏导航栏动画的问题了，但是要注意这个方法在iOS 9后已经废弃，尽量还是使用第一种方法。&lt;/p&gt;
-</description>
-        <pubDate>Wed, 19 Sep 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/09/19/iOS%E5%AE%9E%E7%8E%B0%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E5%8A%A8%E7%94%BB/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/09/19/iOS%E5%AE%9E%E7%8E%B0%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E5%8A%A8%E7%94%BB/</guid>
-        
-        <category>iOS</category>
-        
-        <category>动画</category>
         
         
       </item>

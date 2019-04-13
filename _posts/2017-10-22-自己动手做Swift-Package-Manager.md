@@ -3,7 +3,7 @@ layout:     post
 title:      "自己动手做Swift-Package-Manager"
 subtitle:   "Swift，iOS，Swift Package Manager"
 date:       2017-10-22
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-old.jpg"
 tags:
 - Swift

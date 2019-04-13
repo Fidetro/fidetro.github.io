@@ -3,7 +3,7 @@ layout:     post
 title:      "Swift闭包中weak多个对象"
 subtitle:   "Swift，weak"
 date:       2019-2-23
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-andre-benz.jpg"
 tags:
 - iOS

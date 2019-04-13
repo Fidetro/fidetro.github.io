@@ -3,7 +3,7 @@ layout:     post
 title:      "聊聊ReplayKit踩过来的坑"
 subtitle:   "iOS，动画，ReplayKit"
 date:       2018-12-10
-author:     "Fidetro"
+author:     "Karim"
 header-img: "img/post-bg-ismael.jpg"
 tags:
 - iOS
