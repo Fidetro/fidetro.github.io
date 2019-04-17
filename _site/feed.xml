@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 17 Apr 2019 09:31:10 +0800</pubDate>
-    <lastBuildDate>Wed, 17 Apr 2019 09:31:10 +0800</lastBuildDate>
+    <pubDate>Wed, 17 Apr 2019 11:28:43 +0800</pubDate>
+    <lastBuildDate>Wed, 17 Apr 2019 11:28:43 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -19,7 +19,7 @@
 &lt;/ul&gt;
 
 &lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
-&lt;p&gt;先打开Mac应用虚拟定位，可以看到以下的界面，可以在这里&lt;a href=&quot;https://itunes.apple.com/us/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?l=zh&amp;amp;ls=1&amp;amp;mt=12&quot;&gt;下载&lt;/a&gt;，另外有什么App使用上的问题和建议，也可以来&lt;a href=&quot;https://weibo.com/p/1005052095454814&quot;&gt;微博&lt;/a&gt;私信我：&lt;/p&gt;
+&lt;p&gt;先打开Mac应用虚拟定位，可以看到以下的界面，可以在这里&lt;a href=&quot;https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;下载&lt;/a&gt;，另外有什么App使用上的问题和建议，也可以来&lt;a href=&quot;https://weibo.com/p/1005052095454814&quot;&gt;微博&lt;/a&gt;私信我：&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/mock_location_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -132,8 +132,22 @@ rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
 &lt;h1 id=&quot;视频数据采集原理推流&quot;&gt;视频数据采集原理(推流)&lt;/h1&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;音视频的采集，ios 中，利用 AVCaptureSession和AVCaptureDevice 可以采集到原始的音视频数据流。一般采集为RGBA格式，因为苹果不支持YUV的渲染，只支持RGB渲染，如果对摄像头需要滤镜处理，就需要采集为RGBA格式。&lt;/p&gt;
+  &lt;li&gt;音视频的采集，iOS 中，利用 AVCaptureSession和AVCaptureDevice 可以采集到原始的音视频数据流。一般采集为RGBA格式，因为苹果不支持YUV的渲染，只支持RGB渲染，如果对摄像头需要滤镜处理，就需要采集为RGBA格式。
+    &lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;      &lt;span class=&quot;c1&quot;&gt;// 1. 创建`AVCaptureSession`用来管理音视频输入、输出，`setSessionPreset:`可以设置视频分辨率；&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureSession&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setSessionPreset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureSessionPreset640x480&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;//  2. 通过`AVCaptureDevice`拿到物理设备，再初始化`AVCaptureDeviceInput`输出对象；&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;AVCaptureDevice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureDevice&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;defaultDeviceWithMediaType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVMediaTypeVideo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;AVCaptureDeviceInput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deviceInput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureDeviceInput&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;deviceInputWithDevice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;// 3. 将其设备输出对象`AVCaptureDeviceInput`添加到`AVCaptureSession`的输入中&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;canAddInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deviceInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;addInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deviceInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; 
+      &lt;span class=&quot;c1&quot;&gt;// 4. 创建输出对象&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;AVCaptureVideoDataOutput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;videoDataOutput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureVideoDataOutput&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;NSDictionary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rgbOutputSettings&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSDictionary&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dictionaryWithObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSNumber&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;numberWithInt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCMPixelFormat_32BGRA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCVPixelBufferPixelFormatTypeKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;对视频进行 H264 编码，对音频进行 AAC 编码，在 ios 中分别有已经封装好的编码库来实现对音视频的编码。&lt;/p&gt;
@@ -141,9 +155,7 @@ rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;对编码后的音、视频数据进行组装封包；&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;建立 RTMP 连接并上推到服务端。&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;建立 RTMP 连接并上推到服务端。&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/20190305172841.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
