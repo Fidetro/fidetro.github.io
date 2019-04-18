@@ -3,10 +3,10 @@
   <channel>
     <title>FoolishTalk</title>
     <description></description>
-    <link>http://www.foolishtalk.org/</link>
-    <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 17 Apr 2019 11:28:43 +0800</pubDate>
-    <lastBuildDate>Wed, 17 Apr 2019 11:28:43 +0800</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Thu, 18 Apr 2019 17:42:39 +0800</pubDate>
+    <lastBuildDate>Thu, 18 Apr 2019 17:42:39 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -53,8 +53,8 @@
 &lt;/ol&gt;
 </description>
         <pubDate>Thu, 11 Apr 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/04/11/mocklocation/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/04/11/mocklocation/</guid>
+        <link>http://localhost:4000/2019/04/11/mocklocation/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/04/11/mocklocation/</guid>
         
         <category>iOS</category>
         
@@ -74,7 +74,10 @@
 
 &lt;p&gt;&lt;a href=&quot;https://www.zhihu.com/question/26038990/answer/130557483&quot;&gt;视频直播中说的抓流和推流，是什么意思，两种有什么区别？ - 刘博的回答 - 知乎&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;推流，指的是把采集阶段封包好的内容传输到服务器的过程。介绍一下目前有主流的推送协议，以及各自的优缺点。&lt;/p&gt;
+&lt;p&gt;推流，指的是把采集阶段封包好的内容传输到服务器的过程。&lt;br /&gt;
+拉流是指服务器已有直播内容，用指定地址进行拉取的过程。&lt;/p&gt;
+
+&lt;p&gt;介绍一下目前有主流的推送协议，以及各自的优缺点。&lt;/p&gt;
 &lt;ol&gt;
   &lt;li&gt;
     &lt;p&gt;RTMP&lt;br /&gt;
@@ -89,9 +92,6 @@ Http Live Streaming是由Apple公司定义的基于HTTP的流媒体实时传输�
   &lt;li&gt;WebRTC&lt;br /&gt;
 WebRTC（Web Real-Time Communication），即“源自网页即时通信”。WebRTC是一个支持浏览器进行实时语音、视频对话的开源协议。WebRTC的支持者甚多，Google、Mozilla、Opera推动其成为W3C推荐标准。WebRTC支持目前的主流浏览器，并且基于SRTP和UDP，即便在网络信号一般的情况下也具备较好的稳定性。此外，WebRTC可以实现点对点通信，通信双方延时低，是实现“连麦”功能比较好的选择。&lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;p&gt;拉流是指服务器已有直播内容，用指定地址进行拉取的过程。
-&lt;img src=&quot;https://pic1.zhimg.com/80/7cb543431f65ddc2d328856f1fcc47fc_hd.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;rtmp和hls对比&quot;&gt;RTMP和HLS对比&lt;/h1&gt;
 
@@ -130,37 +130,71 @@ flv刚好支持 h264 和 aac。&lt;br /&gt;
 rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
 
 &lt;h1 id=&quot;视频数据采集原理推流&quot;&gt;视频数据采集原理(推流)&lt;/h1&gt;
-
 &lt;ol&gt;
-  &lt;li&gt;音视频的采集，iOS 中，利用 AVCaptureSession和AVCaptureDevice 可以采集到原始的音视频数据流。一般采集为RGBA格式，因为苹果不支持YUV的渲染，只支持RGB渲染，如果对摄像头需要滤镜处理，就需要采集为RGBA格式。
-    &lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;      &lt;span class=&quot;c1&quot;&gt;// 1. 创建`AVCaptureSession`用来管理音视频输入、输出，`setSessionPreset:`可以设置视频分辨率；&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureSession&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setSessionPreset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureSessionPreset640x480&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-      &lt;span class=&quot;c1&quot;&gt;//  2. 通过`AVCaptureDevice`拿到物理设备，再初始化`AVCaptureDeviceInput`输出对象；&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;AVCaptureDevice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureDevice&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;defaultDeviceWithMediaType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVMediaTypeVideo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;AVCaptureDeviceInput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deviceInput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureDeviceInput&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;deviceInputWithDevice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-      &lt;span class=&quot;c1&quot;&gt;// 3. 将其设备输出对象`AVCaptureDeviceInput`添加到`AVCaptureSession`的输入中&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;canAddInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deviceInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-          &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;addInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deviceInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; 
-      &lt;span class=&quot;c1&quot;&gt;// 4. 创建输出对象&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;AVCaptureVideoDataOutput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;videoDataOutput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureVideoDataOutput&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;NSDictionary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rgbOutputSettings&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSDictionary&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dictionaryWithObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSNumber&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;numberWithInt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCMPixelFormat_32BGRA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCVPixelBufferPixelFormatTypeKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;对视频进行 H264 编码，对音频进行 AAC 编码，在 ios 中分别有已经封装好的编码库来实现对音视频的编码。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;对编码后的音、视频数据进行组装封包；&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;建立 RTMP 连接并上推到服务端。&lt;/li&gt;
+  &lt;li&gt;音视频的采集，iOS 中，利用 AVCaptureSession和AVCaptureDevice 可以采集到原始的音视频数据流。一般采集原始格式为YUV，因为前面也有提到了，YUV体积比较小。&lt;br /&gt;
+```objc&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/20190305172841.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;(AVCaptureSession *)session
+{
+  if (!_session) {
+      // 1. 创建&lt;code class=&quot;highlighter-rouge&quot;&gt;AVCaptureSession&lt;/code&gt;用来管理音视频输入、输出，&lt;code class=&quot;highlighter-rouge&quot;&gt;setSessionPreset:&lt;/code&gt;可以设置视频分辨率；
+      _session = [AVCaptureSession new];
+      [_session setSessionPreset:AVCaptureSessionPreset640x480];
+  }
+  return _session;
+}&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;(void)setupVideoCapture
+{
+  //  2. 通过&lt;code class=&quot;highlighter-rouge&quot;&gt;AVCaptureDevice&lt;/code&gt;拿到物理设备，再初始化&lt;code class=&quot;highlighter-rouge&quot;&gt;AVCaptureDeviceInput&lt;/code&gt;输出对象；
+  AVCaptureDevice &lt;em&gt;device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+  NSError *error = nil;
+  AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:device error:&amp;amp;error];
+  // 3. 将其设备输出对象&lt;code class=&quot;highlighter-rouge&quot;&gt;AVCaptureDeviceInput&lt;/code&gt;添加到&lt;code class=&quot;highlighter-rouge&quot;&gt;AVCaptureSession&lt;/code&gt;的输入中
+  if ([self.session canAddInput:deviceInput])
+  {
+      [self.session addInput:deviceInput];
+  }
+  // 4. 创建输出对象
+  AVCaptureVideoDataOutput *videoDataOutput = [AVCaptureVideoDataOutput new];
+  // 5. 设置输出格式，iOS下目前仅支持这3种
+  /&lt;/em&gt;
+   kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange YUV格式，Y值取值范围[16,235]
+   kCVPixelFormatType_420YpCbCr8BiPlanarFullRange  YUV格式，Y值取值范围[0,255]
+   kCVPixelFormatType_32BGRA                       BGBA格式
+   */
+  NSDictionary *rgbOutputSettings = @{(NSString *)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_32BGRA)};
+  [videoDataOutput setVideoSettings:rgbOutputSettings];
+  // 6. 放弃因为阻塞而延迟的视频帧
+  [videoDataOutput setAlwaysDiscardsLateVideoFrames:YES];
+  // 7. 创建一个串行队列，保证输出帧是按顺序返回的
+  dispatch_queue_t videoDataOutputQueue = dispatch_queue_create(“VideoDataOutputQueue”, DISPATCH_QUEUE_SERIAL);
+  [videoDataOutput setSampleBufferDelegate:self queue:videoDataOutputQueue];&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph LR
+    &lt;p&gt;if ([self.session canAddOutput:videoDataOutput]) {
+      [self.session addOutput:videoDataOutput];
+  }
+  self.videoConnection = [videoDataOutput connectionWithMediaType:AVMediaTypeVideo];
+}&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+
+2. 对视频进行 H264 编码，对音频进行 AAC 编码，在 ios 中分别有已经封装好的编码库来实现对音视频的编码。  
+  
+3. 对编码后的音、视频数据进行组装封包；  
+  
+4. 建立 RTMP 连接并上推到服务端。  
+
+![](http://images.foolishtalk.org/20190305172841.png)  
+
+```mermaid
+graph LR
    硬件采集 --&amp;gt; 音频数据流;
    硬件采集 --&amp;gt; 视频数据流;
    音频数据流 --&amp;gt; AAC编码;
@@ -168,7 +202,7 @@ rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
    AAC编码 --&amp;gt; 组装封包;
    H264编码 --&amp;gt; 组装封包; 
    组装封包 --&amp;gt; RTMP连接推上服务器;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;视频播放原理拉流&quot;&gt;视频播放原理(拉流)&lt;/h1&gt;
 
@@ -227,8 +261,8 @@ rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 05 Mar 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/03/05/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/03/05/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        <link>http://localhost:4000/2019/03/05/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/03/05/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
         
         <category>iOS</category>
         
@@ -248,8 +282,8 @@ rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Sat, 23 Feb 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/02/23/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/02/23/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/</guid>
+        <link>http://localhost:4000/2019/02/23/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/02/23/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/</guid>
         
         <category>iOS</category>
         
@@ -483,8 +517,8 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
 &lt;p&gt;&lt;a href=&quot;http://liuyanwei.jumppo.com/2015/08/19/ios-ThreadAndAsynchronization.html&quot;&gt;ios的线程和同步异步操作&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 16 Feb 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/</guid>
+        <link>http://localhost:4000/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/</guid>
         
         <category>iOS</category>
         
@@ -511,8 +545,8 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
 
 </description>
         <pubDate>Mon, 04 Feb 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/02/04/2019%E7%9A%84%E5%85%B3%E9%94%AE%E8%AF%8D/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/02/04/2019%E7%9A%84%E5%85%B3%E9%94%AE%E8%AF%8D/</guid>
+        <link>http://localhost:4000/2019/02/04/2019%E7%9A%84%E5%85%B3%E9%94%AE%E8%AF%8D/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/02/04/2019%E7%9A%84%E5%85%B3%E9%94%AE%E8%AF%8D/</guid>
         
         <category>杂谈</category>
         
@@ -649,8 +683,8 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
 &lt;a href=&quot;https://developer.apple.com/documentation/cloudkit/ckcontainer&quot;&gt;CKcontainer官方文档&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 15 Dec 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/12/15/CloudKit%E5%AE%9E%E8%B7%B5/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/12/15/CloudKit%E5%AE%9E%E8%B7%B5/</guid>
+        <link>http://localhost:4000/2018/12/15/CloudKit%E5%AE%9E%E8%B7%B5/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/12/15/CloudKit%E5%AE%9E%E8%B7%B5/</guid>
         
         <category>iOS</category>
         
@@ -711,8 +745,8 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
 &lt;p&gt;另外知乎其实是先push到一个原来已经放着videoView的Controller，然后在&lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt;的时候再present到&lt;code class=&quot;highlighter-rouge&quot;&gt;SKStoreProductViewController&lt;/code&gt;。只是一些交互上的细节，这点没有在上面分析。&lt;/p&gt;
 </description>
         <pubDate>Thu, 13 Dec 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/12/13/%E7%9F%A5%E4%B9%8Eapp%E5%86%85%E6%89%93%E5%BC%80app-store%E7%9A%84%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/12/13/%E7%9F%A5%E4%B9%8Eapp%E5%86%85%E6%89%93%E5%BC%80app-store%E7%9A%84%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90/</guid>
+        <link>http://localhost:4000/2018/12/13/%E7%9F%A5%E4%B9%8Eapp%E5%86%85%E6%89%93%E5%BC%80app-store%E7%9A%84%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/12/13/%E7%9F%A5%E4%B9%8Eapp%E5%86%85%E6%89%93%E5%BC%80app-store%E7%9A%84%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90/</guid>
         
         <category>iOS</category>
         
@@ -811,8 +845,8 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
 &lt;p&gt;可以通过获取KVC的方式，获取视频地址，这样就可以避免黑屏的问题了，只是这样，如果要做视频剪辑，就需要另外自定义页面了。但是停止录屏不进入回调和previewViewController有可能为nil的问题，依旧无法解决。&lt;/p&gt;
 </description>
         <pubDate>Mon, 10 Dec 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/12/10/%E8%81%8A%E8%81%8AReplayKit%E8%B8%A9%E8%BF%87%E6%9D%A5%E7%9A%84%E5%9D%91/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/12/10/%E8%81%8A%E8%81%8AReplayKit%E8%B8%A9%E8%BF%87%E6%9D%A5%E7%9A%84%E5%9D%91/</guid>
+        <link>http://localhost:4000/2018/12/10/%E8%81%8A%E8%81%8AReplayKit%E8%B8%A9%E8%BF%87%E6%9D%A5%E7%9A%84%E5%9D%91/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/12/10/%E8%81%8A%E8%81%8AReplayKit%E8%B8%A9%E8%BF%87%E6%9D%A5%E7%9A%84%E5%9D%91/</guid>
         
         <category>iOS</category>
         
@@ -832,8 +866,8 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
 &lt;p&gt;大概就是这些吧～&lt;/p&gt;
 </description>
         <pubDate>Mon, 15 Oct 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/</guid>
+        <link>http://localhost:4000/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/</guid>
         
         <category>杂谈</category>
         
@@ -859,8 +893,8 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
 &lt;p&gt;而&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_BEGIN&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_END&lt;/code&gt;中间声明的对象会把所有对象默认当作是&lt;code class=&quot;highlighter-rouge&quot;&gt;__nonnull&lt;/code&gt;，而我们只需要可能为nil的对象声明为&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;就可以了。&lt;/p&gt;
 </description>
         <pubDate>Thu, 20 Sep 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/</guid>
+        <link>http://localhost:4000/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/</guid>
         
         <category>iOS</category>
         
