@@ -12,7 +12,7 @@
 
     <title>音视频学习笔记 - Karim | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/2019/03/05/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2019/03/05/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -262,70 +262,63 @@ rtmp协议所传输的视频流，就要求是flv格式。</p>
 
 <h1 id="视频数据采集原理推流">视频数据采集原理(推流)</h1>
 <ol>
-  <li>音视频的采集，iOS 中，利用 AVCaptureSession和AVCaptureDevice 可以采集到原始的音视频数据流。一般采集原始格式为YUV，因为前面也有提到了，YUV体积比较小。<br />
-```objc</li>
+  <li>音视频的采集，iOS 中，利用 AVCaptureSession和AVCaptureDevice 可以采集到原始的音视频数据流。一般采集原始格式为YUV，因为前面也有提到了，YUV体积比较小。
+    <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">AVCaptureSession</span> <span class="o">*</span><span class="p">)</span><span class="n">session</span>
+<span class="p">{</span>
+ <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">_session</span><span class="p">)</span> <span class="p">{</span>
+     <span class="c1">// 1. 创建`AVCaptureSession`用来管理音视频输入、输出，`setSessionPreset:`可以设置视频分辨率；</span>
+     <span class="n">_session</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVCaptureSession</span> <span class="nf">new</span><span class="p">];</span>
+     <span class="p">[</span><span class="n">_session</span> <span class="nf">setSessionPreset</span><span class="p">:</span><span class="n">AVCaptureSessionPreset640x480</span><span class="p">];</span>
+ <span class="p">}</span>
+ <span class="k">return</span> <span class="n">_session</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+    <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">setupVideoCapture</span>
+<span class="p">{</span>
+ <span class="c1">//  2. 通过`AVCaptureDevice`拿到物理设备，再初始化`AVCaptureDeviceInput`输出对象；</span>
+ <span class="n">AVCaptureDevice</span> <span class="o">*</span><span class="n">device</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVCaptureDevice</span> <span class="nf">defaultDeviceWithMediaType</span><span class="p">:</span><span class="n">AVMediaTypeVideo</span><span class="p">];</span>
+ <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+ <span class="n">AVCaptureDeviceInput</span> <span class="o">*</span><span class="n">deviceInput</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVCaptureDeviceInput</span> <span class="nf">deviceInputWithDevice</span><span class="p">:</span><span class="n">device</span> <span class="nf">error</span><span class="p">:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">];</span>
+ <span class="c1">// 3. 将其设备输出对象`AVCaptureDeviceInput`添加到`AVCaptureSession`的输入中</span>
+ <span class="k">if</span> <span class="p">([</span><span class="n">self</span><span class="p">.</span><span class="n">session</span> <span class="nf">canAddInput</span><span class="p">:</span><span class="n">deviceInput</span><span class="p">])</span>
+ <span class="p">{</span>
+     <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">session</span> <span class="nf">addInput</span><span class="p">:</span><span class="n">deviceInput</span><span class="p">];</span>
+ <span class="p">}</span>
+ <span class="c1">// 4. 创建输出对象</span>
+ <span class="n">AVCaptureVideoDataOutput</span> <span class="o">*</span><span class="n">videoDataOutput</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVCaptureVideoDataOutput</span> <span class="nf">new</span><span class="p">];</span>
+ <span class="c1">// 5. 设置输出格式，iOS下目前仅支持这3种</span>
+ <span class="cm">/*
+  kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange YUV格式，Y值取值范围[16,235]
+  kCVPixelFormatType_420YpCbCr8BiPlanarFullRange  YUV格式，Y值取值范围[0,255]
+  kCVPixelFormatType_32BGRA                       BGBA格式
+  */</span>
+ <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">rgbOutputSettings</span> <span class="o">=</span> <span class="p">@{(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">kCVPixelBufferPixelFormatTypeKey</span><span class="o">:</span><span class="err">@</span><span class="p">(</span><span class="n">kCVPixelFormatType_32BGRA</span><span class="p">)};</span>
+ <span class="p">[</span><span class="n">videoDataOutput</span> <span class="nf">setVideoSettings</span><span class="p">:</span><span class="n">rgbOutputSettings</span><span class="p">];</span>
+ <span class="c1">// 6. 放弃因为阻塞而延迟的视频帧</span>
+ <span class="p">[</span><span class="n">videoDataOutput</span> <span class="nf">setAlwaysDiscardsLateVideoFrames</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span>
+ <span class="c1">// 7. 创建一个串行队列，保证输出帧是按顺序返回的</span>
+ <span class="n">dispatch_queue_t</span> <span class="n">videoDataOutputQueue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">"VideoDataOutputQueue"</span><span class="p">,</span> <span class="n">DISPATCH_QUEUE_SERIAL</span><span class="p">);</span>
+ <span class="p">[</span><span class="n">videoDataOutput</span> <span class="nf">setSampleBufferDelegate</span><span class="p">:</span><span class="n">self</span> <span class="nf">queue</span><span class="p">:</span><span class="n">videoDataOutputQueue</span><span class="p">];</span>
+    
+ <span class="k">if</span> <span class="p">([</span><span class="n">self</span><span class="p">.</span><span class="n">session</span> <span class="nf">canAddOutput</span><span class="p">:</span><span class="n">videoDataOutput</span><span class="p">])</span> <span class="p">{</span>
+     <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">session</span> <span class="nf">addOutput</span><span class="p">:</span><span class="n">videoDataOutput</span><span class="p">];</span>
+ <span class="p">}</span>
+ <span class="n">self</span><span class="p">.</span><span class="n">videoConnection</span> <span class="o">=</span> <span class="p">[</span><span class="n">videoDataOutput</span> <span class="nf">connectionWithMediaType</span><span class="p">:</span><span class="n">AVMediaTypeVideo</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>对视频进行 H264 编码，对音频进行 AAC 编码，在 ios 中分别有已经封装好的编码库来实现对音视频的编码。</p>
+  </li>
+  <li>
+    <p>对编码后的音、视频数据进行组装封包；</p>
+  </li>
+  <li>建立 RTMP 连接并上推到服务端。</li>
 </ol>
 
-<ul>
-  <li>
-    <p>(AVCaptureSession *)session
-{
-  if (!_session) {
-      // 1. 创建<code class="highlighter-rouge">AVCaptureSession</code>用来管理音视频输入、输出，<code class="highlighter-rouge">setSessionPreset:</code>可以设置视频分辨率；
-      _session = [AVCaptureSession new];
-      [_session setSessionPreset:AVCaptureSessionPreset640x480];
-  }
-  return _session;
-}</p>
-  </li>
-  <li>
-    <p>(void)setupVideoCapture
-{
-  //  2. 通过<code class="highlighter-rouge">AVCaptureDevice</code>拿到物理设备，再初始化<code class="highlighter-rouge">AVCaptureDeviceInput</code>输出对象；
-  AVCaptureDevice <em>device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-  NSError *error = nil;
-  AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:device error:&amp;error];
-  // 3. 将其设备输出对象<code class="highlighter-rouge">AVCaptureDeviceInput</code>添加到<code class="highlighter-rouge">AVCaptureSession</code>的输入中
-  if ([self.session canAddInput:deviceInput])
-  {
-      [self.session addInput:deviceInput];
-  }
-  // 4. 创建输出对象
-  AVCaptureVideoDataOutput *videoDataOutput = [AVCaptureVideoDataOutput new];
-  // 5. 设置输出格式，iOS下目前仅支持这3种
-  /</em>
-   kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange YUV格式，Y值取值范围[16,235]
-   kCVPixelFormatType_420YpCbCr8BiPlanarFullRange  YUV格式，Y值取值范围[0,255]
-   kCVPixelFormatType_32BGRA                       BGBA格式
-   */
-  NSDictionary *rgbOutputSettings = @{(NSString *)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_32BGRA)};
-  [videoDataOutput setVideoSettings:rgbOutputSettings];
-  // 6. 放弃因为阻塞而延迟的视频帧
-  [videoDataOutput setAlwaysDiscardsLateVideoFrames:YES];
-  // 7. 创建一个串行队列，保证输出帧是按顺序返回的
-  dispatch_queue_t videoDataOutputQueue = dispatch_queue_create(“VideoDataOutputQueue”, DISPATCH_QUEUE_SERIAL);
-  [videoDataOutput setSampleBufferDelegate:self queue:videoDataOutputQueue];</p>
+<p><img src="http://images.foolishtalk.org/20190305172841.png" alt="" /></p>
 
-    <p>if ([self.session canAddOutput:videoDataOutput]) {
-      [self.session addOutput:videoDataOutput];
-  }
-  self.videoConnection = [videoDataOutput connectionWithMediaType:AVMediaTypeVideo];
-}</p>
-  </li>
-</ul>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-
-2. 对视频进行 H264 编码，对音频进行 AAC 编码，在 ios 中分别有已经封装好的编码库来实现对音视频的编码。  
-  
-3. 对编码后的音、视频数据进行组装封包；  
-  
-4. 建立 RTMP 连接并上推到服务端。  
-
-![](http://images.foolishtalk.org/20190305172841.png)  
-
-```mermaid
-graph LR
+<pre><code class="language-mermaid">graph LR
    硬件采集 --&gt; 音频数据流;
    硬件采集 --&gt; 视频数据流;
    音频数据流 --&gt; AAC编码;
@@ -333,7 +326,7 @@ graph LR
    AAC编码 --&gt; 组装封包;
    H264编码 --&gt; 组装封包; 
    组装封包 --&gt; RTMP连接推上服务器;
-</code></pre></div></div>
+</code></pre>
 
 <h1 id="视频播放原理拉流">视频播放原理(拉流)</h1>
 
@@ -555,7 +548,7 @@ graph LR
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2019/03/05/音视频学习笔记";
-    var disqus_url = "http://localhost:4000/2019/03/05/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/";
+    var disqus_url = "http://www.foolishtalk.org/2019/03/05/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
