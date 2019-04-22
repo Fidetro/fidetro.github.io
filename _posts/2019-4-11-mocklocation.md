@@ -38,9 +38,9 @@ tags:
 4. 把刚刚生成的GPX文件拖进去工程目录中：  
 ![](http://images.foolishtalk.org/mock_location_6.png)  
 ![](http://images.foolishtalk.org/mock_location_7.png)  
-5. 把手机连到Mac上，然后选中你的手机：  
+5. 把手机连到Mac上，然后选中你的手机，如果没有看到你的手机，可以打开iTunes看看手机是否有连接，如果也没有，拔掉线重新连，应该会看到iTunes有个弹窗，点击信任此电脑，手机上也需要点击信任此电脑：  
 ![](http://images.foolishtalk.org/mock_location_8.png)  
-6. 点击运行：  
+6. 点击运行，首次运行可能会弹出需要信任证书的提示，这时候点击手机的设置-通用-描述文件与设备管理-「找到自己的开发证书」-点击信任，再重新运行一遍：  
 ![](http://images.foolishtalk.org/mock_location_9.png)  
 7. 选中你拖进去gpx文件名字的选项：  
 ![](http://images.foolishtalk.org/mock_location_10.png)  
