@@ -25,13 +25,13 @@ tags:
 2. 在左上角填速度，每个点之间移动的速度会根据这个速度移动；
 3. 右上角保存会生成出一个gpx文件；
 
-先用Xcode新建一个工程，按照以下步骤操作，Xcode可以在App Store下载：    
+先用Xcode新建一个工程，按照以下步骤操作，Xcode可以在App Store[下载](https://itunes.apple.com/cn/app/xcode/id497799835?mt=12)：    
 
 ![](http://images.foolishtalk.org/mock_location_2.png)  
 
 1. 选择创建iOS App：  
 ![](http://images.foolishtalk.org/mock_location_3.png)  
-2. 输入工程名：  
+2. 输入工程名，`Organization Name`随便填就可以了，`Organization Identifier`填"com.xxx.xxx"，xxx替换成任意英文即可：  
 ![](http://images.foolishtalk.org/mock_location_4.png)  
 3. 按照以下步骤，选择工程，然后添加账号，这里填你苹果账号：  
 ![](http://images.foolishtalk.org/mock_location_5.png)  
@@ -39,7 +39,7 @@ tags:
 ![](http://images.foolishtalk.org/mock_location_8.png) 
 5. 输入你手机iOS系统的版本，这里代表可以运行的最低版本，例如你是iOS 10.2，输入10就可以了：  
 ![](http://images.foolishtalk.org/mock_location_11.png) 
-6. 把刚刚生成的GPX文件拖进去工程目录中：  
+6. 下载[虚拟定位](https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)，然后按照你想模拟的路径双击地图，按保存会生成一个GPX文件，把生成的GPX文件拖进去工程目录中：  
 ![](http://images.foolishtalk.org/mock_location_6.png)  
 ![](http://images.foolishtalk.org/mock_location_7.png)  
 

@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 30 Apr 2019 22:32:47 +0800</pubDate>
-    <lastBuildDate>Tue, 30 Apr 2019 22:32:47 +0800</lastBuildDate>
+    <pubDate>Mon, 06 May 2019 19:54:05 +0800</pubDate>
+    <lastBuildDate>Mon, 06 May 2019 19:54:05 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -29,14 +29,14 @@
   &lt;li&gt;右上角保存会生成出一个gpx文件；&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;先用Xcode新建一个工程，按照以下步骤操作，Xcode可以在App Store下载：&lt;/p&gt;
+&lt;p&gt;先用Xcode新建一个工程，按照以下步骤操作，Xcode可以在App Store&lt;a href=&quot;https://itunes.apple.com/cn/app/xcode/id497799835?mt=12&quot;&gt;下载&lt;/a&gt;：&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/mock_location_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;选择创建iOS App：&lt;br /&gt;
 &lt;img src=&quot;http://images.foolishtalk.org/mock_location_3.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;输入工程名：&lt;br /&gt;
+  &lt;li&gt;输入工程名，&lt;code class=&quot;highlighter-rouge&quot;&gt;Organization Name&lt;/code&gt;随便填就可以了，&lt;code class=&quot;highlighter-rouge&quot;&gt;Organization Identifier&lt;/code&gt;填”com.xxx.xxx”，xxx替换成任意英文即可：&lt;br /&gt;
 &lt;img src=&quot;http://images.foolishtalk.org/mock_location_4.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;按照以下步骤，选择工程，然后添加账号，这里填你苹果账号：&lt;br /&gt;
 &lt;img src=&quot;http://images.foolishtalk.org/mock_location_5.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
@@ -45,7 +45,7 @@
   &lt;li&gt;输入你手机iOS系统的版本，这里代表可以运行的最低版本，例如你是iOS 10.2，输入10就可以了：&lt;br /&gt;
 &lt;img src=&quot;http://images.foolishtalk.org/mock_location_11.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;把刚刚生成的GPX文件拖进去工程目录中：&lt;br /&gt;
+    &lt;p&gt;下载&lt;a href=&quot;https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，然后按照你想模拟的路径双击地图，按保存会生成一个GPX文件，把生成的GPX文件拖进去工程目录中：&lt;br /&gt;
 &lt;img src=&quot;http://images.foolishtalk.org/mock_location_6.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
 &lt;img src=&quot;http://images.foolishtalk.org/mock_location_7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
