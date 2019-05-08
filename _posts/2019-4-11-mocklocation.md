@@ -19,7 +19,7 @@ tags:
 # 正文
 先打开Mac应用虚拟定位，可以看到以下的界面，可以在这里[下载](https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)，另外有什么App使用上的问题和建议，也可以来[微博](https://weibo.com/p/1005052095454814)私信我：  
 
-![](http://images.foolishtalk.org/mock_location_1.png)
+![](http://images.foolishtalk.org/mock_location_12.png)
 
 1. 双击选择你要定位的位置点；
 2. 在左上角填速度，每个点之间移动的速度会根据这个速度移动；
