@@ -5,9 +5,34 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 20 Jul 2019 19:11:22 +0800</pubDate>
-    <lastBuildDate>Sat, 20 Jul 2019 19:11:22 +0800</lastBuildDate>
+    <pubDate>Sun, 13 Oct 2019 13:15:51 +0800</pubDate>
+    <lastBuildDate>Sun, 13 Oct 2019 13:15:51 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>macOS High Sierra依赖OpenSSL交叉编译</title>
+        <description>&lt;p&gt;有些比较老的库，又是依赖 openssl，要自己编译成静态库的时候，遇到了这个错误：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;configure: error: OpenSSL support explicitly requested but OpenSSL could not be found
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;如果打算通过&lt;code class=&quot;highlighter-rouge&quot;&gt;brew link openssl&lt;/code&gt;软连接，会得到这个错误：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Warning: Refusing to link macOS-provided software: openssl
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;后来查阅了一些资料，在 High Sierra 上，openssl 被 禁止通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;brew link openssl&lt;/code&gt; 软链接。&lt;/p&gt;
+
+&lt;p&gt;设置这几个环境变量就可以了：&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/opt/openssl/lib:&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/opt/openssl/include:&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CPATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PKG_CONFIG_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/opt/openssl/lib/pkgconfig:&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PKG_CONFIG_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sun, 13 Oct 2019 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
+        
+        <category>Mac</category>
+        
+        
+      </item>
     
       <item>
         <title>iOS模拟移动定位</title>
@@ -869,33 +894,6 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
         <guid isPermaLink="true">http://www.foolishtalk.org/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/</guid>
         
         <category>杂谈</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>NS_ASSUME_NONNULL_BEGIN和NS_ASSUME_NONNULL_END</title>
-        <description>&lt;p&gt;更新了Xcode 10之后在新建OC的类的时候，都会默认加上了&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_BEGIN&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_END&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;NS_ASSUME_NONNULL_BEGIN&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Person&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NSObject&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;NS_ASSUME_NONNULL_END&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;在Objective-C中，是没有像swift中&lt;code class=&quot;highlighter-rouge&quot;&gt;!&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt;的概念，为了解决和swift混编的问题，增加了&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;___nonnull&lt;/code&gt;的关键字。 &lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;代表修饰的对象可以为nil。&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;___nonnull&lt;/code&gt;代表修饰的对象不可以为NULL或者为nil。&lt;br /&gt;
-当我们给类中其中一个对象声明&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;或&lt;code class=&quot;highlighter-rouge&quot;&gt;___nonnull&lt;/code&gt;时候，需要把所有的对象都加上&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;或&lt;code class=&quot;highlighter-rouge&quot;&gt;___nonnull&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;而&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_BEGIN&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ASSUME_NONNULL_END&lt;/code&gt;中间声明的对象会把所有对象默认当作是&lt;code class=&quot;highlighter-rouge&quot;&gt;__nonnull&lt;/code&gt;，而我们只需要可能为nil的对象声明为&lt;code class=&quot;highlighter-rouge&quot;&gt;__nullable&lt;/code&gt;就可以了。&lt;/p&gt;
-</description>
-        <pubDate>Thu, 20 Sep 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/</guid>
-        
-        <category>iOS</category>
         
         
       </item>

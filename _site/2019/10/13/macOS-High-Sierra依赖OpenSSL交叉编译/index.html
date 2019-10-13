@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>About - Karim | FoolishTalk Blog</title>
+    <title>macOS High Sierra依赖OpenSSL交叉编译 - Karim | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/about/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -123,259 +123,229 @@
 </script>
 
 
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/about-bg.jpg')">
+    <style type="text/css">
+/* 新浪微博 */
+.-mob-share-weibo {
+background-image: url("http://images.foolishtalk.org/sina_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+/* 微信 */
+.-mob-share-weixin {
+background-image: url("http://images.foolishtalk.org/wechat_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+/* QQ */
+.-mob-share-qq {
+background-image: url("http://images.foolishtalk.org/qq_share.png")!important;
+background-repeat:no-repeat;
+background-color: #ffffff;
+width: 30px;
+height: 30px;
+border: none;
+}
+</style>
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-andre-benz.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-andre-benz.jpg')
+    }
+</style>
+<header class="intro-header" >
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>About</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">me</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Mac" title="Mac">Mac</a>
+                        
+                    </div>
+                    <h1>macOS High Sierra依赖OpenSSL交叉编译</h1>
+                    
+                    
+                    <h2 class="subheading">Xcode</h2>
+                    
+                    <span class="meta">Posted by Karim on October 13, 2019</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-	<div class="row">
-        
-
-<!-- USE SIDEBAR -->
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">            
     <!-- Post Container -->
-    		<div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-    			<!-- Language Selector -->
-<!-- <select onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
-    <option value="0" selected> 中文 Chinese </option>
-    <option value="1"> 英语 English </option>
-</select> -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-<!-- Chinese Version -->
-<div class="zh post-container">
-    <blockquote>
-        引用一句别人描述我的话，“平时看起来是个很迷糊的状态，唯独在聊到技术的时候，眼睛里是会发光的。”
-    </blockquote>
-    喜欢弄花里花哨的杂技，说大实话。
+				<p>有些比较老的库，又是依赖 openssl，要自己编译成静态库的时候，遇到了这个错误：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>configure: error: OpenSSL support explicitly requested but OpenSSL could not be found
+</code></pre></div></div>
+<p>如果打算通过<code class="highlighter-rouge">brew link openssl</code>软连接，会得到这个错误：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning: Refusing to link macOS-provided software: openssl
+</code></pre></div></div>
+<p>后来查阅了一些资料，在 High Sierra 上，openssl 被 禁止通过 <code class="highlighter-rouge">brew link openssl</code> 软链接。</p>
+
+<p>设置这几个环境变量就可以了：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/usr/local/opt/openssl/lib:<span class="s2">"</span><span class="k">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="k">}</span><span class="s2">"</span>
+<span class="nb">export </span><span class="nv">CPATH</span><span class="o">=</span>/usr/local/opt/openssl/include:<span class="s2">"</span><span class="k">${</span><span class="nv">CPATH</span><span class="k">}</span><span class="s2">"</span>
+<span class="nb">export </span><span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span>/usr/local/opt/openssl/lib/pkgconfig:<span class="s2">"</span><span class="k">${</span><span class="nv">PKG_CONFIG_PATH</span><span class="k">}</span><span class="s2">"</span>
+</code></pre></div></div>
+
+
+                <hr>
+            <div>
+                <p>请保持转载后文章内容的完整，以及文章出处。本人保留所有版权相关权利。</p>
+                <!-- 要是你找到这个，想打赏就打赏吧 <p>如果你看了文章，觉得有收获，可以通过下面的支付宝二维码打赏。</p>
+                <b>
+                <img height="100" width="100" src="http://images.foolishtalk.org/qrcode.png">
+                </b> -->
+            </div>
+                <!-- 分享代码 -->                
+<div class="-foot-share-buttons">
+    <b>分享到：</b>
+    <button class="-mob-share-weibo"></button>
+    <button class="-mob-share-weixin"></button>
+    <button class="-mob-share-qq"></button>
+    <p>Disqus经常被墙，需要评论请科学上网</p>
 </div>
-
-<!-- English Version -->
-<!-- <div class="en post-container">
-    <blockquote>
-        Designer or Engineer, things in between.
-    </blockquote>
-
-    <p>
-        Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. And the only way to do great work is to love what you do. If you haven’t found it yet, keep looking. Don’t settle. As with all matters of the heart, you’ll know when you find it.
-    </p>
-
-    <p>
-    If you want to live your life in a creative way, as an artist, you have to not look back too much. You have to be willing to take whatever you’ve done and whoever you were and throw them away.
-    </p>
-
-    <p style="text-align:right;">
-    -- Steve Jobs
-    </p>
-
-</div>
-
-<!-- Handle Language Change -->
-<script type="text/javascript">
-    var $zh = document.querySelector(".zh");
-    var $en = document.querySelector(".en");
-    function onLanChange(index){
-        if(index == 0){
-            $zh.style.display = "block";
-            $en.style.display = "none";
-        }else{
-            $en.style.display = "block";
-            $zh.style.display = "none";
-        }
-    }
-    onLanChange(0);
-</script> -->
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=23ba60f5704b3"></script>
+                
+                <hr>
+                
 
 
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2019/04/11/mocklocation/" data-toggle="tooltip" data-placement="top" title="iOS模拟移动定位">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
 
 
+                
 
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
 
+            </div>
 
-<!-- disqus 评论框 start -->
-<div class="comment">
-    <div id="disqus_thread" class="disqus-thread">
-
-    </div>
-</div>
-<!-- disqus 评论框 end -->
-
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "fidetro-github-io//about/";
-    var disqus_url = "http://www.foolishtalk.org/about/";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus 公共JS代码 end -->
-
-
-    		</div>
     <!-- Sidebar Container -->
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
                 <section>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-                        
+        				
                             
-                                <a href="/tags/#Objective-C" title="Objective-C" rel="2">
+                				<a href="/tags/#Objective-C" title="Objective-C" rel="2">
                                     Objective-C
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#iOS" title="iOS" rel="33">
+                				<a href="/tags/#iOS" title="iOS" rel="33">
                                     iOS
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Code-Life" title="Code-Life" rel="2">
+                				<a href="/tags/#Code-Life" title="Code-Life" rel="2">
                                     Code-Life
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#WWDC" title="WWDC" rel="2">
+                				<a href="/tags/#WWDC" title="WWDC" rel="2">
                                     WWDC
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Swift" title="Swift" rel="18">
+                				<a href="/tags/#Swift" title="Swift" rel="18">
                                     Swift
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
+                				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#Swift-Tips" title="Swift-Tips" rel="4">
+                				<a href="/tags/#Swift-Tips" title="Swift-Tips" rel="4">
                                     Swift-Tips
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#杂谈" title="杂谈" rel="3">
+                				<a href="/tags/#杂谈" title="杂谈" rel="3">
                                     杂谈
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#RxSwift" title="RxSwift" rel="2">
+                				<a href="/tags/#RxSwift" title="RxSwift" rel="2">
                                     RxSwift
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
-                    </div>
+        				
+        			</div>
                 </section>
                 
 
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
-                    <div class="short-about">
-                        
-                            <img src="/img/avatar-fidetro.jpg" />
-                        
-                        
-                            <p>吝啬分享的程序员。</p>
-                        
-                        <!-- SNS Link -->
-                        <ul class="list-inline">
-                            
-                            <li>
-                                <a href="/feed.xml">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            
-                            
-                            <li>
-                                <a target="_blank" href="http://weibo.com/2095454814">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            
-                            <li>
-                                <a target="_blank" href="https://github.com/fidetro">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                </section>
                 <!-- Friends Blog -->
                 
                 <hr>
@@ -386,14 +356,33 @@
                     
                 </ul>
                 
-                <ul>
-            <!-- http://thinkhard.tech/2018/05/20/%E7%BB%99%E5%8D%9A%E5%AE%A2%E5%8A%A0%E4%B8%AA%E7%90%83-%E8%AE%BF%E5%AE%A2%E7%BB%9F%E8%AE%A1/ -->
-            <script type="text/javascript" src="//ra.revolvermaps.com/0/0/6.js?i=0a4vxtj6z8u&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80" async="async"></script>
-                </ul>
             </div>
-        
-	</div>
-</div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "fidetro-github-io";
+    var disqus_identifier = "/2019/10/13/macOS High Sierra依赖OpenSSL交叉编译";
+    var disqus_url = "http://www.foolishtalk.org/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
 
 
     <!-- Footer -->

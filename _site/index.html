@@ -154,6 +154,30 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">
+        <h2 class="post-title">
+            macOS High Sierra依赖OpenSSL交叉编译
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Xcode
+        </h3>
+        
+        <div class="post-content-preview">
+            有些比较老的库，又是依赖 openssl，要自己编译成静态库的时候，遇到了这个错误：
+configure: error: OpenSSL support explicitly requested but OpenSSL could not be found
+
+如果打算通过brew link openssl软连接，会得到这个错误：
+Warning: Refusing to link macOS...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Karim on October 13, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2019/04/11/mocklocation/">
         <h2 class="post-title">
             iOS模拟移动定位
@@ -385,35 +409,6 @@ ReplayKit是WWDC15推出的苹果原生录屏框架，目的在于让开发者�
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/">
-        <h2 class="post-title">
-            NS_ASSUME_NONNULL_BEGIN和NS_ASSUME_NONNULL_END
-        </h2>
-        
-        <h3 class="post-subtitle">
-            iOS，Xcode 10
-        </h3>
-        
-        <div class="post-content-preview">
-            更新了Xcode 10之后在新建OC的类的时候，都会默认加上了NS_ASSUME_NONNULL_BEGIN和NS_ASSUME_NONNULL_END。
-NS_ASSUME_NONNULL_BEGIN
-
-@interface Person : NSObject
-
-@end
-
-NS_ASSUME_NONNULL_END
-
-在Objective-C中，是没有像swift中!和?的概念，为了解决...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on September 20, 2018
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -509,6 +504,8 @@ NS_ASSUME_NONNULL_END
                                 <a href="/tags/#RxSwift" title="RxSwift" rel="2">
                                     RxSwift
                                 </a>
+                            
+                        
                             
                         
                             
