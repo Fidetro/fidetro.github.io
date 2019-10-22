@@ -5,9 +5,29 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 13 Oct 2019 13:15:51 +0800</pubDate>
-    <lastBuildDate>Sun, 13 Oct 2019 13:15:51 +0800</lastBuildDate>
+    <pubDate>Tue, 22 Oct 2019 22:40:17 +0800</pubDate>
+    <lastBuildDate>Tue, 22 Oct 2019 22:40:17 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>使用Magellan修改iOS定位</title>
+        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+
+&lt;p&gt;最初写的&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，需要依赖 Xcode 搭配使用，对用户使用造成很大的学习成本，但是由于沙盒机制，在AppStore下载没有办法做到。&lt;/p&gt;
+
+&lt;p&gt;于是，我做了&lt;a href=&quot;https://github.com/foolishtalk/Magellan/archive/1.0.zip&quot;&gt;Magellan&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 21 Oct 2019 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2019/10/21/magellan/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2019/10/21/magellan/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Xcode</category>
+        
+        
+      </item>
     
       <item>
         <title>macOS High Sierra依赖OpenSSL交叉编译</title>
@@ -875,25 +895,6 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
         <category>iOS</category>
         
         <category>Objective-C</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>24岁的杂谈</title>
-        <description>&lt;p&gt;昨天刚过完了自己24岁的生日，过了第一个在工作之后，没有在敲代码的生日，工作的第一年生日，写了FFDB，第二年的生日写了Swift-FFDB，尽管这两个库都不完美，但是都是花了非常多心思在里面，自己还是很满足的。&lt;/p&gt;
-
-&lt;p&gt;今年的生日很特别，和我女朋友一起过的第一个生日，认识我的人都知道，以往的自己一直沉迷在写代码，完全不在乎身边的人和事，也不知道为什么，这次主动了起来抓住机会，说起来也很有巧合，我们是520那天认识的，总之如果哪天你看到了这篇，想跟你说句，余生请多指教:)&lt;/p&gt;
-
-&lt;p&gt;博客的服务器可能在未来会考虑搭建在国外VPS了，所以以后访问可能会稍微比较慢。（突然开始供楼，养不起多一台服务器了T^T&lt;/p&gt;
-
-&lt;p&gt;大概就是这些吧～&lt;/p&gt;
-</description>
-        <pubDate>Mon, 15 Oct 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/</guid>
-        
-        <category>杂谈</category>
         
         
       </item>

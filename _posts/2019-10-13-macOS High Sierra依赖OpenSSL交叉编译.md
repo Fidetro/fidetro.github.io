@@ -9,8 +9,6 @@ tags:
 - Mac
 ---
 
-
-
 有些比较老的库，又是依赖 openssl，要自己编译成静态库的时候，遇到了这个错误：
 ```
 configure: error: OpenSSL support explicitly requested but OpenSSL could not be found
