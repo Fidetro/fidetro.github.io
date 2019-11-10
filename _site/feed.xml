@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 10 Nov 2019 19:01:13 +0800</pubDate>
-    <lastBuildDate>Sun, 10 Nov 2019 19:01:13 +0800</lastBuildDate>
+    <pubDate>Sun, 10 Nov 2019 19:59:33 +0800</pubDate>
+    <lastBuildDate>Sun, 10 Nov 2019 19:59:33 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -144,7 +144,7 @@ Optional({
 
 &lt;p&gt;这时候不禁会想到，&lt;code class=&quot;highlighter-rouge&quot;&gt;System Event&lt;/code&gt; 能做什么呢，为什么苹果会不允许我们使用这个权限？对此我又对这个权限有了一个更深入的了解。&lt;/p&gt;
 
-&lt;h1 id=&quot;system-events-1&quot;&gt;System Events&lt;/h1&gt;
+&lt;h1 id=&quot;深入system-events&quot;&gt;深入System Events&lt;/h1&gt;
 
 &lt;p&gt;System Events其实是一个系统App，提供控制Mac OSX GUI和应用之间的交互，在这个路径下你可以找到&lt;code class=&quot;highlighter-rouge&quot;&gt;/System/Library/CoreServices/System Events.app&lt;/code&gt;。 &lt;br /&gt;
 通过System Events，我们可以做到以下这些东西：&lt;/p&gt;

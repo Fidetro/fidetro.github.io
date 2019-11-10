@@ -155,7 +155,7 @@ sdef /Applications/Mail.app > ~/Desktop/mail.xml
 
 这时候不禁会想到，`System Event` 能做什么呢，为什么苹果会不允许我们使用这个权限？对此我又对这个权限有了一个更深入的了解。
 
-# System Events  
+# 深入System Events  
 
 System Events其实是一个系统App，提供控制Mac OSX GUI和应用之间的交互，在这个路径下你可以找到`/System/Library/CoreServices/System Events.app`。   
 通过System Events，我们可以做到以下这些东西：  
