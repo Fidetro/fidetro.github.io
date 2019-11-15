@@ -218,8 +218,8 @@ border: none;
 
 <p>硬件和App之间通过什么通讯方式交互不属于本文讨论的范畴，因为其表现形式都会像上图一样。从代码层上来讲，通讯这部分都应该封装成一个类，外部无需知道内容是如何实现，业务方只需要得到设备返回的数据以及将数据发送给设备就可以了，类似于下面这样:</p>
 <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">DeviceDataManagerDelegate</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
-<span class="c1">//  这里的device他可以是蓝牙的外设，也可以是能某种能标示设备的tag，能get到点就可以了</span>
-<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">readData</span><span class="o">:</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="n">data</span> <span class="n">device</span><span class="o">:</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">device</span><span class="p">;</span>
+<span class="c1">//  这里的device他可以是蓝牙的外设，也可以是能某种能标示设备的tag，能get到点就可以了
+</span><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">readData</span><span class="o">:</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="n">data</span> <span class="n">device</span><span class="o">:</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">device</span><span class="p">;</span>
 <span class="k">@end</span>
 
 <span class="k">@interface</span> <span class="nc">DeviceDataManager</span> <span class="p">:</span> <span class="nc">NSObject</span>
@@ -278,8 +278,8 @@ border: none;
 
     */</span>
     <span class="k">return</span> <span class="p">@{</span><span class="s">@"data"</span><span class="o">:</span><span class="s">@"hello action"</span><span class="p">,</span>
-              <span class="s">@"code"</span><span class="o">:</span><span class="mi">0</span><span class="p">};</span>   <span class="c1">//不同的code标志不同的事件，例如返回的值为空、拿的是缓存的值、设备丢失连接等</span>
-<span class="p">}</span>
+              <span class="s">@"code"</span><span class="o">:</span><span class="mi">0</span><span class="p">};</span>   <span class="c1">//不同的code标志不同的事件，例如返回的值为空、拿的是缓存的值、设备丢失连接等
+</span><span class="p">}</span>
 <span class="k">@end</span>
 </code></pre></div></div>
 <p>Store的伪代码实现</p>
@@ -341,7 +341,7 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/01/12/%E5%9C%A8UITableView%E4%B8%AD%E4%BD%BF%E7%94%A8RunLoop%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/" data-toggle="tooltip" data-placement="top" title="在UITableView中使用RunLoop遇到的坑">&larr; Previous Post</a>
+                        <a href="/2018/01/12/%E5%9C%A8UITableView%E4%B8%AD%E4%BD%BF%E7%94%A8RunLoop%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/" data-toggle="tooltip" data-placement="top" title="在uitableview中使用runloop遇到的坑">&larr; Previous Post</a>
                     </li>
                     
                     
@@ -384,13 +384,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="33">
+                				<a href="/tags/#iOS" title="iOS" rel="32">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -419,8 +419,6 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

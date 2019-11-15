@@ -240,8 +240,8 @@ Photos参考了这里<a href="http://www.jianshu.com/p/6bcda6b35801">获取系�
   </li>
 </ul>
 
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//获取图片</span>
-<span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">accessToImageAccordingToTheAsset</span><span class="p">:(</span><span class="n">PHAsset</span> <span class="o">*</span><span class="p">)</span><span class="nv">asset</span> <span class="nf">size</span><span class="p">:(</span><span class="n">CGSize</span><span class="p">)</span><span class="nv">size</span> <span class="nf">resizeMode</span><span class="p">:(</span><span class="n">PHImageRequestOptionsResizeMode</span><span class="p">)</span><span class="nv">resizeMode</span> <span class="nf">completion</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UIImage</span> <span class="o">*</span><span class="n">image</span><span class="p">,</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">info</span><span class="p">))</span><span class="nv">completion</span>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//获取图片
+</span><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">accessToImageAccordingToTheAsset</span><span class="p">:(</span><span class="n">PHAsset</span> <span class="o">*</span><span class="p">)</span><span class="nv">asset</span> <span class="nf">size</span><span class="p">:(</span><span class="n">CGSize</span><span class="p">)</span><span class="nv">size</span> <span class="nf">resizeMode</span><span class="p">:(</span><span class="n">PHImageRequestOptionsResizeMode</span><span class="p">)</span><span class="nv">resizeMode</span> <span class="nf">completion</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UIImage</span> <span class="o">*</span><span class="n">image</span><span class="p">,</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">info</span><span class="p">))</span><span class="nv">completion</span>
 <span class="p">{</span>
     <span class="k">static</span> <span class="n">PHImageRequestID</span> <span class="n">requestID</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span>
     
@@ -267,10 +267,10 @@ Photos参考了这里<a href="http://www.jianshu.com/p/6bcda6b35801">获取系�
 这时候还要设置<code class="highlighter-rouge">option.synchronous = YES;</code>
 但是这样设置后，获取图片会变成同步操作，如果直接获取相册中的所有照片，会造成卡顿。</p>
 <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">typedef</span> <span class="nf">NS_ENUM</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">,</span> <span class="n">PHImageRequestOptionsDeliveryMode</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">PHImageRequestOptionsDeliveryModeOpportunistic</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">// client may get several image results when the call is asynchronous or will get one result when the call is synchronous</span>
-    <span class="n">PHImageRequestOptionsDeliveryModeHighQualityFormat</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">// client will get one result only and it will be as asked or better than asked (sync requests are automatically processed this way regardless of the specified mode)</span>
-    <span class="n">PHImageRequestOptionsDeliveryModeFastFormat</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">// client will get one result only and it may be degraded</span>
-<span class="p">}</span> <span class="n">PHOTOS_ENUM_AVAILABLE_IOS_TVOS</span><span class="p">(</span><span class="mi">8</span><span class="n">_0</span><span class="p">,</span> <span class="mi">10</span><span class="n">_0</span><span class="p">);</span>
+    <span class="n">PHImageRequestOptionsDeliveryModeOpportunistic</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">// client may get several image results when the call is asynchronous or will get one result when the call is synchronous
+</span>    <span class="n">PHImageRequestOptionsDeliveryModeHighQualityFormat</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">// client will get one result only and it will be as asked or better than asked (sync requests are automatically processed this way regardless of the specified mode)
+</span>    <span class="n">PHImageRequestOptionsDeliveryModeFastFormat</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">// client will get one result only and it may be degraded
+</span><span class="p">}</span> <span class="n">PHOTOS_ENUM_AVAILABLE_IOS_TVOS</span><span class="p">(</span><span class="mi">8</span><span class="n">_0</span><span class="p">,</span> <span class="mi">10</span><span class="n">_0</span><span class="p">);</span>
 </code></pre></div></div>
 
 <ol>
@@ -386,13 +386,13 @@ Photos参考了这里<a href="http://www.jianshu.com/p/6bcda6b35801">获取系�
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="33">
+                				<a href="/tags/#iOS" title="iOS" rel="32">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -421,8 +421,6 @@ Photos参考了这里<a href="http://www.jianshu.com/p/6bcda6b35801">获取系�
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

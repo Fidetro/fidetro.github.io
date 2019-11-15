@@ -218,8 +218,8 @@ border: none;
 
 <span class="cp">#pragma mark - RPPreviewViewControllerpreviewControllerDelegate
 </span><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">previewControllerDidFinish</span><span class="p">:(</span><span class="n">RPPreviewViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">previewController</span> <span class="p">{</span>
-    <span class="c1">//处理dismiss回来的回调</span>
-<span class="p">}</span>
+    <span class="c1">//处理dismiss回来的回调
+</span><span class="p">}</span>
 </code></pre></div></div>
 
 <p>整体上来看，可以说是真的对开发者非常友好了，然而这里面的坑还是不少。</p>
@@ -230,8 +230,8 @@ border: none;
   <li>开始录屏和停止录屏的回调，并不是在主线程。
     <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="p">[[</span><span class="n">RPScreenRecorder</span> <span class="nf">sharedRecorder</span><span class="p">]</span> <span class="nf">startRecordingWithHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
      <span class="p">[[</span><span class="n">NSOperationQueue</span> <span class="nf">mainQueue</span><span class="p">]</span><span class="nf">addOperationWithBlock</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
-         <span class="c1">//要注意回到主线程，避免线程问题</span>
-     <span class="p">}];</span>
+         <span class="c1">//要注意回到主线程，避免线程问题
+</span>     <span class="p">}];</span>
  <span class="p">}];</span>
 </code></pre></div>    </div>
   </li>
@@ -352,13 +352,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="33">
+                				<a href="/tags/#iOS" title="iOS" rel="32">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -387,8 +387,6 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             
