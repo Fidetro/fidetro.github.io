@@ -217,8 +217,8 @@ border: none;
     <span class="k">return</span> <span class="n">_motionManager</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="c1">//启动重力加速计
-</span><span class="o">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">startUpdateAccelerometerResult</span><span class="o">:</span><span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UIImageOrientation</span> <span class="n">orientation</span><span class="p">))</span><span class="n">result</span>
+<span class="c1">//启动重力加速计</span>
+<span class="o">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">startUpdateAccelerometerResult</span><span class="o">:</span><span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UIImageOrientation</span> <span class="n">orientation</span><span class="p">))</span><span class="n">result</span>
 <span class="p">{</span>   
     <span class="k">if</span> <span class="p">([</span><span class="n">sharedManager</span><span class="p">.</span><span class="n">motionManager</span> <span class="nf">isAccelerometerAvailable</span><span class="p">]</span> 
         <span class="p">[</span><span class="n">sharedManager</span><span class="p">.</span><span class="n">motionManager</span> <span class="nf">setAccelerometerUpdateInterval</span><span class="p">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">];</span>
@@ -229,14 +229,14 @@ border: none;
              <span class="k">if</span> <span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">fabs</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
              <span class="p">{</span>
                  <span class="k">if</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">){</span>
-                     <span class="c1">//Down
-</span>                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+                     <span class="c1">//Down</span>
+                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
                          <span class="n">result</span><span class="p">(</span><span class="n">UIImageOrientationDown</span><span class="p">);</span>
                      <span class="p">}</span>
                  <span class="p">}</span>
                  <span class="k">else</span><span class="p">{</span>
-                     <span class="c1">//Portrait
-</span>                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+                     <span class="c1">//Portrait</span>
+                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
                          <span class="n">result</span><span class="p">(</span><span class="n">UIImageOrientationUp</span><span class="p">);</span>
                      <span class="p">}</span>
                  <span class="p">}</span>
@@ -244,14 +244,14 @@ border: none;
              <span class="k">else</span>
              <span class="p">{</span>
                  <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">){</span>
-                     <span class="c1">//Right
-</span>                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+                     <span class="c1">//Right</span>
+                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
                          <span class="n">result</span><span class="p">(</span><span class="n">UIImageOrientationRight</span><span class="p">);</span>
                      <span class="p">}</span>
                  <span class="p">}</span>
                  <span class="k">else</span><span class="p">{</span>
-                     <span class="c1">//Left
-</span>                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+                     <span class="c1">//Left</span>
+                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
                          <span class="n">result</span><span class="p">(</span><span class="n">UIImageOrientationLeft</span><span class="p">);</span>
                      <span class="p">}</span>
                  <span class="p">}</span>
@@ -266,8 +266,8 @@ border: none;
     <span class="n">CVPixelBufferRef</span> <span class="n">pixelBuffer</span> <span class="o">=</span> <span class="n">CMSampleBufferGetImageBuffer</span><span class="p">(</span><span class="n">sampleBuffer</span><span class="p">);</span>
     <span class="n">CFDictionaryRef</span> <span class="n">attachments</span> <span class="o">=</span> <span class="n">CMCopyDictionaryOfAttachments</span><span class="p">(</span><span class="n">kCFAllocatorDefault</span><span class="p">,</span> <span class="n">sampleBuffer</span><span class="p">,</span> <span class="n">kCMAttachmentMode_ShouldNotPropagate</span><span class="p">);</span>
     <span class="n">CIImage</span> <span class="o">*</span><span class="n">ciImage</span> <span class="o">=</span> <span class="p">[[</span><span class="n">CIImage</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithCVPixelBuffer</span><span class="p">:</span><span class="n">pixelBuffer</span> <span class="nf">options</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">CFBridgingRelease</span><span class="p">(</span><span class="n">attachments</span><span class="p">)];</span>
-    <span class="c1">//根据方向设置videoOrientation
-</span>    <span class="k">switch</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">orientation</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//根据方向设置videoOrientation</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">orientation</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">case</span> <span class="n">UIImageOrientationUp</span><span class="p">:</span>
         <span class="p">{</span>
             <span class="n">connection</span><span class="p">.</span><span class="n">videoOrientation</span> <span class="o">=</span> <span class="n">AVCaptureVideoOrientationPortrait</span><span class="p">;</span>
@@ -366,13 +366,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="32">
+                				<a href="/tags/#iOS" title="iOS" rel="34">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -408,6 +408,8 @@ border: none;
                             
         				
                             
+        				
+                            
                 				<a href="/tags/#Swift-Tips" title="Swift-Tips" rel="4">
                                     Swift-Tips
                                 </a>
@@ -430,7 +432,7 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#Xcode" title="Xcode" rel="2">
+                				<a href="/tags/#Xcode" title="Xcode" rel="3">
                                     Xcode
                                 </a>
                             

@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>iOS11-tableView设置section头尾高度失效 - Karim | FoolishTalk Blog</title>
+    <title>使用Magellan修改iOS定位 - Karim | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/09/21/iOS11-tableView%E8%AE%BE%E7%BD%AEsection%E5%A4%B4%E5%B0%BE%E9%AB%98%E5%BA%A6%E5%A4%B1%E6%95%88/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2019/12/04/magellan/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -154,12 +154,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-andre-benz.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-old.jpg')
+        background-image: url('/img/post-bg-andre-benz.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -169,17 +169,17 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#问题随笔" title="问题随笔">问题随笔</a>
-                        
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
+                        <a class="tag" href="/tags/#Xcode" title="Xcode">Xcode</a>
+                        
                     </div>
-                    <h1>iOS11-tableView设置section头尾高度失效</h1>
+                    <h1>使用Magellan修改iOS定位</h1>
                     
                     
-                    <h2 class="subheading">CocoaPod，iOS，UI</h2>
+                    <h2 class="subheading">iOS，定位，Xcode</h2>
                     
-                    <span class="meta">Posted by Karim on September 21, 2017</span>
+                    <span class="meta">Posted by Karim on December 4, 2019</span>
                 </div>
             </div>
         </div>
@@ -196,23 +196,45 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>在iOS 11之前，直接通过这两个代理，就可以修改section的高度</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">heightForHeaderInSection</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="n">CGFLOAT_MIN</span><span class="p">;</span>
-<span class="p">}</span>
+				<h1 id="前言">前言</h1>
 
-<span class="k">-</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">heightForFooterInSection</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="n">CGFLOAT_MIN</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-<p>今天在适配iOS 11的时候发现，这两个代理方法都没走，解决方法：</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//先设置默认高度，然后再通过代理修改</span>
-    <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">sectionFooterHeight</span> <span class="o">=</span> <span class="n">CGFLOAT_MIN</span><span class="p">;</span>
-    <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">sectionHeaderHeight</span> <span class="o">=</span> <span class="n">CGFLOAT_MIN</span><span class="p">;</span>
-</code></pre></div></div>
-<p>目前这个问题，只有纯代码的时候使用才会出现这个问题，如果是使用storyboard的tableView，是不会出现这个问题的，原因还没时间去查，等有空的时候查了会更新文章</p>
+<p>最初写的<a href="https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12">虚拟定位</a>，需要依赖 Xcode 搭配使用，对用户使用造成很大的学习成本，但是由于沙盒机制，在AppStore下载没有办法做到。</p>
+
+<p>于是，我做了 Magellan</p>
+
+<h1 id="正文">正文</h1>
+
+<p>Magellan 可以通过这里<a href="https://pan.baidu.com/s/1ZmJC6yglC0AYzkSSvQVQ9A">下载</a>  提取码：3t8t
+<a href="http://images.foolishtalk.org/Magellan.dmg.zip">备用链接</a>，但是会很慢</p>
+
+<p>Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文件夹中，
+<img src="http://images.foolishtalk.org/20191022225610.png" alt="" /><br />
+然后双击运行，就可以了。<br />
+有可能会出现这个弹窗，直接打开就好了。<br />
+<img src="http://images.foolishtalk.org/20191022105549.png" alt="" /></p>
+
+<p>如果出现无法打开，因为无法确认开发者的身份的弹窗时，可以在<code class="highlighter-rouge">系统偏好设置-通用</code>下方找到，点击仍要继续运行即可。</p>
+
+<p>运行成功后，状态栏上方会出现一顶小帽子图标。<br />
+<img src="http://images.foolishtalk.org/bc9e8955850855ca07147e65957f8087.png" alt="" /></p>
+
+<p>首先手机要连接电脑，然后选择设备，然后再点击安装驱动，如果出现“安装成功”或者“可能已经安装过，无法再次安装”，可以跳过这一步。
+如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者<a href="https://weibo.com/u/2095454814">微博</a>联系到我，我会尽快帮你解决问题。</p>
+
+<p>接下来，在使用虚拟定位的时候，只需要把手机连接上电脑，勾选键盘模式（目前这种方式仅支持键盘模式），双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
+<img src="http://images.foolishtalk.org/f6f4ce34c5e2dfdb8d281c60950ea5c0.png" alt="" /></p>
+
+<h1 id="qa">Q&amp;A</h1>
+<ol>
+  <li>
+    <p>拿来改定位（玩游戏/打卡）会不会被封？<br />
+不要出现瞬移非常严重的情况，从目前技术手段上无法判定，所以可以放心使用。</p>
+  </li>
+  <li>
+    <p>提示“暂不支持 xx 版本，请联系作者升级”，怎么办？<br />
+如果你之前已经安装过驱动了，就不需要管这个提示，依然可以正常使用，如果是从来没有安装过的，出现这个提示，请联系我，我会更新新的版本解决这个问题。</p>
+  </li>
+</ol>
 
 
                 <hr>
@@ -240,13 +262,9 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/09/11/WWDC-2017%E7%AC%94%E8%AE%B0-KVC%E5%92%8CKVO/" data-toggle="tooltip" data-placement="top" title="WWDC-2017笔记---KVC和KVO">&larr; Previous Post</a>
+                        <a href="/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/" data-toggle="tooltip" data-placement="top" title="在Mac app上执行AppleScript">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/09/22/iOS%E8%8E%B7%E5%8F%96%E7%9B%B8%E5%86%8C%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%9B%BE%E7%89%87-%E4%BB%A5%E5%8F%8A%E7%94%B3%E8%AF%B7%E6%9D%83%E9%99%90-%E6%80%BB%E7%BB%93%E8%87%AA%E5%B7%B1%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/" data-toggle="tooltip" data-placement="top" title="iOS获取相册中的所有图片，以及申请权限，总结自己踩到的坑">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -390,8 +408,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2017/09/21/iOS11-tableView设置section头尾高度失效";
-    var disqus_url = "http://www.foolishtalk.org/2017/09/21/iOS11-tableView%E8%AE%BE%E7%BD%AEsection%E5%A4%B4%E5%B0%BE%E9%AB%98%E5%BA%A6%E5%A4%B1%E6%95%88/";
+    var disqus_identifier = "/2019/12/04/magellan";
+    var disqus_url = "http://www.foolishtalk.org/2019/12/04/magellan/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

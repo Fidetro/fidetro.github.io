@@ -251,8 +251,8 @@ border: none;
 <span class="err"> </span> <span class="err"> </span> <span class="n">self</span><span class="p">.</span><span class="n">imageB</span><span class="err"> </span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">getGrayImage</span><span class="p">:[</span><span class="n">imageB</span> <span class="nf">scaleToSize</span><span class="p">:</span><span class="n">CGSizeMake</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)]];</span>
 <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nf">similarityArrayA</span><span class="p">:[</span><span class="n">self</span> <span class="nf">similarityValueWithImage</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">imageA</span><span class="p">]</span> <span class="nf">similarityArrayB</span><span class="p">:[</span><span class="n">self</span> <span class="nf">similarityValueWithImage</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">imageB</span><span class="p">]];</span>
 <span class="p">}</span>
-<span class="c1">//比较两张图的哈希值
-</span><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">similarityArrayA</span><span class="p">:(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">arrayA</span> <span class="nf">similarityArrayB</span><span class="p">:(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">arrayB</span><span class="p">{</span>
+<span class="c1">//比较两张图的哈希值</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">similarityArrayA</span><span class="p">:(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">arrayA</span> <span class="nf">similarityArrayB</span><span class="p">:(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">arrayB</span><span class="p">{</span>
 <span class="err"> </span> <span class="err"> </span> <span class="n">NSInteger</span> <span class="n">similarity</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="p">(</span><span class="n">NSInteger</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">arrayA</span><span class="p">.</span><span class="n">count</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="p">([</span><span class="n">arrayA</span><span class="p">[</span><span class="nf">i</span><span class="p">]</span> <span class="nf">isEqualToNumber</span><span class="p">:</span><span class="n">arrayB</span><span class="p">[</span><span class="nf">i</span><span class="p">]])</span> <span class="p">{</span>
@@ -333,13 +333,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="32">
+                				<a href="/tags/#iOS" title="iOS" rel="34">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -375,6 +375,8 @@ border: none;
                             
         				
                             
+        				
+                            
                 				<a href="/tags/#Swift-Tips" title="Swift-Tips" rel="4">
                                     Swift-Tips
                                 </a>
@@ -397,7 +399,7 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#Xcode" title="Xcode" rel="2">
+                				<a href="/tags/#Xcode" title="Xcode" rel="3">
                                     Xcode
                                 </a>
                             

@@ -285,8 +285,8 @@ border: none;
 <p><code class="highlighter-rouge">dispatch_after()</code>是iOS最常用的延时方法。</p>
 
 <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">dispatch_after</span><span class="p">(</span><span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">)),</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
-        <span class="c1">//两秒后执行
-</span>    <span class="p">});</span>
+        <span class="c1">//两秒后执行</span>
+    <span class="p">});</span>
 </code></pre></div></div>
 
 <h4 id="dispatch_group_t">dispatch_group_t</h4>
@@ -374,8 +374,8 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
 
 <p>使用<code class="highlighter-rouge">dispatch_barrier_async</code>的时候，需要自定义队列才有效，如果使用全局队列或者同步队列，效果和<code class="highlighter-rouge">dispatch_sync()</code>同步函数一样。</p>
 
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">//防止文件读写冲突，可以创建一个串行队列，操作都在这个队列中进行，没有更新数据读用并行，写用串行。
-</span>    <span class="n">dispatch_queue_t</span> <span class="n">dataQueue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">"com.karim.gcd.dataqueue"</span><span class="p">,</span> <span class="n">DISPATCH_QUEUE_CONCURRENT</span><span class="p">);</span>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">//防止文件读写冲突，可以创建一个串行队列，操作都在这个队列中进行，没有更新数据读用并行，写用串行。</span>
+    <span class="n">dispatch_queue_t</span> <span class="n">dataQueue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">"com.karim.gcd.dataqueue"</span><span class="p">,</span> <span class="n">DISPATCH_QUEUE_CONCURRENT</span><span class="p">);</span>
     <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
         <span class="p">[</span><span class="n">NSThread</span> <span class="nf">sleepForTimeInterval</span><span class="p">:</span><span class="mi">2</span><span class="p">.</span><span class="n">f</span><span class="p">];</span>
         <span class="n">NSLog</span><span class="p">(</span><span class="s">@"read data 1"</span><span class="p">);</span>
@@ -383,8 +383,8 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
     <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
         <span class="n">NSLog</span><span class="p">(</span><span class="s">@"read data 2"</span><span class="p">);</span>
     <span class="p">});</span>
-    <span class="c1">//等待前面的都完成，在执行barrier后面的
-</span>    <span class="n">dispatch_barrier_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+    <span class="c1">//等待前面的都完成，在执行barrier后面的</span>
+    <span class="n">dispatch_barrier_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
         <span class="n">NSLog</span><span class="p">(</span><span class="s">@"write data 1"</span><span class="p">);</span>
         <span class="p">[</span><span class="n">NSThread</span> <span class="nf">sleepForTimeInterval</span><span class="p">:</span><span class="mi">1</span><span class="p">];</span>
     <span class="p">});</span>
@@ -483,13 +483,13 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="32">
+                				<a href="/tags/#iOS" title="iOS" rel="34">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -525,6 +525,8 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
                             
         				
                             
+        				
+                            
                 				<a href="/tags/#Swift-Tips" title="Swift-Tips" rel="4">
                                     Swift-Tips
                                 </a>
@@ -547,7 +549,7 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
                             
         				
                             
-                				<a href="/tags/#Xcode" title="Xcode" rel="2">
+                				<a href="/tags/#Xcode" title="Xcode" rel="3">
                                     Xcode
                                 </a>
                             

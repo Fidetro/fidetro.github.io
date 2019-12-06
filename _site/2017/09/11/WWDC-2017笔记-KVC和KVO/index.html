@@ -210,8 +210,8 @@ border: none;
 </code></pre></div></div>
 <p>在swift4中，可以通过<code class="highlighter-rouge">KeyPath</code>间接访问成员变量，达到KVC的效果。</p>
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">let</span> <span class="nv">person</span> <span class="o">=</span> <span class="kt">Person</span><span class="p">()</span> <span class="c1">//结构体</span>
-  <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="n">person</span><span class="p">[</span><span class="nv">keyPath</span><span class="p">:</span><span class="err">\</span><span class="kt">Person</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="c1">//get</span>
-  <span class="n">person</span><span class="p">[</span><span class="nv">keyPath</span><span class="p">:</span><span class="err">\</span><span class="kt">Person</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="s">"张三"</span> <span class="c1">//set</span>
+  <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="n">person</span><span class="p">[</span><span class="nv">keyPath</span><span class="p">:\</span><span class="kt">Person</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="c1">//get</span>
+  <span class="n">person</span><span class="p">[</span><span class="nv">keyPath</span><span class="p">:\</span><span class="kt">Person</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="s">"张三"</span> <span class="c1">//set</span>
 </code></pre></div></div>
 
 <p>KVO的使用也是基于KVC的<code class="highlighter-rouge">KeyPath</code>基础上使用</p>
@@ -222,7 +222,7 @@ border: none;
     <span class="kd">required</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">super</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">coder</span><span class="p">:</span> <span class="n">aDecoder</span><span class="p">)</span>
         <span class="c1">//监听kid的name</span>
-        <span class="k">self</span><span class="o">.</span><span class="n">observation</span> <span class="o">=</span> <span class="n">kid</span><span class="o">.</span><span class="nf">observe</span><span class="p">(</span><span class="err">\</span><span class="kt">Kid</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">changeHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">change</span><span class="p">)</span> <span class="k">in</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">observation</span> <span class="o">=</span> <span class="n">kid</span><span class="o">.</span><span class="nf">observe</span><span class="p">(\</span><span class="kt">Kid</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">changeHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">change</span><span class="p">)</span> <span class="k">in</span>
             <span class="nf">debugPrint</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">object</span><span class="se">)</span><span class="s"> + </span><span class="se">\(</span><span class="n">change</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
         <span class="p">})</span>
     <span class="p">}</span>
@@ -309,13 +309,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="32">
+                				<a href="/tags/#iOS" title="iOS" rel="34">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -351,6 +351,8 @@ border: none;
                             
         				
                             
+        				
+                            
                 				<a href="/tags/#Swift-Tips" title="Swift-Tips" rel="4">
                                     Swift-Tips
                                 </a>
@@ -373,7 +375,7 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#Xcode" title="Xcode" rel="2">
+                				<a href="/tags/#Xcode" title="Xcode" rel="3">
                                     Xcode
                                 </a>
                             
