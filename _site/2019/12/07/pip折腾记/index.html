@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>WWDC-2017笔记---KVC和KVO - Karim | FoolishTalk Blog</title>
+    <title>pip折腾记 - Karim | FoolishTalk Blog</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/09/11/WWDC-2017%E7%AC%94%E8%AE%B0-KVC%E5%92%8CKVO/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2019/12/07/pip%E6%8A%98%E8%85%BE%E8%AE%B0/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -154,12 +154,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-andre-benz.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-old.jpg')
+        background-image: url('/img/post-bg-andre-benz.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -169,17 +169,17 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#WWDC" title="WWDC">WWDC</a>
-                        
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
+                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
+                        
                     </div>
-                    <h1>WWDC-2017笔记---KVC和KVO</h1>
+                    <h1>pip折腾记</h1>
                     
                     
-                    <h2 class="subheading">WWDC，iOS，KVC，KVO</h2>
+                    <h2 class="subheading">iOS，Python</h2>
                     
-                    <span class="meta">Posted by Karim on September 11, 2017</span>
+                    <span class="meta">Posted by Karim on December 7, 2019</span>
                 </div>
             </div>
         </div>
@@ -196,49 +196,48 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>swift3的时候，如果想使用KVC需要把类声明是<code class="highlighter-rouge">@objcMembers</code>,和将成员变量声明为<code class="highlighter-rouge">dynamic</code>,然后就可以使用objc中的<code class="highlighter-rouge">value(forKey key: String)</code>和<code class="highlighter-rouge">setValue(_ value: Any?, forKey key: String)</code>,但是只支持继承<code class="highlighter-rouge">NSObject</code>的类，换句话说，是不支持<code class="highlighter-rouge">struct</code>的</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">@objcMembers</span> <span class="kd">class</span> <span class="kt">Kid</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span>
-    
-  <span class="kd">dynamic</span>  <span class="k">var</span> <span class="nv">name</span> <span class="o">=</span> <span class="kt">String</span><span class="p">()</span>
-    
-<span class="p">}</span>
-<span class="k">var</span> <span class="nv">kid</span> <span class="o">=</span> <span class="kt">Kid</span><span class="p">()</span>
-<span class="n">kid</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">"张三"</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">kid</span><span class="o">.</span><span class="nf">value</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="s">"name"</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
-<span class="n">kid</span><span class="o">.</span><span class="nf">setValue</span><span class="p">(</span><span class="s">"李四"</span><span class="p">,</span> <span class="nv">forKey</span><span class="p">:</span> <span class="s">"name"</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">kid</span><span class="o">.</span><span class="nf">value</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="s">"name"</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+				<h1 id="前言">前言</h1>
+
+<p>最近在公司的新电脑上，要用到一个python2编写的库，发现python版本默认已经是3.0了，pip也是默认使用pip3，但是网上很多是使用pip去安装环境，为了折腾这个环境，花了好长时间，记录一下。</p>
+
+<h1 id="正文">正文</h1>
+<p>pip安装先把安装的脚本下载下来：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget curl https://bootstrap.pypa.io/get-pip.py
 </code></pre></div></div>
-<p>在swift4中，可以通过<code class="highlighter-rouge">KeyPath</code>间接访问成员变量，达到KVC的效果。</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">let</span> <span class="nv">person</span> <span class="o">=</span> <span class="kt">Person</span><span class="p">()</span> <span class="c1">//结构体</span>
-  <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="n">person</span><span class="p">[</span><span class="nv">keyPath</span><span class="p">:\</span><span class="kt">Person</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="c1">//get</span>
-  <span class="n">person</span><span class="p">[</span><span class="nv">keyPath</span><span class="p">:\</span><span class="kt">Person</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="s">"张三"</span> <span class="c1">//set</span>
+<p>如果默认的是python3，需要用指定python版本：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>python2.7 get-pip.py
+</code></pre></div></div>
+<p>安装的过程中，会发现各种超时，原因是要翻墙。我是通过privoxy实现http代理，如果环境没装，自己安装一下：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>privoxy
 </code></pre></div></div>
 
-<p>KVO的使用也是基于KVC的<code class="highlighter-rouge">KeyPath</code>基础上使用</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
-    <span class="k">var</span> <span class="nv">kid</span> <span class="o">=</span> <span class="kt">Kid</span><span class="p">()</span>
-    <span class="k">var</span> <span class="nv">observation</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span> <span class="c1">//负责监听kid</span>
-
-    <span class="kd">required</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">super</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">coder</span><span class="p">:</span> <span class="n">aDecoder</span><span class="p">)</span>
-        <span class="c1">//监听kid的name</span>
-        <span class="k">self</span><span class="o">.</span><span class="n">observation</span> <span class="o">=</span> <span class="n">kid</span><span class="o">.</span><span class="nf">observe</span><span class="p">(\</span><span class="kt">Kid</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">changeHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">change</span><span class="p">)</span> <span class="k">in</span>
-            <span class="nf">debugPrint</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">object</span><span class="se">)</span><span class="s"> + </span><span class="se">\(</span><span class="n">change</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
-        <span class="p">})</span>
-    <span class="p">}</span>
-    <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
-    <span class="p">}</span>
-    <span class="k">override</span> <span class="kd">func</span> <span class="nf">touchesBegan</span><span class="p">(</span><span class="n">_</span> <span class="nv">touches</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">UITouch</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">with</span> <span class="nv">event</span><span class="p">:</span> <span class="kt">UIEvent</span><span class="p">?)</span> <span class="p">{</span>
-    <span class="n">kid</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">"hello"</span>
-   
-    <span class="p">}</span>
-<span class="p">}</span>
-
+<p>如果brew安装太慢。。。再挂下代理：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export ALL_PROXY=socks5://127.0.0.1:portnumber
 </code></pre></div></div>
 
-<p>想了解的更多，可以看<a href="https://developer.apple.com/videos/play/wwdc2017/212/">Session 212</a></p>
+<p>在配置文件<code class="highlighter-rouge">/usr/local/etc/privoxy/config</code>下面加上监听的端口号，以及本地socks5代理的端口号：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>listen-address 0.0.0.0:8118
+forward-socks5 / localhost:1080 .
+</code></pre></div></div>
+<p>启动privoxy：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> /usr/local/sbin/privoxy /usr/local/etc/privoxy/config
+</code></pre></div></div>
+<p>检查是否启动成功：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netstat <span class="nt">-na</span> | <span class="nb">grep </span>8118
+</code></pre></div></div>
+<p>将 socks5 代理转化成 http 代理：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">http_proxy</span><span class="o">=</span><span class="s1">'http://localhost:8118'</span>
+<span class="nb">export </span><span class="nv">https_proxy</span><span class="o">=</span><span class="s1">'http://localhost:8118'</span>
+</code></pre></div></div>
+<p>如果嫌每次设置麻烦，可以把这两行加在<code class="highlighter-rouge">~/.bash_profile</code>下。
+不想使用可以通过下面的命令取消：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unset </span>http_proxy
+<span class="nb">unset </span>https_proxy
+</code></pre></div></div>
 
+<p>参考链接：
+<a href="https://www.zhihu.com/question/31360766/answer/149140490">Homebrew有比较快的源（mirror）吗？ - skytraveler的回答 - 知乎</a>
+<a href="https://double-c.github.io/2018/10/17/mac-ss-cmd/index.html">Mac命令行终端下使用shadowsocks翻墙</a></p>
 
 
                 <hr>
@@ -266,13 +265,9 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/09/10/Cannot-use-mutating-member-on-immutable-value/" data-toggle="tooltip" data-placement="top" title="Cannot use mutating member on immutable value">&larr; Previous Post</a>
+                        <a href="/2019/12/04/magellan/" data-toggle="tooltip" data-placement="top" title="使用Magellan修改iOS定位">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/09/21/iOS11-tableView%E8%AE%BE%E7%BD%AEsection%E5%A4%B4%E5%B0%BE%E9%AB%98%E5%BA%A6%E5%A4%B1%E6%95%88/" data-toggle="tooltip" data-placement="top" title="iOS11-tableView设置section头尾高度失效">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -418,8 +413,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2017/09/11/WWDC-2017笔记---KVC和KVO";
-    var disqus_url = "http://www.foolishtalk.org/2017/09/11/WWDC-2017%E7%AC%94%E8%AE%B0-KVC%E5%92%8CKVO/";
+    var disqus_identifier = "/2019/12/07/pip折腾记";
+    var disqus_url = "http://www.foolishtalk.org/2019/12/07/pip%E6%8A%98%E8%85%BE%E8%AE%B0/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
