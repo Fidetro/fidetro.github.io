@@ -20,8 +20,6 @@ tags:
 
 Magellan 可以通过这里[下载](https://pan.baidu.com/s/14TwkfSDZRHjVNUvAmk5cXw)  提取码：jy4e  
 
-[备用链接](https://media.githubusercontent.com/media/foolishtalk/Magellan/master/Magellan.dmg)，但是会很慢，可能要翻墙。
-
 
 Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文件夹中，
 ![](http://images.foolishtalk.org/20191022225610.png)  
