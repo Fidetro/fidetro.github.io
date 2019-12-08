@@ -17,6 +17,10 @@ tags:
 
 
 # 正文  
+
+[这里](https://www.foolishtalk.org/2019/12/04/magellan/)有个最新的方式，已经不需要用下面的方法了。
+
+
 因为有太多人说看不懂了，所以我又录了个[视频](https://www.bilibili.com/video/av53629147)  
 
 先打开Mac应用虚拟定位，可以看到以下的界面，可以在这里[下载](https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)，另外有什么App使用上的问题和建议，也可以来[微博](https://weibo.com/p/1005052095454814)私信我：  

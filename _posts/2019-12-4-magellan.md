@@ -17,7 +17,7 @@ tags:
 于是，我做了 Magellan 
 
 # 正文  
-
+虚拟定位在这里[下载](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)
 Magellan 可以通过这里[下载](https://pan.baidu.com/s/14TwkfSDZRHjVNUvAmk5cXw)  提取码：jy4e  
 
 
