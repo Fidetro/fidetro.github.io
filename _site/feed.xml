@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 08 Dec 2019 11:18:18 +0800</pubDate>
-    <lastBuildDate>Sun, 08 Dec 2019 11:18:18 +0800</lastBuildDate>
+    <pubDate>Tue, 10 Dec 2019 21:02:16 +0800</pubDate>
+    <lastBuildDate>Tue, 10 Dec 2019 21:02:16 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -88,8 +88,9 @@ Magellan 可以通过这里&lt;a href=&quot;https://pan.baidu.com/s/14TwkfSDZRHj
 &lt;p&gt;运行成功后，状态栏上方会出现一顶小帽子图标。&lt;br /&gt;
 &lt;img src=&quot;http://images.foolishtalk.org/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;首先手机要连接电脑，然后选择设备，然后再点击安装驱动，如果出现“安装成功”或者“可能已经安装过，无法再次安装”，可以跳过这一步。
-如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者&lt;a href=&quot;https://weibo.com/u/2095454814&quot;&gt;微博&lt;/a&gt;联系到我，我会尽快帮你解决问题。&lt;/p&gt;
+&lt;p&gt;首先手机要连接电脑，然后选择设备，然后再点击安装驱动，如果出现“安装成功”或者“可能已经安装过，无法再次安装”，可以跳过这一步。&lt;/p&gt;
+&lt;h5 id=&quot;如果是首次安装驱动记得要重新插拔一次手机不然会没法识别&quot;&gt;如果是首次安装驱动，记得要重新插拔一次手机，不然会没法识别。&lt;/h5&gt;
+&lt;p&gt;如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者&lt;a href=&quot;https://weibo.com/u/2095454814&quot;&gt;微博&lt;/a&gt;联系到我，我会尽快帮你解决问题。&lt;/p&gt;
 
 &lt;p&gt;接下来，在使用虚拟定位的时候，只需要把手机连接上电脑，勾选键盘模式（目前这种方式仅支持键盘模式），双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
 &lt;img src=&quot;http://images.foolishtalk.org/f6f4ce34c5e2dfdb8d281c60950ea5c0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -103,6 +104,10 @@ Magellan 可以通过这里&lt;a href=&quot;https://pan.baidu.com/s/14TwkfSDZRHj
   &lt;li&gt;
     &lt;p&gt;提示“暂不支持 xx 版本，请联系作者升级”，怎么办？&lt;br /&gt;
 如果你之前已经安装过驱动了，就不需要管这个提示，依然可以正常使用，如果是从来没有安装过的，出现这个提示，请联系我，我会更新新的版本解决这个问题。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;修改定位是所有App都有用吗？&lt;br /&gt;
+修改定位是全局的，整个App都会生效。&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 </description>
