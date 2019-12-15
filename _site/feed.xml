@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 14 Dec 2019 00:14:26 +0800</pubDate>
-    <lastBuildDate>Sat, 14 Dec 2019 00:14:26 +0800</lastBuildDate>
+    <pubDate>Sun, 15 Dec 2019 20:54:41 +0800</pubDate>
+    <lastBuildDate>Sun, 15 Dec 2019 20:54:41 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -92,12 +92,20 @@ forward-socks5 / localhost:1080 .
 &lt;p&gt;运行成功后，状态栏上方会出现一顶小帽子图标。&lt;br /&gt;
 &lt;img src=&quot;http://images.foolishtalk.org/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;首先手机要连接电脑，然后选择设备，然后再点击安装驱动，如果出现“安装成功”或者“可能已经安装过，无法再次安装”，可以跳过这一步。&lt;/p&gt;
-&lt;h5 id=&quot;如果是首次安装驱动记得要重新插拔一次手机不然会没法识别&quot;&gt;如果是首次安装驱动，记得要重新插拔一次手机，不然会没法识别。&lt;/h5&gt;
+&lt;p&gt;首先手机要连接电脑，然后选择设备。&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/c81ff0aa45218b3cf8131ad8592eea96.png&quot; alt=&quot;&quot; /&gt;
+然后再点击安装驱动：&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/d762c75e8c2838d7f7bd7d1afff0c881.png&quot; alt=&quot;&quot; /&gt;
+如果出现：&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/2019_12_15_8.44.35.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+或者：&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/2019_12_15_8.46.55.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;如果是首次安装驱动记得要重新插拔一次手机不然可能会没法识别&quot;&gt;如果是首次安装驱动，记得要重新插拔一次手机，不然可能会没法识别。&lt;/h5&gt;
 &lt;p&gt;如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者&lt;a href=&quot;https://weibo.com/u/2095454814&quot;&gt;微博&lt;/a&gt;联系到我，我会尽快帮你解决问题。&lt;/p&gt;
 
-&lt;p&gt;接下来，在使用虚拟定位的时候，只需要把手机连接上电脑，勾选键盘模式（目前这种方式仅支持键盘模式），双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
-&lt;img src=&quot;http://images.foolishtalk.org/f6f4ce34c5e2dfdb8d281c60950ea5c0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;接下来，在使用虚拟定位的时候，只需要把手机连接上电脑，勾选新模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
+&lt;img src=&quot;http://images.foolishtalk.org/20191215-203735.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;qa&quot;&gt;Q&amp;amp;A&lt;/h1&gt;
 &lt;ol&gt;
