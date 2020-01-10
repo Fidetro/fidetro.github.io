@@ -203,16 +203,20 @@ border: none;
 
 <h1 id="正文">正文</h1>
 
-<p><img src="http://images.foolishtalk.org/39ce65c86ee89caeba6d367d0f82786d.png" alt="" /> 
-通过 <code class="highlighter-rouge">Bluetooth Explorer</code> 可以知道，在听歌的时候，传输速度约为 39000 Bytes/s,即 312 kbit/s（1 kbit/s = 125 Bytes/s）</p>
+<p>先上一组电脑在放歌时的传输速率：<br />
+<img src="http://images.foolishtalk.org/39ce65c86ee89caeba6d367d0f82786d.png" alt="" /></p>
 
-<p>而我们公司的蓝牙音箱使用的是SBC编码器<br />
+<p>通过这组数据可以知道，在听歌的时候，传输速度约为 39000 Bytes/s,即 312 kbit/s（1 kbit/s = 125 Bytes/s）</p>
+
+<p>而我们公司的蓝牙音箱使用的是SBC编码器（小tips：按住option点击导航栏的蓝牙图标，可以查看蓝牙设备的信息）<br />
 <img src="http://images.foolishtalk.org/347335e73c15512f3125ee4d60bac4f3.png" alt="" /> 
 SBC编码器中的 <code class="highlighter-rouge">bitpool</code> 参数会导致音质下降，通过<a href="http://soundexpert.org/encoders-320-kbps">这里</a>可以知道 SBC编码器 在 328 kbit/s 时 bitpool 需要达到 53。</p>
 
-<p>问题原因知道了，这样解决就可以了。</p>
+<p><img src="http://images.foolishtalk.org/ec4f4917854d7eab2b26196d3348df60.png" alt="" /></p>
 
-<h1 id="解决">解决</h1>
+<p>问题原因知道了，这样就好解决了。</p>
+
+<h1 id="怎么解决">怎么解决？</h1>
 <p>先去苹果开发者官网下载<a href="https://download.developer.apple.com/Developer_Tools/Additional_Tools_for_Xcode_11/Additional_Tools_for_Xcode_11.dmg">Bluetooth Explorer</a>工具</p>
 
 <p>下载完之后，打开 Hardware，把 <code class="highlighter-rouge">Bluetooth Explorer</code> 拖到应用程序里。<br />
