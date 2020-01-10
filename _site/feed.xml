@@ -5,9 +5,59 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 24 Dec 2019 20:47:40 +0800</pubDate>
-    <lastBuildDate>Tue, 24 Dec 2019 20:47:40 +0800</lastBuildDate>
+    <pubDate>Sat, 11 Jan 2020 00:22:18 +0800</pubDate>
+    <lastBuildDate>Sat, 11 Jan 2020 00:22:18 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>mac连接蓝牙音箱问题小记</title>
+        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+
+&lt;p&gt;过年的时候，公司发了个蓝牙音箱，我的Mac Pro左声道已经坏了很久了，正好可以拿来当音箱用。&lt;br /&gt;
+但是电脑连了蓝牙音箱后，一直会卡卡的和出现沙沙的声音，手机却没有问题，猜想是因为电脑码率比较高导致，带着这个猜想开始搜索相关的一些问题，发现原来不止这款音箱会，别的一些蓝牙设备，包括AirPods也会出现这样的问题。&lt;/p&gt;
+
+&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/39ce65c86ee89caeba6d367d0f82786d.png&quot; alt=&quot;&quot; /&gt; 
+通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bluetooth Explorer&lt;/code&gt; 可以知道，在听歌的时候，传输速度约为 39000 Bytes/s,即 312 kbit/s（1 kbit/s = 125 Bytes/s）&lt;/p&gt;
+
+&lt;p&gt;而我们公司的蓝牙音箱使用的是SBC编码器&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/347335e73c15512f3125ee4d60bac4f3.png&quot; alt=&quot;&quot; /&gt; 
+SBC编码器中的 &lt;code class=&quot;highlighter-rouge&quot;&gt;bitpool&lt;/code&gt; 参数会导致音质下降，通过&lt;a href=&quot;http://soundexpert.org/encoders-320-kbps&quot;&gt;这里&lt;/a&gt;可以知道 SBC编码器 在 328 kbit/s 时 bitpool 需要达到 53。&lt;/p&gt;
+
+&lt;p&gt;问题原因知道了，这样解决就可以了。&lt;/p&gt;
+
+&lt;h1 id=&quot;解决&quot;&gt;解决&lt;/h1&gt;
+&lt;p&gt;先去苹果开发者官网下载&lt;a href=&quot;https://download.developer.apple.com/Developer_Tools/Additional_Tools_for_Xcode_11/Additional_Tools_for_Xcode_11.dmg&quot;&gt;Bluetooth Explorer&lt;/a&gt;工具&lt;/p&gt;
+
+&lt;p&gt;下载完之后，打开 Hardware，把 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bluetooth Explorer&lt;/code&gt; 拖到应用程序里。&lt;br /&gt;
+打开 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bluetooth Explorer&lt;/code&gt; 后，在系统导航栏找到 &lt;code class=&quot;highlighter-rouge&quot;&gt;Audio Options...&lt;/code&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/c1bfcd07315439afe2f2fd3ecdc744f4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;为了方便我就直接把这里 &lt;code class=&quot;highlighter-rouge&quot;&gt;Minimum bitpool&lt;/code&gt; 改到64了：&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/72d3eb4294d65375471054d6f1d290cc.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;另外如果有需要修改编码器的需求，改上面 &lt;code class=&quot;highlighter-rouge&quot;&gt;Codecs&lt;/code&gt; 的设置就好了。&lt;/p&gt;
+
+&lt;p&gt;断开蓝牙设备，再连设备，就会发现没有之前的卡顿和沙沙的声音。&lt;/p&gt;
+
+&lt;h1 id=&quot;题外话&quot;&gt;题外话&lt;/h1&gt;
+&lt;p&gt;网上的文章真是一大抄，通过终端设置 &lt;code class=&quot;highlighter-rouge&quot;&gt;bitpool&lt;/code&gt; 的方法似乎已经失效了，另外我也试过重启 &lt;code class=&quot;highlighter-rouge&quot;&gt;PRAM&lt;/code&gt;，依然无效，如果有通过终端设置的方式，请告诉我，非常感谢。&lt;/p&gt;
+
+&lt;p&gt;参考链接：&lt;br /&gt;
+&lt;a href=&quot;https://www.areilly.com/2017/07/29/enabling-aac-and-aptx-over-bluetooth-on-macos/&quot;&gt;enabling aac and aptx over bluetooth on macos&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://apple.stackexchange.com/questions/167245/yosemite-bluetooth-audio-is-choppy-skips/259954#259954&quot;&gt;Yosemite bluetooth audio is choppy/skips&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 10 Jan 2020 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Python</category>
+        
+        
+      </item>
     
       <item>
         <title>pip折腾记</title>
@@ -120,6 +170,14 @@ forward-socks5 / localhost:1080 .
   &lt;li&gt;
     &lt;p&gt;修改定位是所有App都有用吗？&lt;br /&gt;
 修改定位是全局的，整个App都会生效。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;手机需要越狱吗？&lt;br /&gt;
+手机不需要越狱。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;支持iPad吗？&lt;br /&gt;
+目前不支持，目前考虑到集成iPad驱动太大，所以暂不支持，以后考虑支持。&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 </description>
@@ -871,146 +929,6 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
         <guid isPermaLink="true">http://www.foolishtalk.org/2019/02/04/2019%E7%9A%84%E5%85%B3%E9%94%AE%E8%AF%8D/</guid>
         
         <category>杂谈</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>CloudKit实践</title>
-        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
-
-&lt;p&gt;在iOS 11后，有个&lt;a href=&quot;https://support.apple.com/zh-cn/HT204681&quot;&gt;接力&lt;/a&gt;的功能非常好用，可以在iPhone和Mac上共享剪贴板等。但是自己用的时候，总有很多小问题，明明需要打开的都打开了接力失效、上一次复制的是图片后来复制的是文本，iPhone直接剪贴板都不出来了。经历了一顿需求分析之后，决定自己动手做一个。&lt;br /&gt;
-既然要实现跨平台，免不了要涉及到服务器，选择自己去写还是使用现有的云服务，成为了当前选择的最大问题。
-为了解决又快&lt;del&gt;懒~~又安全&lt;/del&gt;懒~~的问题，我最终选择了苹果自带的&lt;code class=&quot;highlighter-rouge&quot;&gt;CloudKit&lt;/code&gt;。&lt;/p&gt;
-
-&lt;h1 id=&quot;cloudkit&quot;&gt;CloudKit&lt;/h1&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CloudKit&lt;/code&gt;是苹果在WWDC2014推出通过iCloud服务存储结构化应用程序和用户数据的框架，通过&lt;code class=&quot;highlighter-rouge&quot;&gt;CloudKit&lt;/code&gt;获取app现有数据并将其存储在云中，实现用户多设备访问。&lt;/p&gt;
-
-&lt;h2 id=&quot;容器containers&quot;&gt;容器（Containers）&lt;/h2&gt;
-
-&lt;p&gt;一个App可以创建和拥有多个容器：&lt;br /&gt;
-&lt;img src=&quot;https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitQuickStart/Art/3_specifycontainers2_2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//创建容器&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;container&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKContainer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;identifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;在Capabilities选择的容器identifier&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;一个容器中拥有&lt;code class=&quot;highlighter-rouge&quot;&gt;Public&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Private&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Shared&lt;/code&gt;三种数据库，通过&lt;code class=&quot;highlighter-rouge&quot;&gt;CKContainer&lt;/code&gt;的实例获取：&lt;/p&gt;
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;extension&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKContainer&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;privateCloudDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKDatabase&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;publicCloudDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKDatabase&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;@available(OSX 10.12, *)&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;sharedCloudDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKDatabase&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;不同类型的数据库，可以通过下面的表格对比：&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;类型&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;占用用户iCloud容量&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;需要登录iCloud&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;访问&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;privateCloudDatabase&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;是&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;是&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;登录iCloud后允许访问，数据跟随iCloud账号&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;publicCloudDatabase&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;否，使用的是app的公共iCloud容量，具体参考&lt;a href=&quot;https://developer.apple.com/icloud/cloudkit/&quot;&gt;这里&lt;/a&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;否&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;允许不登录iCloud账号，但只能读取，不能写入，同bundle id下所有用户都能访问&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;sharedCloudDatabase&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;否&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;是&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;所有app都可以访问&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h1 id=&quot;使用&quot;&gt;使用&lt;/h1&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;在写代码之前，需要先去&lt;a href=&quot;https://icloud.developer.apple.com/dashboard/&quot;&gt;CloudKit dashboard&lt;/a&gt;，创建&lt;code class=&quot;highlighter-rouge&quot;&gt;Record Type&lt;/code&gt;，同时在新建的Record Type页面新增字段，增加完字段之后，记得要为字段添加&lt;code class=&quot;highlighter-rouge&quot;&gt;recordName&lt;/code&gt;索引，不然查询的时候会报错。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitQuickStart/Art/2017RecordTypes_2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;创建指定唯一记录名称的记录ID。
-    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;artworkRecordID&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKRecordID&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recordName&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：“&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;115&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”）&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;创建一个记录对象。
-    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;artworkRecord&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKRecord&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recordType&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：“&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Artwork&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recordID&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;artworkRecordID&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;）&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;设置记录的字段
-    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;artworkRecord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;title&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;MacKerricher State Park&quot;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;artworkRecord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;artist&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Mei Chen&quot;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;artworkRecord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;address&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Fort Bragg, CA&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;初始化容器并获取数据库对象
-    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;myContainer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKContainer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;identifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;iCloud.com.example.ajohnson.GalleryShared&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//如果使用默认容器，CKContainer.default()  &lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;publicDatabase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myContainer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;publicCloudDatabase&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;保存对象
-    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;publicDatabase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;artworkRecord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
- &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-     &lt;span class=&quot;c1&quot;&gt;// 处理错误&lt;/span&gt;
-     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
- &lt;span class=&quot;c1&quot;&gt;// ...保存成功之后的处理&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;查询
-    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;     &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;predicate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSPredicate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-     &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CKQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;recordType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Artwork&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;predicate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;predicate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-     &lt;span class=&quot;n&quot;&gt;myContainer&lt;/span&gt;
-     &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;publicCloudDatabase&lt;/span&gt;
-     &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;perform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;inZoneWith&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;completionHandler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-         &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Void&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
-         &lt;span class=&quot;kt&quot;&gt;OperationQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addOperation&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                 &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                   &lt;span class=&quot;c1&quot;&gt;// 处理错误&lt;/span&gt;
-                 &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;
-                 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-                 &lt;span class=&quot;c1&quot;&gt;// ...保存成功之后的处理&lt;/span&gt;
-         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-     &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h1 id=&quot;应用&quot;&gt;应用&lt;/h1&gt;
-&lt;p&gt;通过&lt;code class=&quot;highlighter-rouge&quot;&gt;CloudKit&lt;/code&gt;，我分别在iOS上使用Today Widget，在Mac上监听键盘组合键来实现了接力中的共享粘贴板功能，目前功能还比较简单，不过基本也满足了我自己的需求了，后续有时间还是会完善一下复制图片、预览这些小功能的，&lt;a href=&quot;https://github.com/Fidetro/KTCloud&quot;&gt;代码&lt;/a&gt;在这里，感兴趣可以看一下。&lt;/p&gt;
-
-&lt;h1 id=&quot;参考链接&quot;&gt;参考链接&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitQuickStart/Introduction/Introduction.html#//apple_ref/doc/uid/TP40014987-CH1-SW1&quot;&gt;CloudKit官方文档&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://developer.apple.com/documentation/cloudkit/ckcontainer&quot;&gt;CKcontainer官方文档&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Sat, 15 Dec 2018 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2018/12/15/CloudKit%E5%AE%9E%E8%B7%B5/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2018/12/15/CloudKit%E5%AE%9E%E8%B7%B5/</guid>
-        
-        <category>iOS</category>
-        
-        <category>Swift</category>
         
         
       </item>
