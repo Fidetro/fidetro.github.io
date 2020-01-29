@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 11 Jan 2020 00:53:39 +0800</pubDate>
-    <lastBuildDate>Sat, 11 Jan 2020 00:53:39 +0800</lastBuildDate>
+    <pubDate>Wed, 29 Jan 2020 18:02:53 +0800</pubDate>
+    <lastBuildDate>Wed, 29 Jan 2020 18:02:53 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -163,6 +163,10 @@ forward-socks5 / localhost:1080 .
 
 &lt;h1 id=&quot;qa&quot;&gt;Q&amp;amp;A&lt;/h1&gt;
 &lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;显示“暂无可用设备”，找不到自己的设备怎么办？&lt;br /&gt;
+先通过 iTunes 检查手机是否连接成功，如果是旧版本的 iTunes 有可能会导致无法检测到设备，iTunes 需要更新到最新版本。&lt;/p&gt;
+  &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;拿来改定位（玩游戏/打卡）会不会被封？&lt;br /&gt;
 不要出现瞬移非常严重的情况，从目前技术手段上无法判定，所以可以放心使用。&lt;/p&gt;
