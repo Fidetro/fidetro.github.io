@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 29 Jan 2020 18:07:57 +0800</pubDate>
-    <lastBuildDate>Wed, 29 Jan 2020 18:07:57 +0800</lastBuildDate>
+    <pubDate>Fri, 31 Jan 2020 15:29:33 +0800</pubDate>
+    <lastBuildDate>Fri, 31 Jan 2020 15:29:33 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -24,8 +24,10 @@
 &lt;p&gt;通过这组数据可以知道，在听歌的时候，传输速度约为 39000 Bytes/s,即 312 kbit/s（1 kbit/s = 125 Bytes/s）&lt;/p&gt;
 
 &lt;p&gt;而我们公司的蓝牙音箱使用的是SBC编码器（小tips：按住option点击导航栏的蓝牙图标，可以查看蓝牙设备的信息）&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/347335e73c15512f3125ee4d60bac4f3.png&quot; alt=&quot;&quot; /&gt; 
-SBC编码器中的 &lt;code class=&quot;highlighter-rouge&quot;&gt;bitpool&lt;/code&gt; 参数会导致音质下降，通过&lt;a href=&quot;http://soundexpert.org/encoders-320-kbps&quot;&gt;这里&lt;/a&gt;可以知道 SBC编码器 在 328 kbit/s 时 bitpool 需要达到 53。&lt;/p&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/347335e73c15512f3125ee4d60bac4f3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;原因&quot;&gt;原因&lt;/h2&gt;
+&lt;p&gt;SBC编码器中的 &lt;code class=&quot;highlighter-rouge&quot;&gt;bitpool&lt;/code&gt; 参数会导致音质下降，通过&lt;a href=&quot;http://soundexpert.org/encoders-320-kbps&quot;&gt;这里&lt;/a&gt;可以知道 SBC编码器 在 328 kbit/s 时 bitpool 需要达到 53。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/ec4f4917854d7eab2b26196d3348df60.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
