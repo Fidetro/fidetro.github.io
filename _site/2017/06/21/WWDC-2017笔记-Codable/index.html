@@ -199,7 +199,7 @@ border: none;
 				<p>在swift中并不推荐使用runtime，所以json转model比较麻烦，而且也不支持<code class="highlighter-rouge">struct</code>和<code class="highlighter-rouge">enum</code></p>
 
 <p>但是现在可以通过<code class="highlighter-rouge">Codable</code>来实现，实现一个这样的结构体</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">DataListResult</span><span class="p">:</span><span class="kt">Codable</span><span class="p">{</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">DataListResult</span><span class="p">:</span><span class="kt">Codable</span><span class="p">{</span>
     <span class="k">let</span> <span class="nv">_id</span> <span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
  
     <span class="k">let</span> <span class="nv">images</span> <span class="p">:</span> <span class="kt">Array</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">?</span>
@@ -209,9 +209,10 @@ border: none;
     <span class="k">let</span> <span class="nv">results</span> <span class="p">:</span> <span class="p">[</span><span class="kt">DataListResult</span><span class="p">]?</span>
     <span class="k">let</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//一段JSON</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">//一段JSON</span>
  <span class="p">{</span>
       <span class="s">"_id"</span> <span class="p">:</span> <span class="s">"592502d6421aa92c769a8bac"</span><span class="p">,</span>
       <span class="s">"images"</span> <span class="p">:</span> <span class="p">[</span>
@@ -226,15 +227,17 @@ border: none;
     <span class="p">}</span>
   <span class="p">],</span>
   <span class="s">"error"</span> <span class="p">:</span> <span class="kc">false</span>
-</code></pre></div></div>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//JSON data转模型</span>
+</code></pre>
+</div>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">//JSON data转模型</span>
 <span class="k">let</span> <span class="nv">model</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">JSONDecoder</span><span class="p">()</span><span class="o">.</span><span class="nf">decode</span><span class="p">(</span><span class="kt">DataListModel</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="o">!</span><span class="p">)</span> 
 <span class="c1">//模型转JSON data</span>
 <span class="k">let</span> <span class="nv">data</span> <span class="o">=</span>  <span class="k">try</span> <span class="kt">JSONEncoder</span><span class="p">()</span><span class="o">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>在看<a href="https://developer.apple.com/videos/play/wwdc2017/212/">Session 212</a>的时候，发现了还有别的一些用法，像是时间，可以通过以下方法转换成<code class="highlighter-rouge">Date</code></p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">jsonData</span> <span class="o">=</span> <span class="s">"""
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">jsonData</span> <span class="o">=</span> <span class="s">"""
 {
   "</span><span class="n">name</span><span class="s">": "</span><span class="kt">Monalisa</span> <span class="kt">Octocat</span><span class="s">",
   "</span><span class="n">email</span><span class="s">": "</span><span class="n">support</span><span class="kd">@github</span><span class="o">.</span><span class="n">com</span><span class="s">",
@@ -250,9 +253,10 @@ border: none;
 <span class="k">let</span> <span class="nv">decoder</span> <span class="o">=</span> <span class="kt">JSONDecoder</span><span class="p">()</span>
 <span class="n">decoder</span><span class="o">.</span><span class="n">dateDecodingStrategy</span> <span class="o">=</span> <span class="o">.</span><span class="n">iso8601</span>
 <span class="k">let</span> <span class="nv">author</span> <span class="o">=</span> <span class="k">try</span> <span class="n">decoder</span><span class="o">.</span><span class="nf">decode</span><span class="p">(</span><span class="kt">Author</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">jsonData</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>最近也有用到这部分功能，补充一下获取到的json对应key和model的字段不一样的情况</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="p">{</span>
 <span class="s">"nickname"</span> <span class="p">:</span> <span class="err">'</span><span class="n">fidetro</span><span class="err">'</span><span class="p">,</span>
 <span class="s">"birthday"</span><span class="p">:</span> <span class="s">"1994-10-14"</span>
 <span class="p">}</span>
@@ -267,7 +271,8 @@ border: none;
     <span class="p">}</span>
     
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>这时候要注意<code class="highlighter-rouge">CodingKeys</code>是需要把所有的key都<code class="highlighter-rouge">case</code>出来，不然会报这样的错
 <img src="http://images.foolishtalk.org/9562042D-2660-49FF-A090-A774C014E6B1.png" alt="" /></p>
 
@@ -341,13 +346,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="36">
+                				<a href="/tags/#iOS" title="iOS" rel="35">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -376,8 +381,6 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

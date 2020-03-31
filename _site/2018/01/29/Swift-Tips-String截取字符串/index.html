@@ -198,12 +198,13 @@ border: none;
 
 				<p>在<code class="highlighter-rouge">Objective-C</code>中我们可以使调<code class="highlighter-rouge">substringWithRange</code>的方法达到截取字符串的效果</p>
 
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="s">@"123"</span> <span class="nf">substringWithRange</span><span class="p">:</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)];</span>
-</code></pre></div></div>
+<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="s">@"123"</span> <span class="nf">substringWithRange</span><span class="p">:</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)];</span>
+</code></pre>
+</div>
 
 <p>在Swift 4之前，也是有类似的方法<code class="highlighter-rouge">"ss".substring(with: &lt;Range&lt;String.Index&gt;&gt;)</code>  ,但是在Swift 4之后被弃用了，我们可以通过用<code class="highlighter-rouge">extension</code>的方法去给他增加截取字符串的方法</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">String</span><span class="p">{</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">String</span><span class="p">{</span>
     <span class="kd">func</span> <span class="nf">to</span><span class="p">(</span><span class="n">_</span> <span class="nv">index</span><span class="p">:</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
         <span class="k">let</span> <span class="nv">toIndex</span> <span class="o">=</span> <span class="kt">String</span><span class="o">.</span><span class="kt">Index</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">encodedOffset</span><span class="p">:</span> <span class="n">index</span><span class="p">)</span>
         <span class="k">guard</span> <span class="n">toIndex</span> <span class="o">&lt;</span> <span class="k">self</span><span class="o">.</span><span class="n">endIndex</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
@@ -224,18 +225,20 @@ border: none;
         <span class="k">return</span> <span class="kt">String</span><span class="p">(</span><span class="k">self</span><span class="p">[</span><span class="n">toIndex</span><span class="o">...</span><span class="n">fromIndex</span><span class="p">])</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>现在又可以方便的截取字符串了</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="o">.</span><span class="nf">to</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1">//Optional("1234")  </span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="o">.</span><span class="nf">to</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1">//Optional("1234")  </span>
 
 <span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="o">.</span><span class="nf">from</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1">//Optional("45678")  </span>
 
 <span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="o">.</span><span class="nf">subString</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1">//Optional("456")  </span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>另外我们还可以结合Swift下标的特性，达到通过取字符串下标截取字符串</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">String</span><span class="p">{</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">String</span><span class="p">{</span>
     <span class="nf">subscript</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nf">subString</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="n">index</span><span class="p">)</span>
     <span class="p">}</span>
@@ -246,14 +249,16 @@ border: none;
         <span class="k">return</span> <span class="nf">subString</span><span class="p">(</span> <span class="n">bounds</span><span class="o">.</span><span class="n">lowerBound</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="n">bounds</span><span class="o">.</span><span class="n">upperBound</span><span class="p">)</span>
     <span class="p">}</span>   
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>  <span class="c1">//Optional("3")  </span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>  <span class="c1">//Optional("3")  </span>
 
 <span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="p">[</span><span class="mi">3</span><span class="o">...</span><span class="mi">5</span><span class="p">])</span>  <span class="c1">//Optional("456")</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="p">[</span><span class="mi">100</span><span class="p">])</span>  <span class="c1">//nil</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 
                 <hr>
@@ -324,13 +329,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="36">
+                				<a href="/tags/#iOS" title="iOS" rel="35">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -359,8 +364,6 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

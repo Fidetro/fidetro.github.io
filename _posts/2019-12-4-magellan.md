@@ -19,7 +19,7 @@ tags:
 # 正文  
 虚拟定位在这里[下载](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)  
 
-Magellan 可以通过这里[下载](https://pan.baidu.com/s/1oopvICbS1sblHAx96auYzA)  提取码：4xbr  （安装最新的版本即可）  
+Magellan 最新版本可以通过这里[下载](https://www.foolishtalk.org/magellan/magellan.dmg)，[历史版本](https://pan.baidu.com/s/1oopvICbS1sblHAx96auYzA)  提取码：4xbr  （安装最新的版本即可）  
 提供带驱动和不带驱动的版本，两者的差别在于带驱动的版本，可以安装驱动，但是安装包很大300多M，不带驱动10M以下，如果你手机之前已经安装过驱动，可以下载不带驱动的版本。   
 
 ##### 上面说的看不懂的话，直接下载带驱动的版本。

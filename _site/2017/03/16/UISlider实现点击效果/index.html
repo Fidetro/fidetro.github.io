@@ -199,7 +199,7 @@ border: none;
 				<p>找了很久网上文章都是各种复制，而且不管用，最后在stackOverFlow找到怎么解决，记录一下<a href="http://stackoverflow.com/questions/22717167/how-to-enable-tap-and-slide-in-a-uislider">链接</a></p>
 
 <p>关键是用UILongPressGestureRecognizer，实现拖动和点击</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">actionLongGesture</span><span class="p">:(</span><span class="n">UILongPressGestureRecognizer</span> <span class="o">*</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">actionLongGesture</span><span class="p">:(</span><span class="n">UILongPressGestureRecognizer</span> <span class="o">*</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
     
     <span class="k">if</span> <span class="p">(</span><span class="n">sender</span><span class="p">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">UIGestureRecognizerStateBegan</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">CGPoint</span> <span class="n">touchPoint</span> <span class="o">=</span> <span class="p">[</span><span class="n">sender</span> <span class="nf">locationInView</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">];</span>
@@ -216,7 +216,8 @@ border: none;
     <span class="p">}</span>
  
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 
                 <hr>
@@ -287,13 +288,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="36">
+                				<a href="/tags/#iOS" title="iOS" rel="35">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -322,8 +323,6 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

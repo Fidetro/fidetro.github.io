@@ -5,9 +5,9 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 31 Jan 2020 15:29:33 +0800</pubDate>
-    <lastBuildDate>Fri, 31 Jan 2020 15:29:33 +0800</lastBuildDate>
-    <generator>Jekyll v3.8.5</generator>
+    <pubDate>Tue, 31 Mar 2020 22:46:16 +0800</pubDate>
+    <lastBuildDate>Tue, 31 Mar 2020 22:46:16 +0800</lastBuildDate>
+    <generator>Jekyll v3.3.0</generator>
     
       <item>
         <title>mac连接蓝牙音箱问题小记</title>
@@ -73,38 +73,47 @@
 
 &lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
 &lt;p&gt;pip安装先把安装的脚本下载下来：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget curl https://bootstrap.pypa.io/get-pip.py
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget curl https://bootstrap.pypa.io/get-pip.py
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;如果默认的是python3，需要用指定python版本：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;python2.7 get-pip.py
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo python2.7 get-pip.py
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;安装的过程中，会发现各种超时，原因是要翻墙。我是通过privoxy实现http代理，如果环境没装，自己安装一下：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;privoxy
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install privoxy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;如果brew安装太慢。。。再挂下代理：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export ALL_PROXY=socks5://127.0.0.1:portnumber
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export ALL_PROXY=socks5://127.0.0.1:portnumber
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;在配置文件&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/local/etc/privoxy/config&lt;/code&gt;下面加上监听的端口号，以及本地socks5代理的端口号：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;listen-address 0.0.0.0:8118
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;listen-address 0.0.0.0:8118
 forward-socks5 / localhost:1080 .
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;启动privoxy：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo&lt;/span&gt; /usr/local/sbin/privoxy /usr/local/etc/privoxy/config
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo /usr/local/sbin/privoxy /usr/local/etc/privoxy/config
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;检查是否启动成功：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netstat &lt;span class=&quot;nt&quot;&gt;-na&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;8118
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netstat -na | grep 8118
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;将 socks5 代理转化成 http 代理：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;http_proxy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'http://localhost:8118'&lt;/span&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;http_proxy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'http://localhost:8118'&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;https_proxy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'http://localhost:8118'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;如果嫌每次设置麻烦，可以把这两行加在&lt;code class=&quot;highlighter-rouge&quot;&gt;~/.bash_profile&lt;/code&gt;下。
 不想使用可以通过下面的命令取消：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;unset &lt;/span&gt;http_proxy
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;unset &lt;/span&gt;http_proxy
 &lt;span class=&quot;nb&quot;&gt;unset &lt;/span&gt;https_proxy
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;参考链接：&lt;br /&gt;
 &lt;a href=&quot;https://www.zhihu.com/question/31360766/answer/149140490&quot;&gt;Homebrew有比较快的源（mirror）吗？ - skytraveler的回答 - 知乎&lt;/a&gt;&lt;br /&gt;
@@ -132,7 +141,7 @@ forward-socks5 / localhost:1080 .
 &lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
 &lt;p&gt;虚拟定位在这里&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;下载&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Magellan 可以通过这里&lt;a href=&quot;https://pan.baidu.com/s/1oopvICbS1sblHAx96auYzA&quot;&gt;下载&lt;/a&gt;  提取码：4xbr  （安装最新的版本即可）&lt;br /&gt;
+&lt;p&gt;Magellan 最新版本可以通过这里&lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;下载&lt;/a&gt;，&lt;a href=&quot;https://pan.baidu.com/s/1oopvICbS1sblHAx96auYzA&quot;&gt;历史版本&lt;/a&gt;  提取码：4xbr  （安装最新的版本即可）&lt;br /&gt;
 提供带驱动和不带驱动的版本，两者的差别在于带驱动的版本，可以安装驱动，但是安装包很大300多M，不带驱动10M以下，如果你手机之前已经安装过驱动，可以下载不带驱动的版本。&lt;/p&gt;
 
 &lt;h5 id=&quot;上面说的看不懂的话直接下载带驱动的版本&quot;&gt;上面说的看不懂的话，直接下载带驱动的版本。&lt;/h5&gt;
@@ -215,16 +224,18 @@ forward-socks5 / localhost:1080 .
 &lt;img src=&quot;http://images.foolishtalk.org/apple-script-editor-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;运行后它会打开 iTunes ：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tell application &lt;span class=&quot;s2&quot;&gt;&quot;iTunes&quot;&lt;/span&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tell application &lt;span class=&quot;s2&quot;&gt;&quot;iTunes&quot;&lt;/span&gt;
 	play
 end tell
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;这三行可以简单的理解为：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;告诉 iTunes
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;告诉 iTunes
     播放
 结束
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tell application &quot;xxx&quot;&lt;/code&gt; 如果你是想让微信 App做点什么，就是&lt;code class=&quot;highlighter-rouge&quot;&gt;tell application &quot;微信&quot;&lt;/code&gt;,而&lt;code class=&quot;highlighter-rouge&quot;&gt;play&lt;/code&gt;这个事件，是iTunes独有的，怎么能知道app特有的事件？你可以通过&lt;code class=&quot;highlighter-rouge&quot;&gt;脚本编辑器&lt;/code&gt;的导航栏中按照以下步骤找到：&lt;br /&gt;
 &lt;img src=&quot;http://images.foolishtalk.org/apple-script-editor-2.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
 然后选择&lt;code class=&quot;highlighter-rouge&quot;&gt;iTunes&lt;/code&gt;:&lt;br /&gt;
@@ -236,7 +247,7 @@ end tell
 &lt;p&gt;上面已经说到，可以通过&lt;code class=&quot;highlighter-rouge&quot;&gt;tell application &quot;xxx&quot;&lt;/code&gt;这种方式去调用 App 允许的行为，如果你看完了上面的介绍，打算自己动手去做一些 App 自动化的事情，你会发现 App 提供的事件很少，甚至有可能没有，所以接下来讲的是 &lt;code class=&quot;highlighter-rouge&quot;&gt;System Events&lt;/code&gt; , &lt;code class=&quot;highlighter-rouge&quot;&gt;System Events&lt;/code&gt; 为我们提供了系统事件，允许我们模拟用户点击行为，可以说所有用户界面相关的操作，你都可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;System Events&lt;/code&gt; 去进行自动化操作。&lt;/p&gt;
 
 &lt;p&gt;下面这一段就是通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;System Events&lt;/code&gt; 启动 &lt;code class=&quot;highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 然后通过菜单栏的选项卡，新建标签页。&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tell application &lt;span class=&quot;s2&quot;&gt;&quot;Safari&quot;&lt;/span&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tell application &lt;span class=&quot;s2&quot;&gt;&quot;Safari&quot;&lt;/span&gt;
 	&lt;span class=&quot;c&quot;&gt;# 打开Safari&lt;/span&gt;
 	activate
 	tell application &lt;span class=&quot;s2&quot;&gt;&quot;System Events&quot;&lt;/span&gt;
@@ -246,7 +257,8 @@ end tell
 		end tell
 	end tell
 end tell
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;h1 id=&quot;mac-app-调用-applescript-的方式&quot;&gt;Mac App 调用 AppleScript 的方式&lt;/h1&gt;
 
@@ -271,7 +283,7 @@ end tell
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;预期结果是正常的，但是会发现打印出了这样的错误：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2019-09-22 21:15:30.094229+0800 SwiftAppleScript[1453:42847] skipped scripting addition &quot;/Library/ScriptingAdditions/SASyphonInjector.osax&quot; because it is not SIP-protected.
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2019-09-22 21:15:30.094229+0800 SwiftAppleScript[1453:42847] skipped scripting addition &quot;/Library/ScriptingAdditions/SASyphonInjector.osax&quot; because it is not SIP-protected.
 Optional({
     NSAppleScriptErrorAppName = &quot;System Events&quot;;
     NSAppleScriptErrorBriefMessage = &quot;Not authorized to send Apple events to System Events.&quot;;
@@ -279,7 +291,8 @@ Optional({
     NSAppleScriptErrorNumber = &quot;-1743&quot;;
     NSAppleScriptErrorRange = &quot;NSRange: {168, 69}&quot;;
 })
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;这个地方非常的坑，如果没有打印&lt;code class=&quot;highlighter-rouge&quot;&gt;error&lt;/code&gt;,在没有打开&lt;code class=&quot;highlighter-rouge&quot;&gt;App Sanbox&lt;/code&gt;的情况下，是有可能预期效果是正常的，Safari能正常打开然后新建标签页。&lt;/p&gt;
 
@@ -293,14 +306,15 @@ Optional({
 &lt;p&gt;Mac OSX在10.6系统之后，为了防止恶意的App通过系统漏洞攻击系统，获取控制权限，要求上架的所有的App，都必须要开启沙盒。不要以为App安全离我们很远，Mac App一不留神就有可能被利用，System Events 就可以做到这个事情。&lt;/p&gt;
 
 &lt;p&gt;讲回正题，当我们把 &lt;code class=&quot;highlighter-rouge&quot;&gt;App Sanbox&lt;/code&gt; 打开后，新的报错又来了：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Optional({
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Optional({
     NSAppleScriptErrorAppName = Safari;
     NSAppleScriptErrorBriefMessage = &quot;Application isn’t running.&quot;;
     NSAppleScriptErrorMessage = &quot;Safari got an error: Application isn’t running.&quot;;
     NSAppleScriptErrorNumber = &quot;-600&quot;;
     NSAppleScriptErrorRange = &quot;NSRange: {45, 8}&quot;;
 })
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/2019110_IMG_2412.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;这次是提示 &lt;code class=&quot;highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 没有运行，我们的代码里已经加了让 &lt;code class=&quot;highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 唤醒的功能了，这说明这段代码没办法执行，既然没有解决，只能靠 google 了。&lt;/p&gt;
@@ -309,9 +323,10 @@ Optional({
 
 &lt;p&gt;到这里为止，一切正常的。&lt;br /&gt;
 在虚拟定位加入这个权限的第一个版本，上架也非常顺利，但是这之后更新的一个版本，仅涉及一些UI细节的修复，收到苹果拒审的邮件，内容如下：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;我知道你要使用 com.apple.security.temporary-exception.apple-events 干嘛，
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;我知道你要使用 com.apple.security.temporary-exception.apple-events 干嘛，
 但是我不能给你用，要么你就去掉这个功能，要么你要自己找别的方式去实现。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;既然不给我用，为什么上个版本还能给我上架成功？？？&lt;/p&gt;
 
@@ -320,18 +335,20 @@ Optional({
 &lt;p&gt;这个方法不行，只能另外再找方法了。&lt;/p&gt;
 
 &lt;p&gt;从苹果的&lt;a href=&quot;https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html#//apple_ref/doc/uid/TP40011195-CH4-SW25&quot;&gt;文档&lt;/a&gt;可以找到怎么通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt; 调用其他 App 功能的资料，苹果在文档中给我们举了个例子，如果要用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Mail.app&lt;/code&gt; 的邮件编写功能，可以在 &lt;code class=&quot;highlighter-rouge&quot;&gt;App.entitlements&lt;/code&gt; 加上一下的权限：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;key&amp;gt;com.apple.security.scripting-targets&amp;lt;/key&amp;gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;key&amp;gt;com.apple.security.scripting-targets&amp;lt;/key&amp;gt;
     &amp;lt;dict&amp;gt;
         &amp;lt;key&amp;gt;com.apple.mail&amp;lt;/key&amp;gt;
         &amp;lt;array&amp;gt;
             &amp;lt;string&amp;gt;com.apple.mail.compose&amp;lt;/string&amp;gt;
         &amp;lt;/array&amp;gt;
     &amp;lt;/dict&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;这样就可以使用&lt;code class=&quot;highlighter-rouge&quot;&gt;com.apple.mail.compose&lt;/code&gt;这个访问组下的权限了，这个访问组下的权限，可以通过以下的命令看得到：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sdef /Applications/Mail.app &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; ~/Desktop/mail.xml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sdef /Applications/Mail.app &amp;gt; ~/Desktop/mail.xml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;但是 Xcode 本身并没有提供一个可以修改定位的访问组权限给到我们，所以并不能使用以上的方法去解决。&lt;/p&gt;
 
@@ -375,18 +392,21 @@ Optional({
       <item>
         <title>macOS High Sierra依赖OpenSSL交叉编译</title>
         <description>&lt;p&gt;有些比较老的库，又是依赖 openssl，要自己编译成静态库的时候，遇到了这个错误：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;configure: error: OpenSSL support explicitly requested but OpenSSL could not be found
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;configure: error: OpenSSL support explicitly requested but OpenSSL could not be found
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;如果打算通过&lt;code class=&quot;highlighter-rouge&quot;&gt;brew link openssl&lt;/code&gt;软连接，会得到这个错误：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Warning: Refusing to link macOS-provided software: openssl
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Warning: Refusing to link macOS-provided software: openssl
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;后来查阅了一些资料，在 High Sierra 上，openssl 被 禁止通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;brew link openssl&lt;/code&gt; 软链接。&lt;/p&gt;
 
 &lt;p&gt;设置这几个环境变量就可以了：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/opt/openssl/lib:&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/opt/openssl/lib:&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/opt/openssl/include:&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CPATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PKG_CONFIG_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/opt/openssl/lib/pkgconfig:&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PKG_CONFIG_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Sun, 13 Oct 2019 00:00:00 +0800</pubDate>
         <link>http://www.foolishtalk.org/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
@@ -529,41 +549,42 @@ rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
 &lt;h1 id=&quot;视频数据采集原理推流&quot;&gt;视频数据采集原理(推流)&lt;/h1&gt;
 &lt;ol&gt;
   &lt;li&gt;音视频的采集，iOS 中，利用 AVCaptureSession和AVCaptureDevice 可以采集到原始的音视频数据流。一般采集原始格式为YUV，因为前面也有提到了，YUV体积比较小。
-    &lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureSession&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;
+    &lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureSession&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_session&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-     &lt;span class=&quot;c1&quot;&gt;// 1. 创建`AVCaptureSession`用来管理音视频输入、输出，`setSessionPreset:`可以设置视频分辨率；&lt;/span&gt;
-     &lt;span class=&quot;n&quot;&gt;_session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureSession&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+     &lt;span class=&quot;c1&quot;&gt;// 1. 创建`AVCaptureSession`用来管理音视频输入、输出，`setSessionPreset:`可以设置视频分辨率；
+&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;_session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureSession&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
      &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_session&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setSessionPreset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureSessionPreset640x480&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_session&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setupVideoCapture&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setupVideoCapture&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;c1&quot;&gt;//  2. 通过`AVCaptureDevice`拿到物理设备，再初始化`AVCaptureDeviceInput`输出对象；&lt;/span&gt;
- &lt;span class=&quot;n&quot;&gt;AVCaptureDevice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureDevice&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;defaultDeviceWithMediaType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVMediaTypeVideo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;//  2. 通过`AVCaptureDevice`拿到物理设备，再初始化`AVCaptureDeviceInput`输出对象；
+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AVCaptureDevice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureDevice&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;defaultDeviceWithMediaType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVMediaTypeVideo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;NSError&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;AVCaptureDeviceInput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deviceInput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureDeviceInput&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;deviceInputWithDevice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
- &lt;span class=&quot;c1&quot;&gt;// 3. 将其设备输出对象`AVCaptureDeviceInput`添加到`AVCaptureSession`的输入中&lt;/span&gt;
- &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;canAddInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deviceInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// 3. 将其设备输出对象`AVCaptureDeviceInput`添加到`AVCaptureSession`的输入中
+&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;canAddInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deviceInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
      &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;addInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deviceInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
- &lt;span class=&quot;c1&quot;&gt;// 4. 创建输出对象&lt;/span&gt;
- &lt;span class=&quot;n&quot;&gt;AVCaptureVideoDataOutput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;videoDataOutput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureVideoDataOutput&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
- &lt;span class=&quot;c1&quot;&gt;// 5. 设置输出格式，iOS下目前仅支持这3种&lt;/span&gt;
- &lt;span class=&quot;cm&quot;&gt;/*
+ &lt;span class=&quot;c1&quot;&gt;// 4. 创建输出对象
+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AVCaptureVideoDataOutput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;videoDataOutput&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVCaptureVideoDataOutput&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// 5. 设置输出格式，iOS下目前仅支持这3种
+&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/*
   kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange YUV格式，Y值取值范围[16,235]
   kCVPixelFormatType_420YpCbCr8BiPlanarFullRange  YUV格式，Y值取值范围[0,255]
   kCVPixelFormatType_32BGRA                       BGBA格式
   */&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;NSDictionary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rgbOutputSettings&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;@{(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCVPixelBufferPixelFormatTypeKey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCVPixelFormatType_32BGRA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)};&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;videoDataOutput&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setVideoSettings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rgbOutputSettings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
- &lt;span class=&quot;c1&quot;&gt;// 6. 放弃因为阻塞而延迟的视频帧&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;videoDataOutput&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setAlwaysDiscardsLateVideoFrames&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;YES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
- &lt;span class=&quot;c1&quot;&gt;// 7. 创建一个串行队列，保证输出帧是按顺序返回的&lt;/span&gt;
- &lt;span class=&quot;n&quot;&gt;dispatch_queue_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;videoDataOutputQueue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_queue_create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;VideoDataOutputQueue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DISPATCH_QUEUE_SERIAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// 6. 放弃因为阻塞而延迟的视频帧
+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;videoDataOutput&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setAlwaysDiscardsLateVideoFrames&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;YES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// 7. 创建一个串行队列，保证输出帧是按顺序返回的
+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_queue_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;videoDataOutputQueue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_queue_create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;VideoDataOutputQueue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DISPATCH_QUEUE_SERIAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;videoDataOutput&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setSampleBufferDelegate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;videoDataOutputQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
     
  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;canAddOutput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;videoDataOutput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -571,7 +592,8 @@ rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;videoConnection&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;videoDataOutput&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;connectionWithMediaType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AVMediaTypeVideo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;对视频进行 H264 编码，对音频进行 AAC 编码，在 ios 中分别有已经封装好的编码库来实现对音视频的编码。&lt;/p&gt;
@@ -665,11 +687,12 @@ rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
         <title>Swift闭包中weak多个对象</title>
         <description>&lt;p&gt;无论是在OC还是Swift都会有在闭包中需要弱引用对象的时候，没有在Swift的文档中看到如何在闭包中对多个对象弱引用，最后在stackoverflow上&lt;a href=&quot;https://stackoverflow.com/questions/28015394/how-can-you-capture-multiple-arguments-weakly-in-a-swift-closure&quot;&gt;找到&lt;/a&gt;相关的资料：&lt;/p&gt;
 
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;weak&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;weak&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;weak&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;weak&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
             
     &lt;span class=&quot;c1&quot;&gt;//....&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Sat, 23 Feb 2019 00:00:00 +0800</pubDate>
         <link>http://www.foolishtalk.org/2019/02/23/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/</link>
@@ -703,16 +726,18 @@ rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
 &lt;p&gt;在操作系统中，开启一个任务会开启一个进程。&lt;br /&gt;
 在iOS上，一个app对应一个进程。每个进程运行在其专用且受保护的内存空间中。&lt;br /&gt;
 例如在mac上打开终端，然后再输入&lt;code class=&quot;highlighter-rouge&quot;&gt;ps&lt;/code&gt;就会看到开启了一条&lt;code class=&quot;highlighter-rouge&quot;&gt;bash&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;MacdeMacBook-Pro:~ Fidetro$ ps
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;MacdeMacBook-Pro:~ Fidetro$ ps
   PID TTY           TIME CMD
  8329 ttys000    0:00.03 -bash
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;如果再开打开一个终端，再次输入&lt;code class=&quot;highlighter-rouge&quot;&gt;ps&lt;/code&gt;就会看到开启了两个&lt;code class=&quot;highlighter-rouge&quot;&gt;bash&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;MacdeMacBook-Pro:~ Karim$ ps
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;MacdeMacBook-Pro:~ Karim$ ps
   PID TTY           TIME CMD
  8329 ttys000    0:00.03 -bash
  8651 ttys001    0:00.02 -bash
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;一个进程中又至少会开启一条线程，在iOS中，我们把那条线程叫做主线程。一个进程可以开启多条线程。&lt;/p&gt;
 &lt;h3 id=&quot;什么是线程&quot;&gt;什么是线程？&lt;/h3&gt;
 
@@ -776,10 +801,11 @@ rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_after()&lt;/code&gt;是iOS最常用的延时方法。&lt;/p&gt;
 
-&lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;n&quot;&gt;dispatch_after&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dispatch_time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DISPATCH_TIME_NOW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int64_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NSEC_PER_SEC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_get_main_queue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;//两秒后执行&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;n&quot;&gt;dispatch_after&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dispatch_time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DISPATCH_TIME_NOW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int64_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NSEC_PER_SEC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_get_main_queue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//两秒后执行
+&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;h4 id=&quot;dispatch_group_t&quot;&gt;dispatch_group_t&lt;/h4&gt;
 
@@ -789,7 +815,7 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
 第二种是&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_group_wait()&lt;/code&gt;，会阻塞当前线程，等待所有任务完成后才往下走，&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_group_wait()&lt;/code&gt;不可以在主线程调用，否则会造成死锁。&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_group_notify()&lt;/code&gt;的例子如下：&lt;/p&gt;
-&lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;n&quot;&gt;dispatch_group_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_group_create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;n&quot;&gt;dispatch_group_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_group_create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;dispatch_queue_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_get_global_queue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;dispatch_group_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;dispatch_group_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_get_main_queue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
@@ -814,7 +840,8 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
         &lt;span class=&quot;n&quot;&gt;NSLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;输出结果：&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-clang&quot;&gt;2018-12-19 15:12:27.770146+0800 GCD[70391:2895561] 2
@@ -823,7 +850,7 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_group_wait()&lt;/code&gt;例子如下：&lt;/p&gt;
-&lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;dispatch_queue_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;asyncQueue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_queue_create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;com.group.queue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DISPATCH_QUEUE_CONCURRENT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;dispatch_queue_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;asyncQueue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_queue_create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;com.group.queue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DISPATCH_QUEUE_CONCURRENT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;dispatch_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;asyncQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;dispatch_group_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_group_create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;dispatch_queue_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_get_global_queue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
@@ -848,7 +875,8 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
         &lt;span class=&quot;n&quot;&gt;dispatch_group_wait&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DISPATCH_TIME_FOREVER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;NSLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;输出结果：&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-clang&quot;&gt;2019-02-16 12:21:12.300569+0800 GCD[79234:3427553] 2
 2019-02-16 12:21:13.751251+0800 GCD[79234:3427553] 1
@@ -866,8 +894,8 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
 
 &lt;p&gt;使用&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_barrier_async&lt;/code&gt;的时候，需要自定义队列才有效，如果使用全局队列或者同步队列，效果和&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync()&lt;/code&gt;同步函数一样。&lt;/p&gt;
 
-&lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;c1&quot;&gt;//防止文件读写冲突，可以创建一个串行队列，操作都在这个队列中进行，没有更新数据读用并行，写用串行。&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;dispatch_queue_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dataQueue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_queue_create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;com.karim.gcd.dataqueue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DISPATCH_QUEUE_CONCURRENT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;div class=&quot;language-objc highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;c1&quot;&gt;//防止文件读写冲突，可以创建一个串行队列，操作都在这个队列中进行，没有更新数据读用并行，写用串行。
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;dispatch_queue_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dataQueue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_queue_create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;com.karim.gcd.dataqueue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DISPATCH_QUEUE_CONCURRENT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;dispatch_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSThread&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sleepForTimeInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;NSLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;read data 1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
@@ -875,8 +903,8 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
     &lt;span class=&quot;n&quot;&gt;dispatch_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;NSLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;read data 2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//等待前面的都完成，在执行barrier后面的&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;dispatch_barrier_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;//等待前面的都完成，在执行barrier后面的
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;dispatch_barrier_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;NSLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;write data 1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSThread&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sleepForTimeInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
@@ -887,7 +915,8 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
     &lt;span class=&quot;n&quot;&gt;dispatch_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;NSLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;read data 4&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;输出结果如下：&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-clang&quot;&gt;2018-12-19 15:26:50.297477+0800 GCD[70716:2943544] read data 2
 2018-12-19 15:26:52.302570+0800 GCD[70716:2943541] read data 1

@@ -208,7 +208,7 @@ border: none;
 <img src="http://images.foolishtalk.org/764E4AA7-A3BE-4782-AACF-69E4EBE4CAF7.png" alt="" />
 说完这些坑之后，也该讲讲怎么适配了，talk is cheap，show me the code！
  在iOS 11发布后，Masonry也更新了最新适配的方法，增加了以下属性方便我们适配</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuide</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuide</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideLeading</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideTrailing</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideLeft</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
@@ -219,14 +219,15 @@ border: none;
 <span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideHeight</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideCenterX</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MASViewAttribute</span> <span class="o">*</span><span class="n">mas_safeAreaLayoutGuideCenterY</span> <span class="n">NS_AVAILABLE_IOS</span><span class="p">(</span><span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>但是这些属性只有在iOS 11中才可以使用，所以如果要适配从iOS 8开始，做下面的效果得写判断</p>
 
 <p><img src="http://images.foolishtalk.org/E6C62EB6-71E0-4253-80FC-EFBEE4657537.png" alt="" /></p>
 
 <p><img src="http://images.foolishtalk.org/C9391B5F-D768-48F7-B003-0E7964D48820.png" alt="" /></p>
 
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
     <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>
     <span class="n">self</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">@"First"</span><span class="p">;</span>
     <span class="n">UIView</span> <span class="o">*</span><span class="n">colorView</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIView</span> <span class="nf">alloc</span><span class="p">]</span><span class="nf">init</span><span class="p">];</span>
@@ -241,13 +242,14 @@ border: none;
         <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">);</span>
     <span class="p">}];</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p><code class="highlighter-rouge">@available(iOS 11.0, *)</code>只是判断iOS系统版本，并不是判断是否iPhoneX，即时是iPhoneX以下，只要升到了iOS11也是可以用<code class="highlighter-rouge">SafeArea</code>的
 在iOS 11之前，ViewController中的<code class="highlighter-rouge">automaticallyAdjustsScrollViewInsets</code>是默认<code class="highlighter-rouge">YES</code>的，这样会导致在有导航栏的情况下，第一个subView如果<code class="highlighter-rouge">UIScrollView</code>的子类，例如<code class="highlighter-rouge">UITableView</code>的时候，<code class="highlighter-rouge">TableView</code>的本身不会做偏移，但是<code class="highlighter-rouge">UITableViewWrapperView</code>会往下偏移到导航栏下面，让导航栏不会发生挡住TableView内容的情况。但是在iOS11后，<code class="highlighter-rouge">automaticallyAdjustsScrollViewInsets</code>被废弃了，这个属性被移到了<code class="highlighter-rouge">UIScrollView</code>中的<code class="highlighter-rouge">contentInsetAdjustmentBehavior</code>，大家应该都遇过导航栏是透明的但是导航栏的Item是显示的需求，如果要做这种效果</p>
 
 <p><img src="http://images.foolishtalk.org/5759B33B-9C3F-485A-801C-32C421E0023F.png" alt="" />
 <img src="http://images.foolishtalk.org/B7D623C5-CBF1-47A8-9D07-3EA684D8BBD9.png" alt="" /></p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
     <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>
     <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="nf">greenColor</span><span class="p">];</span>
     <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">navigationController</span><span class="p">.</span><span class="n">navigationBar</span> <span class="nf">setBackgroundImage</span><span class="p">:[</span><span class="n">UIImage</span> <span class="nf">new</span><span class="p">]</span>
@@ -263,20 +265,21 @@ border: none;
     <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="nf">mas_makeConstraints</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">);</span>
         <span class="k">if</span> <span class="p">(</span><span class="err">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(((</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)[</span><span class="n">UIApplication</span> <span class="nf">performSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">sharedApplication</span><span class="p">)]).</span><span class="n">keyWindow</span><span class="p">.</span><span class="n">safeAreaInsets</span><span class="p">.</span><span class="n">top</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span><span class="c1">//iOS11而且是iPhone X</span>
-                <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_top</span><span class="p">).</span><span class="n">mas_offset</span><span class="p">(</span><span class="mi">44</span><span class="p">);</span><span class="c1">//这个也可以用    self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0); make.top.mas_equalTo(self.view.mas_top);代替</span>
-
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="c1">//iOS11，但是不是iPhone X</span>
-                <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_top</span><span class="p">).</span><span class="n">mas_offset</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(((</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)[</span><span class="n">UIApplication</span> <span class="nf">performSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">sharedApplication</span><span class="p">)]).</span><span class="n">keyWindow</span><span class="p">.</span><span class="n">safeAreaInsets</span><span class="p">.</span><span class="n">top</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span><span class="c1">//iOS11而且是iPhone X
+</span>                <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_top</span><span class="p">).</span><span class="n">mas_offset</span><span class="p">(</span><span class="mi">44</span><span class="p">);</span><span class="c1">//这个也可以用    self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0); make.top.mas_equalTo(self.view.mas_top);代替
+</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="c1">//iOS11，但是不是iPhone X
+</span>                <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_top</span><span class="p">).</span><span class="n">mas_offset</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
             <span class="p">}</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="c1">//iOS11以下，而且不是iPhone X</span>
-            <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_top</span><span class="p">).</span><span class="n">mas_offset</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="c1">//iOS11以下，而且不是iPhone X
+</span>            <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_top</span><span class="p">).</span><span class="n">mas_offset</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}];</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>或者使用scrollView的contentInset</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
     <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>
     <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="nf">greenColor</span><span class="p">];</span>
     <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">navigationController</span><span class="p">.</span><span class="n">navigationBar</span> <span class="nf">setBackgroundImage</span><span class="p">:[</span><span class="n">UIImage</span> <span class="nf">new</span><span class="p">]</span>
@@ -285,13 +288,13 @@ border: none;
     <span class="n">self</span><span class="p">.</span><span class="n">navigationController</span><span class="p">.</span><span class="n">navigationBar</span><span class="p">.</span><span class="n">translucent</span> <span class="o">=</span> <span class="nb">YES</span><span class="p">;</span>
     
     <span class="k">if</span> <span class="p">(</span><span class="err">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">))</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(((</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)[</span><span class="n">UIApplication</span> <span class="nf">performSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">sharedApplication</span><span class="p">)]).</span><span class="n">keyWindow</span><span class="p">.</span><span class="n">safeAreaInsets</span><span class="p">.</span><span class="n">top</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span><span class="c1">//iOS11而且是iPhone X</span>
-            <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">contentInset</span> <span class="o">=</span> <span class="n">UIEdgeInsetsMake</span><span class="p">(</span><span class="mi">44</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="c1">//iOS11，但是不是iPhone X</span>
-            <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">contentInset</span> <span class="o">=</span> <span class="n">UIEdgeInsetsMake</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(((</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)[</span><span class="n">UIApplication</span> <span class="nf">performSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">sharedApplication</span><span class="p">)]).</span><span class="n">keyWindow</span><span class="p">.</span><span class="n">safeAreaInsets</span><span class="p">.</span><span class="n">top</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span><span class="c1">//iOS11而且是iPhone X
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">contentInset</span> <span class="o">=</span> <span class="n">UIEdgeInsetsMake</span><span class="p">(</span><span class="mi">44</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="c1">//iOS11，但是不是iPhone X
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">contentInset</span> <span class="o">=</span> <span class="n">UIEdgeInsetsMake</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
         <span class="p">}</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="c1">//iOS11以下，而且不是iPhone X</span>
-        <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">contentInset</span> <span class="o">=</span> <span class="n">UIEdgeInsetsMake</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="c1">//iOS11以下，而且不是iPhone X
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">contentInset</span> <span class="o">=</span> <span class="n">UIEdgeInsetsMake</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
         
     <span class="p">}</span>
     <span class="k">if</span> <span class="p">(</span><span class="err">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mi">11</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">))</span> <span class="p">{</span>
@@ -304,7 +307,8 @@ border: none;
         <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">);</span>
     <span class="p">}];</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>总的来说，如果不出现很多这种导航栏隐藏的情况，适配应该工作量不会很大，如果TabBar和NavigationBar全是自定义的话，估计工作量会大很多。
 附上参考链接和WWDC链接：</p>
 <ol>
@@ -385,13 +389,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="36">
+                				<a href="/tags/#iOS" title="iOS" rel="35">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -420,8 +424,6 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

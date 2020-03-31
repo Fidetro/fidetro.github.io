@@ -197,7 +197,7 @@ border: none;
                 post-container">
 
 				<p>在给Alamofire用protocol封装一层业务的时候，定义了以下的协议和方法</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">BaseRequest</span> <span class="p">{</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">BaseRequest</span> <span class="p">{</span>
 <span class="p">}</span>
 <span class="kd">extension</span> <span class="kt">FIDRequest</span> <span class="p">{</span>
     <span class="kd">func</span> <span class="nf">complete</span><span class="p">(</span><span class="n">_</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">DataResponse</span><span class="o">&lt;</span><span class="kt">Any</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()))</span> <span class="p">{</span>
@@ -217,20 +217,23 @@ border: none;
             <span class="p">}</span>
        <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>这时候问题就来了，正常情况下，应该使用<code class="highlighter-rouge">[weak self]</code>就可以解决了，但是在使用<code class="highlighter-rouge">protocol</code>的时候，是无法使用<code class="highlighter-rouge">[weak self]</code>的，然后就会有以下的报错
 <code class="highlighter-rouge">'weak' may only be applied to class and class-bound protocol types, not 'Self'</code></p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">func</span> <span class="nf">request</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">WBBaseRequest</span> <span class="p">{</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code>    <span class="kd">func</span> <span class="nf">request</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">WBBaseRequest</span> <span class="p">{</span>
             <span class="n">complete</span> <span class="p">{</span>  <span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span>  <span class="k">in</span> <span class="c1">//这个地方会报错 'weak' may only be applied to class and class-bound protocol types, not 'Self'</span>
 <span class="c1">//这里还有段代码造成循环引用</span>
             <span class="p">}</span>
        <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>直接解决这个问题的方式是，将 <code class="highlighter-rouge">BaseRequest</code>声明为只有类才可以使用</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">BaseRequest</span> <span class="p">:</span> <span class="kd">class</span> <span class="p">{</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">BaseRequest</span> <span class="p">:</span> <span class="kd">class</span> <span class="p">{</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>然后就可以愉快的使用<code class="highlighter-rouge">[weak self]</code></p>
 
 <p>总结：
@@ -271,7 +274,7 @@ border: none;
                     
                     
                     <li class="next">
-                        <a href="/2018/01/12/%E5%9C%A8UITableView%E4%B8%AD%E4%BD%BF%E7%94%A8RunLoop%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/" data-toggle="tooltip" data-placement="top" title="在UITableView中使用RunLoop遇到的坑">Next Post &rarr;</a>
+                        <a href="/2018/01/12/%E5%9C%A8UITableView%E4%B8%AD%E4%BD%BF%E7%94%A8RunLoop%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/" data-toggle="tooltip" data-placement="top" title="在uitableview中使用runloop遇到的坑">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -309,13 +312,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="36">
+                				<a href="/tags/#iOS" title="iOS" rel="35">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -344,8 +347,6 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

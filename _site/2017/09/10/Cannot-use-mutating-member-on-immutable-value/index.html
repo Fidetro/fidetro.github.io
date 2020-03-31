@@ -205,14 +205,15 @@ border: none;
 <p><img src="http://images.foolishtalk.org/0D9699AB-D8DB-4341-B1AF-7ACD8C56D082.png" alt="2.png" /></p>
 
 <p>然后我改成这样就可以了，也不需要<code class="highlighter-rouge">mutating</code>修饰</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     <span class="kd">func</span> <span class="nf">into</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableClass</span><span class="p">:</span><span class="kt">FFDataBaseModel</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Insert</span> <span class="p">{</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code>     <span class="kd">func</span> <span class="nf">into</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableClass</span><span class="p">:</span><span class="kt">FFDataBaseModel</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Insert</span> <span class="p">{</span>
         <span class="k">var</span> <span class="nv">insert</span> <span class="o">=</span> <span class="k">self</span>
         
         <span class="n">insert</span><span class="o">.</span><span class="n">sqlStatement</span><span class="p">?</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="s">" INSERT INTO "</span> <span class="o">+</span> <span class="n">tableClass</span><span class="o">.</span><span class="nf">tableName</span><span class="p">())</span>
         
             <span class="k">return</span> <span class="n">insert</span>
         <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 
                 <hr>
@@ -283,13 +284,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="36">
+                				<a href="/tags/#iOS" title="iOS" rel="35">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -318,8 +319,6 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

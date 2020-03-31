@@ -251,17 +251,19 @@ border: none;
 <p>RxSwift为我们平时使用的UI控件提供了响应式函数，使用自带的响应式函数就能非常方便的进行数据绑定。 
 例如我们实现了一个选择体重尺子功能的View：<br />
 以前的做法：</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">func</span> <span class="nf">scrollRuleValue</span><span class="p">(</span><span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code>    <span class="kd">func</span> <span class="nf">scrollRuleValue</span><span class="p">(</span><span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">collectionView</span> <span class="o">==</span> <span class="n">containerView</span><span class="o">.</span><span class="n">weightRuleView</span><span class="o">.</span><span class="n">collectionView</span> <span class="p">{</span>
             <span class="n">containerView</span><span class="o">.</span><span class="n">weightLabel</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">"</span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">kg"</span>
         <span class="p">}</span>
     <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>利用RxSwift的特性：</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="n">containerView</span><span class="o">.</span><span class="n">weightRuleView</span><span class="o">.</span><span class="n">observerValue</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="k">in</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code>        <span class="n">containerView</span><span class="o">.</span><span class="n">weightRuleView</span><span class="o">.</span><span class="n">observerValue</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="k">in</span>
             <span class="k">return</span> <span class="s">"</span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">kg"</span>
             <span class="p">}</span><span class="o">.</span><span class="nf">bind</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="n">containerView</span><span class="o">.</span><span class="n">weightLabel</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>这行代码的意思：</p>
 <ol>
   <li>监听ruleView的observerValue序列发送;</li>
@@ -347,13 +349,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="36">
+                				<a href="/tags/#iOS" title="iOS" rel="35">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -382,8 +384,6 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

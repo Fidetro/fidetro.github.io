@@ -210,21 +210,23 @@ border: none;
 <p>一个App可以创建和拥有多个容器：<br />
 <img src="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitQuickStart/Art/3_specifycontainers2_2x.png" alt="" /></p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//创建容器</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">//创建容器</span>
 <span class="k">let</span> <span class="nv">container</span> <span class="o">=</span> <span class="kt">CKContainer</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="s">"在Capabilities选择的容器identifier"</span><span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>一个容器中拥有<code class="highlighter-rouge">Public</code>、<code class="highlighter-rouge">Private</code>、<code class="highlighter-rouge">Shared</code>三种数据库，通过<code class="highlighter-rouge">CKContainer</code>的实例获取：</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">CKContainer</span> <span class="p">{</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">CKContainer</span> <span class="p">{</span>
 
-    <span class="kd">open</span> <span class="k">var</span> <span class="nv">privateCloudDatabase</span><span class="p">:</span> <span class="kt">CKDatabase</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+    <span class="n">open</span> <span class="k">var</span> <span class="nv">privateCloudDatabase</span><span class="p">:</span> <span class="kt">CKDatabase</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
 
-    <span class="kd">open</span> <span class="k">var</span> <span class="nv">publicCloudDatabase</span><span class="p">:</span> <span class="kt">CKDatabase</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+    <span class="n">open</span> <span class="k">var</span> <span class="nv">publicCloudDatabase</span><span class="p">:</span> <span class="kt">CKDatabase</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
 
     <span class="kd">@available(OSX 10.12, *)</span>
-    <span class="kd">open</span> <span class="k">var</span> <span class="nv">sharedCloudDatabase</span><span class="p">:</span> <span class="kt">CKDatabase</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+    <span class="n">open</span> <span class="k">var</span> <span class="nv">sharedCloudDatabase</span><span class="p">:</span> <span class="kt">CKDatabase</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>不同类型的数据库，可以通过下面的表格对比：</p>
 
 <table>
@@ -268,26 +270,30 @@ border: none;
 
 <ol>
   <li>创建指定唯一记录名称的记录ID。
-    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">artworkRecordID</span> <span class="o">=</span> <span class="kt">CKRecordID</span><span class="err">（</span><span class="n">recordName</span><span class="err">：“</span><span class="mi">115</span><span class="err">”）</span>
-</code></pre></div>    </div>
+    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">artworkRecordID</span> <span class="o">=</span> <span class="kt">CKRecordID</span><span class="err">（</span><span class="n">recordName</span><span class="err">：“</span><span class="mi">115</span><span class="err">”）</span>
+</code></pre>
+    </div>
   </li>
   <li>创建一个记录对象。
-    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">artworkRecord</span> <span class="o">=</span> <span class="kt">CKRecord</span><span class="err">（</span><span class="n">recordType</span><span class="err">：“</span><span class="kt">Artwork</span><span class="err">”，</span><span class="n">recordID</span><span class="err">：</span><span class="n">artworkRecordID</span><span class="err">）</span>
-</code></pre></div>    </div>
+    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">artworkRecord</span> <span class="o">=</span> <span class="kt">CKRecord</span><span class="err">（</span><span class="n">recordType</span><span class="err">：“</span><span class="kt">Artwork</span><span class="err">”，</span><span class="n">recordID</span><span class="err">：</span><span class="n">artworkRecordID</span><span class="err">）</span>
+</code></pre>
+    </div>
   </li>
   <li>设置记录的字段
-    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">artworkRecord</span><span class="p">[</span><span class="s">"title"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"MacKerricher State Park"</span>
+    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="n">artworkRecord</span><span class="p">[</span><span class="s">"title"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"MacKerricher State Park"</span>
 <span class="n">artworkRecord</span><span class="p">[</span><span class="s">"artist"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Mei Chen"</span>
 <span class="n">artworkRecord</span><span class="p">[</span><span class="s">"address"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Fort Bragg, CA"</span>
-</code></pre></div>    </div>
+</code></pre>
+    </div>
   </li>
   <li>初始化容器并获取数据库对象
-    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">myContainer</span> <span class="o">=</span> <span class="kt">CKContainer</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="s">"iCloud.com.example.ajohnson.GalleryShared"</span><span class="p">)</span> <span class="c1">//如果使用默认容器，CKContainer.default()  </span>
+    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">myContainer</span> <span class="o">=</span> <span class="kt">CKContainer</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="s">"iCloud.com.example.ajohnson.GalleryShared"</span><span class="p">)</span> <span class="c1">//如果使用默认容器，CKContainer.default()  </span>
 <span class="k">let</span> <span class="nv">publicDatabase</span> <span class="o">=</span> <span class="n">myContainer</span><span class="o">.</span><span class="n">publicCloudDatabase</span>
-</code></pre></div>    </div>
+</code></pre>
+    </div>
   </li>
   <li>保存对象
-    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">publicDatabase</span><span class="o">.</span><span class="nf">save</span><span class="p">(</span><span class="n">artworkRecord</span><span class="p">)</span> <span class="p">{</span>
+    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="n">publicDatabase</span><span class="o">.</span><span class="nf">save</span><span class="p">(</span><span class="n">artworkRecord</span><span class="p">)</span> <span class="p">{</span>
  <span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="k">in</span>
  <span class="k">guard</span> <span class="k">let</span> <span class="nv">error</span> <span class="o">=</span> <span class="n">error</span> <span class="k">else</span> <span class="p">{</span>
      <span class="c1">// 处理错误</span>
@@ -295,10 +301,11 @@ border: none;
  <span class="p">}</span>
  <span class="c1">// ...保存成功之后的处理</span>
 <span class="p">}</span>
-</code></pre></div>    </div>
+</code></pre>
+    </div>
   </li>
   <li>查询
-    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     <span class="k">let</span> <span class="nv">predicate</span> <span class="o">=</span> <span class="kt">NSPredicate</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+    <div class="language-swift highlighter-rouge"><pre class="highlight"><code>     <span class="k">let</span> <span class="nv">predicate</span> <span class="o">=</span> <span class="kt">NSPredicate</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
      <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">CKQuery</span><span class="p">(</span><span class="nv">recordType</span><span class="p">:</span> <span class="s">"Artwork"</span><span class="p">,</span> <span class="nv">predicate</span><span class="p">:</span> <span class="n">predicate</span><span class="p">)</span>
      <span class="n">myContainer</span>
      <span class="o">.</span><span class="n">publicCloudDatabase</span>
@@ -312,7 +319,8 @@ border: none;
                  <span class="c1">// ...保存成功之后的处理</span>
          <span class="p">}</span>
      <span class="p">})</span>
-</code></pre></div>    </div>
+</code></pre>
+    </div>
   </li>
 </ol>
 
@@ -392,13 +400,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="36">
+                				<a href="/tags/#iOS" title="iOS" rel="35">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -427,8 +435,6 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

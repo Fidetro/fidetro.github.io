@@ -195,14 +195,15 @@ border: none;
                 post-container">
 
 				<p>更新了Xcode 10之后在新建OC的类的时候，都会默认加上了<code class="highlighter-rouge">NS_ASSUME_NONNULL_BEGIN</code>和<code class="highlighter-rouge">NS_ASSUME_NONNULL_END</code>。</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">NS_ASSUME_NONNULL_BEGIN</span>
+<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="n">NS_ASSUME_NONNULL_BEGIN</span>
 
 <span class="k">@interface</span> <span class="nc">Person</span> <span class="p">:</span> <span class="nc">NSObject</span>
 
 <span class="k">@end</span>
 
 <span class="n">NS_ASSUME_NONNULL_END</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>在Objective-C中，是没有像swift中<code class="highlighter-rouge">!</code>和<code class="highlighter-rouge">?</code>的概念，为了解决和swift混编的问题，增加了<code class="highlighter-rouge">__nullable</code>和<code class="highlighter-rouge">___nonnull</code>的关键字。 <code class="highlighter-rouge">__nullable</code>代表修饰的对象可以为nil。</p>
 
 <p><code class="highlighter-rouge">___nonnull</code>代表修饰的对象不可以为NULL或者为nil。<br />
@@ -279,13 +280,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="36">
+                				<a href="/tags/#iOS" title="iOS" rel="35">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -314,8 +315,6 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

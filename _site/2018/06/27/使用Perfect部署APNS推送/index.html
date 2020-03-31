@@ -244,11 +244,12 @@ border: none;
 </ol>
 
 <p>好了。。终于把前面的准备工作做好了，在Package.swift中引入</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="kt">Package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span><span class="s">"https://github.com/PerfectlySoft/Perfect-Notifications.git"</span><span class="p">,</span> <span class="nv">majorVersion</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
-</code></pre></div></div>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="o">.</span><span class="kt">Package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span><span class="s">"https://github.com/PerfectlySoft/Perfect-Notifications.git"</span><span class="p">,</span> <span class="nv">majorVersion</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
+</code></pre>
+</div>
 
 <p>配置推送设置：</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">//app的bundle id</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code>    <span class="c1">//app的bundle id</span>
     <span class="k">let</span> <span class="nv">notificationsAppId</span> <span class="o">=</span> <span class="s">"com.Fidetro.iOS-PetDay"</span>
     <span class="c1">//auth key id</span>
     <span class="k">let</span> <span class="nv">apnsKeyIdentifier</span> <span class="o">=</span> <span class="s">"F6S4LA6KT7"</span>
@@ -266,10 +267,11 @@ border: none;
         <span class="nv">privateKeyPath</span><span class="p">:</span> <span class="n">apnsPrivateKeyFilePath</span><span class="p">)</span>
     
     <span class="kt">NotificationPusher</span><span class="o">.</span><span class="n">development</span> <span class="o">=</span> <span class="kc">true</span> <span class="c1">// 打开APNS沙箱服务器开关</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>在需要推送的地方写上：</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">deviceIds</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"xxx"</span><span class="p">]</span><span class="c1">//需要推送的deviceId</span>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">deviceIds</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"xxx"</span><span class="p">]</span><span class="c1">//需要推送的deviceId</span>
     <span class="k">let</span> <span class="nv">n</span> <span class="o">=</span> <span class="kt">NotificationPusher</span><span class="p">(</span><span class="nv">apnsTopic</span><span class="p">:</span> <span class="n">notificationsAppId</span><span class="p">)</span>
     <span class="n">n</span><span class="o">.</span><span class="nf">pushAPNS</span><span class="p">(</span>
         <span class="nv">configurationName</span><span class="p">:</span> <span class="n">notificationsAppId</span><span class="p">,</span>
@@ -279,7 +281,8 @@ border: none;
             <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">responses</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
             
     <span class="p">}</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <ol>
   <li>
@@ -287,7 +290,7 @@ border: none;
 <img src="http://images.foolishtalk.org/perfect-notification-13.png" alt="" /></p>
   </li>
   <li>在Appdelegate请求权限
-    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+    <div class="language-swift highlighter-rouge"><pre class="highlight"><code> <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
     
      <span class="k">let</span> <span class="nv">center</span> <span class="o">=</span> <span class="kt">UNUserNotificationCenter</span><span class="o">.</span><span class="nf">current</span><span class="p">()</span>
      <span class="n">center</span><span class="o">.</span><span class="nf">requestAuthorization</span><span class="p">(</span><span class="nv">options</span><span class="p">:[</span><span class="o">.</span><span class="n">badge</span><span class="p">,</span> <span class="o">.</span><span class="n">alert</span><span class="p">,</span> <span class="o">.</span><span class="n">sound</span><span class="p">])</span> <span class="p">{</span> <span class="p">(</span><span class="n">granted</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="k">in</span>
@@ -297,13 +300,15 @@ border: none;
 
      <span class="k">return</span> <span class="kc">true</span>
  <span class="p">}</span>
-</code></pre></div>    </div>
+</code></pre>
+    </div>
   </li>
   <li>获取deviceToken
-    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didRegisterForRemoteNotificationsWithDeviceToken</span> <span class="nv">deviceToken</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="p">{</span>
+    <div class="language-swift highlighter-rouge"><pre class="highlight"><code> <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didRegisterForRemoteNotificationsWithDeviceToken</span> <span class="nv">deviceToken</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="p">{</span>
      <span class="nf">print</span><span class="p">(</span><span class="n">deviceToken</span><span class="o">.</span><span class="nf">hexEncodedString</span><span class="p">())</span>
  <span class="p">}</span>
-</code></pre></div>    </div>
+</code></pre>
+    </div>
   </li>
 </ol>
 
@@ -379,13 +384,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="36">
+                				<a href="/tags/#iOS" title="iOS" rel="35">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -414,8 +419,6 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

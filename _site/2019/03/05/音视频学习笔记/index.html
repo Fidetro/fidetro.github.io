@@ -263,41 +263,42 @@ rtmp协议所传输的视频流，就要求是flv格式。</p>
 <h1 id="视频数据采集原理推流">视频数据采集原理(推流)</h1>
 <ol>
   <li>音视频的采集，iOS 中，利用 AVCaptureSession和AVCaptureDevice 可以采集到原始的音视频数据流。一般采集原始格式为YUV，因为前面也有提到了，YUV体积比较小。
-    <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">AVCaptureSession</span> <span class="o">*</span><span class="p">)</span><span class="n">session</span>
+    <div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">AVCaptureSession</span> <span class="o">*</span><span class="p">)</span><span class="n">session</span>
 <span class="p">{</span>
  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">_session</span><span class="p">)</span> <span class="p">{</span>
-     <span class="c1">// 1. 创建`AVCaptureSession`用来管理音视频输入、输出，`setSessionPreset:`可以设置视频分辨率；</span>
-     <span class="n">_session</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVCaptureSession</span> <span class="nf">new</span><span class="p">];</span>
+     <span class="c1">// 1. 创建`AVCaptureSession`用来管理音视频输入、输出，`setSessionPreset:`可以设置视频分辨率；
+</span>     <span class="n">_session</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVCaptureSession</span> <span class="nf">new</span><span class="p">];</span>
      <span class="p">[</span><span class="n">_session</span> <span class="nf">setSessionPreset</span><span class="p">:</span><span class="n">AVCaptureSessionPreset640x480</span><span class="p">];</span>
  <span class="p">}</span>
  <span class="k">return</span> <span class="n">_session</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div>    </div>
-    <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">setupVideoCapture</span>
+</code></pre>
+    </div>
+    <div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">setupVideoCapture</span>
 <span class="p">{</span>
- <span class="c1">//  2. 通过`AVCaptureDevice`拿到物理设备，再初始化`AVCaptureDeviceInput`输出对象；</span>
- <span class="n">AVCaptureDevice</span> <span class="o">*</span><span class="n">device</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVCaptureDevice</span> <span class="nf">defaultDeviceWithMediaType</span><span class="p">:</span><span class="n">AVMediaTypeVideo</span><span class="p">];</span>
+ <span class="c1">//  2. 通过`AVCaptureDevice`拿到物理设备，再初始化`AVCaptureDeviceInput`输出对象；
+</span> <span class="n">AVCaptureDevice</span> <span class="o">*</span><span class="n">device</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVCaptureDevice</span> <span class="nf">defaultDeviceWithMediaType</span><span class="p">:</span><span class="n">AVMediaTypeVideo</span><span class="p">];</span>
  <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
  <span class="n">AVCaptureDeviceInput</span> <span class="o">*</span><span class="n">deviceInput</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVCaptureDeviceInput</span> <span class="nf">deviceInputWithDevice</span><span class="p">:</span><span class="n">device</span> <span class="nf">error</span><span class="p">:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">];</span>
- <span class="c1">// 3. 将其设备输出对象`AVCaptureDeviceInput`添加到`AVCaptureSession`的输入中</span>
- <span class="k">if</span> <span class="p">([</span><span class="n">self</span><span class="p">.</span><span class="n">session</span> <span class="nf">canAddInput</span><span class="p">:</span><span class="n">deviceInput</span><span class="p">])</span>
+ <span class="c1">// 3. 将其设备输出对象`AVCaptureDeviceInput`添加到`AVCaptureSession`的输入中
+</span> <span class="k">if</span> <span class="p">([</span><span class="n">self</span><span class="p">.</span><span class="n">session</span> <span class="nf">canAddInput</span><span class="p">:</span><span class="n">deviceInput</span><span class="p">])</span>
  <span class="p">{</span>
      <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">session</span> <span class="nf">addInput</span><span class="p">:</span><span class="n">deviceInput</span><span class="p">];</span>
  <span class="p">}</span>
- <span class="c1">// 4. 创建输出对象</span>
- <span class="n">AVCaptureVideoDataOutput</span> <span class="o">*</span><span class="n">videoDataOutput</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVCaptureVideoDataOutput</span> <span class="nf">new</span><span class="p">];</span>
- <span class="c1">// 5. 设置输出格式，iOS下目前仅支持这3种</span>
- <span class="cm">/*
+ <span class="c1">// 4. 创建输出对象
+</span> <span class="n">AVCaptureVideoDataOutput</span> <span class="o">*</span><span class="n">videoDataOutput</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVCaptureVideoDataOutput</span> <span class="nf">new</span><span class="p">];</span>
+ <span class="c1">// 5. 设置输出格式，iOS下目前仅支持这3种
+</span> <span class="cm">/*
   kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange YUV格式，Y值取值范围[16,235]
   kCVPixelFormatType_420YpCbCr8BiPlanarFullRange  YUV格式，Y值取值范围[0,255]
   kCVPixelFormatType_32BGRA                       BGBA格式
   */</span>
  <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">rgbOutputSettings</span> <span class="o">=</span> <span class="p">@{(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">kCVPixelBufferPixelFormatTypeKey</span><span class="o">:</span><span class="err">@</span><span class="p">(</span><span class="n">kCVPixelFormatType_32BGRA</span><span class="p">)};</span>
  <span class="p">[</span><span class="n">videoDataOutput</span> <span class="nf">setVideoSettings</span><span class="p">:</span><span class="n">rgbOutputSettings</span><span class="p">];</span>
- <span class="c1">// 6. 放弃因为阻塞而延迟的视频帧</span>
- <span class="p">[</span><span class="n">videoDataOutput</span> <span class="nf">setAlwaysDiscardsLateVideoFrames</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span>
- <span class="c1">// 7. 创建一个串行队列，保证输出帧是按顺序返回的</span>
- <span class="n">dispatch_queue_t</span> <span class="n">videoDataOutputQueue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">"VideoDataOutputQueue"</span><span class="p">,</span> <span class="n">DISPATCH_QUEUE_SERIAL</span><span class="p">);</span>
+ <span class="c1">// 6. 放弃因为阻塞而延迟的视频帧
+</span> <span class="p">[</span><span class="n">videoDataOutput</span> <span class="nf">setAlwaysDiscardsLateVideoFrames</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span>
+ <span class="c1">// 7. 创建一个串行队列，保证输出帧是按顺序返回的
+</span> <span class="n">dispatch_queue_t</span> <span class="n">videoDataOutputQueue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">"VideoDataOutputQueue"</span><span class="p">,</span> <span class="n">DISPATCH_QUEUE_SERIAL</span><span class="p">);</span>
  <span class="p">[</span><span class="n">videoDataOutput</span> <span class="nf">setSampleBufferDelegate</span><span class="p">:</span><span class="n">self</span> <span class="nf">queue</span><span class="p">:</span><span class="n">videoDataOutputQueue</span><span class="p">];</span>
     
  <span class="k">if</span> <span class="p">([</span><span class="n">self</span><span class="p">.</span><span class="n">session</span> <span class="nf">canAddOutput</span><span class="p">:</span><span class="n">videoDataOutput</span><span class="p">])</span> <span class="p">{</span>
@@ -305,7 +306,8 @@ rtmp协议所传输的视频流，就要求是flv格式。</p>
  <span class="p">}</span>
  <span class="n">self</span><span class="p">.</span><span class="n">videoConnection</span> <span class="o">=</span> <span class="p">[</span><span class="n">videoDataOutput</span> <span class="nf">connectionWithMediaType</span><span class="p">:</span><span class="n">AVMediaTypeVideo</span><span class="p">];</span>
 <span class="p">}</span>
-</code></pre></div>    </div>
+</code></pre>
+    </div>
   </li>
   <li>
     <p>对视频进行 H264 编码，对音频进行 AAC 编码，在 ios 中分别有已经封装好的编码库来实现对音视频的编码。</p>
@@ -453,13 +455,13 @@ rtmp协议所传输的视频流，就要求是flv格式。</p>
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="36">
+                				<a href="/tags/#iOS" title="iOS" rel="35">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -488,8 +490,6 @@ rtmp协议所传输的视频流，就要求是flv格式。</p>
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

@@ -217,15 +217,16 @@ border: none;
 <p><img src="http://images.foolishtalk.org/0C1F4A7B-90A5-4CB1-B51A-A06A48116480.png" alt="" /></p>
 
 <p>硬件和App之间通过什么通讯方式交互不属于本文讨论的范畴，因为其表现形式都会像上图一样。从代码层上来讲，通讯这部分都应该封装成一个类，外部无需知道内容是如何实现，业务方只需要得到设备返回的数据以及将数据发送给设备就可以了，类似于下面这样:</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">DeviceDataManagerDelegate</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
-<span class="c1">//  这里的device他可以是蓝牙的外设，也可以是能某种能标示设备的tag，能get到点就可以了</span>
-<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">readData</span><span class="o">:</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="n">data</span> <span class="n">device</span><span class="o">:</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">device</span><span class="p">;</span>
+<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">DeviceDataManagerDelegate</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+<span class="c1">//  这里的device他可以是蓝牙的外设，也可以是能某种能标示设备的tag，能get到点就可以了
+</span><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">readData</span><span class="o">:</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="n">data</span> <span class="n">device</span><span class="o">:</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">device</span><span class="p">;</span>
 <span class="k">@end</span>
 
 <span class="k">@interface</span> <span class="nc">DeviceDataManager</span> <span class="p">:</span> <span class="nc">NSObject</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sendData</span><span class="p">:(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span> <span class="nf">device</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">device</span><span class="p">;</span>
 <span class="k">@end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>但在实际开发中，并没有这么的简单。首先是App端的收发，发送消息对数据的拼装、硬件端是否在线、失败后的重连重发等，然后到接收消息时的数据解析、数据缓存、粘包等的情况发生，如果事先没有考虑好这些问题，开发的时候很容易写出灾难级的代码。</p>
 
 <hr />
@@ -237,20 +238,23 @@ border: none;
 <p>为了下面的内容更好理解，避免和http请求的网络层混淆，我把这一层叫作<code class="highlighter-rouge">传输层</code>。</p>
 
 <p>在<code class="highlighter-rouge">网络层</code>中，我们一般会根据业务对网络请求进行封装，避免重复写处理非正常结果时的代码，传输层中并不能像网络层一样能直接使用得到的数据，传输层中得到一般都是经过自定的协议包装加密过后的数据，而不像网络层使用JSON那么方便，抛开自定义的协议来讲，物联网中传输层最基本的内容都会由以下的组成：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>传输层数据
+<div class="highlighter-rouge"><pre class="highlight"><code>传输层数据
 │
 ├────命令字(功能)
 ├────消息体(行为)
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>在得到这部分数据之后，我们会经过根据事先与硬件方约定好的协议去进行解析，例如<code class="highlighter-rouge">0x0100</code>这个数据代表了什么：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>           开关（功能）  状态（行为）
+<div class="highlighter-rouge"><pre class="highlight"><code>           开关（功能）  状态（行为）
 传输层数据    0x01         0x00 
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>这部分数据看起来十分简单，但是对于一个完全没有看过事先与硬件方约定好的协议来说，是非常难懂的。<br />
 在我当时团队的code review的时候，也发现了因此带来的一些问题：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.随着版本更新，新的协议增加导致数据变得越来越庞大，接手的同学一脸懵逼;
+<div class="highlighter-rouge"><pre class="highlight"><code>1.随着版本更新，新的协议增加导致数据变得越来越庞大，接手的同学一脸懵逼;
 2.处理数据后，通知满天飞，甚至没有处理消息体直接丢;
-</code></pre></div></div>
+</code></pre>
+</div>
 <p><del>对于第一个问题，我曾经有考虑过使用一门语言作出通用的解析库，硬件端、移动端、前端、后台如果需要解析这个数据，只需要传入传输层数据，返回的就是JSON对象这样的一个方案。想象中挺美好的，但是这样也会带来解析库的维护成本以及额外的文档，后来还是放弃了这个做法。</del><br />
  在第一的问题上，最终还是老老实实的手动解析成model。<br />
  造成第二个问题，很大程度也是因为团队里没有约定很好的代码规范导致的。在当时，我还没有很深入的了解过AOP，选择的是在一开始处理完数据之后，会用另外一个model的block去接收，然后另外在controller去订阅，这种做法有个弊端就是代码量十分多，后来我了解到了<code class="highlighter-rouge">AOP</code>之后，我强烈推荐使用<code class="highlighter-rouge">AOP</code>去解决这个问题，这里用AOP好处是：</p>
@@ -266,7 +270,7 @@ border: none;
 <p>怕讲的太抽象，放一段使用<code class="highlighter-rouge">Aspects</code>的伪代码：</p>
 
 <p>Action的伪实现</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 
+<div class="language-objc highlighter-rouge"><pre class="highlight"><code> 
 <span class="k">@implementation</span> <span class="nc">TAction</span>
 
 <span class="k">+</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nf">parse</span><span class="p">:(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="nv">data</span>
@@ -278,12 +282,13 @@ border: none;
 
     */</span>
     <span class="k">return</span> <span class="p">@{</span><span class="s">@"data"</span><span class="o">:</span><span class="s">@"hello action"</span><span class="p">,</span>
-              <span class="s">@"code"</span><span class="o">:</span><span class="mi">0</span><span class="p">};</span>   <span class="c1">//不同的code标志不同的事件，例如返回的值为空、拿的是缓存的值、设备丢失连接等</span>
-<span class="p">}</span>
+              <span class="s">@"code"</span><span class="o">:</span><span class="mi">0</span><span class="p">};</span>   <span class="c1">//不同的code标志不同的事件，例如返回的值为空、拿的是缓存的值、设备丢失连接等
+</span><span class="p">}</span>
 <span class="k">@end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>Store的伪代码实现</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@implementation</span> <span class="nc">TStore</span>
+<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">@implementation</span> <span class="nc">TStore</span>
 <span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">subscribe</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">str</span><span class="p">))</span><span class="nv">handler_block</span>
 <span class="p">{</span>
     <span class="p">[</span><span class="n">object_getClass</span><span class="p">([</span><span class="n">TAction</span> <span class="nf">class</span><span class="p">])</span> <span class="nf">aspect_hookSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nf">parse</span><span class="p">:)</span> <span class="n">withOptions</span><span class="o">:</span><span class="n">AspectPositionAfter</span> <span class="n">usingBlock</span><span class="o">:^</span><span class="p">(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">AspectInfo</span><span class="o">&gt;</span> <span class="n">aspectInfo</span><span class="p">,</span><span class="n">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
@@ -298,9 +303,10 @@ border: none;
     <span class="p">}</span> <span class="n">error</span><span class="o">:</span><span class="nb">NULL</span><span class="p">];</span>
 <span class="p">}</span>
 <span class="k">@end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>在Controller上，我们就只需要订阅Store的消息就可以了：</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@implementation</span> <span class="nc">ViewController</span>
+<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">@implementation</span> <span class="nc">ViewController</span>
 
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
     <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>    
@@ -309,7 +315,8 @@ border: none;
     <span class="p">}];</span>    
 <span class="p">}</span>
 <span class="k">@end</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <hr />
 
@@ -341,7 +348,7 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/01/12/%E5%9C%A8UITableView%E4%B8%AD%E4%BD%BF%E7%94%A8RunLoop%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/" data-toggle="tooltip" data-placement="top" title="在UITableView中使用RunLoop遇到的坑">&larr; Previous Post</a>
+                        <a href="/2018/01/12/%E5%9C%A8UITableView%E4%B8%AD%E4%BD%BF%E7%94%A8RunLoop%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/" data-toggle="tooltip" data-placement="top" title="在uitableview中使用runloop遇到的坑">&larr; Previous Post</a>
                     </li>
                     
                     
@@ -384,13 +391,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="36">
+                				<a href="/tags/#iOS" title="iOS" rel="35">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -419,8 +426,6 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             

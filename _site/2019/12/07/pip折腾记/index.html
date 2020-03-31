@@ -202,38 +202,47 @@ border: none;
 
 <h1 id="正文">正文</h1>
 <p>pip安装先把安装的脚本下载下来：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget curl https://bootstrap.pypa.io/get-pip.py
-</code></pre></div></div>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>wget curl https://bootstrap.pypa.io/get-pip.py
+</code></pre>
+</div>
 <p>如果默认的是python3，需要用指定python版本：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>python2.7 get-pip.py
-</code></pre></div></div>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo python2.7 get-pip.py
+</code></pre>
+</div>
 <p>安装的过程中，会发现各种超时，原因是要翻墙。我是通过privoxy实现http代理，如果环境没装，自己安装一下：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>privoxy
-</code></pre></div></div>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>brew install privoxy
+</code></pre>
+</div>
 
 <p>如果brew安装太慢。。。再挂下代理：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export ALL_PROXY=socks5://127.0.0.1:portnumber
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>export ALL_PROXY=socks5://127.0.0.1:portnumber
+</code></pre>
+</div>
 
 <p>在配置文件<code class="highlighter-rouge">/usr/local/etc/privoxy/config</code>下面加上监听的端口号，以及本地socks5代理的端口号：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>listen-address 0.0.0.0:8118
+<div class="highlighter-rouge"><pre class="highlight"><code>listen-address 0.0.0.0:8118
 forward-socks5 / localhost:1080 .
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>启动privoxy：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> /usr/local/sbin/privoxy /usr/local/etc/privoxy/config
-</code></pre></div></div>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sudo /usr/local/sbin/privoxy /usr/local/etc/privoxy/config
+</code></pre>
+</div>
 <p>检查是否启动成功：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netstat <span class="nt">-na</span> | <span class="nb">grep </span>8118
-</code></pre></div></div>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>netstat -na | grep 8118
+</code></pre>
+</div>
 <p>将 socks5 代理转化成 http 代理：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">http_proxy</span><span class="o">=</span><span class="s1">'http://localhost:8118'</span>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">export </span><span class="nv">http_proxy</span><span class="o">=</span><span class="s1">'http://localhost:8118'</span>
 <span class="nb">export </span><span class="nv">https_proxy</span><span class="o">=</span><span class="s1">'http://localhost:8118'</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 <p>如果嫌每次设置麻烦，可以把这两行加在<code class="highlighter-rouge">~/.bash_profile</code>下。
 不想使用可以通过下面的命令取消：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unset </span>http_proxy
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">unset </span>http_proxy
 <span class="nb">unset </span>https_proxy
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>参考链接：<br />
 <a href="https://www.zhihu.com/question/31360766/answer/149140490">Homebrew有比较快的源（mirror）吗？ - skytraveler的回答 - 知乎</a><br />
@@ -308,13 +317,13 @@ forward-socks5 / localhost:1080 .
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="36">
+                				<a href="/tags/#iOS" title="iOS" rel="35">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
                                     问题随笔
                                 </a>
                             
@@ -343,8 +352,6 @@ forward-socks5 / localhost:1080 .
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
-                            
-        				
                             
         				
                             
