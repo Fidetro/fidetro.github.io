@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 11 Apr 2020 14:34:10 +0800</pubDate>
-    <lastBuildDate>Sat, 11 Apr 2020 14:34:10 +0800</lastBuildDate>
+    <pubDate>Wed, 15 Apr 2020 00:46:16 +0800</pubDate>
+    <lastBuildDate>Wed, 15 Apr 2020 00:46:16 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -136,15 +136,9 @@ forward-socks5 / localhost:1080 .
 
 &lt;p&gt;最初写的&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，需要依赖 Xcode 搭配使用，对用户使用造成很大的学习成本，但是由于沙盒机制，在AppStore下载没有办法做到。&lt;/p&gt;
 
-&lt;p&gt;于是，我做了 Magellan&lt;/p&gt;
+&lt;p&gt;于是，我做了 Magellan，但是要注意，修改定位必须要同时下载&lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan&lt;/a&gt;以及&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，不然无法使用。&lt;/p&gt;
 
 &lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
-&lt;p&gt;虚拟定位在这里&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;下载&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Magellan 最新版本可以通过这里&lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;下载&lt;/a&gt;，&lt;a href=&quot;https://pan.baidu.com/s/1oopvICbS1sblHAx96auYzA&quot;&gt;历史版本&lt;/a&gt;  提取码：4xbr  （安装最新的版本即可）&lt;br /&gt;
-提供带驱动和不带驱动的版本，两者的差别在于带驱动的版本，可以安装驱动，但是安装包很大300多M，不带驱动10M以下，如果你手机之前已经安装过驱动，可以下载不带驱动的版本。&lt;/p&gt;
-
-&lt;h5 id=&quot;上面说的看不懂的话直接下载带驱动的版本&quot;&gt;上面说的看不懂的话，直接下载带驱动的版本。&lt;/h5&gt;
 
 &lt;p&gt;Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文件夹中，
 &lt;img src=&quot;http://images.foolishtalk.org/20191022225610.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
@@ -169,7 +163,7 @@ forward-socks5 / localhost:1080 .
 &lt;h5 id=&quot;如果是首次安装驱动记得要重新插拔一次手机不然可能会没法识别&quot;&gt;如果是首次安装驱动，记得要重新插拔一次手机，不然可能会没法识别。&lt;/h5&gt;
 &lt;p&gt;如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者&lt;a href=&quot;https://weibo.com/u/2095454814&quot;&gt;微博&lt;/a&gt;联系到我，我会尽快帮你解决问题。&lt;/p&gt;
 
-&lt;p&gt;接下来，在使用虚拟定位的时候，只需要把手机连接上电脑，勾选键盘模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
+&lt;p&gt;接下来，打开&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，把手机连接上电脑，勾选键盘模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
 &lt;img src=&quot;http://images.foolishtalk.org/4c15776765db87f361aa9d9f3b17e6fe.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;qa&quot;&gt;Q&amp;amp;A&lt;/h1&gt;

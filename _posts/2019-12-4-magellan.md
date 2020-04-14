@@ -14,17 +14,9 @@ tags:
 
 最初写的[虚拟定位](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)，需要依赖 Xcode 搭配使用，对用户使用造成很大的学习成本，但是由于沙盒机制，在AppStore下载没有办法做到。  
 
-于是，我做了 Magellan 
+于是，我做了 Magellan，但是要注意，修改定位必须要同时下载[Magellan](https://www.foolishtalk.org/magellan/magellan.dmg)以及[虚拟定位](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)，不然无法使用。
 
 # 正文  
-虚拟定位在这里[下载](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)  
-
-Magellan 最新版本可以通过这里[下载](https://www.foolishtalk.org/magellan/magellan.dmg)，[历史版本](https://pan.baidu.com/s/1oopvICbS1sblHAx96auYzA)  提取码：4xbr  （安装最新的版本即可）  
-提供带驱动和不带驱动的版本，两者的差别在于带驱动的版本，可以安装驱动，但是安装包很大300多M，不带驱动10M以下，如果你手机之前已经安装过驱动，可以下载不带驱动的版本。   
-
-##### 上面说的看不懂的话，直接下载带驱动的版本。
-
-
 
 Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文件夹中，
 ![](http://images.foolishtalk.org/20191022225610.png)  
@@ -50,7 +42,7 @@ Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文�
 如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者[微博](https://weibo.com/u/2095454814)联系到我，我会尽快帮你解决问题。
 
 
-接下来，在使用虚拟定位的时候，只需要把手机连接上电脑，勾选键盘模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
+接下来，打开[虚拟定位](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)，把手机连接上电脑，勾选键盘模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
 ![](http://images.foolishtalk.org/4c15776765db87f361aa9d9f3b17e6fe.png)  
 
 
