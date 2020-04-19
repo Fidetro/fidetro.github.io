@@ -42,8 +42,13 @@ Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文�
 如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者[微博](https://weibo.com/u/2095454814)联系到我，我会尽快帮你解决问题。
 
 
-接下来，打开[虚拟定位](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)，把手机连接上电脑，勾选键盘模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
-![](http://images.foolishtalk.org/4c15776765db87f361aa9d9f3b17e6fe.png)  
+接下来，打开[虚拟定位](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)，把手机连接上电脑。
+
+改定位的方式有两种：
+1. 勾选键盘模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
+![](http://images.foolishtalk.org/4c15776765db87f361aa9d9f3b17e6fe.png)   
+2. 不需要勾选键盘模式，直接双击地图，在地图上生成多个点，类似这样：
+![](http://images.foolishtalk.org/b66ba3623da6f66123bbc4088e9e954e.png)  
 
 
 # Q&A  

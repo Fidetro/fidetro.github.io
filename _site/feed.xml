@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 19 Apr 2020 12:20:25 +0800</pubDate>
-    <lastBuildDate>Sun, 19 Apr 2020 12:20:25 +0800</lastBuildDate>
+    <pubDate>Sun, 19 Apr 2020 12:22:05 +0800</pubDate>
+    <lastBuildDate>Sun, 19 Apr 2020 12:22:05 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -163,8 +163,15 @@ forward-socks5 / localhost:1080 .
 &lt;h5 id=&quot;如果是首次安装驱动记得要重新插拔一次手机不然可能会没法识别&quot;&gt;如果是首次安装驱动，记得要重新插拔一次手机，不然可能会没法识别。&lt;/h5&gt;
 &lt;p&gt;如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者&lt;a href=&quot;https://weibo.com/u/2095454814&quot;&gt;微博&lt;/a&gt;联系到我，我会尽快帮你解决问题。&lt;/p&gt;
 
-&lt;p&gt;接下来，打开&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，把手机连接上电脑，勾选键盘模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
-&lt;img src=&quot;http://images.foolishtalk.org/4c15776765db87f361aa9d9f3b17e6fe.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;接下来，打开&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，把手机连接上电脑。&lt;/p&gt;
+
+&lt;p&gt;改定位的方式有两种：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;勾选键盘模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
+&lt;img src=&quot;http://images.foolishtalk.org/4c15776765db87f361aa9d9f3b17e6fe.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;不需要勾选键盘模式，直接双击地图，在地图上生成多个点，类似这样：
+&lt;img src=&quot;http://images.foolishtalk.org/b66ba3623da6f66123bbc4088e9e954e.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h1 id=&quot;qa&quot;&gt;Q&amp;amp;A&lt;/h1&gt;
 &lt;ol&gt;
