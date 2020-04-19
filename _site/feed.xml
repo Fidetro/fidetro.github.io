@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 19 Apr 2020 12:19:17 +0800</pubDate>
-    <lastBuildDate>Sun, 19 Apr 2020 12:19:17 +0800</lastBuildDate>
+    <pubDate>Sun, 19 Apr 2020 12:20:25 +0800</pubDate>
+    <lastBuildDate>Sun, 19 Apr 2020 12:20:25 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -126,86 +126,6 @@ forward-socks5 / localhost:1080 .
         <category>iOS</category>
         
         <category>Python</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Magellan Instruction</title>
-        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
-
-&lt;p&gt;首先你需要下载&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;以及&lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan&lt;/a&gt;，修改定位需要两个 App 同时运行。&lt;/p&gt;
-
-&lt;p&gt;Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文件夹中，
-&lt;img src=&quot;http://images.foolishtalk.org/20191022225610.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-然后双击运行，就可以了。&lt;br /&gt;
-有可能会出现这个弹窗，直接打开就好了。&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/20191022105549.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;如果出现无法打开，因为无法确认开发者的身份的弹窗时，可以在&lt;code class=&quot;highlighter-rouge&quot;&gt;系统偏好设置-通用&lt;/code&gt;下方找到，点击仍要继续运行即可。&lt;/p&gt;
-
-&lt;p&gt;运行成功后，状态栏上方会出现一顶小帽子图标。&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;首先手机要连接电脑，然后选择设备。&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/c81ff0aa45218b3cf8131ad8592eea96.png&quot; alt=&quot;&quot; /&gt;
-然后再点击安装驱动：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/d762c75e8c2838d7f7bd7d1afff0c881.png&quot; alt=&quot;&quot; /&gt;
-如果出现：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/2019_12_15_8.44.35.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-或者：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/2019_12_15_8.46.55.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;如果是首次安装驱动记得要重新插拔一次手机不然可能会没法识别&quot;&gt;如果是首次安装驱动，记得要重新插拔一次手机，不然可能会没法识别。&lt;/h5&gt;
-&lt;p&gt;如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者&lt;a href=&quot;https://weibo.com/u/2095454814&quot;&gt;微博&lt;/a&gt;联系到我，我会尽快帮你解决问题。&lt;/p&gt;
-
-&lt;p&gt;接下来，打开&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，把手机连接上电脑。&lt;/p&gt;
-
-&lt;p&gt;改定位的方式有两种：&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;勾选键盘模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
-&lt;img src=&quot;http://images.foolishtalk.org/4c15776765db87f361aa9d9f3b17e6fe.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;不需要勾选键盘模式，直接双击地图，在地图上生成多个点，类似这样：
-&lt;img src=&quot;http://images.foolishtalk.org/b66ba3623da6f66123bbc4088e9e954e.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;然后输入速度，最后点击&lt;code class=&quot;highlighter-rouge&quot;&gt;路线执行&lt;/code&gt;，你会发现手机正在按照规划的路线在移动。&lt;/p&gt;
-
-&lt;h1 id=&quot;qa&quot;&gt;Q&amp;amp;A&lt;/h1&gt;
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;显示“暂无可用设备”，找不到自己的设备怎么办？&lt;br /&gt;
-先通过 iTunes 检查手机是否连接成功，如果是旧版本的 iTunes 有可能会导致无法检测到设备，iTunes 需要更新到最新版本。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;拿来改定位（玩游戏/打卡）会不会被封？&lt;br /&gt;
-不要出现瞬移非常严重的情况，从目前技术手段上无法判定，所以可以放心使用。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;提示“暂不支持 xx 版本，请联系作者升级”，怎么办？&lt;br /&gt;
-如果你之前已经安装过驱动了，就不需要管这个提示，依然可以正常使用，如果是从来没有安装过的，出现这个提示，请联系我，我会更新新的版本解决这个问题。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;修改定位是所有App都有用吗？&lt;br /&gt;
-修改定位是全局的，整个App都会生效。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;手机需要越狱吗？&lt;br /&gt;
-手机不需要越狱。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;支持iPad吗？&lt;br /&gt;
-目前不支持，目前考虑到集成iPad驱动太大，所以暂不支持，以后考虑支持。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Wed, 04 Dec 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/12/04/magellan_en/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/12/04/magellan_en/</guid>
-        
-        <category>iOS</category>
-        
-        <category>Xcode</category>
         
         
       </item>
@@ -1014,6 +934,34 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
         <guid isPermaLink="true">http://www.foolishtalk.org/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/</guid>
         
         <category>iOS</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>2019的关键词</title>
+        <description>&lt;h1 id=&quot;2018&quot;&gt;2018&lt;/h1&gt;
+
+&lt;p&gt;在过去的一年，经历了人生第一次裁员，被万表裁了之后，期间去过YY面试，第一次去到大公司去面试，面试之前并没有怎么好好准备，一直以来对自己的水平都是非常自信，结果依旧在上面栽了个大跟斗，最终在东莞和广州之间，还是选择留在了广州，去到了悦跑圈，年轻还是尽量希望能够往更好的平台和城市发展。&lt;br /&gt;
+在工作和技术上，并没有很大突破，这点其实很遗憾，日复一日的搬砖，自身专业上没有很好沉淀，对细节把控不够，深度依旧不够深入，真的很不满意现状的水平。&lt;br /&gt;
+给自己定下2019的几个关键词，不忘初心，方得始终。&lt;/p&gt;
+
+&lt;h1 id=&quot;细节&quot;&gt;细节&lt;/h1&gt;
+&lt;p&gt;deadline短，并不是给自己代码不规范的借口，注重细节，真的很大程度上可以减少更多bug。&lt;br /&gt;
+看待问题要有更全面的思考，稍不注意就有可能影响到原有的逻辑。&lt;/p&gt;
+
+&lt;h1 id=&quot;清醒&quot;&gt;清醒&lt;/h1&gt;
+&lt;p&gt;不被他人左右自己的方向，知道自己要做的是什么，什么该做，什么不该做，当机立断。&lt;/p&gt;
+
+&lt;h1 id=&quot;感恩&quot;&gt;感恩&lt;/h1&gt;
+&lt;p&gt;感谢那些纵容你犯错后以后原谅你的人，不要再犯错，失去别人对你的信任了。&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 04 Feb 2019 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2019/02/04/2019%E7%9A%84%E5%85%B3%E9%94%AE%E8%AF%8D/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2019/02/04/2019%E7%9A%84%E5%85%B3%E9%94%AE%E8%AF%8D/</guid>
+        
+        <category>杂谈</category>
         
         
       </item>
