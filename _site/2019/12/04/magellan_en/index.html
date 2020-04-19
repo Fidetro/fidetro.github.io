@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Cannot use mutating member on immutable value - FoolishTalk 技术分享</title>
+    <title>Magellan Instruction - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/09/10/Cannot-use-mutating-member-on-immutable-value/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2019/12/04/magellan_en/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -154,12 +154,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-andre-benz.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-old.jpg')
+        background-image: url('/img/post-bg-andre-benz.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -169,17 +169,17 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
-                        
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
+                        <a class="tag" href="/tags/#Xcode" title="Xcode">Xcode</a>
+                        
                     </div>
-                    <h1>Cannot use mutating member on immutable value</h1>
+                    <h1>Magellan Instruction</h1>
                     
                     
-                    <h2 class="subheading">Swift，iOS</h2>
+                    <h2 class="subheading">iOS，定位，Xcode</h2>
                     
-                    <span class="meta">Posted by Karim on September 10, 2017</span>
+                    <span class="meta">Posted by Karim on December 4, 2019</span>
                 </div>
             </div>
         </div>
@@ -196,24 +196,72 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>这个报错是在我写swift的FFDB时候遇到的，因为在做swift版的时候，考虑到SQL语句层是通用的，所以打算抽象出来复用在Perfect上，选择用结构体和协议的方式去做，在使用结构体的时候，发现会报错，用类是不会报这个错的。原因是这样：
-结构体中，func不可以改变self本身的成员变量，如果修改本身的成员变量，需要在func前加上<code class="highlighter-rouge">mutating</code>关键字
-<img src="http://images.foolishtalk.org/73AD1856-8075-4CFE-A530-7F3E0D547F06.png" alt="1.png" /></p>
+				<h1 id="前言">前言</h1>
 
-<p>加上了<code class="highlighter-rouge">mutating</code>之后本以为已经可以了，然后调这方法看看,报错来了，大概意思是不可以在一个不可变的值使用可以的成员，函数返回的是一个不可变的值，所以问题就出在函数的返回值</p>
+<p>首先你需要下载<a href="https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12">虚拟定位</a>以及<a href="https://www.foolishtalk.org/magellan/magellan.dmg">Magellan</a>，修改定位需要两个 App 同时运行。</p>
 
-<p><img src="http://images.foolishtalk.org/0D9699AB-D8DB-4341-B1AF-7ACD8C56D082.png" alt="2.png" /></p>
+<p>Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文件夹中，
+<img src="http://images.foolishtalk.org/20191022225610.png" alt="" /><br />
+然后双击运行，就可以了。<br />
+有可能会出现这个弹窗，直接打开就好了。<br />
+<img src="http://images.foolishtalk.org/20191022105549.png" alt="" /></p>
 
-<p>然后我改成这样就可以了，也不需要<code class="highlighter-rouge">mutating</code>修饰</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code>     <span class="kd">func</span> <span class="nf">into</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableClass</span><span class="p">:</span><span class="kt">FFDataBaseModel</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Insert</span> <span class="p">{</span>
-        <span class="k">var</span> <span class="nv">insert</span> <span class="o">=</span> <span class="k">self</span>
-        
-        <span class="n">insert</span><span class="o">.</span><span class="n">sqlStatement</span><span class="p">?</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="s">" INSERT INTO "</span> <span class="o">+</span> <span class="n">tableClass</span><span class="o">.</span><span class="nf">tableName</span><span class="p">())</span>
-        
-            <span class="k">return</span> <span class="n">insert</span>
-        <span class="p">}</span>
-</code></pre>
-</div>
+<p>如果出现无法打开，因为无法确认开发者的身份的弹窗时，可以在<code class="highlighter-rouge">系统偏好设置-通用</code>下方找到，点击仍要继续运行即可。</p>
+
+<p>运行成功后，状态栏上方会出现一顶小帽子图标。<br />
+<img src="http://images.foolishtalk.org/bc9e8955850855ca07147e65957f8087.png" alt="" /></p>
+
+<p>首先手机要连接电脑，然后选择设备。<br />
+<img src="http://images.foolishtalk.org/c81ff0aa45218b3cf8131ad8592eea96.png" alt="" />
+然后再点击安装驱动：<br />
+<img src="http://images.foolishtalk.org/d762c75e8c2838d7f7bd7d1afff0c881.png" alt="" />
+如果出现：<br />
+<img src="http://images.foolishtalk.org/2019_12_15_8.44.35.png" alt="" /><br />
+或者：<br />
+<img src="http://images.foolishtalk.org/2019_12_15_8.46.55.png" alt="" /></p>
+
+<h5 id="如果是首次安装驱动记得要重新插拔一次手机不然可能会没法识别">如果是首次安装驱动，记得要重新插拔一次手机，不然可能会没法识别。</h5>
+<p>如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者<a href="https://weibo.com/u/2095454814">微博</a>联系到我，我会尽快帮你解决问题。</p>
+
+<p>接下来，打开<a href="https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12">虚拟定位</a>，把手机连接上电脑。</p>
+
+<p>改定位的方式有两种：</p>
+<ol>
+  <li>勾选键盘模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
+<img src="http://images.foolishtalk.org/4c15776765db87f361aa9d9f3b17e6fe.png" alt="" /></li>
+  <li>不需要勾选键盘模式，直接双击地图，在地图上生成多个点，类似这样：
+<img src="http://images.foolishtalk.org/b66ba3623da6f66123bbc4088e9e954e.png" alt="" /></li>
+</ol>
+
+<p>然后输入速度，最后点击<code class="highlighter-rouge">路线执行</code>，你会发现手机正在按照规划的路线在移动。</p>
+
+<h1 id="qa">Q&amp;A</h1>
+<ol>
+  <li>
+    <p>显示“暂无可用设备”，找不到自己的设备怎么办？<br />
+先通过 iTunes 检查手机是否连接成功，如果是旧版本的 iTunes 有可能会导致无法检测到设备，iTunes 需要更新到最新版本。</p>
+  </li>
+  <li>
+    <p>拿来改定位（玩游戏/打卡）会不会被封？<br />
+不要出现瞬移非常严重的情况，从目前技术手段上无法判定，所以可以放心使用。</p>
+  </li>
+  <li>
+    <p>提示“暂不支持 xx 版本，请联系作者升级”，怎么办？<br />
+如果你之前已经安装过驱动了，就不需要管这个提示，依然可以正常使用，如果是从来没有安装过的，出现这个提示，请联系我，我会更新新的版本解决这个问题。</p>
+  </li>
+  <li>
+    <p>修改定位是所有App都有用吗？<br />
+修改定位是全局的，整个App都会生效。</p>
+  </li>
+  <li>
+    <p>手机需要越狱吗？<br />
+手机不需要越狱。</p>
+  </li>
+  <li>
+    <p>支持iPad吗？<br />
+目前不支持，目前考虑到集成iPad驱动太大，所以暂不支持，以后考虑支持。</p>
+  </li>
+</ol>
 
 
                 <hr>
@@ -241,12 +289,12 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/08/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E4%B8%8A%E9%83%A8%E7%BD%B2Perfect%E6%9C%8D%E5%8A%A1%E5%99%A8/" data-toggle="tooltip" data-placement="top" title="如何在阿里云上部署Perfect服务器">&larr; Previous Post</a>
+                        <a href="/2019/12/04/magellan/" data-toggle="tooltip" data-placement="top" title="使用Magellan修改iOS定位">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/09/11/WWDC-2017%E7%AC%94%E8%AE%B0-KVC%E5%92%8CKVO/" data-toggle="tooltip" data-placement="top" title="WWDC-2017笔记---KVC和KVO">Next Post &rarr;</a>
+                        <a href="/2019/12/07/pip%E6%8A%98%E8%85%BE%E8%AE%B0/" data-toggle="tooltip" data-placement="top" title="pip折腾记">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -393,8 +441,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2017/09/10/Cannot use mutating member on immutable value";
-    var disqus_url = "http://www.foolishtalk.org/2017/09/10/Cannot-use-mutating-member-on-immutable-value/";
+    var disqus_identifier = "/2019/12/04/magellan_en";
+    var disqus_url = "http://www.foolishtalk.org/2019/12/04/magellan_en/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
