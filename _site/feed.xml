@@ -5,9 +5,66 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 19 Apr 2020 12:24:38 +0800</pubDate>
-    <lastBuildDate>Sun, 19 Apr 2020 12:24:38 +0800</lastBuildDate>
+    <pubDate>Mon, 20 Apr 2020 20:57:39 +0800</pubDate>
+    <lastBuildDate>Mon, 20 Apr 2020 20:57:39 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
+    
+      <item>
+        <title>Modify phone positioning via Magellan</title>
+        <description>&lt;h1 id=&quot;installation&quot;&gt;Installation:&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Firstly, download &lt;a href=&quot;(https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)&quot;&gt;Virtual Location App&lt;/a&gt; and &lt;a href=&quot;(https://www.foolishtalk.org/magellan/magellan.dmg)&quot;&gt;Magellan App&lt;/a&gt;. It requires running both these two apps to modify the location.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;There is an ico at system navigation bar as following after &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt; running successfully.&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Connect the mobile phone to your computer, then choose your personal mobile.&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/d944f3a7aa0e20280cb65dff013839e6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;If there is no installing the driver before, please click to &lt;code class=&quot;highlighter-rouge&quot;&gt;Install the driver &lt;/code&gt;firstly.&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/0d0da9bb126e3bd24ebfb83bd16ef3c0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;It will download the driver automatically for the first installing.&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/0fcda7c41ae4197d268c1a01bb2392a8.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Please click &lt;code class=&quot;highlighter-rouge&quot;&gt;Install the Driver&lt;/code&gt; again after download successfully. After installation successfully, there will be following tips.&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/15393a5bdbede13840e344e94f5d4946.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;It need to run &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan app&lt;/code&gt; again after installation.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;operation&quot;&gt;Operation:&lt;/h1&gt;
+&lt;ol&gt;
+  &lt;li&gt;Open &lt;code class=&quot;highlighter-rouge&quot;&gt;Virtual Location App&lt;/code&gt;&lt;br /&gt;
+There are two ways to modify the position as followings:&lt;br /&gt;
+(1) &lt;br /&gt;
+Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Move By double-click&lt;/code&gt;. Double click the map on &lt;code class=&quot;highlighter-rouge&quot;&gt;Virtual Location App&lt;/code&gt;. Then you will find your position on mobile phone has already changed.&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/162dbbf387c59ed6947ae015fa298fba.png&quot; alt=&quot;&quot; /&gt;
+(2) &lt;br /&gt;
+① Double click the map on Virtual Location without selecting &lt;code class=&quot;highlighter-rouge&quot;&gt;Move by double-click&lt;/code&gt;. There will be generated multi-spots on the map as picture shows.&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/9c7ff0c8547f7eeea693ae78f877d000.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;② Please input Speed and click &lt;code class=&quot;highlighter-rouge&quot;&gt;Run by route&lt;/code&gt; finally. You will find your mobile phone is moving along programmed route.&lt;/p&gt;
+
+&lt;p&gt;If there are any questions, please feel free to contact me and send email to zykzzzz@hotmail.com. 
+In most case, it is better to provide the log file will be helpful. Please click &lt;code class=&quot;highlighter-rouge&quot;&gt;Export log file&lt;/code&gt; to generate the log file by &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 19 Apr 2020 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2020/04/19/magellan_en/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2020/04/19/magellan_en/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Xcode</category>
+        
+        
+      </item>
     
       <item>
         <title>mac连接蓝牙音箱问题小记</title>
@@ -943,34 +1000,6 @@ GCD提供了两种方式去获取&lt;code class=&quot;highlighter-rouge&quot;&gt
         <guid isPermaLink="true">http://www.foolishtalk.org/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/</guid>
         
         <category>iOS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>2019的关键词</title>
-        <description>&lt;h1 id=&quot;2018&quot;&gt;2018&lt;/h1&gt;
-
-&lt;p&gt;在过去的一年，经历了人生第一次裁员，被万表裁了之后，期间去过YY面试，第一次去到大公司去面试，面试之前并没有怎么好好准备，一直以来对自己的水平都是非常自信，结果依旧在上面栽了个大跟斗，最终在东莞和广州之间，还是选择留在了广州，去到了悦跑圈，年轻还是尽量希望能够往更好的平台和城市发展。&lt;br /&gt;
-在工作和技术上，并没有很大突破，这点其实很遗憾，日复一日的搬砖，自身专业上没有很好沉淀，对细节把控不够，深度依旧不够深入，真的很不满意现状的水平。&lt;br /&gt;
-给自己定下2019的几个关键词，不忘初心，方得始终。&lt;/p&gt;
-
-&lt;h1 id=&quot;细节&quot;&gt;细节&lt;/h1&gt;
-&lt;p&gt;deadline短，并不是给自己代码不规范的借口，注重细节，真的很大程度上可以减少更多bug。&lt;br /&gt;
-看待问题要有更全面的思考，稍不注意就有可能影响到原有的逻辑。&lt;/p&gt;
-
-&lt;h1 id=&quot;清醒&quot;&gt;清醒&lt;/h1&gt;
-&lt;p&gt;不被他人左右自己的方向，知道自己要做的是什么，什么该做，什么不该做，当机立断。&lt;/p&gt;
-
-&lt;h1 id=&quot;感恩&quot;&gt;感恩&lt;/h1&gt;
-&lt;p&gt;感谢那些纵容你犯错后以后原谅你的人，不要再犯错，失去别人对你的信任了。&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 04 Feb 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/02/04/2019%E7%9A%84%E5%85%B3%E9%94%AE%E8%AF%8D/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/02/04/2019%E7%9A%84%E5%85%B3%E9%94%AE%E8%AF%8D/</guid>
-        
-        <category>杂谈</category>
         
         
       </item>
