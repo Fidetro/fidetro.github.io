@@ -154,6 +154,41 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97/">
+        <h2 class="post-title">
+            你真的了解p、po、v区别吗
+        </h2>
+        
+        <h3 class="post-subtitle">
+            iOS，Xcode，LLVM
+        </h3>
+        
+        <div class="post-content-preview">
+            正文
+平常在使用Xcode断点调试问题时，po可能是最常用到的LLVM命令了。
+通过po命令，我们可以在Xcode的LLDB控制台打印对象的描述，系统在运行时会提供一个默认值，如图：
+
+
+我们可以通过重写func debugDescription()达到我们希望在po的时候返回预期的返回值。
+
+
+po的底层逻辑实现：
+
+
+事实上打印对象有三种方法，po只是其中一种。
+
+第二种方式是p。
+
+p...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Karim on June 1, 2020
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2020/04/19/magellan_en/">
         <h2 class="post-title">
             Modify phone positioning via Magellan
@@ -414,32 +449,6 @@ Warning: Refusing to link macO...
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/">
-        <h2 class="post-title">
-            iOS多线程总结
-        </h2>
-        
-        <h3 class="post-subtitle">
-            iOS，多线程
-        </h3>
-        
-        <div class="post-content-preview">
-            iOS多线程总结
-
-碎碎念
-这是2019的第一篇，虽然原来这篇大概在上年7、8月的时候就开始写了，但是因为各种生活+工作的事情，再加上对文章保持严谨的态度，在写之前写过很多测试代码，同时也顺便自己复习了一下，所以一直搁置到现在才写完。
-
-前言
-最初写这一篇，是曾经被抛出过一个很泛的问题，“说说你知道的iOS多线程的知识点？”，对于一个iOS开发者来说，多线程绝对不陌生，而且经常会用到，但是遇...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on February 16, 2019
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -476,7 +485,7 @@ Warning: Refusing to link macO...
                             
                         
                             
-                                <a href="/tags/#iOS" title="iOS" rel="36">
+                                <a href="/tags/#iOS" title="iOS" rel="37">
                                     iOS
                                 </a>
                             
@@ -540,7 +549,7 @@ Warning: Refusing to link macO...
                             
                         
                             
-                                <a href="/tags/#Xcode" title="Xcode" rel="4">
+                                <a href="/tags/#Xcode" title="Xcode" rel="5">
                                     Xcode
                                 </a>
                             
