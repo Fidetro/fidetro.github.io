@@ -154,6 +154,34 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2019/02/23/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/">
+        <h2 class="post-title">
+            Swift闭包中weak多个对象
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Swift，weak
+        </h3>
+        
+        <div class="post-content-preview">
+            无论是在OC还是Swift都会有在闭包中需要弱引用对象的时候，没有在Swift的文档中看到如何在闭包中对多个对象弱引用，最后在stackoverflow上找到相关的资料：
+
+{ [weak self,weak sender]  in
+            
+    //....
+}
+
+
+
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Karim on February 23, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/">
         <h2 class="post-title">
             iOS多线程总结
@@ -378,39 +406,6 @@ AutoLayout作为平时用的最多的布局方案，但是在性能上总是饱�
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2018/08/30/iOS%E7%BB%98%E5%88%B6%E6%80%A7%E8%83%BD%E8%B0%83%E7%A0%94/">
-        <h2 class="post-title">
-            iOS绘制性能调研
-        </h2>
-        
-        <h3 class="post-subtitle">
-            iOS，绘制
-        </h3>
-        
-        <div class="post-content-preview">
-            前言
-在上篇iOS截图引起的思考留下了一些疑问，会在这篇全部解开。
-在上一篇结尾的时候，我提出了：
-
-  即使是相同的path，drawRect也是有可能会比CAShapeLayer要快的。
-
-
-正文
-
-先来看两段贝塞尔画出来的路径：
-
-  这一段路径是在悦跑圈实际遇到的轨迹情况
-    func setupAPath() -&gt; UIBezierPath {
- let bezier =...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on August 30, 2018
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -451,7 +446,7 @@ AutoLayout作为平时用的最多的布局方案，但是在性能上总是饱�
                             
                         
                             
-                                <a href="/tags/#iOS" title="iOS" rel="37">
+                                <a href="/tags/#iOS" title="iOS" rel="38">
                                     iOS
                                 </a>
                             
@@ -515,7 +510,7 @@ AutoLayout作为平时用的最多的布局方案，但是在性能上总是饱�
                             
                         
                             
-                                <a href="/tags/#Xcode" title="Xcode" rel="5">
+                                <a href="/tags/#Xcode" title="Xcode" rel="6">
                                     Xcode
                                 </a>
                             

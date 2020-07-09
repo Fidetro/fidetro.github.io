@@ -5,9 +5,136 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 09 Jun 2020 00:25:21 +0800</pubDate>
-    <lastBuildDate>Tue, 09 Jun 2020 00:25:21 +0800</lastBuildDate>
+    <pubDate>Thu, 09 Jul 2020 23:20:45 +0800</pubDate>
+    <lastBuildDate>Thu, 09 Jul 2020 23:20:45 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
+    
+      <item>
+        <title>Mac App公证</title>
+        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+
+&lt;p&gt;从非Mac AppStore的地方下载的App，大家应该都有遇到过这样的提示：&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/IMG_4487.PNG&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;遇到这种情况，可以在终端输入，将&lt;code class=&quot;highlighter-rouge&quot;&gt;安全性与隐私-通用-任何来源&lt;/code&gt;开启，这样就可以解决了：&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo spctl --master-disable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/b763e24905260962b5f85903f86472d5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;但是作为一个普通用户，会认为你的App不安全，我开发的虚拟定位因为需要依赖非沙盒环境下的Magellan，也遇到这个问题，也有国外用户因为觉得这个行为是有风险，在AppStore给了个差评。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/9d72a50bedcd69db68dbe4777d16b83f.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;从设置上看，用户是可以通过选择&lt;code class=&quot;highlighter-rouge&quot;&gt;App Store和被认可的开发者&lt;/code&gt;下载非App Store来源的应用的，问题是怎样才能成为被认可的开发者呢？&lt;/p&gt;
+
+&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
+
+&lt;p&gt;Mac上通过&lt;code class=&quot;highlighter-rouge&quot;&gt;Gatekeeper&lt;/code&gt;的技术来确保用户运行的是自己信任的App,在&lt;code class=&quot;highlighter-rouge&quot;&gt;App Store&lt;/code&gt;上架之前应用是经过&lt;code class=&quot;highlighter-rouge&quot;&gt;Apple&lt;/code&gt;签名的，通过这种方式保证App没有被修改。&lt;/p&gt;
+
+&lt;p&gt;而从第三方网站或软件中下载的App，则需要提交应用给Apple进行公证，公证结束后再对其签名，用户下载的时候弹窗就会变成这样：&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/IMG_4488.PNG&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;公证的方式有两种，一种是通过Xcode Archives后在&lt;code class=&quot;highlighter-rouge&quot;&gt;Organizer&lt;/code&gt;进行操作，另一种方式是通过脚本自定义workflow。&lt;/p&gt;
+
+&lt;h2 id=&quot;xcode&quot;&gt;Xcode&lt;/h2&gt;
+&lt;p&gt;通过 Xcode导航栏上方 「Product」-&amp;gt;「Archives」,选择「Distribute App」-&amp;gt; 「Developer ID」-&amp;gt; 「Upload」&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/4408719a68ebdffd9d939200a4458fd9.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;上传完成后，等苹果回复认证通过的邮件后，再次选择「Distribute App」-&amp;gt; 「Developer ID」-&amp;gt; 「Export」，这时候导出的包就是已经被苹果公证过的了。&lt;br /&gt;
+苹果公证邮件回复的很快，官方文档提到一般一小时内会回复，我一般5-10分钟就会收到了。&lt;/p&gt;
+
+&lt;h2 id=&quot;workflow&quot;&gt;Workflow&lt;/h2&gt;
+&lt;p&gt;我自己用的是脚本打包，因为mac上打包主要以dmg的形式为主，另外dSYM也需要上传到App Center上，自定义workflow更适合我。&lt;/p&gt;
+
+&lt;p&gt;先用Xcode打包的方式执行一次，将导出后文件夹中的&lt;code class=&quot;highlighter-rouge&quot;&gt;ExportOptions.plist&lt;/code&gt;复制到工程目录下，即&lt;code class=&quot;highlighter-rouge&quot;&gt;$SRCROOT/ExportOptions.plist&lt;/code&gt;下，等下会用到。&lt;/p&gt;
+
+&lt;p&gt;新建个构建脚本文件，放工程目录下：&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#App名字&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;PRODUCT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;xxx
+&lt;span class=&quot;nv&quot;&gt;CONFIGURATION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Release
+&lt;span class=&quot;c&quot;&gt;#SCHEME名字&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;BUILD_SCHEME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;xxx
+
+&lt;span class=&quot;nv&quot;&gt;CLEAN_COMMAND&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;xcodebuild -workspace &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PRODUCT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.xcworkspace -scheme &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;BUILD_SCHEME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; -configuration &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CONFIGURATION&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; -sdk macosx&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;BUILD_COMMAND&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;xcodebuild archive -workspace &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PRODUCT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.xcworkspace -scheme &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;BUILD_SCHEME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; -configuration &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CONFIGURATION&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; -sdk macosx -archivePath &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PRODUCT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.xcarchive&quot;&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$CLEAN_COMMAND&lt;/span&gt; clean
+&lt;span class=&quot;nv&quot;&gt;$BUILD_COMMAND&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;苹果不建议我们使用明文的密码，通过下面的命令，将密码放进钥匙串：&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun altool --store-password-in-keychain-item &lt;span class=&quot;s2&quot;&gt;&quot;AC_PASSWORD&quot;&lt;/span&gt; -u &lt;span class=&quot;s2&quot;&gt;&quot;开发者账号邮箱&quot;&lt;/span&gt; -p &lt;span class=&quot;s2&quot;&gt;&quot;apple id专用密码&quot;&lt;/span&gt;  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;不知道什么是专用密码的，可以看&lt;a href=&quot;https://support.apple.com/zh-cn/HT204397&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;将下面的脚本调整后，放入Post-actions中&lt;br /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/7d1045b183241672996953e235bec078.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcodebuild -exportArchive -archivePath &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ARCHIVE_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; -exportOptionsPlist &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$SRCROOT&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/ExportOptions.plist&quot;&lt;/span&gt; -exportPath &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$EXPORT_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;APP_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$EXPORT_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PRODUCT_NAME&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.app&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ZIP_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$EXPORT_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PRODUCT_NAME&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.zip&quot;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#如果不是打包成dmg，.app需要压缩成zip上传&lt;/span&gt;
+ditto -c -k --keepParent &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$APP_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZIP_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#这里的ProviderShortname，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看&lt;/span&gt;
+xcrun altool --notarize-app --primary-bundle-id &lt;span class=&quot;s2&quot;&gt;&quot;com.bundle.id&quot;&lt;/span&gt; --username &lt;span class=&quot;s2&quot;&gt;&quot;AC_USERNAME&quot;&lt;/span&gt; --password &lt;span class=&quot;s2&quot;&gt;&quot;@keychain:AC_PASSWORD&quot;&lt;/span&gt; --asc-provider &amp;lt;ProviderShortname&amp;gt; --file &lt;span class=&quot;nv&quot;&gt;$ZIP_PATH&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;上传完之后，控制台上会打印&lt;code class=&quot;highlighter-rouge&quot;&gt;RequestUUID&lt;/code&gt;,如果不成功或者想查询审核状态都需要这个id，也可以通过后面查询当前所有请求状态的命令查到&lt;code class=&quot;highlighter-rouge&quot;&gt;RequestUUID&lt;/code&gt;。&lt;br /&gt;
+审核通过后，对app签入公证即可：&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun stapler staple &lt;span class=&quot;s2&quot;&gt;&quot;xxx.dmg&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;查询当前所有请求状态&quot;&gt;查询当前所有请求状态&lt;/h3&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun altool --notarization-history 0 -u &lt;span class=&quot;s2&quot;&gt;&quot;AC_USERNAME&quot;&lt;/span&gt; -p &lt;span class=&quot;s2&quot;&gt;&quot;@keychain:AC_PASSWORD&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;会返回你所有请求的状态&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Notarization History - page 0
+
+Date                      RequestUUID                          Status      Status Code Status Message  
+------------------------- ------------------------------------ ----------- ----------- ----------------
+2018-07-02 20:32:01 +0000 2EFE2717-52EF-43A5-96DC-0797E4CA1041 invalid     2           Package Invalid 
+2018-06-29 13:23:13 +0000 6D020E28-9890-48E5-851C-4275169D07CC invalid     2           Package Invalid
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;查询某个请求的详细信息&quot;&gt;查询某个请求的详细信息&lt;/h3&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun altool --notarization-info &lt;span class=&quot;nv&quot;&gt;$替&lt;/span&gt;换成自己的RequestUUID -u &lt;span class=&quot;s2&quot;&gt;&quot;AC_USERNAME&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;如果有审核有问题，LogFileURL会提供日志文件，指出发现的问题，修改完后重新提交即可。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   RequestUUID: 2EFE2717-52EF-43A5-96DC-0797E4CA1041
+          Date: 2018-07-02 20:32:01 +0000
+        Status: invalid
+    LogFileURL: https://osxapps.itunes.apple.com/...
+   Status Code: 2 
+Status Message: Package Invalid
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;写在最后的一些感触&quot;&gt;写在最后的一些感触&lt;/h1&gt;
+&lt;p&gt;虽然是个并不麻烦的事情，但是很多大厂的App都没有做这个，感觉都是国内用户惯的，需要用户去适应App，而不是App迎合用户。&lt;/p&gt;
+
+&lt;h1 id=&quot;参考链接&quot;&gt;参考链接&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution&quot;&gt;Notarizing macOS Software Before Distribution&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://developer.apple.com/developer-id/&quot;&gt;Signing Your Apps for Gatekeeper&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://support.apple.com/en-us/HT202491&quot;&gt;Safely open apps on your Mac&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow&quot;&gt;Customizing the Notarization Workflow&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 08 Jul 2020 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Xcode</category>
+        
+        
+      </item>
     
       <item>
         <title>你真的了解p、po、v区别吗</title>
@@ -79,8 +206,8 @@
 &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2019/429/&quot;&gt;LLDB: Beyond “po”&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 01 Jun 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97/</guid>
+        <link>http://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</guid>
         
         <category>iOS</category>
         
@@ -819,30 +946,6 @@ rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
         <category>iOS</category>
         
         <category>音视频</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Swift闭包中weak多个对象</title>
-        <description>&lt;p&gt;无论是在OC还是Swift都会有在闭包中需要弱引用对象的时候，没有在Swift的文档中看到如何在闭包中对多个对象弱引用，最后在stackoverflow上&lt;a href=&quot;https://stackoverflow.com/questions/28015394/how-can-you-capture-multiple-arguments-weakly-in-a-swift-closure&quot;&gt;找到&lt;/a&gt;相关的资料：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;weak&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;weak&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
-            
-    &lt;span class=&quot;c1&quot;&gt;//....&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Sat, 23 Feb 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/02/23/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/02/23/Swift%E9%97%AD%E5%8C%85%E4%B8%ADweak%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1/</guid>
-        
-        <category>iOS</category>
-        
-        <category>Swift</category>
-        
-        <category>Swift-Tips</category>
         
         
       </item>

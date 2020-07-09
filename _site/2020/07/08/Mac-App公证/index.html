@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Swift-Tips String截取字符串 - FoolishTalk 技术分享</title>
+    <title>Mac App公证 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -154,12 +154,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-sea.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-white-room.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-sea.jpg')
+        background-image: url('/img/post-white-room.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -169,17 +169,17 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Swift-Tips" title="Swift-Tips">Swift-Tips</a>
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
-                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        <a class="tag" href="/tags/#Xcode" title="Xcode">Xcode</a>
                         
                     </div>
-                    <h1>Swift-Tips String截取字符串</h1>
+                    <h1>Mac App公证</h1>
                     
                     
-                    <h2 class="subheading">Swift，Tips</h2>
+                    <h2 class="subheading">Mac OSX</h2>
                     
-                    <span class="meta">Posted by Karim on January 29, 2018</span>
+                    <span class="meta">Posted by Karim on July 8, 2020</span>
                 </div>
             </div>
         </div>
@@ -196,69 +196,119 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>在<code class="highlighter-rouge">Objective-C</code>中我们可以使调<code class="highlighter-rouge">substringWithRange</code>的方法达到截取字符串的效果</p>
+				<h1 id="前言">前言</h1>
 
-<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="s">@"123"</span> <span class="nf">substringWithRange</span><span class="p">:</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)];</span>
+<p>从非Mac AppStore的地方下载的App，大家应该都有遇到过这样的提示：<br />
+<img src="http://images.foolishtalk.org/IMG_4487.PNG" alt="" /></p>
+
+<p>遇到这种情况，可以在终端输入，将<code class="highlighter-rouge">安全性与隐私-通用-任何来源</code>开启，这样就可以解决了：</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo spctl --master-disable
+</code></pre>
+</div>
+<p><img src="http://images.foolishtalk.org/b763e24905260962b5f85903f86472d5.png" alt="" /></p>
+
+<p>但是作为一个普通用户，会认为你的App不安全，我开发的虚拟定位因为需要依赖非沙盒环境下的Magellan，也遇到这个问题，也有国外用户因为觉得这个行为是有风险，在AppStore给了个差评。</p>
+
+<p><img src="http://images.foolishtalk.org/9d72a50bedcd69db68dbe4777d16b83f.png" alt="" /></p>
+
+<p>从设置上看，用户是可以通过选择<code class="highlighter-rouge">App Store和被认可的开发者</code>下载非App Store来源的应用的，问题是怎样才能成为被认可的开发者呢？</p>
+
+<h1 id="正文">正文</h1>
+
+<p>Mac上通过<code class="highlighter-rouge">Gatekeeper</code>的技术来确保用户运行的是自己信任的App,在<code class="highlighter-rouge">App Store</code>上架之前应用是经过<code class="highlighter-rouge">Apple</code>签名的，通过这种方式保证App没有被修改。</p>
+
+<p>而从第三方网站或软件中下载的App，则需要提交应用给Apple进行公证，公证结束后再对其签名，用户下载的时候弹窗就会变成这样：<br />
+<img src="http://images.foolishtalk.org/IMG_4488.PNG" alt="" /></p>
+
+<p>公证的方式有两种，一种是通过Xcode Archives后在<code class="highlighter-rouge">Organizer</code>进行操作，另一种方式是通过脚本自定义workflow。</p>
+
+<h2 id="xcode">Xcode</h2>
+<p>通过 Xcode导航栏上方 「Product」-&gt;「Archives」,选择「Distribute App」-&gt; 「Developer ID」-&gt; 「Upload」<br />
+<img src="http://images.foolishtalk.org/4408719a68ebdffd9d939200a4458fd9.png" alt="" /></p>
+
+<p>上传完成后，等苹果回复认证通过的邮件后，再次选择「Distribute App」-&gt; 「Developer ID」-&gt; 「Export」，这时候导出的包就是已经被苹果公证过的了。<br />
+苹果公证邮件回复的很快，官方文档提到一般一小时内会回复，我一般5-10分钟就会收到了。</p>
+
+<h2 id="workflow">Workflow</h2>
+<p>我自己用的是脚本打包，因为mac上打包主要以dmg的形式为主，另外dSYM也需要上传到App Center上，自定义workflow更适合我。</p>
+
+<p>先用Xcode打包的方式执行一次，将导出后文件夹中的<code class="highlighter-rouge">ExportOptions.plist</code>复制到工程目录下，即<code class="highlighter-rouge">$SRCROOT/ExportOptions.plist</code>下，等下会用到。</p>
+
+<p>新建个构建脚本文件，放工程目录下：</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#App名字</span>
+<span class="nv">PRODUCT_NAME</span><span class="o">=</span>xxx
+<span class="nv">CONFIGURATION</span><span class="o">=</span>Release
+<span class="c">#SCHEME名字</span>
+<span class="nv">BUILD_SCHEME</span><span class="o">=</span>xxx
+
+<span class="nv">CLEAN_COMMAND</span><span class="o">=</span><span class="s2">"xcodebuild -workspace </span><span class="k">${</span><span class="nv">PRODUCT_NAME</span><span class="k">}</span><span class="s2">.xcworkspace -scheme </span><span class="k">${</span><span class="nv">BUILD_SCHEME</span><span class="k">}</span><span class="s2"> -configuration </span><span class="k">${</span><span class="nv">CONFIGURATION</span><span class="k">}</span><span class="s2"> -sdk macosx"</span>
+<span class="nv">BUILD_COMMAND</span><span class="o">=</span><span class="s2">"xcodebuild archive -workspace </span><span class="k">${</span><span class="nv">PRODUCT_NAME</span><span class="k">}</span><span class="s2">.xcworkspace -scheme </span><span class="k">${</span><span class="nv">BUILD_SCHEME</span><span class="k">}</span><span class="s2"> -configuration </span><span class="k">${</span><span class="nv">CONFIGURATION</span><span class="k">}</span><span class="s2"> -sdk macosx -archivePath </span><span class="k">${</span><span class="nv">PRODUCT_NAME</span><span class="k">}</span><span class="s2">.xcarchive"</span>
+
+<span class="nv">$CLEAN_COMMAND</span> clean
+<span class="nv">$BUILD_COMMAND</span>
+</code></pre>
+</div>
+<p>苹果不建议我们使用明文的密码，通过下面的命令，将密码放进钥匙串：</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>xcrun altool --store-password-in-keychain-item <span class="s2">"AC_PASSWORD"</span> -u <span class="s2">"开发者账号邮箱"</span> -p <span class="s2">"apple id专用密码"</span>  
+</code></pre>
+</div>
+<p>不知道什么是专用密码的，可以看<a href="https://support.apple.com/zh-cn/HT204397">这里</a></p>
+
+<p>将下面的脚本调整后，放入Post-actions中<br />
+<img src="http://images.foolishtalk.org/7d1045b183241672996953e235bec078.png" alt="" /></p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>xcodebuild -exportArchive -archivePath <span class="s2">"</span><span class="nv">$ARCHIVE_PATH</span><span class="s2">"</span> -exportOptionsPlist <span class="s2">"</span><span class="nv">$SRCROOT</span><span class="s2">/ExportOptions.plist"</span> -exportPath <span class="s2">"</span><span class="nv">$EXPORT_PATH</span><span class="s2">"</span>
+
+<span class="nv">APP_PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$EXPORT_PATH</span><span class="s2">/</span><span class="nv">$PRODUCT_NAME</span><span class="s2">.app"</span>
+<span class="nv">ZIP_PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$EXPORT_PATH</span><span class="s2">/</span><span class="nv">$PRODUCT_NAME</span><span class="s2">.zip"</span>
+<span class="c">#如果不是打包成dmg，.app需要压缩成zip上传</span>
+ditto -c -k --keepParent <span class="s2">"</span><span class="nv">$APP_PATH</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ZIP_PATH</span><span class="s2">"</span>
+<span class="c">#这里的ProviderShortname，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看</span>
+xcrun altool --notarize-app --primary-bundle-id <span class="s2">"com.bundle.id"</span> --username <span class="s2">"AC_USERNAME"</span> --password <span class="s2">"@keychain:AC_PASSWORD"</span> --asc-provider &lt;ProviderShortname&gt; --file <span class="nv">$ZIP_PATH</span>
+</code></pre>
+</div>
+<p>上传完之后，控制台上会打印<code class="highlighter-rouge">RequestUUID</code>,如果不成功或者想查询审核状态都需要这个id，也可以通过后面查询当前所有请求状态的命令查到<code class="highlighter-rouge">RequestUUID</code>。<br />
+审核通过后，对app签入公证即可：</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>xcrun stapler staple <span class="s2">"xxx.dmg"</span>
+</code></pre>
+</div>
+<h3 id="查询当前所有请求状态">查询当前所有请求状态</h3>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>xcrun altool --notarization-history 0 -u <span class="s2">"AC_USERNAME"</span> -p <span class="s2">"@keychain:AC_PASSWORD"</span>
+</code></pre>
+</div>
+<p>会返回你所有请求的状态</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Notarization History - page 0
+
+Date                      RequestUUID                          Status      Status Code Status Message  
+------------------------- ------------------------------------ ----------- ----------- ----------------
+2018-07-02 20:32:01 +0000 2EFE2717-52EF-43A5-96DC-0797E4CA1041 invalid     2           Package Invalid 
+2018-06-29 13:23:13 +0000 6D020E28-9890-48E5-851C-4275169D07CC invalid     2           Package Invalid
+
 </code></pre>
 </div>
 
-<p>在Swift 4之前，也是有类似的方法<code class="highlighter-rouge">"ss".substring(with: &lt;Range&lt;String.Index&gt;&gt;)</code>  ,但是在Swift 4之后被弃用了，我们可以通过用<code class="highlighter-rouge">extension</code>的方法去给他增加截取字符串的方法</p>
-
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">String</span><span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">to</span><span class="p">(</span><span class="n">_</span> <span class="nv">index</span><span class="p">:</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
-        <span class="k">let</span> <span class="nv">toIndex</span> <span class="o">=</span> <span class="kt">String</span><span class="o">.</span><span class="kt">Index</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">encodedOffset</span><span class="p">:</span> <span class="n">index</span><span class="p">)</span>
-        <span class="k">guard</span> <span class="n">toIndex</span> <span class="o">&lt;</span> <span class="k">self</span><span class="o">.</span><span class="n">endIndex</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
-        <span class="k">return</span> <span class="kt">String</span><span class="p">(</span><span class="k">self</span><span class="p">[</span><span class="o">...</span><span class="n">toIndex</span><span class="p">])</span>
-        
-    <span class="p">}</span>
-    <span class="kd">func</span> <span class="nf">from</span><span class="p">(</span><span class="n">_</span> <span class="nv">index</span><span class="p">:</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
-        <span class="k">let</span> <span class="nv">fromIndex</span> <span class="o">=</span> <span class="kt">String</span><span class="o">.</span><span class="kt">Index</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">encodedOffset</span><span class="p">:</span> <span class="n">index</span><span class="p">)</span>
-        <span class="k">guard</span> <span class="n">fromIndex</span> <span class="o">&lt;</span> <span class="k">self</span><span class="o">.</span><span class="n">endIndex</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
-        <span class="k">return</span> <span class="kt">String</span><span class="p">(</span><span class="k">self</span><span class="p">[</span><span class="n">fromIndex</span><span class="o">..&lt;</span><span class="k">self</span><span class="o">.</span><span class="n">endIndex</span><span class="p">])</span>
-    <span class="p">}</span>
-    <span class="kd">func</span> <span class="nf">subString</span><span class="p">(</span><span class="n">_</span> <span class="nv">from</span><span class="p">:</span><span class="kt">Int</span><span class="p">,</span><span class="nv">to</span><span class="p">:</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
-        <span class="k">let</span> <span class="nv">toIndex</span> <span class="o">=</span> <span class="kt">String</span><span class="o">.</span><span class="kt">Index</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">encodedOffset</span><span class="p">:</span> <span class="n">from</span><span class="p">)</span>
-        <span class="k">let</span> <span class="nv">fromIndex</span> <span class="o">=</span> <span class="kt">String</span><span class="o">.</span><span class="kt">Index</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">encodedOffset</span><span class="p">:</span> <span class="n">to</span><span class="p">)</span>
-        <span class="k">guard</span> <span class="n">toIndex</span> <span class="o">&lt;</span> <span class="k">self</span><span class="o">.</span><span class="n">endIndex</span><span class="p">,</span>
-            <span class="n">fromIndex</span> <span class="o">&lt;</span> <span class="k">self</span><span class="o">.</span><span class="n">endIndex</span><span class="p">,</span>
-            <span class="n">toIndex</span> <span class="o">&lt;=</span> <span class="n">fromIndex</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
-        <span class="k">return</span> <span class="kt">String</span><span class="p">(</span><span class="k">self</span><span class="p">[</span><span class="n">toIndex</span><span class="o">...</span><span class="n">fromIndex</span><span class="p">])</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<h3 id="查询某个请求的详细信息">查询某个请求的详细信息</h3>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>xcrun altool --notarization-info <span class="nv">$替</span>换成自己的RequestUUID -u <span class="s2">"AC_USERNAME"</span>
+</code></pre>
+</div>
+<p>如果有审核有问题，LogFileURL会提供日志文件，指出发现的问题，修改完后重新提交即可。</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>   RequestUUID: 2EFE2717-52EF-43A5-96DC-0797E4CA1041
+          Date: 2018-07-02 20:32:01 +0000
+        Status: invalid
+    LogFileURL: https://osxapps.itunes.apple.com/...
+   Status Code: 2 
+Status Message: Package Invalid
 </code></pre>
 </div>
 
-<p>现在又可以方便的截取字符串了</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="o">.</span><span class="nf">to</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1">//Optional("1234")  </span>
+<h1 id="写在最后的一些感触">写在最后的一些感触</h1>
+<p>虽然是个并不麻烦的事情，但是很多大厂的App都没有做这个，感觉都是国内用户惯的，需要用户去适应App，而不是App迎合用户。</p>
 
-<span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="o">.</span><span class="nf">from</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1">//Optional("45678")  </span>
+<h1 id="参考链接">参考链接</h1>
 
-<span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="o">.</span><span class="nf">subString</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1">//Optional("456")  </span>
-</code></pre>
-</div>
-
-<p>另外我们还可以结合Swift下标的特性，达到通过取字符串下标截取字符串</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">String</span><span class="p">{</span>
-    <span class="nf">subscript</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nf">subString</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="n">index</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="nf">subscript</span> <span class="p">(</span><span class="nv">bounds</span><span class="p">:</span> <span class="kt">CountableClosedRange</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nf">subString</span><span class="p">(</span> <span class="n">bounds</span><span class="o">.</span><span class="n">lowerBound</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="n">bounds</span><span class="o">.</span><span class="n">upperBound</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="nf">subscript</span> <span class="p">(</span><span class="nv">bounds</span><span class="p">:</span> <span class="kt">CountableRange</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nf">subString</span><span class="p">(</span> <span class="n">bounds</span><span class="o">.</span><span class="n">lowerBound</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="n">bounds</span><span class="o">.</span><span class="n">upperBound</span><span class="p">)</span>
-    <span class="p">}</span>   
-<span class="p">}</span>
-</code></pre>
-</div>
-
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>  <span class="c1">//Optional("3")  </span>
-
-<span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="p">[</span><span class="mi">3</span><span class="o">...</span><span class="mi">5</span><span class="p">])</span>  <span class="c1">//Optional("456")</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="s">"12345678"</span><span class="p">[</span><span class="mi">100</span><span class="p">])</span>  <span class="c1">//nil</span>
-</code></pre>
-</div>
+<p><a href="https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution">Notarizing macOS Software Before Distribution</a><br />
+<a href="https://developer.apple.com/developer-id/">Signing Your Apps for Gatekeeper</a><br />
+<a href="https://support.apple.com/en-us/HT202491">Safely open apps on your Mac</a><br />
+<a href="https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow">Customizing the Notarization Workflow</a></p>
 
 
                 <hr>
@@ -286,13 +336,9 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/01/16/%E6%B5%85%E8%B0%88iOS%E5%9C%A8%E7%89%A9%E8%81%94%E7%BD%91%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E6%9E%B6%E6%9E%84/" data-toggle="tooltip" data-placement="top" title="浅谈iOS在物联网应用中的架构">&larr; Previous Post</a>
+                        <a href="/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/" data-toggle="tooltip" data-placement="top" title="你真的了解p、po、v区别吗">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2018/03/06/AVCaptureSession%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%B8%E6%9C%BA%E8%8E%B7%E5%8F%96%E7%9A%84UIImage%E6%97%8B%E8%BD%AC%E6%97%A0%E6%95%88/" data-toggle="tooltip" data-placement="top" title="AVCaptureSession自定义相机获取的UIImage旋转无效">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -438,8 +484,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2018/01/29/Swift-Tips String截取字符串";
-    var disqus_url = "http://www.foolishtalk.org/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/";
+    var disqus_identifier = "/2020/07/08/Mac App公证";
+    var disqus_url = "http://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
