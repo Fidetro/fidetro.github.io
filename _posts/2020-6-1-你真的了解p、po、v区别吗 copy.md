@@ -4,7 +4,7 @@ title:      "你真的了解p、po、v区别吗"
 subtitle:   "iOS，Xcode，LLDB"
 date:       2020-6-1
 author:     "Karim"
-header-img: "img/post-white-room.jpg"
+header-img: "img/post-white-room.png"
 tags:
 - iOS
 - Xcode
