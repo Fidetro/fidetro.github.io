@@ -1,0 +1,27 @@
+---
+layout:     post
+title:      "解决博客在Chrome里http和https混合使用的问题"
+subtitle:   "Chrome Nginx"
+date:       2020-10-7
+author:     "Karim"
+header-img: "img/post-white-room.png"
+tags:
+- Chrome
+- Nginx
+---
+
+# 前言  
+今天突然发现博客的图片都无法加载了，打开浏览器控制台一看，发现是无法找到https资源报错了：  
+```
+Mixed Content: The page at '<URL>' was loaded over HTTPS, but requested an insecure font '<URL>'
+```
+原来是因为更新了Chrome后，如果网站是https，会把非https的资源强制转成了http，我博客用的七牛云，使用https流量是要另外收费的，所以只好找个方法曲线救国。
+
+# 解决
+通过nginx反向到七牛云的域名，原本请求http://images.foolishtalk.org/xxx.png，改成请求https://www.foolishtalk.org/cloud/xxx.png
+```
+   #反向代理，解决七牛云的图片在谷歌浏览器会自动把https转成http的问题
+   location /cloud/ {
+      proxy_pass http://images.foolishtalk.org/;
+   }
+```

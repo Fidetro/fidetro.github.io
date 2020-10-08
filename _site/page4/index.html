@@ -154,6 +154,32 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2018/03/06/AVCaptureSession%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%B8%E6%9C%BA%E8%8E%B7%E5%8F%96%E7%9A%84UIImage%E6%97%8B%E8%BD%AC%E6%97%A0%E6%95%88/">
+        <h2 class="post-title">
+            AVCaptureSession自定义相机获取的UIImage旋转无效
+        </h2>
+        
+        <h3 class="post-subtitle">
+            AVFoundation，Tips
+        </h3>
+        
+        <div class="post-content-preview">
+            在使用AVCaptureSession自定义相机的时候，发现无论横竖拍出来，照片的方向总是不对，参考了下面的两个链接的方法依旧行不通，然后自己想了个办法去解决。
+
+is-uiimage-imagewithciimagescaleorientation-broken-on-ios10
+
+how-to-rotate-a-uiimage-90-degrees
+
+通过使用重力加速计判断手机旋转的方向...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Karim on March 6, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2018/01/29/Swift-Tips-String%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/">
         <h2 class="post-title">
             Swift-Tips String截取字符串
@@ -371,31 +397,6 @@ $ apt-get install make git clang libicu-dev libmysqlclient-dev libpq...
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2017/09/22/iOS%E8%8E%B7%E5%8F%96%E7%9B%B8%E5%86%8C%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%9B%BE%E7%89%87-%E4%BB%A5%E5%8F%8A%E7%94%B3%E8%AF%B7%E6%9D%83%E9%99%90-%E6%80%BB%E7%BB%93%E8%87%AA%E5%B7%B1%E8%B8%A9%E5%88%B0%E7%9A%84%E5%9D%91/">
-        <h2 class="post-title">
-            iOS获取相册中的所有图片，以及申请权限，总结自己踩到的坑
-        </h2>
-        
-        <h3 class="post-subtitle">
-            iOS，相机，相册
-        </h3>
-        
-        <div class="post-content-preview">
-            之前没做过这一块的，今天也是刚接触，上网查了一下主要是两个库iOS 8之前需要使用AssetsLibrary .framework,iOS 8之后使用Photos.framework
-想看详细讲解的，可以直接看iOS 开发之照片框架详解
-Photos参考了这里获取系统相册的所有照片
-
-在iOS 8以后，申请相册权限是可以得到回调的:
-[PHPhotoLibrary requestAuthor...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on September 22, 2017
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -509,6 +510,10 @@ Photos参考了这里获取系统相册的所有照片
                                 <a href="/tags/#Mac" title="Mac" rel="2">
                                     Mac
                                 </a>
+                            
+                        
+                            
+                        
                             
                         
                             
