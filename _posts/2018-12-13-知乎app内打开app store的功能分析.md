@@ -13,7 +13,7 @@ tags:
 # 前言  
 
 今天刚好有个朋友问了我一个像知乎那样，app内打开app store的app内容页面，上面还能播放视频这种是怎么实现的，虽然问题很简单，但是本着探讨功能实现的想法，记录了下来。知乎app内效果如下：  
-![](http://images.foolishtalk.org/2018-10-13-image-zhihu-ad.jpeg)  
+![](https://www.foolishtalk.org/cloud/2018-10-13-image-zhihu-ad.jpeg)  
 
 通过这个图可以看出，其实要做的事情很简单，就是把原来的view往下移一点，然后在上面放视频。  
 无非就是几个思路，先看看原来的vc是否有子view属性，通过继承去重写约束，其次就是使用一些比较hack的手段。  
@@ -43,7 +43,7 @@ tags:
             })
 ```
 效果如下:  
-![](http://images.foolishtalk.org/2018-10-13-image-yuepao-ad.jpeg)
+![](https://www.foolishtalk.org/cloud/2018-10-13-image-yuepao-ad.jpeg)
 
 到了这里，基本已经差不多了，但是其实还有些小细节要注意，这样直接修改的话，会发现没办法将页面滚到最底下。这时候还需要将view的高度减少：  
 ```swift

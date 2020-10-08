@@ -19,32 +19,32 @@ tags:
 Perfect已经提供了现成的组件[Perfect-Notifications](https://github.com/PerfectlySoft/Perfect-Notifications)可以让我们快速的实现消息推送，所以在这之前，先把去准备好推送证书。  
 
 1. 如果没创建app id，先去把app id创建好  
-![](http://images.foolishtalk.org/perfect-notification-1.png)  
-![](http://images.foolishtalk.org/perfect-notification-2.png)  
+![](https://www.foolishtalk.org/cloud/perfect-notification-1.png)  
+![](https://www.foolishtalk.org/cloud/perfect-notification-2.png)  
 
 2. 创建推送证书  
-![](http://images.foolishtalk.org/perfect-notification-3.png)  
-![](http://images.foolishtalk.org/perfect-notification-4.png)  
+![](https://www.foolishtalk.org/cloud/perfect-notification-3.png)  
+![](https://www.foolishtalk.org/cloud/perfect-notification-4.png)  
 
 3. 然后下一步，选择刚刚对应创建的app id  
-![](http://images.foolishtalk.org/perfect-notification-5.png)  
+![](https://www.foolishtalk.org/cloud/perfect-notification-5.png)  
 
 4. 到了这步之后需要在自己电脑上创建CSR文件  
-![](http://images.foolishtalk.org/perfect-notification-6.png)  
-![](http://images.foolishtalk.org/perfect-notification-7.png)  
+![](https://www.foolishtalk.org/cloud/perfect-notification-6.png)  
+![](https://www.foolishtalk.org/cloud/perfect-notification-7.png)  
 
 5. 选择刚刚创建的证书，然后下一步，下载下来    
-![](http://images.foolishtalk.org/perfect-notification-8.png)  
+![](https://www.foolishtalk.org/cloud/perfect-notification-8.png)  
 
 6. 双击打开刚刚下载下来的证书,进入钥匙串访问，导出秘钥  
-![](http://images.foolishtalk.org/perfect-notification-9.png)  
+![](https://www.foolishtalk.org/cloud/perfect-notification-9.png)  
 
 7. 创建auth key和记录key id(后面要用),下载下来会得到一个xx.p8的文件  
-![](http://images.foolishtalk.org/perfect-notification-10.png)  
-![](http://images.foolishtalk.org/perfect-notification-11.png)  
+![](https://www.foolishtalk.org/cloud/perfect-notification-10.png)  
+![](https://www.foolishtalk.org/cloud/perfect-notification-11.png)  
 
 8. 去[Account](https://developer.apple.com/account)页面记录team id(后面要用)  
-![](http://images.foolishtalk.org/perfect-notification-12.png)  
+![](https://www.foolishtalk.org/cloud/perfect-notification-12.png)  
 
 
 好了。。终于把前面的准备工作做好了，在Package.swift中引入  
@@ -89,7 +89,7 @@ Perfect已经提供了现成的组件[Perfect-Notifications](https://github.com/
 ```
 
 1. 接下来在iOS的app上打开消息推送选项：
-![](http://images.foolishtalk.org/perfect-notification-13.png) 
+![](https://www.foolishtalk.org/cloud/perfect-notification-13.png) 
 
 
 2. 在Appdelegate请求权限
@@ -114,4 +114,4 @@ Perfect已经提供了现成的组件[Perfect-Notifications](https://github.com/
 ```  
 
 大功告成！
-![](http://images.foolishtalk.org/perfect-notification-14.png) 
+![](https://www.foolishtalk.org/cloud/perfect-notification-14.png) 

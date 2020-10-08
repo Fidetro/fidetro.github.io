@@ -18,7 +18,7 @@ tags:
 `AppleScript`它是什么？  
 
 `AppleScript`它是苹果提供在Mac OS上实现自动化的脚本语言，语法相对简单、易懂，类似英语语法。下面这段代码，你可以通过 Mac 自带的脚本编辑器运行：  
-![](http://images.foolishtalk.org/apple-script-editor-1.png)
+![](https://www.foolishtalk.org/cloud/apple-script-editor-1.png)
 
 运行后它会打开 iTunes ：  
 ```shell
@@ -34,9 +34,9 @@ end tell
 结束
 ```  
 `tell application "xxx"` 如果你是想让微信 App做点什么，就是`tell application "微信"`,而`play`这个事件，是iTunes独有的，怎么能知道app特有的事件？你可以通过`脚本编辑器`的导航栏中按照以下步骤找到：  
-![](http://images.foolishtalk.org/apple-script-editor-2.png)  
+![](https://www.foolishtalk.org/cloud/apple-script-editor-2.png)  
 然后选择`iTunes`:  
-![](http://images.foolishtalk.org/apple-script-editor-3.png)   
+![](https://www.foolishtalk.org/cloud/apple-script-editor-3.png)   
 这里可以看到关于play事件的一些描述。  
 在编写Mac app之前，可以先通过脚本编辑器把我们想实现的功能调试好，然后再把脚本移到Mac app上，确保脚本是正确的，而不是因为App沙盒、权限等问题引起。  
 
@@ -97,9 +97,9 @@ Optional({
 这个地方非常的坑，如果没有打印`error`,在没有打开`App Sanbox`的情况下，是有可能预期效果是正常的，Safari能正常打开然后新建标签页。
 
 如果之前是做iOS开发的，对这个错误应该会很自然的有头绪，应该就是一些权限问题，直接在Info.plist上就能找到一个看起来是这个权限的字段，`Privacy - AppleEvents Sending Usage Description`，把这个字段加上后，重新运行，发现多出了这个弹窗：  
-![](http://images.foolishtalk.org/2019-09-28.4.55.09.png)
+![](https://www.foolishtalk.org/cloud/2019-09-28.4.55.09.png)
 如果能够正常运行，那恭喜你，说明你没有打开`Capabilities`->`App Sanbox`
-![](http://images.foolishtalk.org/2EE70BF91F39368ACF74DD225DEF0EE0.png)
+![](https://www.foolishtalk.org/cloud/2EE70BF91F39368ACF74DD225DEF0EE0.png)
 
 # 为什么要打开App Sanbox？  
 
@@ -115,7 +115,7 @@ Optional({
     NSAppleScriptErrorRange = "NSRange: {45, 8}";
 })
 ```
-![](http://images.foolishtalk.org/2019110_IMG_2412.png)  
+![](https://www.foolishtalk.org/cloud/2019110_IMG_2412.png)  
 
 这次是提示 `Safari` 没有运行，我们的代码里已经加了让 `Safari` 唤醒的功能了，这说明这段代码没办法执行，既然没有解决，只能靠 google 了。
 
@@ -131,7 +131,7 @@ Optional({
 
 既然不给我用，为什么上个版本还能给我上架成功？？？
 
-![](http://images.foolishtalk.org/2019110_IMG_2412.png)
+![](https://www.foolishtalk.org/cloud/2019110_IMG_2412.png)
 
 这个方法不行，只能另外再找方法了。
 

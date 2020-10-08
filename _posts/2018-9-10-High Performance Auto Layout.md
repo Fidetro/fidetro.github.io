@@ -62,10 +62,10 @@ override func updateConstraints() {
 当我们创建了一个View，给这个View去添加约束的时候，会创建一个和约束对应的等式，将其添加到计算约束的引擎中，引擎会将约束解释成视图的布局变量，最终设置视图的x，y，width，height。  
 
 例如我们要创建下图的视图关系：  
-![](http://images.foolishtalk.org/2018_9_8_autolayout_1.png)  
+![](https://www.foolishtalk.org/cloud/2018_9_8_autolayout_1.png)  
 
 约束会转换成以下的等式：  
-![](http://images.foolishtalk.org/2018_9_8_autolayout_2.png)  
+![](https://www.foolishtalk.org/cloud/2018_9_8_autolayout_2.png)  
 
 
 ```swift  

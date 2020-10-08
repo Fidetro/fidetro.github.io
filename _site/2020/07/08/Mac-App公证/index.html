@@ -126,7 +126,7 @@
     <style type="text/css">
 /* 新浪微博 */
 .-mob-share-weibo {
-background-image: url("http://images.foolishtalk.org/sina_share.png")!important;
+background-image: url("https://www.foolishtalk.org/cloud/sina_share.png")!important;
 background-repeat:no-repeat;
 background-color: #ffffff;
 width: 30px;
@@ -135,7 +135,7 @@ border: none;
 }
 /* 微信 */
 .-mob-share-weixin {
-background-image: url("http://images.foolishtalk.org/wechat_share.png")!important;
+background-image: url("https://www.foolishtalk.org/cloud/wechat_share.png")!important;
 background-repeat:no-repeat;
 background-color: #ffffff;
 width: 30px;
@@ -144,7 +144,7 @@ border: none;
 }
 /* QQ */
 .-mob-share-qq {
-background-image: url("http://images.foolishtalk.org/qq_share.png")!important;
+background-image: url("https://www.foolishtalk.org/cloud/qq_share.png")!important;
 background-repeat:no-repeat;
 background-color: #ffffff;
 width: 30px;
@@ -199,17 +199,17 @@ border: none;
 				<h1 id="前言">前言</h1>
 
 <p>从非Mac AppStore的地方下载的App，大家应该都有遇到过这样的提示：<br />
-<img src="http://images.foolishtalk.org/IMG_4487.PNG" alt="" /></p>
+<img src="https://www.foolishtalk.org/cloud/IMG_4487.PNG" alt="" /></p>
 
 <p>遇到这种情况，可以在终端输入，将<code class="highlighter-rouge">安全性与隐私-通用-任何来源</code>开启，这样就可以解决了：</p>
 <div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo spctl --master-disable
 </code></pre>
 </div>
-<p><img src="http://images.foolishtalk.org/b763e24905260962b5f85903f86472d5.png" alt="" /></p>
+<p><img src="https://www.foolishtalk.org/cloud/b763e24905260962b5f85903f86472d5.png" alt="" /></p>
 
 <p>但是作为一个普通用户，会认为你的App不安全，我开发的虚拟定位因为需要依赖非沙盒环境下的Magellan，也遇到这个问题，也有国外用户因为觉得这个行为是有风险，在AppStore给了个差评。</p>
 
-<p><img src="http://images.foolishtalk.org/9d72a50bedcd69db68dbe4777d16b83f.png" alt="" /></p>
+<p><img src="https://www.foolishtalk.org/cloud/9d72a50bedcd69db68dbe4777d16b83f.png" alt="" /></p>
 
 <p>从设置上看，用户是可以通过选择<code class="highlighter-rouge">App Store和被认可的开发者</code>下载非App Store来源的应用的，问题是怎样才能成为被认可的开发者呢？</p>
 
@@ -218,13 +218,13 @@ border: none;
 <p>Mac上通过<code class="highlighter-rouge">Gatekeeper</code>的技术来确保用户运行的是自己信任的App,在<code class="highlighter-rouge">App Store</code>上架之前应用是经过<code class="highlighter-rouge">Apple</code>签名的，通过这种方式保证App没有被修改。</p>
 
 <p>而从第三方网站或软件中下载的App，则需要提交应用给Apple进行公证，公证结束后再对其签名，用户下载的时候弹窗就会变成这样：<br />
-<img src="http://images.foolishtalk.org/IMG_4488.PNG" alt="" /></p>
+<img src="https://www.foolishtalk.org/cloud/IMG_4488.PNG" alt="" /></p>
 
 <p>公证的方式有两种，一种是通过Xcode Archives后在<code class="highlighter-rouge">Organizer</code>进行操作，另一种方式是通过脚本自定义workflow。</p>
 
 <h2 id="xcode">Xcode</h2>
 <p>通过 Xcode导航栏上方 「Product」-&gt;「Archives」,选择「Distribute App」-&gt; 「Developer ID」-&gt; 「Upload」<br />
-<img src="http://images.foolishtalk.org/4408719a68ebdffd9d939200a4458fd9.png" alt="" /></p>
+<img src="https://www.foolishtalk.org/cloud/4408719a68ebdffd9d939200a4458fd9.png" alt="" /></p>
 
 <p>上传完成后，等苹果回复认证通过的邮件后，再次选择「Distribute App」-&gt; 「Developer ID」-&gt; 「Export」，这时候导出的包就是已经被苹果公证过的了。<br />
 苹果公证邮件回复的很快，官方文档提到一般一小时内会回复，我一般5-10分钟就会收到了。</p>
@@ -255,7 +255,7 @@ border: none;
 <p>不知道什么是专用密码的，可以看<a href="https://support.apple.com/zh-cn/HT204397">这里</a></p>
 
 <p>将下面的脚本调整后，放入Post-actions中<br />
-<img src="http://images.foolishtalk.org/7d1045b183241672996953e235bec078.png" alt="" /></p>
+<img src="https://www.foolishtalk.org/cloud/7d1045b183241672996953e235bec078.png" alt="" /></p>
 <div class="language-shell highlighter-rouge"><pre class="highlight"><code>xcodebuild -exportArchive -archivePath <span class="s2">"</span><span class="nv">$ARCHIVE_PATH</span><span class="s2">"</span> -exportOptionsPlist <span class="s2">"</span><span class="nv">$SRCROOT</span><span class="s2">/ExportOptions.plist"</span> -exportPath <span class="s2">"</span><span class="nv">$EXPORT_PATH</span><span class="s2">"</span>
 
 <span class="nv">APP_PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$EXPORT_PATH</span><span class="s2">/</span><span class="nv">$PRODUCT_NAME</span><span class="s2">.app"</span>
@@ -316,7 +316,7 @@ Status Message: Package Invalid
                 <p>请保持转载后文章内容的完整，以及文章出处。本人保留所有版权相关权利。</p>
                 <!-- 要是你找到这个，想打赏就打赏吧 <p>如果你看了文章，觉得有收获，可以通过下面的支付宝二维码打赏。</p>
                 <b>
-                <img height="100" width="100" src="http://images.foolishtalk.org/qrcode.png">
+                <img height="100" width="100" src="https://www.foolishtalk.org/cloud/qrcode.png">
                 </b> -->
             </div>
                 <!-- 分享代码 -->                

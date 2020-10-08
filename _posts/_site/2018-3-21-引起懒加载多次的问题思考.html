@@ -48,10 +48,10 @@
 </code></pre>
 <p>问题解决！<br />
 为了方便解释，我特地画了个图来解释第一次代码的生命周期：<br />
-<img src="http://images.foolishtalk.org/2018-3-21-lazy-1.png" alt="" /></p>
+<img src="https://www.foolishtalk.org/cloud/2018-3-21-lazy-1.png" alt="" /></p>
 
 <p>换到第二个方式之后，就简单多了：</p>
 
-<p><img src="http://images.foolishtalk.org/2018-3-21-lazy-2.png" alt="" /></p>
+<p><img src="https://www.foolishtalk.org/cloud/2018-3-21-lazy-2.png" alt="" /></p>
 
 <p>从这个问题，可以猜测Controller的view在生成的时候就会触发<code class="highlighter-rouge">viewDidLoad</code>,为了避免出现这样的问题，还是应该尽量少在Controller的初始化方法里进行操作。</p>

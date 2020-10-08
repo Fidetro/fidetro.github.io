@@ -126,7 +126,7 @@
     <style type="text/css">
 /* 新浪微博 */
 .-mob-share-weibo {
-background-image: url("http://images.foolishtalk.org/sina_share.png")!important;
+background-image: url("https://www.foolishtalk.org/cloud/sina_share.png")!important;
 background-repeat:no-repeat;
 background-color: #ffffff;
 width: 30px;
@@ -135,7 +135,7 @@ border: none;
 }
 /* 微信 */
 .-mob-share-weixin {
-background-image: url("http://images.foolishtalk.org/wechat_share.png")!important;
+background-image: url("https://www.foolishtalk.org/cloud/wechat_share.png")!important;
 background-repeat:no-repeat;
 background-color: #ffffff;
 width: 30px;
@@ -144,7 +144,7 @@ border: none;
 }
 /* QQ */
 .-mob-share-qq {
-background-image: url("http://images.foolishtalk.org/qq_share.png")!important;
+background-image: url("https://www.foolishtalk.org/cloud/qq_share.png")!important;
 background-repeat:no-repeat;
 background-color: #ffffff;
 width: 30px;
@@ -204,7 +204,7 @@ border: none;
 <p><code class="highlighter-rouge">AppleScript</code>它是什么？</p>
 
 <p><code class="highlighter-rouge">AppleScript</code>它是苹果提供在Mac OS上实现自动化的脚本语言，语法相对简单、易懂，类似英语语法。下面这段代码，你可以通过 Mac 自带的脚本编辑器运行：<br />
-<img src="http://images.foolishtalk.org/apple-script-editor-1.png" alt="" /></p>
+<img src="https://www.foolishtalk.org/cloud/apple-script-editor-1.png" alt="" /></p>
 
 <p>运行后它会打开 iTunes ：</p>
 <div class="language-shell highlighter-rouge"><pre class="highlight"><code>tell application <span class="s2">"iTunes"</span>
@@ -220,9 +220,9 @@ end tell
 </code></pre>
 </div>
 <p><code class="highlighter-rouge">tell application "xxx"</code> 如果你是想让微信 App做点什么，就是<code class="highlighter-rouge">tell application "微信"</code>,而<code class="highlighter-rouge">play</code>这个事件，是iTunes独有的，怎么能知道app特有的事件？你可以通过<code class="highlighter-rouge">脚本编辑器</code>的导航栏中按照以下步骤找到：<br />
-<img src="http://images.foolishtalk.org/apple-script-editor-2.png" alt="" /><br />
+<img src="https://www.foolishtalk.org/cloud/apple-script-editor-2.png" alt="" /><br />
 然后选择<code class="highlighter-rouge">iTunes</code>:<br />
-<img src="http://images.foolishtalk.org/apple-script-editor-3.png" alt="" /> <br />
+<img src="https://www.foolishtalk.org/cloud/apple-script-editor-3.png" alt="" /> <br />
 这里可以看到关于play事件的一些描述。<br />
 在编写Mac app之前，可以先通过脚本编辑器把我们想实现的功能调试好，然后再把脚本移到Mac app上，确保脚本是正确的，而不是因为App沙盒、权限等问题引起。</p>
 
@@ -280,9 +280,9 @@ Optional({
 <p>这个地方非常的坑，如果没有打印<code class="highlighter-rouge">error</code>,在没有打开<code class="highlighter-rouge">App Sanbox</code>的情况下，是有可能预期效果是正常的，Safari能正常打开然后新建标签页。</p>
 
 <p>如果之前是做iOS开发的，对这个错误应该会很自然的有头绪，应该就是一些权限问题，直接在Info.plist上就能找到一个看起来是这个权限的字段，<code class="highlighter-rouge">Privacy - AppleEvents Sending Usage Description</code>，把这个字段加上后，重新运行，发现多出了这个弹窗：<br />
-<img src="http://images.foolishtalk.org/2019-09-28.4.55.09.png" alt="" />
+<img src="https://www.foolishtalk.org/cloud/2019-09-28.4.55.09.png" alt="" />
 如果能够正常运行，那恭喜你，说明你没有打开<code class="highlighter-rouge">Capabilities</code>-&gt;<code class="highlighter-rouge">App Sanbox</code>
-<img src="http://images.foolishtalk.org/2EE70BF91F39368ACF74DD225DEF0EE0.png" alt="" /></p>
+<img src="https://www.foolishtalk.org/cloud/2EE70BF91F39368ACF74DD225DEF0EE0.png" alt="" /></p>
 
 <h1 id="为什么要打开app-sanbox">为什么要打开App Sanbox？</h1>
 
@@ -298,7 +298,7 @@ Optional({
 })
 </code></pre>
 </div>
-<p><img src="http://images.foolishtalk.org/2019110_IMG_2412.png" alt="" /></p>
+<p><img src="https://www.foolishtalk.org/cloud/2019110_IMG_2412.png" alt="" /></p>
 
 <p>这次是提示 <code class="highlighter-rouge">Safari</code> 没有运行，我们的代码里已经加了让 <code class="highlighter-rouge">Safari</code> 唤醒的功能了，这说明这段代码没办法执行，既然没有解决，只能靠 google 了。</p>
 
@@ -313,7 +313,7 @@ Optional({
 
 <p>既然不给我用，为什么上个版本还能给我上架成功？？？</p>
 
-<p><img src="http://images.foolishtalk.org/2019110_IMG_2412.png" alt="" /></p>
+<p><img src="https://www.foolishtalk.org/cloud/2019110_IMG_2412.png" alt="" /></p>
 
 <p>这个方法不行，只能另外再找方法了。</p>
 
@@ -367,7 +367,7 @@ Optional({
                 <p>请保持转载后文章内容的完整，以及文章出处。本人保留所有版权相关权利。</p>
                 <!-- 要是你找到这个，想打赏就打赏吧 <p>如果你看了文章，觉得有收获，可以通过下面的支付宝二维码打赏。</p>
                 <b>
-                <img height="100" width="100" src="http://images.foolishtalk.org/qrcode.png">
+                <img height="100" width="100" src="https://www.foolishtalk.org/cloud/qrcode.png">
                 </b> -->
             </div>
                 <!-- 分享代码 -->                

@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 09 Jul 2020 23:27:04 +0800</pubDate>
-    <lastBuildDate>Thu, 09 Jul 2020 23:27:04 +0800</lastBuildDate>
+    <pubDate>Thu, 08 Oct 2020 19:36:28 +0800</pubDate>
+    <lastBuildDate>Thu, 08 Oct 2020 19:36:28 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -14,17 +14,17 @@
         <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
 
 &lt;p&gt;从非Mac AppStore的地方下载的App，大家应该都有遇到过这样的提示：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/IMG_4487.PNG&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/IMG_4487.PNG&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;遇到这种情况，可以在终端输入，将&lt;code class=&quot;highlighter-rouge&quot;&gt;安全性与隐私-通用-任何来源&lt;/code&gt;开启，这样就可以解决了：&lt;/p&gt;
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo spctl --master-disable
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/b763e24905260962b5f85903f86472d5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/b763e24905260962b5f85903f86472d5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;但是作为一个普通用户，会认为你的App不安全，我开发的虚拟定位因为需要依赖非沙盒环境下的Magellan，也遇到这个问题，也有国外用户因为觉得这个行为是有风险，在AppStore给了个差评。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/9d72a50bedcd69db68dbe4777d16b83f.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/9d72a50bedcd69db68dbe4777d16b83f.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;从设置上看，用户是可以通过选择&lt;code class=&quot;highlighter-rouge&quot;&gt;App Store和被认可的开发者&lt;/code&gt;下载非App Store来源的应用的，问题是怎样才能成为被认可的开发者呢？&lt;/p&gt;
 
@@ -33,13 +33,13 @@
 &lt;p&gt;Mac上通过&lt;code class=&quot;highlighter-rouge&quot;&gt;Gatekeeper&lt;/code&gt;的技术来确保用户运行的是自己信任的App,在&lt;code class=&quot;highlighter-rouge&quot;&gt;App Store&lt;/code&gt;上架之前应用是经过&lt;code class=&quot;highlighter-rouge&quot;&gt;Apple&lt;/code&gt;签名的，通过这种方式保证App没有被修改。&lt;/p&gt;
 
 &lt;p&gt;而从第三方网站或软件中下载的App，则需要提交应用给Apple进行公证，公证结束后再对其签名，用户下载的时候弹窗就会变成这样：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/IMG_4488.PNG&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/IMG_4488.PNG&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;公证的方式有两种，一种是通过Xcode Archives后在&lt;code class=&quot;highlighter-rouge&quot;&gt;Organizer&lt;/code&gt;进行操作，另一种方式是通过脚本自定义workflow。&lt;/p&gt;
 
 &lt;h2 id=&quot;xcode&quot;&gt;Xcode&lt;/h2&gt;
 &lt;p&gt;通过 Xcode导航栏上方 「Product」-&amp;gt;「Archives」,选择「Distribute App」-&amp;gt; 「Developer ID」-&amp;gt; 「Upload」&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/4408719a68ebdffd9d939200a4458fd9.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/4408719a68ebdffd9d939200a4458fd9.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;上传完成后，等苹果回复认证通过的邮件后，再次选择「Distribute App」-&amp;gt; 「Developer ID」-&amp;gt; 「Export」，这时候导出的包就是已经被苹果公证过的了。&lt;br /&gt;
 苹果公证邮件回复的很快，官方文档提到一般一小时内会回复，我一般5-10分钟就会收到了。&lt;/p&gt;
@@ -70,7 +70,7 @@
 &lt;p&gt;不知道什么是专用密码的，可以看&lt;a href=&quot;https://support.apple.com/zh-cn/HT204397&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;将下面的脚本调整后，放入Post-actions中&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/7d1045b183241672996953e235bec078.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/7d1045b183241672996953e235bec078.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcodebuild -exportArchive -archivePath &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ARCHIVE_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; -exportOptionsPlist &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$SRCROOT&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/ExportOptions.plist&quot;&lt;/span&gt; -exportPath &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$EXPORT_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;APP_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$EXPORT_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PRODUCT_NAME&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.app&quot;&lt;/span&gt;
@@ -141,38 +141,38 @@ Status Message: Package Invalid
         <description>&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
 &lt;p&gt;平常在使用Xcode断点调试问题时，&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;可能是最常用到的&lt;code class=&quot;highlighter-rouge&quot;&gt;LLVM&lt;/code&gt;命令了。&lt;br /&gt;
 通过&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;命令，我们可以在Xcode的&lt;code class=&quot;highlighter-rouge&quot;&gt;LLDB&lt;/code&gt;控制台打印对象的描述，系统在运行时会提供一个默认值，如图：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/caed4a8d6cbafa4387d2fb57155cf6e7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/caed4a8d6cbafa4387d2fb57155cf6e7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;我们可以通过重写&lt;code class=&quot;highlighter-rouge&quot;&gt;func debugDescription()&lt;/code&gt;达到我们希望在&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;的时候返回预期的返回值。&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/54e45465efc65c1b4fd93f2d8995ea4e.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/54e45465efc65c1b4fd93f2d8995ea4e.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;的底层逻辑实现：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/57320d88124faf7812bbaa673f37fee4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/57320d88124faf7812bbaa673f37fee4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;事实上打印对象有三种方法，&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;只是其中一种。&lt;/p&gt;
 
 &lt;p&gt;第二种方式是&lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt;。&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;的区别在于，&lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt;不会随着&lt;code class=&quot;highlighter-rouge&quot;&gt;func debugDescription()&lt;/code&gt;方法修改而且改变打印的值。
-&lt;img src=&quot;http://images.foolishtalk.org/0bb5fdda413e64e8b3ba45c58d1c2ec3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/0bb5fdda413e64e8b3ba45c58d1c2ec3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;但是&lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;，遵循swift的语法，在下面的例子中，是无法打印的。&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/f65d30492a3fc575e641976544a7aa1e.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/f65d30492a3fc575e641976544a7aa1e.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
 同样下面的代码也会报错：&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    let student : Person = Student(name:&quot;john&quot;)
     print(student.name) //这里是会报错的
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt;的底层逻辑实现：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/e2b0f3feefd02283937b5230a420110d.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/e2b0f3feefd02283937b5230a420110d.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;第三种方式是通过&lt;code class=&quot;highlighter-rouge&quot;&gt;v&lt;/code&gt;打印。&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;v&lt;/code&gt;同样不会不会随着&lt;code class=&quot;highlighter-rouge&quot;&gt;func debugDescription()&lt;/code&gt;方法修改而且改变打印的值。&lt;br /&gt;
 而且&lt;code class=&quot;highlighter-rouge&quot;&gt;v&lt;/code&gt;有自己的语法，不需要通过编译，而是进行动态类型解析，但是它无法执行代码。&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/849c0b54225807f00201d31cd8bf072c.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/849c0b54225807f00201d31cd8bf072c.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v&lt;/code&gt;的底层逻辑实现：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/67340b5668cffd5d75e007e1839d46fd.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/67340b5668cffd5d75e007e1839d46fd.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;总结&quot;&gt;总结&lt;/h1&gt;
 
@@ -225,22 +225,22 @@ Status Message: Package Invalid
     &lt;p&gt;Firstly, download &lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;Virtual Location App&lt;/a&gt; and &lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan App&lt;/a&gt;. It requires running both these two apps to modify the location.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;There is an ico at system navigation bar as following after &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt; running successfully.&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Connect the mobile phone to your computer, then choose your personal mobile.&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/d944f3a7aa0e20280cb65dff013839e6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/d944f3a7aa0e20280cb65dff013839e6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;If there is no installing the driver before, please click to &lt;code class=&quot;highlighter-rouge&quot;&gt;Install the driver &lt;/code&gt;firstly.&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/0d0da9bb126e3bd24ebfb83bd16ef3c0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/0d0da9bb126e3bd24ebfb83bd16ef3c0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;It will download the driver automatically for the first installing.&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/0fcda7c41ae4197d268c1a01bb2392a8.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/0fcda7c41ae4197d268c1a01bb2392a8.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Please click &lt;code class=&quot;highlighter-rouge&quot;&gt;Install the Driver&lt;/code&gt; again after download successfully. After installation successfully, there will be following tips.&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/15393a5bdbede13840e344e94f5d4946.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/15393a5bdbede13840e344e94f5d4946.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;It need to run &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan app&lt;/code&gt; again after installation.&lt;/li&gt;
 &lt;/ol&gt;
@@ -251,10 +251,10 @@ Status Message: Package Invalid
 There are two ways to modify the position as followings:&lt;br /&gt;
 (1) &lt;br /&gt;
 Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Move By double-click&lt;/code&gt;. Double click the map on &lt;code class=&quot;highlighter-rouge&quot;&gt;Virtual Location App&lt;/code&gt;. Then you will find your position on mobile phone has already changed.&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/162dbbf387c59ed6947ae015fa298fba.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/162dbbf387c59ed6947ae015fa298fba.png&quot; alt=&quot;&quot; /&gt;
 (2) &lt;br /&gt;
 ① Double click the map on Virtual Location without selecting &lt;code class=&quot;highlighter-rouge&quot;&gt;Move by double-click&lt;/code&gt;. There will be generated multi-spots on the map as picture shows.&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/9c7ff0c8547f7eeea693ae78f877d000.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/9c7ff0c8547f7eeea693ae78f877d000.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;② Please input Speed and click &lt;code class=&quot;highlighter-rouge&quot;&gt;Run by route&lt;/code&gt; finally. You will find your mobile phone is moving along programmed route.&lt;/p&gt;
@@ -283,17 +283,17 @@ In most case, it is better to provide the log file will be helpful. Please click
 &lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
 
 &lt;p&gt;先上一组电脑在放歌时的传输速率：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/39ce65c86ee89caeba6d367d0f82786d.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/39ce65c86ee89caeba6d367d0f82786d.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;通过这组数据可以知道，在听歌的时候，传输速度约为 39000 Bytes/s,即 312 kbit/s（1 kbit/s = 125 Bytes/s）&lt;/p&gt;
 
 &lt;p&gt;而我们公司的蓝牙音箱使用的是SBC编码器（小tips：按住option点击导航栏的蓝牙图标，可以查看蓝牙设备的信息）&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/347335e73c15512f3125ee4d60bac4f3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/347335e73c15512f3125ee4d60bac4f3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;原因&quot;&gt;原因&lt;/h2&gt;
 &lt;p&gt;SBC编码器中的 &lt;code class=&quot;highlighter-rouge&quot;&gt;bitpool&lt;/code&gt; 参数会导致音质下降，通过&lt;a href=&quot;http://soundexpert.org/encoders-320-kbps&quot;&gt;这里&lt;/a&gt;可以知道 SBC编码器 在 328 kbit/s 时 bitpool 需要达到 53。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/ec4f4917854d7eab2b26196d3348df60.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/ec4f4917854d7eab2b26196d3348df60.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;问题原因知道了，这样就好解决了。&lt;/p&gt;
 
@@ -302,10 +302,10 @@ In most case, it is better to provide the log file will be helpful. Please click
 
 &lt;p&gt;下载完之后，打开 Hardware，把 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bluetooth Explorer&lt;/code&gt; 拖到应用程序里。&lt;br /&gt;
 打开 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bluetooth Explorer&lt;/code&gt; 后，在系统导航栏找到 &lt;code class=&quot;highlighter-rouge&quot;&gt;Audio Options...&lt;/code&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/c1bfcd07315439afe2f2fd3ecdc744f4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/c1bfcd07315439afe2f2fd3ecdc744f4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;为了方便我就直接把这里 &lt;code class=&quot;highlighter-rouge&quot;&gt;Minimum bitpool&lt;/code&gt; 改到64了：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/72d3eb4294d65375471054d6f1d290cc.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/72d3eb4294d65375471054d6f1d290cc.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;另外如果有需要修改编码器的需求，改上面 &lt;code class=&quot;highlighter-rouge&quot;&gt;Codecs&lt;/code&gt; 的设置就好了。&lt;/p&gt;
 
@@ -405,24 +405,24 @@ forward-socks5 / localhost:1080 .
 &lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
 
 &lt;p&gt;Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文件夹中，
-&lt;img src=&quot;http://images.foolishtalk.org/20191022225610.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/20191022225610.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
 然后双击运行，就可以了。&lt;br /&gt;
 有可能会出现这个弹窗，直接打开就好了。&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/20191022105549.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/20191022105549.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;如果出现无法打开，因为无法确认开发者的身份的弹窗时，可以在&lt;code class=&quot;highlighter-rouge&quot;&gt;系统偏好设置-通用&lt;/code&gt;下方找到，点击仍要继续运行即可。&lt;/p&gt;
 
 &lt;p&gt;运行成功后，状态栏上方会出现一顶小帽子图标。&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;首先手机要连接电脑，然后选择设备。&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/c81ff0aa45218b3cf8131ad8592eea96.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/c81ff0aa45218b3cf8131ad8592eea96.png&quot; alt=&quot;&quot; /&gt;
 然后再点击安装驱动：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/d762c75e8c2838d7f7bd7d1afff0c881.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/d762c75e8c2838d7f7bd7d1afff0c881.png&quot; alt=&quot;&quot; /&gt;
 如果出现：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/2019_12_15_8.44.35.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/2019_12_15_8.44.35.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
 或者：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/2019_12_15_8.46.55.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/2019_12_15_8.46.55.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h5 id=&quot;如果是首次安装驱动记得要重新插拔一次手机不然可能会没法识别&quot;&gt;如果是首次安装驱动，记得要重新插拔一次手机，不然可能会没法识别。&lt;/h5&gt;
 &lt;p&gt;如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者&lt;a href=&quot;https://weibo.com/u/2095454814&quot;&gt;微博&lt;/a&gt;联系到我，我会尽快帮你解决问题。&lt;/p&gt;
@@ -432,9 +432,9 @@ forward-socks5 / localhost:1080 .
 &lt;p&gt;改定位的方式有两种：&lt;/p&gt;
 &lt;ol&gt;
   &lt;li&gt;勾选键盘模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
-&lt;img src=&quot;http://images.foolishtalk.org/4c15776765db87f361aa9d9f3b17e6fe.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/4c15776765db87f361aa9d9f3b17e6fe.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;不需要勾选键盘模式，直接双击地图，在地图上生成多个点，类似这样：
-&lt;img src=&quot;http://images.foolishtalk.org/b66ba3623da6f66123bbc4088e9e954e.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/b66ba3623da6f66123bbc4088e9e954e.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;然后输入速度，最后点击&lt;code class=&quot;highlighter-rouge&quot;&gt;路线执行&lt;/code&gt;，你会发现手机正在按照规划的路线在移动。&lt;/p&gt;
@@ -488,7 +488,7 @@ forward-socks5 / localhost:1080 .
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;它是什么？&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;它是苹果提供在Mac OS上实现自动化的脚本语言，语法相对简单、易懂，类似英语语法。下面这段代码，你可以通过 Mac 自带的脚本编辑器运行：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/apple-script-editor-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/apple-script-editor-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;运行后它会打开 iTunes ：&lt;/p&gt;
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tell application &lt;span class=&quot;s2&quot;&gt;&quot;iTunes&quot;&lt;/span&gt;
@@ -504,9 +504,9 @@ end tell
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tell application &quot;xxx&quot;&lt;/code&gt; 如果你是想让微信 App做点什么，就是&lt;code class=&quot;highlighter-rouge&quot;&gt;tell application &quot;微信&quot;&lt;/code&gt;,而&lt;code class=&quot;highlighter-rouge&quot;&gt;play&lt;/code&gt;这个事件，是iTunes独有的，怎么能知道app特有的事件？你可以通过&lt;code class=&quot;highlighter-rouge&quot;&gt;脚本编辑器&lt;/code&gt;的导航栏中按照以下步骤找到：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/apple-script-editor-2.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/apple-script-editor-2.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
 然后选择&lt;code class=&quot;highlighter-rouge&quot;&gt;iTunes&lt;/code&gt;:&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/apple-script-editor-3.png&quot; alt=&quot;&quot; /&gt; &lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/apple-script-editor-3.png&quot; alt=&quot;&quot; /&gt; &lt;br /&gt;
 这里可以看到关于play事件的一些描述。&lt;br /&gt;
 在编写Mac app之前，可以先通过脚本编辑器把我们想实现的功能调试好，然后再把脚本移到Mac app上，确保脚本是正确的，而不是因为App沙盒、权限等问题引起。&lt;/p&gt;
 
@@ -564,9 +564,9 @@ Optional({
 &lt;p&gt;这个地方非常的坑，如果没有打印&lt;code class=&quot;highlighter-rouge&quot;&gt;error&lt;/code&gt;,在没有打开&lt;code class=&quot;highlighter-rouge&quot;&gt;App Sanbox&lt;/code&gt;的情况下，是有可能预期效果是正常的，Safari能正常打开然后新建标签页。&lt;/p&gt;
 
 &lt;p&gt;如果之前是做iOS开发的，对这个错误应该会很自然的有头绪，应该就是一些权限问题，直接在Info.plist上就能找到一个看起来是这个权限的字段，&lt;code class=&quot;highlighter-rouge&quot;&gt;Privacy - AppleEvents Sending Usage Description&lt;/code&gt;，把这个字段加上后，重新运行，发现多出了这个弹窗：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/2019-09-28.4.55.09.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/2019-09-28.4.55.09.png&quot; alt=&quot;&quot; /&gt;
 如果能够正常运行，那恭喜你，说明你没有打开&lt;code class=&quot;highlighter-rouge&quot;&gt;Capabilities&lt;/code&gt;-&amp;gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;App Sanbox&lt;/code&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/2EE70BF91F39368ACF74DD225DEF0EE0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/2EE70BF91F39368ACF74DD225DEF0EE0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;为什么要打开app-sanbox&quot;&gt;为什么要打开App Sanbox？&lt;/h1&gt;
 
@@ -582,7 +582,7 @@ Optional({
 })
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/2019110_IMG_2412.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/2019110_IMG_2412.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;这次是提示 &lt;code class=&quot;highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 没有运行，我们的代码里已经加了让 &lt;code class=&quot;highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 唤醒的功能了，这说明这段代码没办法执行，既然没有解决，只能靠 google 了。&lt;/p&gt;
 
@@ -597,7 +597,7 @@ Optional({
 
 &lt;p&gt;既然不给我用，为什么上个版本还能给我上架成功？？？&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/2019110_IMG_2412.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/2019110_IMG_2412.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;这个方法不行，只能另外再找方法了。&lt;/p&gt;
 
@@ -701,7 +701,7 @@ Optional({
 
 &lt;p&gt;先打开Mac应用虚拟定位，可以看到以下的界面，可以在这里&lt;a href=&quot;https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;下载&lt;/a&gt;，另外有什么App使用上的问题和建议，也可以来&lt;a href=&quot;https://weibo.com/p/1005052095454814&quot;&gt;微博&lt;/a&gt;私信我：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/mock_location_12.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_12.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;双击选择你要定位的位置点；&lt;/li&gt;
@@ -711,28 +711,28 @@ Optional({
 
 &lt;p&gt;先用Xcode新建一个工程，按照以下步骤操作，Xcode可以在App Store&lt;a href=&quot;https://itunes.apple.com/cn/app/xcode/id497799835?mt=12&quot;&gt;下载&lt;/a&gt;：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/mock_location_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;选择创建iOS App：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/mock_location_3.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_3.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;输入工程名，&lt;code class=&quot;highlighter-rouge&quot;&gt;Organization Name&lt;/code&gt;随便填就可以了，&lt;code class=&quot;highlighter-rouge&quot;&gt;Organization Identifier&lt;/code&gt;填”com.xxx.xxx”，xxx替换成任意英文即可：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/mock_location_4.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_4.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;按照以下步骤，选择工程，然后添加账号，这里填你苹果账号：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/mock_location_5.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_5.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;把手机连到Mac上，然后选中你的手机，如果没有看到你的手机，可以打开iTunes看看手机是否有连接，如果也没有，拔掉线重新连，应该会看到iTunes有个弹窗，点击信任此电脑，手机上也需要点击信任此电脑：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/mock_location_8.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_8.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;输入你手机iOS系统的版本，这里代表可以运行的最低版本，例如你是iOS 10.2，输入10就可以了：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/mock_location_11.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_11.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;下载&lt;a href=&quot;https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，然后按照你想模拟的路径双击地图，按保存会生成一个GPX文件，把生成的GPX文件拖进去工程目录中：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/mock_location_6.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/mock_location_7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_6.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;点击运行，首次运行可能会弹出需要信任证书的提示，这时候点击手机的设置-通用-描述文件与设备管理-「找到自己的开发证书」-点击信任，再重新运行一遍：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/mock_location_9.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_9.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;选中你拖进去gpx文件名字的选项：&lt;br /&gt;
-&lt;img src=&quot;http://images.foolishtalk.org/mock_location_10.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_10.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;这时候你会发现定位已经改变了，但是要注意，这时候手机和Mac是不能断开连接的，以及运行的App不能被杀死，否则定位修改都会失败。&lt;/li&gt;
 &lt;/ol&gt;
 </description>
@@ -871,7 +871,7 @@ rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
   &lt;li&gt;建立 RTMP 连接并上推到服务端。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/20190305172841.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/20190305172841.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph LR
    硬件采集 --&amp;gt; 音频数据流;
@@ -885,7 +885,7 @@ rtmp协议所传输的视频流，就要求是flv格式。&lt;/p&gt;
 
 &lt;h1 id=&quot;视频播放原理拉流&quot;&gt;视频播放原理(拉流)&lt;/h1&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://images.foolishtalk.org/20190305172857.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/20190305172857.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph LR
    数据 --&amp;gt; 解协议;
    解协议 --&amp;gt; 封装格式数据;

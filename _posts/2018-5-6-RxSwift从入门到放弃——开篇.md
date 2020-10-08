@@ -19,11 +19,11 @@ tags:
    
 在学习RxSwift的时候，或者本来就有看过相关的资料，肯定会对下面这张图的名词有所听闻。  
 
-![](http://images.foolishtalk.org/rxswift-know.png)
+![](https://www.foolishtalk.org/cloud/rxswift-know.png)
  
 
 不了解的同学看完应该是这样的表情的：  
-![](http://images.foolishtalk.org/black_question.png)  
+![](https://www.foolishtalk.org/cloud/black_question.png)  
 
 看不懂没关系，看完这个系列的文章之后，就会懂了。  
 
