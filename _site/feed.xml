@@ -3,10 +3,10 @@
   <channel>
     <title>FoolishTalk</title>
     <description></description>
-    <link>http://www.foolishtalk.org/</link>
-    <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 08 Oct 2020 20:08:59 +0800</pubDate>
-    <lastBuildDate>Thu, 08 Oct 2020 20:08:59 +0800</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Tue, 15 Dec 2020 23:46:45 +0800</pubDate>
+    <lastBuildDate>Tue, 15 Dec 2020 23:46:45 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -28,8 +28,8 @@
 &lt;/div&gt;
 </description>
         <pubDate>Wed, 07 Oct 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+        <link>http://localhost:4000/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
         
         <category>Chrome</category>
         
@@ -155,8 +155,8 @@ Status Message: Package Invalid
 &lt;a href=&quot;https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow&quot;&gt;Customizing the Notarization Workflow&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 08 Jul 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</guid>
+        <link>http://localhost:4000/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</guid>
         
         <category>iOS</category>
         
@@ -235,8 +235,8 @@ Status Message: Package Invalid
 &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2019/429/&quot;&gt;LLDB: Beyond “po”&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 01 Jun 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</guid>
+        <link>http://localhost:4000/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</guid>
         
         <category>iOS</category>
         
@@ -292,8 +292,8 @@ Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Move By double-click&lt;/
 In most case, it is better to provide the log file will be helpful. Please click &lt;code class=&quot;highlighter-rouge&quot;&gt;Export log file&lt;/code&gt; to generate the log file by &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt;.&lt;/p&gt;
 </description>
         <pubDate>Sun, 19 Apr 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/04/19/magellan_en/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/04/19/magellan_en/</guid>
+        <link>http://localhost:4000/2020/04/19/magellan_en/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/19/magellan_en/</guid>
         
         <category>iOS</category>
         
@@ -348,8 +348,8 @@ In most case, it is better to provide the log file will be helpful. Please click
 &lt;a href=&quot;https://apple.stackexchange.com/questions/167245/yosemite-bluetooth-audio-is-choppy-skips/259954#259954&quot;&gt;Yosemite bluetooth audio is choppy/skips&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 10 Jan 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</guid>
+        <link>http://localhost:4000/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</guid>
         
         <category>iOS</category>
         
@@ -413,8 +413,8 @@ forward-socks5 / localhost:1080 .
 &lt;a href=&quot;https://double-c.github.io/2018/10/17/mac-ss-cmd/index.html&quot;&gt;Mac命令行终端下使用shadowsocks翻墙&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 07 Dec 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/12/07/pip%E6%8A%98%E8%85%BE%E8%AE%B0/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/12/07/pip%E6%8A%98%E8%85%BE%E8%AE%B0/</guid>
+        <link>http://localhost:4000/2019/12/07/pip%E6%8A%98%E8%85%BE%E8%AE%B0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/12/07/pip%E6%8A%98%E8%85%BE%E8%AE%B0/</guid>
         
         <category>iOS</category>
         
@@ -476,7 +476,7 @@ forward-socks5 / localhost:1080 .
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;拿来改定位（玩游戏/打卡）会不会被封？&lt;br /&gt;
-不要出现瞬移非常严重的情况，从目前技术手段上无法判定，所以可以放心使用。&lt;/p&gt;
+不要出现瞬移非常严重的情况，从目前技术手段上无法判定，所以可以放心使用，但是也请勿用于违法/作弊行为，App的初心是用于平时开发测试定位移动。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;提示“暂不支持 xx 版本，请联系作者升级”，怎么办？&lt;br /&gt;
@@ -497,8 +497,8 @@ forward-socks5 / localhost:1080 .
 &lt;/ol&gt;
 </description>
         <pubDate>Wed, 04 Dec 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/12/04/magellan/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/12/04/magellan/</guid>
+        <link>http://localhost:4000/2019/12/04/magellan/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/12/04/magellan/</guid>
         
         <category>iOS</category>
         
@@ -675,8 +675,8 @@ Optional({
 如果你也想开发一款App并且上架AppStore，但是要依赖一个不是自己开发的App，大部分非Apple的App，都不会提供AppleScript的相关接口给到第三方使用，把applescript放在&lt;code class=&quot;highlighter-rouge&quot;&gt;Application Scripts&lt;/code&gt;目录下使用是目前唯一能上架成功的方式。&lt;/p&gt;
 </description>
         <pubDate>Sun, 10 Nov 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/</guid>
+        <link>http://localhost:4000/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/</guid>
         
         <category>Mac</category>
         
@@ -705,8 +705,8 @@ Optional({
 &lt;/div&gt;
 </description>
         <pubDate>Sun, 13 Oct 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
+        <link>http://localhost:4000/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
         
         <category>Mac</category>
         
@@ -766,8 +766,8 @@ Optional({
 &lt;/ol&gt;
 </description>
         <pubDate>Thu, 11 Apr 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/04/11/mocklocation/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/04/11/mocklocation/</guid>
+        <link>http://localhost:4000/2019/04/11/mocklocation/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/04/11/mocklocation/</guid>
         
         <category>iOS</category>
         
