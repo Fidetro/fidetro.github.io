@@ -71,7 +71,7 @@ ga_domain: foolishtalk.org
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "吝啬分享的程序员。"
+sidebar-about-description: "程序员做事，不谈收益。"
 sidebar-avatar: /img/avatar-fidetro.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
