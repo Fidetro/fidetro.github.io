@@ -45,12 +45,12 @@ Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文�
 接下来，打开[虚拟定位](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)，把手机连接上电脑。
 
 改定位的方式有两种：
-1. 勾选键盘模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
-![](https://www.foolishtalk.org/cloud/4c15776765db87f361aa9d9f3b17e6fe.png)   
-2. 不需要勾选键盘模式，直接双击地图，在地图上生成多个点，类似这样：
-![](https://www.foolishtalk.org/cloud/b66ba3623da6f66123bbc4088e9e954e.png)  
+1. 选中单点模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
+![](https://www.foolishtalk.org/cloud/guide_zh_1.png)   
+2. 选中轨迹模式，直接双击地图，在地图上生成多个点，类似这样：
+![](https://www.foolishtalk.org/cloud/guide_zh_2.png)  
 
-然后输入速度，最后点击`路线执行`，你会发现手机正在按照规划的路线在移动。
+然后输入速度，最后点击`开始移动`，你会发现手机正在按照规划的路线在移动。
 
 
 # Q&A  

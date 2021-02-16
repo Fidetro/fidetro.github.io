@@ -35,13 +35,13 @@ tags:
 1.	Open `Virtual Location App`  
 There are two ways to modify the position as followings:  
 (1)   
-Select `Move By double-click`. Double click the map on `Virtual Location App`. Then you will find your position on mobile phone has already changed.  
-![](https://www.foolishtalk.org/cloud/162dbbf387c59ed6947ae015fa298fba.png)
+Select `Point`. Double click the map on `Virtual Location App`. Then you will find your position on mobile phone has already changed.  
+![](https://www.foolishtalk.org/cloud/guide_en_1.png))
 (2)   
-① Double click the map on Virtual Location without selecting `Move by double-click`. There will be generated multi-spots on the map as picture shows.  
-![](https://www.foolishtalk.org/cloud/9c7ff0c8547f7eeea693ae78f877d000.png)
+① Select `Route`. Double click the map on `Virtual Location　App`. There will be generated multi-spots on the map as picture shows.  
+![](https://www.foolishtalk.org/cloud/guide_en_2.png))
 
-② Please input Speed and click `Run by route` finally. You will find your mobile phone is moving along programmed route.
+② Please input Speed and click `Start` finally. You will find your mobile phone is moving along programmed route.
 
 
 If there are any questions, please feel free to contact me and send email to zykzzzz@hotmail.com. 

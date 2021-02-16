@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 22 Dec 2020 00:51:32 +0800</pubDate>
-    <lastBuildDate>Tue, 22 Dec 2020 00:51:32 +0800</lastBuildDate>
+    <pubDate>Wed, 17 Feb 2021 01:40:30 +0800</pubDate>
+    <lastBuildDate>Wed, 17 Feb 2021 01:40:30 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -279,14 +279,14 @@ Status Message: Package Invalid
   &lt;li&gt;Open &lt;code class=&quot;highlighter-rouge&quot;&gt;Virtual Location App&lt;/code&gt;&lt;br /&gt;
 There are two ways to modify the position as followings:&lt;br /&gt;
 (1) &lt;br /&gt;
-Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Move By double-click&lt;/code&gt;. Double click the map on &lt;code class=&quot;highlighter-rouge&quot;&gt;Virtual Location App&lt;/code&gt;. Then you will find your position on mobile phone has already changed.&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/162dbbf387c59ed6947ae015fa298fba.png&quot; alt=&quot;&quot; /&gt;
+Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Point&lt;/code&gt;. Double click the map on &lt;code class=&quot;highlighter-rouge&quot;&gt;Virtual Location App&lt;/code&gt;. Then you will find your position on mobile phone has already changed.&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_1.png&quot; alt=&quot;&quot; /&gt;)
 (2) &lt;br /&gt;
-① Double click the map on Virtual Location without selecting &lt;code class=&quot;highlighter-rouge&quot;&gt;Move by double-click&lt;/code&gt;. There will be generated multi-spots on the map as picture shows.&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/9c7ff0c8547f7eeea693ae78f877d000.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+① Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Route&lt;/code&gt;. Double click the map on &lt;code class=&quot;highlighter-rouge&quot;&gt;Virtual Location　App&lt;/code&gt;. There will be generated multi-spots on the map as picture shows.&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_2.png&quot; alt=&quot;&quot; /&gt;)&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;② Please input Speed and click &lt;code class=&quot;highlighter-rouge&quot;&gt;Run by route&lt;/code&gt; finally. You will find your mobile phone is moving along programmed route.&lt;/p&gt;
+&lt;p&gt;② Please input Speed and click &lt;code class=&quot;highlighter-rouge&quot;&gt;Start&lt;/code&gt; finally. You will find your mobile phone is moving along programmed route.&lt;/p&gt;
 
 &lt;p&gt;If there are any questions, please feel free to contact me and send email to zykzzzz@hotmail.com. 
 In most case, it is better to provide the log file will be helpful. Please click &lt;code class=&quot;highlighter-rouge&quot;&gt;Export log file&lt;/code&gt; to generate the log file by &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt;.&lt;/p&gt;
@@ -460,13 +460,13 @@ forward-socks5 / localhost:1080 .
 
 &lt;p&gt;改定位的方式有两种：&lt;/p&gt;
 &lt;ol&gt;
-  &lt;li&gt;勾选键盘模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/4c15776765db87f361aa9d9f3b17e6fe.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;不需要勾选键盘模式，直接双击地图，在地图上生成多个点，类似这样：
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/b66ba3623da6f66123bbc4088e9e954e.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;选中单点模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_zh_1.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;选中轨迹模式，直接双击地图，在地图上生成多个点，类似这样：
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_zh_2.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;然后输入速度，最后点击&lt;code class=&quot;highlighter-rouge&quot;&gt;路线执行&lt;/code&gt;，你会发现手机正在按照规划的路线在移动。&lt;/p&gt;
+&lt;p&gt;然后输入速度，最后点击&lt;code class=&quot;highlighter-rouge&quot;&gt;开始移动&lt;/code&gt;，你会发现手机正在按照规划的路线在移动。&lt;/p&gt;
 
 &lt;h1 id=&quot;qa&quot;&gt;Q&amp;amp;A&lt;/h1&gt;
 &lt;ol&gt;
