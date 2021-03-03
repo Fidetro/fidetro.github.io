@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "使用Magellan修改iOS定位"
+title:      "使用虚拟定位修改iPhone定位"
 subtitle:   "iOS，定位，Xcode"
 date:       2019-12-4
 author:     "Karim"
@@ -12,9 +12,11 @@ tags:
 
 # 前言  
 
-最初写的[虚拟定位](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)，需要依赖 Xcode 搭配使用，对用户使用造成很大的学习成本，但是由于沙盒机制，在AppStore下载没有办法做到。  
+首先你需要通过Mac AppStore下载[虚拟定位](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)。
+虚拟定位的界面如下：
+![](https://www.foolishtalk.org/cloud/guide_zh_1.png)   
 
-于是，我做了 Magellan，但是要注意，修改定位必须要同时下载[Magellan](https://www.foolishtalk.org/magellan/magellan.dmg)以及[虚拟定位](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)，不然无法使用。
+同时下载[Magellan](https://www.foolishtalk.org/magellan/magellan.dmg)，不然无法使用。
 
 # 正文  
 

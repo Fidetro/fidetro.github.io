@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Modify phone positioning via Magellan"
+title:      "Modify phone positioning via Virtual Location"
 subtitle:   "iOS，Virtual Location"
 date:       2020-4-19
 author:     "Karim"
@@ -14,6 +14,9 @@ tags:
 # Installation:
 
 1.	Firstly, download [Virtual Location App](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12) and [Magellan App](https://www.foolishtalk.org/magellan/magellan.dmg). It requires running both these two apps to modify the location.
+
+The virtual positioning interface looks like this:
+![](https://www.foolishtalk.org/cloud/guide_en_1.png)
 
 2.	There is an ico at system navigation bar as following after `Magellan App` running successfully.  
 ![](https://www.foolishtalk.org/cloud/bc9e8955850855ca07147e65957f8087.png) 
