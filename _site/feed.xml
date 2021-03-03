@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 17 Feb 2021 01:40:30 +0800</pubDate>
-    <lastBuildDate>Wed, 17 Feb 2021 01:40:30 +0800</lastBuildDate>
+    <pubDate>Wed, 03 Mar 2021 23:35:57 +0800</pubDate>
+    <lastBuildDate>Wed, 03 Mar 2021 23:35:57 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -246,13 +246,17 @@ Status Message: Package Invalid
       </item>
     
       <item>
-        <title>Modify phone positioning via Magellan</title>
+        <title>Modify phone positioning via Virtual Location</title>
         <description>&lt;h1 id=&quot;installation&quot;&gt;Installation:&lt;/h1&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Firstly, download &lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;Virtual Location App&lt;/a&gt; and &lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan App&lt;/a&gt;. It requires running both these two apps to modify the location.&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;Firstly, download &lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;Virtual Location App&lt;/a&gt; and &lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan App&lt;/a&gt;. It requires running both these two apps to modify the location.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The virtual positioning interface looks like this:
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
   &lt;li&gt;There is an ico at system navigation bar as following after &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt; running successfully.&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;
@@ -424,12 +428,14 @@ forward-socks5 / localhost:1080 .
       </item>
     
       <item>
-        <title>使用Magellan修改iOS定位</title>
+        <title>使用虚拟定位修改iPhone定位</title>
         <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
 
-&lt;p&gt;最初写的&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，需要依赖 Xcode 搭配使用，对用户使用造成很大的学习成本，但是由于沙盒机制，在AppStore下载没有办法做到。&lt;/p&gt;
+&lt;p&gt;首先你需要通过Mac AppStore下载&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;。
+虚拟定位的界面如下：
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_zh_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;于是，我做了 Magellan，但是要注意，修改定位必须要同时下载&lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan&lt;/a&gt;以及&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，不然无法使用。&lt;/p&gt;
+&lt;p&gt;同时下载&lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan&lt;/a&gt;，不然无法使用。&lt;/p&gt;
 
 &lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
 
