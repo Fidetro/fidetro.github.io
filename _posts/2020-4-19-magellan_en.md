@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "Modify phone positioning via Virtual Location"
-subtitle:   "iOS，Virtual Location"
+title:      "Modify iPhone positioning via Virtual Location"
+subtitle:   "iOS，Virtual Location，Magellan"
 date:       2020-4-19
 author:     "Karim"
 header-img: "img/post-bg-andre-benz.jpg"

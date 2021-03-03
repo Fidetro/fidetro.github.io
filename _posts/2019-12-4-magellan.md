@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "使用虚拟定位修改iPhone定位"
-subtitle:   "iOS，定位，Xcode"
+subtitle:   "iOS，定位，Xcode，Magellan，虚拟定位"
 date:       2019-12-4
 author:     "Karim"
 header-img: "img/post-bg-andre-benz.jpg"
