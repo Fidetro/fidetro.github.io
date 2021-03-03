@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 03 Mar 2021 23:37:34 +0800</pubDate>
-    <lastBuildDate>Wed, 03 Mar 2021 23:37:34 +0800</lastBuildDate>
+    <pubDate>Wed, 03 Mar 2021 23:40:01 +0800</pubDate>
+    <lastBuildDate>Wed, 03 Mar 2021 23:40:01 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -249,9 +249,7 @@ Status Message: Package Invalid
         <title>Modify iPhone positioning via Virtual Location</title>
         <description>&lt;h1 id=&quot;installation&quot;&gt;Installation:&lt;/h1&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;Firstly, download &lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;Virtual Location App&lt;/a&gt; and &lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan App&lt;/a&gt;. It requires running both these two apps to modify the location.&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;Firstly, download &lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;Virtual Location App&lt;/a&gt; and &lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan App&lt;/a&gt;. It requires running both these two apps to modify the location.&lt;/p&gt;
 
 &lt;p&gt;The virtual positioning interface looks like this:
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
