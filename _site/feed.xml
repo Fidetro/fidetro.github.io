@@ -5,9 +5,92 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 03 Mar 2021 23:40:01 +0800</pubDate>
-    <lastBuildDate>Wed, 03 Mar 2021 23:40:01 +0800</lastBuildDate>
+    <pubDate>Mon, 03 May 2021 12:45:27 +0800</pubDate>
+    <lastBuildDate>Mon, 03 May 2021 12:45:27 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
+    
+      <item>
+        <title>WWDC-2018笔记---使用Signposts分析App性能</title>
+        <description>&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Signposts&lt;/code&gt; 可以针对某段代码块进行性能分析，并且能在Instrument中显示,并且允许我们标记一段开始和结束，然后将这两点时间发生的事情与日志关联起来。
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/8E243DC9-80EC-4729-A537-262254E0A542.png&quot; alt=&quot;&quot; /&gt;
+代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;import os.signpost
+
+let refreshLog = OSLog(subsystem: &quot;com.example.your-app&quot;, category: &quot;RefreshOperations&quot;)
+//标记单独获取所有图片的开始
+os_signpost(.begin, log: refreshLog, name: &quot;Refresh Panel&quot;)
+for element in panel.elements {
+    //标记单独获取一次图片的开始
+    os_signpost(.begin, log: refreshLog, name: &quot;Fetch Asset&quot;)
+    //获取图片
+    fetchAsset(for: element)
+    os_signpost(.end, log: refreshLog, name: &quot;Fetch Asset&quot;)
+}
+os_signpost(.end, log: refreshLog, name: &quot;Refresh Panel&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;同一个方法有可能被多次调用，在 Instrument 上会出现重叠的情况，如果我们希望区分是否是不同的对象调用，可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;Signpost IDs&lt;/code&gt; 实现。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;let spid = OSSignpostID(log: refreshLog)
+os_signpost(.begin, log: refreshLog, name: &quot;Fetch Asset&quot;, signpostID: spid)
+
+os_signpost(.end, log: refreshLog, name: &quot;Fetch Asset&quot;, signpostID: spid)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如果调用的对象本身具有唯一性，还可以用对象作为&lt;code class=&quot;highlighter-rouge&quot;&gt;Signpost IDs&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;let spid = OSSignpostID(log: refreshLog, object: element)
+os_signpost(.begin, log: refreshLog, name: &quot;Fetch Asset&quot;, signpostID: spid)
+
+os_signpost(.end, log: refreshLog, name: &quot;Fetch Asset&quot;, signpostID: spid)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;os_signpost()&lt;/code&gt;还允许我们在使用的时候通过格式化字符串的方式增加元数据。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;os_signpost(.begin, log: log, name: &quot;Compute Physics&quot;,
+&quot;for %{public}s at (%d, %.1f) with mass %.2f and velocity (%.1f, %.1f)&quot;, description, x1, y1, m, x2, y2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;更有利于我们后续分析和发现追踪特定场景下的问题，这里还要提到一点，对于字符串格式化，这里使用的了&lt;code class=&quot;highlighter-rouge&quot;&gt;%{public}s&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;description&lt;/code&gt;如果是静态常量的字符串时，可以使用&lt;code class=&quot;highlighter-rouge&quot;&gt;%s&lt;/code&gt;，但是需要格式化动态拼接的字符串
+时，需要使用&lt;code class=&quot;highlighter-rouge&quot;&gt;%{public}s&lt;/code&gt;，为了保护用户的隐私，苹果建议日志都使用静态字符串和数字组成。 &lt;br /&gt;
+还有个小Tips，想让数据在&lt;code class=&quot;highlighter-rouge&quot;&gt;Instrument&lt;/code&gt;上以内存大小的单位格式化，可以使用&lt;code class=&quot;highlighter-rouge&quot;&gt;%{xcode:size-in-bytes}llu&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;苹果在WWDC上声称signpost进行了启动上优化，并且通过编译器的优化，使得它是在编译时运行而不是运行时，并且将很多工作都交给了&lt;code class=&quot;highlighter-rouge&quot;&gt;Instrument&lt;/code&gt;,使得&lt;code class=&quot;highlighter-rouge&quot;&gt;signpost&lt;/code&gt;在发送的时候只会占用非常少的系统资源。但是你依然有可能想停止&lt;code class=&quot;highlighter-rouge&quot;&gt;signpost&lt;/code&gt;的使用。如果想在代码中停止某个&lt;code class=&quot;highlighter-rouge&quot;&gt;signpost&lt;/code&gt;的使用，可以通过改变OSLog的初始化实现：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;let refreshLog: OSLog
+if ProcessInfo.processInfo.environment.keys.contains(&quot;SIGNPOSTS_FOR_REFRESH&quot;) {
+    refreshLog = OSLog(subsystem: &quot;com.example.your-app&quot;, category: &quot;RefreshOperations&quot;)
+} else {
+    refreshLog = .disabled //标记为不使用
+}
+os_signpost(.begin, log: refreshLog, name: &quot;Refresh Panel&quot;)
+for element in panel.elements {
+    os_signpost(.begin, log: refreshLog, name: &quot;Fetch Asset&quot;)
+    fetchAsset(for: element)
+    os_signpost(.end, log: refreshLog, name: &quot;Fetch Asset&quot;)
+}
+os_signpost(.end, log: refreshLog, name: &quot;Refresh Panel&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;signpost&lt;/code&gt;不仅支持Swift，同时也支持C、OC，API可以参考下图。&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/7548FA58-3851-4DFE-A885-0FD67F3EBFA3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;signpost&lt;/code&gt;如何使用这里就不展开说了，非常简单，在&lt;code class=&quot;highlighter-rouge&quot;&gt;Instrument&lt;/code&gt;添加&lt;code class=&quot;highlighter-rouge&quot;&gt;os_signpost&lt;/code&gt;的选项卡就可以使用。
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/2021-05-03-12-34-02.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;参考&quot;&gt;参考&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2018/405/&quot;&gt;Measuring Performance Using Logging&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;[Why the Xcode 8 (iOS 10) print [LogMessageLogging] &lt;private&gt; in console](https://stackoverflow.com/a/39840862/6202715)
+[Unified Logging and Activity Tracing](https://developer.apple.com/videos/play/wwdc2016/721/)&lt;/private&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 03 May 2021 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2021/05/03/WWDC-2018%E7%AC%94%E8%AE%B0-%E4%BD%BF%E7%94%A8Signposts%E5%88%86%E6%9E%90App%E6%80%A7%E8%83%BD/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2021/05/03/WWDC-2018%E7%AC%94%E8%AE%B0-%E4%BD%BF%E7%94%A8Signposts%E5%88%86%E6%9E%90App%E6%80%A7%E8%83%BD/</guid>
+        
+        <category>WWDC</category>
+        
+        <category>Instrument</category>
+        
+        <category>性能分析</category>
+        
+        
+      </item>
     
       <item>
         <title>解决博客在Chrome里http和https混合使用的问题</title>
@@ -713,69 +796,6 @@ Optional({
         <guid isPermaLink="true">http://www.foolishtalk.org/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
         
         <category>Mac</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>iOS模拟移动定位</title>
-        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
-&lt;p&gt;在阅读这篇文章之前，先保证你必须符合以下几个条件：&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;有台Mac可以使用&lt;/li&gt;
-  &lt;li&gt;有一定的编程经验（如果你愿意折腾，没有经验也是可以的）&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.foolishtalk.org/2019/12/04/magellan/&quot;&gt;这里&lt;/a&gt;有个最新的方式，已经不需要用下面的方法了。&lt;/p&gt;
-
-&lt;p&gt;因为有太多人说看不懂了，所以我又录了个&lt;a href=&quot;https://www.bilibili.com/video/av53629147&quot;&gt;视频&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;先打开Mac应用虚拟定位，可以看到以下的界面，可以在这里&lt;a href=&quot;https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;下载&lt;/a&gt;，另外有什么App使用上的问题和建议，也可以来&lt;a href=&quot;https://weibo.com/p/1005052095454814&quot;&gt;微博&lt;/a&gt;私信我：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_12.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;双击选择你要定位的位置点；&lt;/li&gt;
-  &lt;li&gt;在左上角填速度，每个点之间移动的速度会根据这个速度移动；&lt;/li&gt;
-  &lt;li&gt;右上角保存会生成出一个gpx文件；&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;先用Xcode新建一个工程，按照以下步骤操作，Xcode可以在App Store&lt;a href=&quot;https://itunes.apple.com/cn/app/xcode/id497799835?mt=12&quot;&gt;下载&lt;/a&gt;：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;选择创建iOS App：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_3.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;输入工程名，&lt;code class=&quot;highlighter-rouge&quot;&gt;Organization Name&lt;/code&gt;随便填就可以了，&lt;code class=&quot;highlighter-rouge&quot;&gt;Organization Identifier&lt;/code&gt;填”com.xxx.xxx”，xxx替换成任意英文即可：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_4.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;按照以下步骤，选择工程，然后添加账号，这里填你苹果账号：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_5.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;把手机连到Mac上，然后选中你的手机，如果没有看到你的手机，可以打开iTunes看看手机是否有连接，如果也没有，拔掉线重新连，应该会看到iTunes有个弹窗，点击信任此电脑，手机上也需要点击信任此电脑：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_8.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;输入你手机iOS系统的版本，这里代表可以运行的最低版本，例如你是iOS 10.2，输入10就可以了：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_11.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;下载&lt;a href=&quot;https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，然后按照你想模拟的路径双击地图，按保存会生成一个GPX文件，把生成的GPX文件拖进去工程目录中：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_6.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;点击运行，首次运行可能会弹出需要信任证书的提示，这时候点击手机的设置-通用-描述文件与设备管理-「找到自己的开发证书」-点击信任，再重新运行一遍：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_9.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;选中你拖进去gpx文件名字的选项：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/mock_location_10.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;这时候你会发现定位已经改变了，但是要注意，这时候手机和Mac是不能断开连接的，以及运行的App不能被杀死，否则定位修改都会失败。&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Thu, 11 Apr 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/04/11/mocklocation/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/04/11/mocklocation/</guid>
-        
-        <category>iOS</category>
-        
-        <category>Xcode</category>
         
         
       </item>
