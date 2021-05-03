@@ -202,57 +202,62 @@ border: none;
 <p><code class="highlighter-rouge">Signposts</code> 可以针对某段代码块进行性能分析，并且能在Instrument中显示,并且允许我们标记一段开始和结束，然后将这两点时间发生的事情与日志关联起来。
 <img src="https://www.foolishtalk.org/cloud/8E243DC9-80EC-4729-A537-262254E0A542.png" alt="" />
 代码如下：</p>
-<pre><code class="language-Swift">import os.signpost
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">import</span> <span class="n">os</span><span class="o">.</span><span class="n">signpost</span>
 
-let refreshLog = OSLog(subsystem: "com.example.your-app", category: "RefreshOperations")
-//标记单独获取所有图片的开始
-os_signpost(.begin, log: refreshLog, name: "Refresh Panel")
-for element in panel.elements {
-    //标记单独获取一次图片的开始
-    os_signpost(.begin, log: refreshLog, name: "Fetch Asset")
-    //获取图片
-    fetchAsset(for: element)
-    os_signpost(.end, log: refreshLog, name: "Fetch Asset")
-}
-os_signpost(.end, log: refreshLog, name: "Refresh Panel")
+<span class="k">let</span> <span class="nv">refreshLog</span> <span class="o">=</span> <span class="kt">OSLog</span><span class="p">(</span><span class="nv">subsystem</span><span class="p">:</span> <span class="s">"com.example.your-app"</span><span class="p">,</span> <span class="nv">category</span><span class="p">:</span> <span class="s">"RefreshOperations"</span><span class="p">)</span>
+<span class="c1">//标记单独获取所有图片的开始</span>
+<span class="nf">os_signpost</span><span class="p">(</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"Refresh Panel"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">element</span> <span class="k">in</span> <span class="n">panel</span><span class="o">.</span><span class="n">elements</span> <span class="p">{</span>
+    <span class="c1">//标记单独获取一次图片的开始</span>
+    <span class="nf">os_signpost</span><span class="p">(</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"Fetch Asset"</span><span class="p">)</span>
+    <span class="c1">//获取图片</span>
+    <span class="nf">fetchAsset</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="n">element</span><span class="p">)</span>
+    <span class="nf">os_signpost</span><span class="p">(</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"Fetch Asset"</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nf">os_signpost</span><span class="p">(</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"Refresh Panel"</span><span class="p">)</span>
 </code></pre>
+</div>
 
 <p>同一个方法有可能被多次调用，在 Instrument 上会出现重叠的情况，如果我们希望区分是否是不同的对象调用，可以通过 <code class="highlighter-rouge">Signpost IDs</code> 实现。</p>
-<pre><code class="language-Swift">let spid = OSSignpostID(log: refreshLog)
-os_signpost(.begin, log: refreshLog, name: "Fetch Asset", signpostID: spid)
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">spid</span> <span class="o">=</span> <span class="kt">OSSignpostID</span><span class="p">(</span><span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">)</span>
+<span class="nf">os_signpost</span><span class="p">(</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"Fetch Asset"</span><span class="p">,</span> <span class="nv">signpostID</span><span class="p">:</span> <span class="n">spid</span><span class="p">)</span>
 
-os_signpost(.end, log: refreshLog, name: "Fetch Asset", signpostID: spid)
+<span class="nf">os_signpost</span><span class="p">(</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"Fetch Asset"</span><span class="p">,</span> <span class="nv">signpostID</span><span class="p">:</span> <span class="n">spid</span><span class="p">)</span>
 </code></pre>
+</div>
 <p>如果调用的对象本身具有唯一性，还可以用对象作为<code class="highlighter-rouge">Signpost IDs</code>。</p>
-<pre><code class="language-Swift">let spid = OSSignpostID(log: refreshLog, object: element)
-os_signpost(.begin, log: refreshLog, name: "Fetch Asset", signpostID: spid)
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">spid</span> <span class="o">=</span> <span class="kt">OSSignpostID</span><span class="p">(</span><span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">,</span> <span class="nv">object</span><span class="p">:</span> <span class="n">element</span><span class="p">)</span>
+<span class="nf">os_signpost</span><span class="p">(</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"Fetch Asset"</span><span class="p">,</span> <span class="nv">signpostID</span><span class="p">:</span> <span class="n">spid</span><span class="p">)</span>
 
-os_signpost(.end, log: refreshLog, name: "Fetch Asset", signpostID: spid)
+<span class="nf">os_signpost</span><span class="p">(</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"Fetch Asset"</span><span class="p">,</span> <span class="nv">signpostID</span><span class="p">:</span> <span class="n">spid</span><span class="p">)</span>
 </code></pre>
+</div>
 
 <p><code class="highlighter-rouge">os_signpost()</code>还允许我们在使用的时候通过格式化字符串的方式增加元数据。</p>
-<pre><code class="language-Swift">os_signpost(.begin, log: log, name: "Compute Physics",
-"for %{public}s at (%d, %.1f) with mass %.2f and velocity (%.1f, %.1f)", description, x1, y1, m, x2, y2)
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="nf">os_signpost</span><span class="p">(</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="n">log</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"Compute Physics"</span><span class="p">,</span>
+<span class="s">"for %{public}s at (%d, %.1f) with mass %.2f and velocity (%.1f, %.1f)"</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>
 </code></pre>
+</div>
 <p>更有利于我们后续分析和发现追踪特定场景下的问题，这里还要提到一点，对于字符串格式化，这里使用的了<code class="highlighter-rouge">%{public}s</code>，<code class="highlighter-rouge">description</code>如果是静态常量的字符串时，可以使用<code class="highlighter-rouge">%s</code>，但是需要格式化动态拼接的字符串
 时，需要使用<code class="highlighter-rouge">%{public}s</code>，为了保护用户的隐私，苹果建议日志都使用静态字符串和数字组成。 <br />
 还有个小Tips，想让数据在<code class="highlighter-rouge">Instrument</code>上以内存大小的单位格式化，可以使用<code class="highlighter-rouge">%{xcode:size-in-bytes}llu</code></p>
 
 <p>苹果在WWDC上声称signpost进行了启动上优化，并且通过编译器的优化，使得它是在编译时运行而不是运行时，并且将很多工作都交给了<code class="highlighter-rouge">Instrument</code>,使得<code class="highlighter-rouge">signpost</code>在发送的时候只会占用非常少的系统资源。但是你依然有可能想停止<code class="highlighter-rouge">signpost</code>的使用。如果想在代码中停止某个<code class="highlighter-rouge">signpost</code>的使用，可以通过改变OSLog的初始化实现：</p>
-<pre><code class="language-Swift">let refreshLog: OSLog
-if ProcessInfo.processInfo.environment.keys.contains("SIGNPOSTS_FOR_REFRESH") {
-    refreshLog = OSLog(subsystem: "com.example.your-app", category: "RefreshOperations")
-} else {
-    refreshLog = .disabled //标记为不使用
-}
-os_signpost(.begin, log: refreshLog, name: "Refresh Panel")
-for element in panel.elements {
-    os_signpost(.begin, log: refreshLog, name: "Fetch Asset")
-    fetchAsset(for: element)
-    os_signpost(.end, log: refreshLog, name: "Fetch Asset")
-}
-os_signpost(.end, log: refreshLog, name: "Refresh Panel")
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">refreshLog</span><span class="p">:</span> <span class="kt">OSLog</span>
+<span class="k">if</span> <span class="kt">ProcessInfo</span><span class="o">.</span><span class="n">processInfo</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="s">"SIGNPOSTS_FOR_REFRESH"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">refreshLog</span> <span class="o">=</span> <span class="kt">OSLog</span><span class="p">(</span><span class="nv">subsystem</span><span class="p">:</span> <span class="s">"com.example.your-app"</span><span class="p">,</span> <span class="nv">category</span><span class="p">:</span> <span class="s">"RefreshOperations"</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">refreshLog</span> <span class="o">=</span> <span class="o">.</span><span class="n">disabled</span> <span class="c1">//标记为不使用</span>
+<span class="p">}</span>
+<span class="nf">os_signpost</span><span class="p">(</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"Refresh Panel"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">element</span> <span class="k">in</span> <span class="n">panel</span><span class="o">.</span><span class="n">elements</span> <span class="p">{</span>
+    <span class="nf">os_signpost</span><span class="p">(</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"Fetch Asset"</span><span class="p">)</span>
+    <span class="nf">fetchAsset</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="n">element</span><span class="p">)</span>
+    <span class="nf">os_signpost</span><span class="p">(</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"Fetch Asset"</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nf">os_signpost</span><span class="p">(</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="n">refreshLog</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"Refresh Panel"</span><span class="p">)</span>
 </code></pre>
+</div>
 
 <p><code class="highlighter-rouge">signpost</code>不仅支持Swift，同时也支持C、OC，API可以参考下图。<br />
 <img src="https://www.foolishtalk.org/cloud/7548FA58-3851-4DFE-A885-0FD67F3EBFA3.png" alt="" /></p>
