@@ -82,6 +82,6 @@ os_signpost(.end, log: refreshLog, name: "Refresh Panel")
 # 参考
 [Measuring Performance Using Logging](https://developer.apple.com/videos/play/wwdc2018/405/)
 
-[Why the Xcode 8 iOS 10 print LogMessageLogging <private> in console](https://stackoverflow.com/a/39840862/6202715)     
+[Why the Xcode 8 (iOS 10) print LogMessageLogging in console](https://stackoverflow.com/a/39840862/6202715)     
 
 [Unified Logging and Activity Tracing](https://developer.apple.com/videos/play/wwdc2016/721/)  
