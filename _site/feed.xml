@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 03 May 2021 12:54:14 +0800</pubDate>
-    <lastBuildDate>Mon, 03 May 2021 12:54:14 +0800</lastBuildDate>
+    <pubDate>Tue, 04 May 2021 15:37:09 +0800</pubDate>
+    <lastBuildDate>Tue, 04 May 2021 15:37:09 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -81,7 +81,7 @@
 &lt;h1 id=&quot;参考&quot;&gt;参考&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2018/405/&quot;&gt;Measuring Performance Using Logging&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;[Why the Xcode 8 (iOS 10) print [LogMessageLogging] &lt;private&gt; in console](https://stackoverflow.com/a/39840862/6202715)
+&lt;p&gt;[Why the Xcode 8 (iOS 10) print LogMessageLogging &lt;private&gt; in console](https://stackoverflow.com/a/39840862/6202715)
 [Unified Logging and Activity Tracing](https://developer.apple.com/videos/play/wwdc2016/721/)&lt;/private&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 03 May 2021 00:00:00 +0800</pubDate>
