@@ -253,8 +253,7 @@ border: none;
 </div>
 <p>苹果不建议我们使用明文的密码，通过下面的命令，将密码放进钥匙串：<br />
 Xcode 13之后:</p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#Xcode 13之后</span>
-<span class="c">#这里的WWDRTeamID，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看</span>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#这里的WWDRTeamID，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看</span>
 xcrun notarytool store-credentials <span class="s2">"AC_PASSWORD"</span> --apple-id <span class="s2">"开发者账号邮箱"</span> --team-id &lt;WWDRTeamID&gt; --password &lt;secret_2FA_password&gt;
 </code></pre>
 </div>
@@ -274,7 +273,7 @@ xcrun notarytool store-credentials <span class="s2">"AC_PASSWORD"</span> --apple
 ditto -c -k --keepParent <span class="s2">"</span><span class="nv">$APP_PATH</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ZIP_PATH</span><span class="s2">"</span>
 </code></pre>
 </div>
-<p>Xcode 13之后：</p>
+<p>接着将压缩好的zip文件，上传到苹果服务器进行公证，Xcode 13之后：</p>
 <div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#使用--wait，告诉notarytool只有在公证服务完成处理提交后才退出</span>
 <span class="c">#如果你想公证处理提交后得到一个回调，可以使用--webhook指定一个url</span>
 xcrun notarytool submit <span class="nv">$ZIP_PATH</span>

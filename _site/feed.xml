@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 27 Jun 2021 12:38:45 +0800</pubDate>
-    <lastBuildDate>Sun, 27 Jun 2021 12:38:45 +0800</lastBuildDate>
+    <pubDate>Sun, 27 Jun 2021 12:41:29 +0800</pubDate>
+    <lastBuildDate>Sun, 27 Jun 2021 12:41:29 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -183,8 +183,7 @@
 &lt;/div&gt;
 &lt;p&gt;苹果不建议我们使用明文的密码，通过下面的命令，将密码放进钥匙串：&lt;br /&gt;
 Xcode 13之后:&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#Xcode 13之后&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#这里的WWDRTeamID，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看&lt;/span&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#这里的WWDRTeamID，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看&lt;/span&gt;
 xcrun notarytool store-credentials &lt;span class=&quot;s2&quot;&gt;&quot;AC_PASSWORD&quot;&lt;/span&gt; --apple-id &lt;span class=&quot;s2&quot;&gt;&quot;开发者账号邮箱&quot;&lt;/span&gt; --team-id &amp;lt;WWDRTeamID&amp;gt; --password &amp;lt;secret_2FA_password&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -204,7 +203,7 @@ xcrun notarytool store-credentials &lt;span class=&quot;s2&quot;&gt;&quot;AC_PAS
 ditto -c -k --keepParent &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$APP_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZIP_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;Xcode 13之后：&lt;/p&gt;
+&lt;p&gt;接着将压缩好的zip文件，上传到苹果服务器进行公证，Xcode 13之后：&lt;/p&gt;
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#使用--wait，告诉notarytool只有在公证服务完成处理提交后才退出&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#如果你想公证处理提交后得到一个回调，可以使用--webhook指定一个url&lt;/span&gt;
 xcrun notarytool submit &lt;span class=&quot;nv&quot;&gt;$ZIP_PATH&lt;/span&gt;
