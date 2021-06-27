@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 24 Jun 2021 22:11:32 +0800</pubDate>
-    <lastBuildDate>Thu, 24 Jun 2021 22:11:32 +0800</lastBuildDate>
+    <pubDate>Sun, 27 Jun 2021 12:38:45 +0800</pubDate>
+    <lastBuildDate>Sun, 27 Jun 2021 12:38:45 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -181,7 +181,14 @@
 &lt;span class=&quot;nv&quot;&gt;$BUILD_COMMAND&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;苹果不建议我们使用明文的密码，通过下面的命令，将密码放进钥匙串：&lt;/p&gt;
+&lt;p&gt;苹果不建议我们使用明文的密码，通过下面的命令，将密码放进钥匙串：&lt;br /&gt;
+Xcode 13之后:&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#Xcode 13之后&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#这里的WWDRTeamID，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看&lt;/span&gt;
+xcrun notarytool store-credentials &lt;span class=&quot;s2&quot;&gt;&quot;AC_PASSWORD&quot;&lt;/span&gt; --apple-id &lt;span class=&quot;s2&quot;&gt;&quot;开发者账号邮箱&quot;&lt;/span&gt; --team-id &amp;lt;WWDRTeamID&amp;gt; --password &amp;lt;secret_2FA_password&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Xcode 13之前:&lt;/p&gt;
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun altool --store-password-in-keychain-item &lt;span class=&quot;s2&quot;&gt;&quot;AC_PASSWORD&quot;&lt;/span&gt; -u &lt;span class=&quot;s2&quot;&gt;&quot;开发者账号邮箱&quot;&lt;/span&gt; -p &lt;span class=&quot;s2&quot;&gt;&quot;apple id专用密码&quot;&lt;/span&gt;  
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -195,10 +202,23 @@
 &lt;span class=&quot;nv&quot;&gt;ZIP_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$EXPORT_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PRODUCT_NAME&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.zip&quot;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#如果不是打包成dmg，.app需要压缩成zip上传&lt;/span&gt;
 ditto -c -k --keepParent &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$APP_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZIP_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#这里的ProviderShortname，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Xcode 13之后：&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#使用--wait，告诉notarytool只有在公证服务完成处理提交后才退出&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#如果你想公证处理提交后得到一个回调，可以使用--webhook指定一个url&lt;/span&gt;
+xcrun notarytool submit &lt;span class=&quot;nv&quot;&gt;$ZIP_PATH&lt;/span&gt;
+                   --keychain-profile &lt;span class=&quot;s2&quot;&gt;&quot;AC_PASSWORD&quot;&lt;/span&gt;
+                   --wait
+                   --webhook &lt;span class=&quot;s2&quot;&gt;&quot;https://example.com/notarization&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Xcode 13之前：&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#这里的ProviderShortname，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看&lt;/span&gt;
 xcrun altool --notarize-app --primary-bundle-id &lt;span class=&quot;s2&quot;&gt;&quot;com.bundle.id&quot;&lt;/span&gt; --username &lt;span class=&quot;s2&quot;&gt;&quot;AC_USERNAME&quot;&lt;/span&gt; --password &lt;span class=&quot;s2&quot;&gt;&quot;@keychain:AC_PASSWORD&quot;&lt;/span&gt; --asc-provider &amp;lt;ProviderShortname&amp;gt; --file &lt;span class=&quot;nv&quot;&gt;$ZIP_PATH&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;p&gt;上传完之后，控制台上会打印&lt;code class=&quot;highlighter-rouge&quot;&gt;RequestUUID&lt;/code&gt;,如果不成功或者想查询审核状态都需要这个id，也可以通过后面查询当前所有请求状态的命令查到&lt;code class=&quot;highlighter-rouge&quot;&gt;RequestUUID&lt;/code&gt;。&lt;br /&gt;
 审核通过后，对app签入公证即可：&lt;/p&gt;
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun stapler staple &lt;span class=&quot;s2&quot;&gt;&quot;xxx.dmg&quot;&lt;/span&gt;
@@ -518,11 +538,11 @@ forward-socks5 / localhost:1080 .
         <title>使用虚拟定位修改iPhone定位</title>
         <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
 
-&lt;p&gt;首先你需要通过Mac AppStore下载&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;。
+&lt;p&gt;首先你需要通过Mac AppStore下载&lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位(点这下载)&lt;/a&gt;。
 虚拟定位的界面如下：
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_zh_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;同时下载&lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan&lt;/a&gt;，不然无法使用。&lt;/p&gt;
+&lt;p&gt;同时下载&lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan(点这下载)&lt;/a&gt;，不然无法使用。&lt;/p&gt;
 
 &lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
 

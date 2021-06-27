@@ -251,7 +251,14 @@ border: none;
 <span class="nv">$BUILD_COMMAND</span>
 </code></pre>
 </div>
-<p>苹果不建议我们使用明文的密码，通过下面的命令，将密码放进钥匙串：</p>
+<p>苹果不建议我们使用明文的密码，通过下面的命令，将密码放进钥匙串：<br />
+Xcode 13之后:</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#Xcode 13之后</span>
+<span class="c">#这里的WWDRTeamID，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看</span>
+xcrun notarytool store-credentials <span class="s2">"AC_PASSWORD"</span> --apple-id <span class="s2">"开发者账号邮箱"</span> --team-id &lt;WWDRTeamID&gt; --password &lt;secret_2FA_password&gt;
+</code></pre>
+</div>
+<p>Xcode 13之前:</p>
 <div class="language-shell highlighter-rouge"><pre class="highlight"><code>xcrun altool --store-password-in-keychain-item <span class="s2">"AC_PASSWORD"</span> -u <span class="s2">"开发者账号邮箱"</span> -p <span class="s2">"apple id专用密码"</span>  
 </code></pre>
 </div>
@@ -265,10 +272,23 @@ border: none;
 <span class="nv">ZIP_PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$EXPORT_PATH</span><span class="s2">/</span><span class="nv">$PRODUCT_NAME</span><span class="s2">.zip"</span>
 <span class="c">#如果不是打包成dmg，.app需要压缩成zip上传</span>
 ditto -c -k --keepParent <span class="s2">"</span><span class="nv">$APP_PATH</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ZIP_PATH</span><span class="s2">"</span>
-<span class="c">#这里的ProviderShortname，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看</span>
+</code></pre>
+</div>
+<p>Xcode 13之后：</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#使用--wait，告诉notarytool只有在公证服务完成处理提交后才退出</span>
+<span class="c">#如果你想公证处理提交后得到一个回调，可以使用--webhook指定一个url</span>
+xcrun notarytool submit <span class="nv">$ZIP_PATH</span>
+                   --keychain-profile <span class="s2">"AC_PASSWORD"</span>
+                   --wait
+                   --webhook <span class="s2">"https://example.com/notarization"</span>
+</code></pre>
+</div>
+<p>Xcode 13之前：</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#这里的ProviderShortname，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看</span>
 xcrun altool --notarize-app --primary-bundle-id <span class="s2">"com.bundle.id"</span> --username <span class="s2">"AC_USERNAME"</span> --password <span class="s2">"@keychain:AC_PASSWORD"</span> --asc-provider &lt;ProviderShortname&gt; --file <span class="nv">$ZIP_PATH</span>
 </code></pre>
 </div>
+
 <p>上传完之后，控制台上会打印<code class="highlighter-rouge">RequestUUID</code>,如果不成功或者想查询审核状态都需要这个id，也可以通过后面查询当前所有请求状态的命令查到<code class="highlighter-rouge">RequestUUID</code>。<br />
 审核通过后，对app签入公证即可：</p>
 <div class="language-shell highlighter-rouge"><pre class="highlight"><code>xcrun stapler staple <span class="s2">"xxx.dmg"</span>
