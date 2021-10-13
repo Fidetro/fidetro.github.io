@@ -16,20 +16,23 @@ tags:
 虚拟定位的界面如下：
 ![](https://www.foolishtalk.org/cloud/guide_zh_1.png)   
 
-同时下载[Magellan(点这下载)](https://www.foolishtalk.org/magellan/magellan.dmg)，不然无法使用。
+同时需要安装Magellan（下面会有详细说到）
 
-# 正文  
 
-Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文件夹中，
-![](https://www.foolishtalk.org/cloud/20191022225610.png)  
-然后双击运行，就可以了。  
-有可能会出现这个弹窗，直接打开就好了。  
-![](https://www.foolishtalk.org/cloud/20191022105549.png)  
+# Magellan如何运行  
+如果没有安装Magellan，在虚拟定位首次启动时，会出现:
+![](https://www.foolishtalk.org/cloud/b7cdd9f10f727ca59420902b277aa9c8_zh.png)  
+或者在双击地图时，会出现以下弹窗：  
+![](https://www.foolishtalk.org/cloud/14d2cba4eeda3d9fa77b1efd8a1aa6d9_zh.png)  
 
-如果出现无法打开，因为无法确认开发者的身份的弹窗时，可以在`系统偏好设置-通用`下方找到，点击仍要继续运行即可。  
+点击"打开 Magellan 下载器"
 
 运行成功后，状态栏上方会出现一顶小帽子图标。  
 ![](https://www.foolishtalk.org/cloud/bc9e8955850855ca07147e65957f8087.png)  
+
+如果上面没有运行成功，请看文章最底部的单独安装Magellan教程。
+
+# 正文  
 
 首先手机要连接电脑，然后选择设备。  
 ![](https://www.foolishtalk.org/cloud/c81ff0aa45218b3cf8131ad8592eea96.png)
@@ -54,13 +57,12 @@ Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文�
 
 然后输入速度，最后点击`开始移动`，你会发现手机正在按照规划的路线在移动。
 
-
 # Q&A  
 1. 显示“暂无可用设备”，找不到自己的设备怎么办？  
 先通过 iTunes 检查手机是否连接成功，如果是旧版本的 iTunes 有可能会导致无法检测到设备，iTunes 需要更新到最新版本。  
   
 2. 拿来改定位（玩游戏/打卡）会不会被封？  
-不要出现瞬移非常严重的情况，从目前技术手段上无法判定，所以可以放心使用，但是也请勿用于违法/作弊行为，App的初心是用于平时开发测试定位移动。     
+请勿用于违法/作弊行为，App的初心是用于平时开发测试定位移动。     
   
 3. 提示“暂不支持 xx 版本，请联系作者升级”，怎么办？  
 如果你之前已经安装过驱动了，就不需要管这个提示，依然可以正常使用，如果是从来没有安装过的，出现这个提示，请联系我，我会更新新的版本解决这个问题。  
@@ -72,4 +74,17 @@ Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文�
 手机不需要越狱。   
   
 6. 支持iPad吗？  
-目前不支持，目前考虑到集成iPad驱动太大，所以暂不支持，以后考虑支持。 
+支持iPad。
+
+
+
+# 单独安装Magellan  
+虚拟定位的每个版本都会内置最新的Magellan版本，一般来说不需要独立安装，下面这段的安装方式可以忽略。
+[Magellan(点这下载)](https://www.foolishtalk.org/magellan/magellan.dmg)
+Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文件夹中，
+![](https://www.foolishtalk.org/cloud/20191022225610.png)  
+然后双击运行，就可以了。  
+有可能会出现这个弹窗，直接打开就好了。  
+![](https://www.foolishtalk.org/cloud/20191022105549.png)  
+
+如果出现无法打开，因为无法确认开发者的身份的弹窗时，可以在`系统偏好设置-通用`下方找到，点击仍要继续运行即可。 

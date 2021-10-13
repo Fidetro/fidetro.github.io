@@ -15,11 +15,20 @@ tags:
 
 Firstly, download [Virtual Location App](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12) and [Magellan App](https://www.foolishtalk.org/magellan/magellan.dmg). It requires running both these two apps to modify the location.
 
-The virtual positioning interface looks like this:
+The Virtual Location interface looks like this:
 ![](https://www.foolishtalk.org/cloud/guide_en_1.png)
 
-2.	There is an ico at system navigation bar as following after `Magellan App` running successfully.  
+1. If Magellan is not installed, when the virtual location is first started, it will appear::
+![](https://www.foolishtalk.org/cloud/b7cdd9f10f727ca59420902b277aa9c8_en.png)  
+Or, when double-clicking on the map, the following pop-up will appear：  
+![](https://www.foolishtalk.org/cloud/14d2cba4eeda3d9fa77b1efd8a1aa6d9_en.png)  
+
+2. Click on "Open Magellan Downloader",If Magellan is installed successfully,
+there is an ico at system navigation bar as following after `Magellan App` running successfully.  
 ![](https://www.foolishtalk.org/cloud/bc9e8955850855ca07147e65957f8087.png) 
+
+If `Magellan` installation fails, please download and install it separately from [here]((https://www.foolishtalk.org/magellan/magellan.dmg))
+
 3.	Connect the mobile phone to your computer, then choose your personal mobile.  
 ![](https://www.foolishtalk.org/cloud/d944f3a7aa0e20280cb65dff013839e6.png)
 

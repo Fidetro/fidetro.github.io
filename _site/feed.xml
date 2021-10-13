@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 27 Jun 2021 12:41:29 +0800</pubDate>
-    <lastBuildDate>Sun, 27 Jun 2021 12:41:29 +0800</lastBuildDate>
+    <pubDate>Wed, 13 Oct 2021 19:24:30 +0800</pubDate>
+    <lastBuildDate>Wed, 13 Oct 2021 19:24:30 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -359,12 +359,26 @@ Status Message: Package Invalid
 
 &lt;p&gt;Firstly, download &lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;Virtual Location App&lt;/a&gt; and &lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan App&lt;/a&gt;. It requires running both these two apps to modify the location.&lt;/p&gt;
 
-&lt;p&gt;The virtual positioning interface looks like this:
+&lt;p&gt;The Virtual Location interface looks like this:
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;There is an ico at system navigation bar as following after &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt; running successfully.&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;If Magellan is not installed, when the virtual location is first started, it will appear::
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/b7cdd9f10f727ca59420902b277aa9c8_en.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+Or, when double-clicking on the map, the following pop-up will appear：&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/14d2cba4eeda3d9fa77b1efd8a1aa6d9_en.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Click on “Open Magellan Downloader”,If Magellan is installed successfully,
+there is an ico at system navigation bar as following after &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt; running successfully.&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;If &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan&lt;/code&gt; installation fails, please download and install it separately from &lt;a href=&quot;(https://www.foolishtalk.org/magellan/magellan.dmg)&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
   &lt;li&gt;
     &lt;p&gt;Connect the mobile phone to your computer, then choose your personal mobile.&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/d944f3a7aa0e20280cb65dff013839e6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -381,7 +395,9 @@ Status Message: Package Invalid
     &lt;p&gt;Please click &lt;code class=&quot;highlighter-rouge&quot;&gt;Install the Driver&lt;/code&gt; again after download successfully. After installation successfully, there will be following tips.&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/15393a5bdbede13840e344e94f5d4946.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;It need to run &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan app&lt;/code&gt; again after installation.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;It need to run &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan app&lt;/code&gt; again after installation.&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h1 id=&quot;operation&quot;&gt;Operation:&lt;/h1&gt;
@@ -541,20 +557,22 @@ forward-socks5 / localhost:1080 .
 虚拟定位的界面如下：
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_zh_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;同时下载&lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan(点这下载)&lt;/a&gt;，不然无法使用。&lt;/p&gt;
+&lt;p&gt;同时需要安装Magellan（下面会有详细说到）&lt;/p&gt;
 
-&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
+&lt;h1 id=&quot;magellan如何运行&quot;&gt;Magellan如何运行&lt;/h1&gt;
+&lt;p&gt;如果没有安装Magellan，在虚拟定位首次启动时，会出现:
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/b7cdd9f10f727ca59420902b277aa9c8_zh.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+或者在双击地图时，会出现以下弹窗：&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/14d2cba4eeda3d9fa77b1efd8a1aa6d9_zh.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文件夹中，
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/20191022225610.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-然后双击运行，就可以了。&lt;br /&gt;
-有可能会出现这个弹窗，直接打开就好了。&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/20191022105549.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;如果出现无法打开，因为无法确认开发者的身份的弹窗时，可以在&lt;code class=&quot;highlighter-rouge&quot;&gt;系统偏好设置-通用&lt;/code&gt;下方找到，点击仍要继续运行即可。&lt;/p&gt;
+&lt;p&gt;点击”打开 Magellan 下载器”&lt;/p&gt;
 
 &lt;p&gt;运行成功后，状态栏上方会出现一顶小帽子图标。&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如果上面没有运行成功，请看文章最底部的单独安装Magellan教程。&lt;/p&gt;
+
+&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
 
 &lt;p&gt;首先手机要连接电脑，然后选择设备。&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/c81ff0aa45218b3cf8131ad8592eea96.png&quot; alt=&quot;&quot; /&gt;
@@ -588,7 +606,7 @@ forward-socks5 / localhost:1080 .
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;拿来改定位（玩游戏/打卡）会不会被封？&lt;br /&gt;
-不要出现瞬移非常严重的情况，从目前技术手段上无法判定，所以可以放心使用，但是也请勿用于违法/作弊行为，App的初心是用于平时开发测试定位移动。&lt;/p&gt;
+请勿用于违法/作弊行为，App的初心是用于平时开发测试定位移动。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;提示“暂不支持 xx 版本，请联系作者升级”，怎么办？&lt;br /&gt;
@@ -604,9 +622,20 @@ forward-socks5 / localhost:1080 .
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;支持iPad吗？&lt;br /&gt;
-目前不支持，目前考虑到集成iPad驱动太大，所以暂不支持，以后考虑支持。&lt;/p&gt;
+支持iPad。&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;h1 id=&quot;单独安装magellan&quot;&gt;单独安装Magellan&lt;/h1&gt;
+&lt;p&gt;虚拟定位的每个版本都会内置最新的Magellan版本，一般来说不需要独立安装，下面这段的安装方式可以忽略。
+&lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.dmg&quot;&gt;Magellan(点这下载)&lt;/a&gt;
+Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文件夹中，
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/20191022225610.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+然后双击运行，就可以了。&lt;br /&gt;
+有可能会出现这个弹窗，直接打开就好了。&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/20191022105549.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如果出现无法打开，因为无法确认开发者的身份的弹窗时，可以在&lt;code class=&quot;highlighter-rouge&quot;&gt;系统偏好设置-通用&lt;/code&gt;下方找到，点击仍要继续运行即可。&lt;/p&gt;
 </description>
         <pubDate>Wed, 04 Dec 2019 00:00:00 +0800</pubDate>
         <link>http://www.foolishtalk.org/2019/12/04/magellan/</link>
