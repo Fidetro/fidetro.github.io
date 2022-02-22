@@ -12,7 +12,7 @@
 
     <title>WWDC-2017笔记---KVC和KVO - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/09/11/WWDC-2017%E7%AC%94%E8%AE%B0-KVC%E5%92%8CKVO/">
+    <link rel="canonical" href="http://localhost:4000/2017/09/11/WWDC-2017%E7%AC%94%E8%AE%B0-KVC%E5%92%8CKVO/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -199,8 +199,8 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>swift3的时候，如果想使用KVC需要把类声明是<code class="highlighter-rouge">@objcMembers</code>,和将成员变量声明为<code class="highlighter-rouge">dynamic</code>,然后就可以使用objc中的<code class="highlighter-rouge">value(forKey key: String)</code>和<code class="highlighter-rouge">setValue(_ value: Any?, forKey key: String)</code>,但是只支持继承<code class="highlighter-rouge">NSObject</code>的类，换句话说，是不支持<code class="highlighter-rouge">struct</code>的</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">@objcMembers</span> <span class="kd">class</span> <span class="kt">Kid</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span>
+				<p>swift3的时候，如果想使用KVC需要把类声明是<code class="language-plaintext highlighter-rouge">@objcMembers</code>,和将成员变量声明为<code class="language-plaintext highlighter-rouge">dynamic</code>,然后就可以使用objc中的<code class="language-plaintext highlighter-rouge">value(forKey key: String)</code>和<code class="language-plaintext highlighter-rouge">setValue(_ value: Any?, forKey key: String)</code>,但是只支持继承<code class="language-plaintext highlighter-rouge">NSObject</code>的类，换句话说，是不支持<code class="language-plaintext highlighter-rouge">struct</code>的</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">@objcMembers</span> <span class="kd">class</span> <span class="kt">Kid</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span>
     
   <span class="kd">dynamic</span>  <span class="k">var</span> <span class="nv">name</span> <span class="o">=</span> <span class="kt">String</span><span class="p">()</span>
     
@@ -210,24 +210,22 @@ border: none;
 <span class="nf">print</span><span class="p">(</span><span class="n">kid</span><span class="o">.</span><span class="nf">value</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="s">"name"</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
 <span class="n">kid</span><span class="o">.</span><span class="nf">setValue</span><span class="p">(</span><span class="s">"李四"</span><span class="p">,</span> <span class="nv">forKey</span><span class="p">:</span> <span class="s">"name"</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">kid</span><span class="o">.</span><span class="nf">value</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="s">"name"</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
-</code></pre>
-</div>
-<p>在swift4中，可以通过<code class="highlighter-rouge">KeyPath</code>间接访问成员变量，达到KVC的效果。</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code>  <span class="k">let</span> <span class="nv">person</span> <span class="o">=</span> <span class="kt">Person</span><span class="p">()</span> <span class="c1">//结构体</span>
-  <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="n">person</span><span class="p">[</span><span class="nv">keyPath</span><span class="p">:</span><span class="err">\</span><span class="kt">Person</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="c1">//get</span>
-  <span class="n">person</span><span class="p">[</span><span class="nv">keyPath</span><span class="p">:</span><span class="err">\</span><span class="kt">Person</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="s">"张三"</span> <span class="c1">//set</span>
-</code></pre>
-</div>
+</code></pre></div></div>
+<p>在swift4中，可以通过<code class="language-plaintext highlighter-rouge">KeyPath</code>间接访问成员变量，达到KVC的效果。</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">let</span> <span class="nv">person</span> <span class="o">=</span> <span class="kt">Person</span><span class="p">()</span> <span class="c1">//结构体</span>
+  <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="n">person</span><span class="p">[</span><span class="nv">keyPath</span><span class="p">:\</span><span class="kt">Person</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="c1">//get</span>
+  <span class="n">person</span><span class="p">[</span><span class="nv">keyPath</span><span class="p">:\</span><span class="kt">Person</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="s">"张三"</span> <span class="c1">//set</span>
+</code></pre></div></div>
 
-<p>KVO的使用也是基于KVC的<code class="highlighter-rouge">KeyPath</code>基础上使用</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code> <span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+<p>KVO的使用也是基于KVC的<code class="language-plaintext highlighter-rouge">KeyPath</code>基础上使用</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
     <span class="k">var</span> <span class="nv">kid</span> <span class="o">=</span> <span class="kt">Kid</span><span class="p">()</span>
     <span class="k">var</span> <span class="nv">observation</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span> <span class="c1">//负责监听kid</span>
 
     <span class="kd">required</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">super</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">coder</span><span class="p">:</span> <span class="n">aDecoder</span><span class="p">)</span>
         <span class="c1">//监听kid的name</span>
-        <span class="k">self</span><span class="o">.</span><span class="n">observation</span> <span class="o">=</span> <span class="n">kid</span><span class="o">.</span><span class="nf">observe</span><span class="p">(</span><span class="err">\</span><span class="kt">Kid</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">changeHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">change</span><span class="p">)</span> <span class="k">in</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">observation</span> <span class="o">=</span> <span class="n">kid</span><span class="o">.</span><span class="nf">observe</span><span class="p">(\</span><span class="kt">Kid</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">changeHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">change</span><span class="p">)</span> <span class="k">in</span>
             <span class="nf">debugPrint</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">object</span><span class="se">)</span><span class="s"> + </span><span class="se">\(</span><span class="n">change</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
         <span class="p">})</span>
     <span class="p">}</span>
@@ -240,8 +238,7 @@ border: none;
     <span class="p">}</span>
 <span class="p">}</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>想了解的更多，可以看<a href="https://developer.apple.com/videos/play/wwdc2017/212/">Session 212</a></p>
 
@@ -315,13 +312,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -350,6 +347,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -402,6 +401,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -433,7 +434,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2017/09/11/WWDC-2017笔记---KVC和KVO";
-    var disqus_url = "http://www.foolishtalk.org/2017/09/11/WWDC-2017%E7%AC%94%E8%AE%B0-KVC%E5%92%8CKVO/";
+    var disqus_url = "http://localhost:4000/2017/09/11/WWDC-2017%E7%AC%94%E8%AE%B0-KVC%E5%92%8CKVO/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -493,7 +494,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

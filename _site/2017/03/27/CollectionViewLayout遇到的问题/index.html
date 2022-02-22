@@ -12,7 +12,7 @@
 
     <title>CollectionViewLayout遇到的问题 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/03/27/CollectionViewLayout%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">
+    <link rel="canonical" href="http://localhost:4000/2017/03/27/CollectionViewLayout%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -199,18 +199,16 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<div class="highlighter-rouge"><pre class="highlight"><code>2017-03-27 11:12:20.902274 DTSampleLight[1480:432147] The behavior of the UICollectionViewFlowLayout is not defined because:
+				<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2017-03-27 11:12:20.902274 DTSampleLight[1480:432147] The behavior of the UICollectionViewFlowLayout is not defined because:
 2017-03-27 11:12:20.902372 DTSampleLight[1480:432147] the item height must be less than the height of the UICollectionView minus the section insets top and bottom values, minus the content insets top and bottom values.
 2017-03-27 11:12:20.903319 DTSampleLight[1480:432147] The relevant UICollectionViewFlowLayout instance is &lt;UICollectionViewFlowLayout: 0x1010c3170&gt;, and it is attached to &lt;UICollectionView: 0x1019c4e00; frame = (0 426; 320 78); clipsToBounds = YES; gestureRecognizers = &lt;NSArray: 0x17425ac70&gt;; layer = &lt;CALayer: 0x174425780&gt;; contentOffset: {0, 0}; contentSize: {132.74074073191042, 98}&gt; collection view layout: &lt;UICollectionViewFlowLayout: 0x1010c3170&gt;.
 2017-03-27 11:12:20.903366 DTSampleLight[1480:432147] Make a symbolic breakpoint at UICollectionViewFlowLayoutBreakForInvalidSizes to catch this in the debugger.
-</code></pre>
-</div>
+</code></pre></div></div>
 <h3 id="解决方法">解决方法</h3>
-<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewWillLayoutSubviews</span> <span class="p">{</span>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewWillLayoutSubviews</span> <span class="p">{</span>
     <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">containerView</span><span class="p">.</span><span class="n">collectionView</span><span class="p">.</span><span class="n">collectionViewLayout</span> <span class="nf">invalidateLayout</span><span class="p">];</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <blockquote>
   <p><a href="http://stackoverflow.com/questions/16013209/uicollectionview-layout-issue">参考链接</a></p>
@@ -285,13 +283,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -320,6 +318,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -372,6 +372,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -403,7 +405,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2017/03/27/CollectionViewLayout遇到的问题";
-    var disqus_url = "http://www.foolishtalk.org/2017/03/27/CollectionViewLayout%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/";
+    var disqus_url = "http://localhost:4000/2017/03/27/CollectionViewLayout%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -463,7 +465,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

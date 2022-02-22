@@ -12,7 +12,7 @@
 
     <title>AVCaptureSession自定义相机获取的UIImage旋转无效 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2018/03/06/AVCaptureSession%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%B8%E6%9C%BA%E8%8E%B7%E5%8F%96%E7%9A%84UIImage%E6%97%8B%E8%BD%AC%E6%97%A0%E6%95%88/">
+    <link rel="canonical" href="http://localhost:4000/2018/03/06/AVCaptureSession%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%B8%E6%9C%BA%E8%8E%B7%E5%8F%96%E7%9A%84UIImage%E6%97%8B%E8%BD%AC%E6%97%A0%E6%95%88/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -199,14 +199,14 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>在使用<code class="highlighter-rouge">AVCaptureSession</code>自定义相机的时候，发现无论横竖拍出来，照片的方向总是不对，参考了下面的两个链接的方法依旧行不通，然后自己想了个办法去解决。</p>
+				<p>在使用<code class="language-plaintext highlighter-rouge">AVCaptureSession</code>自定义相机的时候，发现无论横竖拍出来，照片的方向总是不对，参考了下面的两个链接的方法依旧行不通，然后自己想了个办法去解决。</p>
 
 <p><a href="https://stackoverflow.com/questions/39705993/is-uiimage-imagewithciimagescaleorientation-broken-on-ios10">is-uiimage-imagewithciimagescaleorientation-broken-on-ios10</a></p>
 
 <p><a href="https://stackoverflow.com/questions/1315251/how-to-rotate-a-uiimage-90-degrees/30703714#30703714">how-to-rotate-a-uiimage-90-degrees</a></p>
 
-<p>通过使用重力加速计判断手机旋转的方向，再去设置<code class="highlighter-rouge">AVCaptureConnection</code>的<code class="highlighter-rouge">videoOrientation</code>属性，代码如下：</p>
-<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">@interface</span> <span class="nc">FIDCameraHelper</span> <span class="p">()</span>
+<p>通过使用重力加速计判断手机旋转的方向，再去设置<code class="language-plaintext highlighter-rouge">AVCaptureConnection</code>的<code class="language-plaintext highlighter-rouge">videoOrientation</code>属性，代码如下：</p>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@interface</span> <span class="nc">FIDCameraHelper</span> <span class="p">()</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">strong</span><span class="p">)</span> <span class="n">CMMotionManager</span> <span class="o">*</span><span class="n">motionManager</span><span class="p">;</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span><span class="n">assign</span><span class="p">)</span> <span class="n">UIImageOrientation</span> <span class="n">orientation</span><span class="p">;</span>
 <span class="k">@end</span>
@@ -220,8 +220,8 @@ border: none;
     <span class="k">return</span> <span class="n">_motionManager</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="c1">//启动重力加速计
-</span><span class="o">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">startUpdateAccelerometerResult</span><span class="o">:</span><span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UIImageOrientation</span> <span class="n">orientation</span><span class="p">))</span><span class="n">result</span>
+<span class="c1">//启动重力加速计</span>
+<span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">startUpdateAccelerometerResult</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UIImageOrientation</span> <span class="n">orientation</span><span class="p">))</span><span class="nv">result</span>
 <span class="p">{</span>   
     <span class="k">if</span> <span class="p">([</span><span class="n">sharedManager</span><span class="p">.</span><span class="n">motionManager</span> <span class="nf">isAccelerometerAvailable</span><span class="p">]</span> 
         <span class="p">[</span><span class="n">sharedManager</span><span class="p">.</span><span class="n">motionManager</span> <span class="nf">setAccelerometerUpdateInterval</span><span class="p">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">];</span>
@@ -232,14 +232,14 @@ border: none;
              <span class="k">if</span> <span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">fabs</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
              <span class="p">{</span>
                  <span class="k">if</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">){</span>
-                     <span class="c1">//Down
-</span>                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+                     <span class="c1">//Down</span>
+                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
                          <span class="n">result</span><span class="p">(</span><span class="n">UIImageOrientationDown</span><span class="p">);</span>
                      <span class="p">}</span>
                  <span class="p">}</span>
                  <span class="k">else</span><span class="p">{</span>
-                     <span class="c1">//Portrait
-</span>                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+                     <span class="c1">//Portrait</span>
+                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
                          <span class="n">result</span><span class="p">(</span><span class="n">UIImageOrientationUp</span><span class="p">);</span>
                      <span class="p">}</span>
                  <span class="p">}</span>
@@ -247,30 +247,30 @@ border: none;
              <span class="k">else</span>
              <span class="p">{</span>
                  <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">){</span>
-                     <span class="c1">//Right
-</span>                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+                     <span class="c1">//Right</span>
+                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
                          <span class="n">result</span><span class="p">(</span><span class="n">UIImageOrientationRight</span><span class="p">);</span>
                      <span class="p">}</span>
                  <span class="p">}</span>
                  <span class="k">else</span><span class="p">{</span>
-                     <span class="c1">//Left
-</span>                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+                     <span class="c1">//Left</span>
+                     <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
                          <span class="n">result</span><span class="p">(</span><span class="n">UIImageOrientationLeft</span><span class="p">);</span>
                      <span class="p">}</span>
                  <span class="p">}</span>
              <span class="p">}</span>
          <span class="p">}];</span>
     <span class="p">}</span>
-<span class="p">}</span>
+<span class="err">}</span>
 
-<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">captureOutput</span><span class="o">:</span><span class="p">(</span><span class="n">AVCaptureOutput</span> <span class="o">*</span><span class="p">)</span><span class="n">captureOutput</span> <span class="n">didOutputSampleBuffer</span><span class="o">:</span><span class="p">(</span><span class="n">CMSampleBufferRef</span><span class="p">)</span><span class="n">sampleBuffer</span> <span class="n">fromConnection</span><span class="o">:</span><span class="p">(</span><span class="n">AVCaptureConnection</span> <span class="o">*</span><span class="p">)</span><span class="n">connection</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">captureOutput</span><span class="p">:(</span><span class="n">AVCaptureOutput</span> <span class="o">*</span><span class="p">)</span><span class="nv">captureOutput</span> <span class="nf">didOutputSampleBuffer</span><span class="p">:(</span><span class="n">CMSampleBufferRef</span><span class="p">)</span><span class="nv">sampleBuffer</span> <span class="nf">fromConnection</span><span class="p">:(</span><span class="n">AVCaptureConnection</span> <span class="o">*</span><span class="p">)</span><span class="nv">connection</span>
 <span class="p">{</span>
     
     <span class="n">CVPixelBufferRef</span> <span class="n">pixelBuffer</span> <span class="o">=</span> <span class="n">CMSampleBufferGetImageBuffer</span><span class="p">(</span><span class="n">sampleBuffer</span><span class="p">);</span>
     <span class="n">CFDictionaryRef</span> <span class="n">attachments</span> <span class="o">=</span> <span class="n">CMCopyDictionaryOfAttachments</span><span class="p">(</span><span class="n">kCFAllocatorDefault</span><span class="p">,</span> <span class="n">sampleBuffer</span><span class="p">,</span> <span class="n">kCMAttachmentMode_ShouldNotPropagate</span><span class="p">);</span>
     <span class="n">CIImage</span> <span class="o">*</span><span class="n">ciImage</span> <span class="o">=</span> <span class="p">[[</span><span class="n">CIImage</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithCVPixelBuffer</span><span class="p">:</span><span class="n">pixelBuffer</span> <span class="nf">options</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">CFBridgingRelease</span><span class="p">(</span><span class="n">attachments</span><span class="p">)];</span>
-    <span class="c1">//根据方向设置videoOrientation
-</span>    <span class="k">switch</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">orientation</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//根据方向设置videoOrientation</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">orientation</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">case</span> <span class="n">UIImageOrientationUp</span><span class="p">:</span>
         <span class="p">{</span>
             <span class="n">connection</span><span class="p">.</span><span class="n">videoOrientation</span> <span class="o">=</span> <span class="n">AVCaptureVideoOrientationPortrait</span><span class="p">;</span>
@@ -291,15 +291,14 @@ border: none;
             <span class="n">connection</span><span class="p">.</span><span class="n">videoOrientation</span> <span class="o">=</span> <span class="n">AVCaptureVideoOrientationLandscapeLeft</span><span class="p">;</span>
             <span class="k">break</span><span class="p">;</span>
         <span class="p">}</span>
-        <span class="k">default</span><span class="o">:</span>
+        <span class="nl">default:</span>
             <span class="k">break</span><span class="p">;</span>
     <span class="p">}</span>
     <span class="n">self</span><span class="p">.</span><span class="n">cameraImage</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIImage</span> <span class="nf">imageWithCIImage</span><span class="p">:</span><span class="n">ciImage</span> <span class="nf">scale</span><span class="p">:</span><span class="mi">1</span><span class="p">.</span><span class="mi">0</span> <span class="n">orientation</span><span class="o">:</span><span class="n">self</span><span class="p">.</span><span class="n">orientation</span><span class="p">];</span>
 <span class="p">}</span>
 
 <span class="k">@end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 
                 <hr>
@@ -370,13 +369,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -405,6 +404,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -457,6 +458,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -488,7 +491,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2018/03/06/AVCaptureSession自定义相机获取的UIImage旋转无效";
-    var disqus_url = "http://www.foolishtalk.org/2018/03/06/AVCaptureSession%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%B8%E6%9C%BA%E8%8E%B7%E5%8F%96%E7%9A%84UIImage%E6%97%8B%E8%BD%AC%E6%97%A0%E6%95%88/";
+    var disqus_url = "http://localhost:4000/2018/03/06/AVCaptureSession%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%B8%E6%9C%BA%E8%8E%B7%E5%8F%96%E7%9A%84UIImage%E6%97%8B%E8%BD%AC%E6%97%A0%E6%95%88/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -548,7 +551,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

@@ -12,7 +12,7 @@
 
     <title>iOS11-tableView设置section头尾高度失效 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/09/21/iOS11-tableView%E8%AE%BE%E7%BD%AEsection%E5%A4%B4%E5%B0%BE%E9%AB%98%E5%BA%A6%E5%A4%B1%E6%95%88/">
+    <link rel="canonical" href="http://localhost:4000/2017/09/21/iOS11-tableView%E8%AE%BE%E7%BD%AEsection%E5%A4%B4%E5%B0%BE%E9%AB%98%E5%BA%A6%E5%A4%B1%E6%95%88/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -200,7 +200,7 @@ border: none;
                 post-container">
 
 				<p>在iOS 11之前，直接通过这两个代理，就可以修改section的高度</p>
-<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">heightForHeaderInSection</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">heightForHeaderInSection</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">CGFLOAT_MIN</span><span class="p">;</span>
 <span class="p">}</span>
@@ -209,14 +209,12 @@ border: none;
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">CGFLOAT_MIN</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>今天在适配iOS 11的时候发现，这两个代理方法都没走，解决方法：</p>
-<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="c1">//先设置默认高度，然后再通过代理修改
-</span>    <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">sectionFooterHeight</span> <span class="o">=</span> <span class="n">CGFLOAT_MIN</span><span class="p">;</span>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//先设置默认高度，然后再通过代理修改</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">sectionFooterHeight</span> <span class="o">=</span> <span class="n">CGFLOAT_MIN</span><span class="p">;</span>
     <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">sectionHeaderHeight</span> <span class="o">=</span> <span class="n">CGFLOAT_MIN</span><span class="p">;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>目前这个问题，只有纯代码的时候使用才会出现这个问题，如果是使用storyboard的tableView，是不会出现这个问题的，原因还没时间去查，等有空的时候查了会更新文章</p>
 
 
@@ -288,13 +286,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -323,6 +321,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -375,6 +375,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -406,7 +408,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2017/09/21/iOS11-tableView设置section头尾高度失效";
-    var disqus_url = "http://www.foolishtalk.org/2017/09/21/iOS11-tableView%E8%AE%BE%E7%BD%AEsection%E5%A4%B4%E5%B0%BE%E9%AB%98%E5%BA%A6%E5%A4%B1%E6%95%88/";
+    var disqus_url = "http://localhost:4000/2017/09/21/iOS11-tableView%E8%AE%BE%E7%BD%AEsection%E5%A4%B4%E5%B0%BE%E9%AB%98%E5%BA%A6%E5%A4%B1%E6%95%88/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -466,7 +468,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

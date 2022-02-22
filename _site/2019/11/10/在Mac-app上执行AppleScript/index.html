@@ -12,7 +12,7 @@
 
     <title>在Mac app上执行AppleScript - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/">
+    <link rel="canonical" href="http://localhost:4000/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -201,39 +201,37 @@ border: none;
 
 				<h1 id="前言">前言</h1>
 
-<p>前段时间我开发了<a href="https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12">虚拟定位</a>，一脚踩进了<code class="highlighter-rouge">AppleScript</code>的坑里无法自拔。</p>
+<p>前段时间我开发了<a href="https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12">虚拟定位</a>，一脚踩进了<code class="language-plaintext highlighter-rouge">AppleScript</code>的坑里无法自拔。</p>
 
 <h1 id="applescript">AppleScript</h1>
-<p><code class="highlighter-rouge">AppleScript</code>它是什么？</p>
+<p><code class="language-plaintext highlighter-rouge">AppleScript</code>它是什么？</p>
 
-<p><code class="highlighter-rouge">AppleScript</code>它是苹果提供在Mac OS上实现自动化的脚本语言，语法相对简单、易懂，类似英语语法。下面这段代码，你可以通过 Mac 自带的脚本编辑器运行：<br />
+<p><code class="language-plaintext highlighter-rouge">AppleScript</code>它是苹果提供在Mac OS上实现自动化的脚本语言，语法相对简单、易懂，类似英语语法。下面这段代码，你可以通过 Mac 自带的脚本编辑器运行：<br />
 <img src="https://www.foolishtalk.org/cloud/apple-script-editor-1.png" alt="" /></p>
 
 <p>运行后它会打开 iTunes ：</p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>tell application <span class="s2">"iTunes"</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tell application <span class="s2">"iTunes"</span>
 	play
 end tell
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>这三行可以简单的理解为：</p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>告诉 iTunes
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>告诉 iTunes
     播放
 结束
-</code></pre>
-</div>
-<p><code class="highlighter-rouge">tell application "xxx"</code> 如果你是想让微信 App做点什么，就是<code class="highlighter-rouge">tell application "微信"</code>,而<code class="highlighter-rouge">play</code>这个事件，是iTunes独有的，怎么能知道app特有的事件？你可以通过<code class="highlighter-rouge">脚本编辑器</code>的导航栏中按照以下步骤找到：<br />
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">tell application "xxx"</code> 如果你是想让微信 App做点什么，就是<code class="language-plaintext highlighter-rouge">tell application "微信"</code>,而<code class="language-plaintext highlighter-rouge">play</code>这个事件，是iTunes独有的，怎么能知道app特有的事件？你可以通过<code class="language-plaintext highlighter-rouge">脚本编辑器</code>的导航栏中按照以下步骤找到：<br />
 <img src="https://www.foolishtalk.org/cloud/apple-script-editor-2.png" alt="" /><br />
-然后选择<code class="highlighter-rouge">iTunes</code>:<br />
+然后选择<code class="language-plaintext highlighter-rouge">iTunes</code>:<br />
 <img src="https://www.foolishtalk.org/cloud/apple-script-editor-3.png" alt="" /> <br />
 这里可以看到关于play事件的一些描述。<br />
 在编写Mac app之前，可以先通过脚本编辑器把我们想实现的功能调试好，然后再把脚本移到Mac app上，确保脚本是正确的，而不是因为App沙盒、权限等问题引起。</p>
 
 <h1 id="system-events">System Events</h1>
-<p>上面已经说到，可以通过<code class="highlighter-rouge">tell application "xxx"</code>这种方式去调用 App 允许的行为，如果你看完了上面的介绍，打算自己动手去做一些 App 自动化的事情，你会发现 App 提供的事件很少，甚至有可能没有，所以接下来讲的是 <code class="highlighter-rouge">System Events</code> , <code class="highlighter-rouge">System Events</code> 为我们提供了系统事件，允许我们模拟用户点击行为，可以说所有用户界面相关的操作，你都可以通过 <code class="highlighter-rouge">System Events</code> 去进行自动化操作。</p>
+<p>上面已经说到，可以通过<code class="language-plaintext highlighter-rouge">tell application "xxx"</code>这种方式去调用 App 允许的行为，如果你看完了上面的介绍，打算自己动手去做一些 App 自动化的事情，你会发现 App 提供的事件很少，甚至有可能没有，所以接下来讲的是 <code class="language-plaintext highlighter-rouge">System Events</code> , <code class="language-plaintext highlighter-rouge">System Events</code> 为我们提供了系统事件，允许我们模拟用户点击行为，可以说所有用户界面相关的操作，你都可以通过 <code class="language-plaintext highlighter-rouge">System Events</code> 去进行自动化操作。</p>
 
-<p>下面这一段就是通过 <code class="highlighter-rouge">System Events</code> 启动 <code class="highlighter-rouge">Safari</code> 然后通过菜单栏的选项卡，新建标签页。</p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>tell application <span class="s2">"Safari"</span>
+<p>下面这一段就是通过 <code class="language-plaintext highlighter-rouge">System Events</code> 启动 <code class="language-plaintext highlighter-rouge">Safari</code> 然后通过菜单栏的选项卡，新建标签页。</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tell application <span class="s2">"Safari"</span>
 	<span class="c"># 打开Safari</span>
 	activate
 	tell application <span class="s2">"System Events"</span>
@@ -243,12 +241,11 @@ end tell
 		end tell
 	end tell
 end tell
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h1 id="mac-app-调用-applescript-的方式">Mac App 调用 AppleScript 的方式</h1>
 
-<p>通过 <code class="highlighter-rouge">NSAppleScript</code> 运行以下代码：</p>
+<p>通过 <code class="language-plaintext highlighter-rouge">NSAppleScript</code> 运行以下代码：</p>
 
 <pre><code class="language-Swift">        let source = """
 tell application "Safari"
@@ -269,7 +266,7 @@ end tell
 </code></pre>
 
 <p>预期结果是正常的，但是会发现打印出了这样的错误：</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>2019-09-22 21:15:30.094229+0800 SwiftAppleScript[1453:42847] skipped scripting addition "/Library/ScriptingAdditions/SASyphonInjector.osax" because it is not SIP-protected.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2019-09-22 21:15:30.094229+0800 SwiftAppleScript[1453:42847] skipped scripting addition "/Library/ScriptingAdditions/SASyphonInjector.osax" because it is not SIP-protected.
 Optional({
     NSAppleScriptErrorAppName = "System Events";
     NSAppleScriptErrorBriefMessage = "Not authorized to send Apple events to System Events.";
@@ -277,42 +274,39 @@ Optional({
     NSAppleScriptErrorNumber = "-1743";
     NSAppleScriptErrorRange = "NSRange: {168, 69}";
 })
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<p>这个地方非常的坑，如果没有打印<code class="highlighter-rouge">error</code>,在没有打开<code class="highlighter-rouge">App Sanbox</code>的情况下，是有可能预期效果是正常的，Safari能正常打开然后新建标签页。</p>
+<p>这个地方非常的坑，如果没有打印<code class="language-plaintext highlighter-rouge">error</code>,在没有打开<code class="language-plaintext highlighter-rouge">App Sanbox</code>的情况下，是有可能预期效果是正常的，Safari能正常打开然后新建标签页。</p>
 
-<p>如果之前是做iOS开发的，对这个错误应该会很自然的有头绪，应该就是一些权限问题，直接在Info.plist上就能找到一个看起来是这个权限的字段，<code class="highlighter-rouge">Privacy - AppleEvents Sending Usage Description</code>，把这个字段加上后，重新运行，发现多出了这个弹窗：<br />
+<p>如果之前是做iOS开发的，对这个错误应该会很自然的有头绪，应该就是一些权限问题，直接在Info.plist上就能找到一个看起来是这个权限的字段，<code class="language-plaintext highlighter-rouge">Privacy - AppleEvents Sending Usage Description</code>，把这个字段加上后，重新运行，发现多出了这个弹窗：<br />
 <img src="https://www.foolishtalk.org/cloud/2019-09-28.4.55.09.png" alt="" />
-如果能够正常运行，那恭喜你，说明你没有打开<code class="highlighter-rouge">Capabilities</code>-&gt;<code class="highlighter-rouge">App Sanbox</code>
+如果能够正常运行，那恭喜你，说明你没有打开<code class="language-plaintext highlighter-rouge">Capabilities</code>-&gt;<code class="language-plaintext highlighter-rouge">App Sanbox</code>
 <img src="https://www.foolishtalk.org/cloud/2EE70BF91F39368ACF74DD225DEF0EE0.png" alt="" /></p>
 
 <h1 id="为什么要打开app-sanbox">为什么要打开App Sanbox？</h1>
 
 <p>Mac OSX在10.6系统之后，为了防止恶意的App通过系统漏洞攻击系统，获取控制权限，要求上架的所有的App，都必须要开启沙盒。不要以为App安全离我们很远，Mac App一不留神就有可能被利用，System Events 就可以做到这个事情。</p>
 
-<p>讲回正题，当我们把 <code class="highlighter-rouge">App Sanbox</code> 打开后，新的报错又来了：</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>Optional({
+<p>讲回正题，当我们把 <code class="language-plaintext highlighter-rouge">App Sanbox</code> 打开后，新的报错又来了：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Optional({
     NSAppleScriptErrorAppName = Safari;
     NSAppleScriptErrorBriefMessage = "Application isn’t running.";
     NSAppleScriptErrorMessage = "Safari got an error: Application isn’t running.";
     NSAppleScriptErrorNumber = "-600";
     NSAppleScriptErrorRange = "NSRange: {45, 8}";
 })
-</code></pre>
-</div>
+</code></pre></div></div>
 <p><img src="https://www.foolishtalk.org/cloud/2019110_IMG_2412.png" alt="" /></p>
 
-<p>这次是提示 <code class="highlighter-rouge">Safari</code> 没有运行，我们的代码里已经加了让 <code class="highlighter-rouge">Safari</code> 唤醒的功能了，这说明这段代码没办法执行，既然没有解决，只能靠 google 了。</p>
+<p>这次是提示 <code class="language-plaintext highlighter-rouge">Safari</code> 没有运行，我们的代码里已经加了让 <code class="language-plaintext highlighter-rouge">Safari</code> 唤醒的功能了，这说明这段代码没办法执行，既然没有解决，只能靠 google 了。</p>
 
-<p>在查阅了一大波资料后，在 <code class="highlighter-rouge">App.entitlements</code> 加上这个 <code class="highlighter-rouge">com.apple.security.temporary-exception.apple-events</code> 权限就可以了。</p>
+<p>在查阅了一大波资料后，在 <code class="language-plaintext highlighter-rouge">App.entitlements</code> 加上这个 <code class="language-plaintext highlighter-rouge">com.apple.security.temporary-exception.apple-events</code> 权限就可以了。</p>
 
 <p>到这里为止，一切正常的。<br />
 在虚拟定位加入这个权限的第一个版本，上架也非常顺利，但是这之后更新的一个版本，仅涉及一些UI细节的修复，收到苹果拒审的邮件，内容如下：</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>我知道你要使用 com.apple.security.temporary-exception.apple-events 干嘛，
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>我知道你要使用 com.apple.security.temporary-exception.apple-events 干嘛，
 但是我不能给你用，要么你就去掉这个功能，要么你要自己找别的方式去实现。
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>既然不给我用，为什么上个版本还能给我上架成功？？？</p>
 
@@ -320,29 +314,27 @@ Optional({
 
 <p>这个方法不行，只能另外再找方法了。</p>
 
-<p>从苹果的<a href="https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html#//apple_ref/doc/uid/TP40011195-CH4-SW25">文档</a>可以找到怎么通过 <code class="highlighter-rouge">AppleScript</code> 调用其他 App 功能的资料，苹果在文档中给我们举了个例子，如果要用 <code class="highlighter-rouge">Mail.app</code> 的邮件编写功能，可以在 <code class="highlighter-rouge">App.entitlements</code> 加上一下的权限：</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;key&gt;com.apple.security.scripting-targets&lt;/key&gt;
+<p>从苹果的<a href="https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html#//apple_ref/doc/uid/TP40011195-CH4-SW25">文档</a>可以找到怎么通过 <code class="language-plaintext highlighter-rouge">AppleScript</code> 调用其他 App 功能的资料，苹果在文档中给我们举了个例子，如果要用 <code class="language-plaintext highlighter-rouge">Mail.app</code> 的邮件编写功能，可以在 <code class="language-plaintext highlighter-rouge">App.entitlements</code> 加上一下的权限：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;key&gt;com.apple.security.scripting-targets&lt;/key&gt;
     &lt;dict&gt;
         &lt;key&gt;com.apple.mail&lt;/key&gt;
         &lt;array&gt;
             &lt;string&gt;com.apple.mail.compose&lt;/string&gt;
         &lt;/array&gt;
     &lt;/dict&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<p>这样就可以使用<code class="highlighter-rouge">com.apple.mail.compose</code>这个访问组下的权限了，这个访问组下的权限，可以通过以下的命令看得到：</p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>sdef /Applications/Mail.app &gt; ~/Desktop/mail.xml
-</code></pre>
-</div>
+<p>这样就可以使用<code class="language-plaintext highlighter-rouge">com.apple.mail.compose</code>这个访问组下的权限了，这个访问组下的权限，可以通过以下的命令看得到：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sdef /Applications/Mail.app <span class="o">&gt;</span> ~/Desktop/mail.xml
+</code></pre></div></div>
 
 <p>但是 Xcode 本身并没有提供一个可以修改定位的访问组权限给到我们，所以并不能使用以上的方法去解决。</p>
 
-<p>这时候不禁会想到，<code class="highlighter-rouge">System Event</code> 能做什么呢，为什么苹果会不允许我们使用这个权限？对此我又对这个权限有了一个更深入的了解。</p>
+<p>这时候不禁会想到，<code class="language-plaintext highlighter-rouge">System Event</code> 能做什么呢，为什么苹果会不允许我们使用这个权限？对此我又对这个权限有了一个更深入的了解。</p>
 
 <h1 id="思考">思考</h1>
 
-<p>System Events其实是一个系统App，提供控制Mac OSX GUI和应用之间的交互，在这个路径下你可以找到<code class="highlighter-rouge">/System/Library/CoreServices/System Events.app</code>。 <br />
+<p>System Events其实是一个系统App，提供控制Mac OSX GUI和应用之间的交互，在这个路径下你可以找到<code class="language-plaintext highlighter-rouge">/System/Library/CoreServices/System Events.app</code>。 <br />
 通过System Events，我们可以做到以下这些东西：</p>
 <ul>
   <li>获取正在运行的App列表</li>
@@ -353,8 +345,8 @@ Optional({
 
 <p>等等…这不就是等于能远程监控和控制别人的电脑吗？<br />
 所以苹果不开放这个权限也是有原因，既然这样，也只能找别的方法看看了。<br />
-苹果不允许开发者动态调用<code class="highlighter-rouge">AppleScript</code>，但是可以调用 App 沙盒里的 <code class="highlighter-rouge">Application Scripts</code> 目录下的文件。
-最终虚拟定位采用的方案也是这个，在<code class="highlighter-rouge">Info.plist</code>加上<code class="highlighter-rouge">NSAppleEventsUsageDescription</code>,并且通过弹窗引导用户把控制Xcode的脚本保存在<code class="highlighter-rouge">Application Scripts</code>目录下：</p>
+苹果不允许开发者动态调用<code class="language-plaintext highlighter-rouge">AppleScript</code>，但是可以调用 App 沙盒里的 <code class="language-plaintext highlighter-rouge">Application Scripts</code> 目录下的文件。
+最终虚拟定位采用的方案也是这个，在<code class="language-plaintext highlighter-rouge">Info.plist</code>加上<code class="language-plaintext highlighter-rouge">NSAppleEventsUsageDescription</code>,并且通过弹窗引导用户把控制Xcode的脚本保存在<code class="language-plaintext highlighter-rouge">Application Scripts</code>目录下：</p>
 <pre><code class="language-Swift">FileManager.default.urls(for: .applicationScriptsDirectory, in: .userDomainMask)
 </code></pre>
 
@@ -362,7 +354,7 @@ Optional({
 
 <h1 id="总结">总结</h1>
 <p>App的沙盒机制，给用户带来了安全保障，但是也给开发者带来了很多开发上的困难，同时也一定程度上会增加用户在使用上带来不好的体验。<br />
-如果你也想开发一款App并且上架AppStore，但是要依赖一个不是自己开发的App，大部分非Apple的App，都不会提供AppleScript的相关接口给到第三方使用，把applescript放在<code class="highlighter-rouge">Application Scripts</code>目录下使用是目前唯一能上架成功的方式。</p>
+如果你也想开发一款App并且上架AppStore，但是要依赖一个不是自己开发的App，大部分非Apple的App，都不会提供AppleScript的相关接口给到第三方使用，把applescript放在<code class="language-plaintext highlighter-rouge">Application Scripts</code>目录下使用是目前唯一能上架成功的方式。</p>
 
 
                 <hr>
@@ -433,13 +425,13 @@ Optional({
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -468,6 +460,8 @@ Optional({
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -520,6 +514,8 @@ Optional({
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -551,7 +547,7 @@ Optional({
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2019/11/10/在Mac app上执行AppleScript";
-    var disqus_url = "http://www.foolishtalk.org/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/";
+    var disqus_url = "http://localhost:4000/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -611,7 +607,7 @@ Optional({
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

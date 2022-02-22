@@ -12,7 +12,7 @@
 
     <title>Cannot use mutating member on immutable value - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/09/10/Cannot-use-mutating-member-on-immutable-value/">
+    <link rel="canonical" href="http://localhost:4000/2017/09/10/Cannot-use-mutating-member-on-immutable-value/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -200,23 +200,22 @@ border: none;
                 post-container">
 
 				<p>这个报错是在我写swift的FFDB时候遇到的，因为在做swift版的时候，考虑到SQL语句层是通用的，所以打算抽象出来复用在Perfect上，选择用结构体和协议的方式去做，在使用结构体的时候，发现会报错，用类是不会报这个错的。原因是这样：
-结构体中，func不可以改变self本身的成员变量，如果修改本身的成员变量，需要在func前加上<code class="highlighter-rouge">mutating</code>关键字
+结构体中，func不可以改变self本身的成员变量，如果修改本身的成员变量，需要在func前加上<code class="language-plaintext highlighter-rouge">mutating</code>关键字
 <img src="https://www.foolishtalk.org/cloud/73AD1856-8075-4CFE-A530-7F3E0D547F06.png" alt="1.png" /></p>
 
-<p>加上了<code class="highlighter-rouge">mutating</code>之后本以为已经可以了，然后调这方法看看,报错来了，大概意思是不可以在一个不可变的值使用可以的成员，函数返回的是一个不可变的值，所以问题就出在函数的返回值</p>
+<p>加上了<code class="language-plaintext highlighter-rouge">mutating</code>之后本以为已经可以了，然后调这方法看看,报错来了，大概意思是不可以在一个不可变的值使用可以的成员，函数返回的是一个不可变的值，所以问题就出在函数的返回值</p>
 
 <p><img src="https://www.foolishtalk.org/cloud/0D9699AB-D8DB-4341-B1AF-7ACD8C56D082.png" alt="2.png" /></p>
 
-<p>然后我改成这样就可以了，也不需要<code class="highlighter-rouge">mutating</code>修饰</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code>     <span class="kd">func</span> <span class="nf">into</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableClass</span><span class="p">:</span><span class="kt">FFDataBaseModel</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Insert</span> <span class="p">{</span>
+<p>然后我改成这样就可以了，也不需要<code class="language-plaintext highlighter-rouge">mutating</code>修饰</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     <span class="kd">func</span> <span class="nf">into</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableClass</span><span class="p">:</span><span class="kt">FFDataBaseModel</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Insert</span> <span class="p">{</span>
         <span class="k">var</span> <span class="nv">insert</span> <span class="o">=</span> <span class="k">self</span>
         
         <span class="n">insert</span><span class="o">.</span><span class="n">sqlStatement</span><span class="p">?</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="s">" INSERT INTO "</span> <span class="o">+</span> <span class="n">tableClass</span><span class="o">.</span><span class="nf">tableName</span><span class="p">())</span>
         
             <span class="k">return</span> <span class="n">insert</span>
         <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 
                 <hr>
@@ -287,13 +286,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -322,6 +321,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -374,6 +375,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -405,7 +408,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2017/09/10/Cannot use mutating member on immutable value";
-    var disqus_url = "http://www.foolishtalk.org/2017/09/10/Cannot-use-mutating-member-on-immutable-value/";
+    var disqus_url = "http://localhost:4000/2017/09/10/Cannot-use-mutating-member-on-immutable-value/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -465,7 +468,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

@@ -12,7 +12,7 @@
 
     <title>NS_ASSUME_NONNULL_BEGIN和NS_ASSUME_NONNULL_END - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/">
+    <link rel="canonical" href="http://localhost:4000/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -197,22 +197,21 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>更新了Xcode 10之后在新建OC的类的时候，都会默认加上了<code class="highlighter-rouge">NS_ASSUME_NONNULL_BEGIN</code>和<code class="highlighter-rouge">NS_ASSUME_NONNULL_END</code>。</p>
-<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="n">NS_ASSUME_NONNULL_BEGIN</span>
+				<p>更新了Xcode 10之后在新建OC的类的时候，都会默认加上了<code class="language-plaintext highlighter-rouge">NS_ASSUME_NONNULL_BEGIN</code>和<code class="language-plaintext highlighter-rouge">NS_ASSUME_NONNULL_END</code>。</p>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">NS_ASSUME_NONNULL_BEGIN</span>
 
 <span class="k">@interface</span> <span class="nc">Person</span> <span class="p">:</span> <span class="nc">NSObject</span>
 
 <span class="k">@end</span>
 
 <span class="n">NS_ASSUME_NONNULL_END</span>
-</code></pre>
-</div>
-<p>在Objective-C中，是没有像swift中<code class="highlighter-rouge">!</code>和<code class="highlighter-rouge">?</code>的概念，为了解决和swift混编的问题，增加了<code class="highlighter-rouge">__nullable</code>和<code class="highlighter-rouge">___nonnull</code>的关键字。 <code class="highlighter-rouge">__nullable</code>代表修饰的对象可以为nil。</p>
+</code></pre></div></div>
+<p>在Objective-C中，是没有像swift中<code class="language-plaintext highlighter-rouge">!</code>和<code class="language-plaintext highlighter-rouge">?</code>的概念，为了解决和swift混编的问题，增加了<code class="language-plaintext highlighter-rouge">__nullable</code>和<code class="language-plaintext highlighter-rouge">___nonnull</code>的关键字。 <code class="language-plaintext highlighter-rouge">__nullable</code>代表修饰的对象可以为nil。</p>
 
-<p><code class="highlighter-rouge">___nonnull</code>代表修饰的对象不可以为NULL或者为nil。<br />
-当我们给类中其中一个对象声明<code class="highlighter-rouge">__nullable</code>或<code class="highlighter-rouge">___nonnull</code>时候，需要把所有的对象都加上<code class="highlighter-rouge">__nullable</code>或<code class="highlighter-rouge">___nonnull</code>。</p>
+<p><code class="language-plaintext highlighter-rouge">___nonnull</code>代表修饰的对象不可以为NULL或者为nil。<br />
+当我们给类中其中一个对象声明<code class="language-plaintext highlighter-rouge">__nullable</code>或<code class="language-plaintext highlighter-rouge">___nonnull</code>时候，需要把所有的对象都加上<code class="language-plaintext highlighter-rouge">__nullable</code>或<code class="language-plaintext highlighter-rouge">___nonnull</code>。</p>
 
-<p>而<code class="highlighter-rouge">NS_ASSUME_NONNULL_BEGIN</code>和<code class="highlighter-rouge">NS_ASSUME_NONNULL_END</code>中间声明的对象会把所有对象默认当作是<code class="highlighter-rouge">__nonnull</code>，而我们只需要可能为nil的对象声明为<code class="highlighter-rouge">__nullable</code>就可以了。</p>
+<p>而<code class="language-plaintext highlighter-rouge">NS_ASSUME_NONNULL_BEGIN</code>和<code class="language-plaintext highlighter-rouge">NS_ASSUME_NONNULL_END</code>中间声明的对象会把所有对象默认当作是<code class="language-plaintext highlighter-rouge">__nonnull</code>，而我们只需要可能为nil的对象声明为<code class="language-plaintext highlighter-rouge">__nullable</code>就可以了。</p>
 
 
                 <hr>
@@ -283,13 +282,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -318,6 +317,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -370,6 +371,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -401,7 +404,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2018/09/20/NS_ASSUME_NONNULL_BEGIN和NS_ASSUME_NONNULL_END";
-    var disqus_url = "http://www.foolishtalk.org/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/";
+    var disqus_url = "http://localhost:4000/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -461,7 +464,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

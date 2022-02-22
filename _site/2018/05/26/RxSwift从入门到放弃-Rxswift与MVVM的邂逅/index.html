@@ -12,7 +12,7 @@
 
     <title>RxSwift从入门到放弃——Rxswift与MVVM的邂逅 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2018/05/26/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-Rxswift%E4%B8%8EMVVM%E7%9A%84%E9%82%82%E9%80%85/">
+    <link rel="canonical" href="http://localhost:4000/2018/05/26/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-Rxswift%E4%B8%8EMVVM%E7%9A%84%E9%82%82%E9%80%85/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -211,7 +211,7 @@ border: none;
 </ul>
 
 <h2 id="mvvm和rxswift之间的关系">MVVM和RxSwift之间的关系</h2>
-<p>我们在讲到RxSwift的时候，基本肯定会聊到MVVM，如果不太了解MVVM，可以先看后面<code class="highlighter-rouge">MVVM是什么？</code>。<br />
+<p>我们在讲到RxSwift的时候，基本肯定会聊到MVVM，如果不太了解MVVM，可以先看后面<code class="language-plaintext highlighter-rouge">MVVM是什么？</code>。<br />
 首先MVVM需要有ViewModel，iOS原生并没有提供很好的数据绑定方式，使用RxSwift、RxCocoa提供了已经封装好了数据与UI绑定的方法，使得数据绑定简单了起来。<br />
 使用了RxSwift也并不是必须使用MVVM，使用MVVM架构，也并不是必须要使用RxSwift才能实现。</p>
 
@@ -254,19 +254,17 @@ border: none;
 <p>RxSwift为我们平时使用的UI控件提供了响应式函数，使用自带的响应式函数就能非常方便的进行数据绑定。 
 例如我们实现了一个选择体重尺子功能的View：<br />
 以前的做法：</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code>    <span class="kd">func</span> <span class="nf">scrollRuleValue</span><span class="p">(</span><span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">func</span> <span class="nf">scrollRuleValue</span><span class="p">(</span><span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">collectionView</span> <span class="o">==</span> <span class="n">containerView</span><span class="o">.</span><span class="n">weightRuleView</span><span class="o">.</span><span class="n">collectionView</span> <span class="p">{</span>
             <span class="n">containerView</span><span class="o">.</span><span class="n">weightLabel</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">"</span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">kg"</span>
         <span class="p">}</span>
     <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>利用RxSwift的特性：</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code>        <span class="n">containerView</span><span class="o">.</span><span class="n">weightRuleView</span><span class="o">.</span><span class="n">observerValue</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="k">in</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="n">containerView</span><span class="o">.</span><span class="n">weightRuleView</span><span class="o">.</span><span class="n">observerValue</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="k">in</span>
             <span class="k">return</span> <span class="s">"</span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">kg"</span>
             <span class="p">}</span><span class="o">.</span><span class="nf">bind</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="n">containerView</span><span class="o">.</span><span class="n">weightLabel</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>这行代码的意思：</p>
 <ol>
   <li>监听ruleView的observerValue序列发送;</li>
@@ -276,7 +274,7 @@ border: none;
 
 <p>这是一个在Cocoa编程里最常见的委托代理模式，将视图变化交给Controller去处理，再去更新视图。而RxSwift只需要让ruleView创建一个发送数据的序列，再由Controller与需要更新的视图进行绑定，这样就能节省大量在写代理时候的代码。</p>
 
-<p>利用已经提供好的属性，既避免了ViewModel直接拿到View，可以随意的更改View属性，同时还节省了大量代码。另外一方面，由于业务逻辑已经都移到了ViewModel，对于业务的单元测试也变得极其简单，对于RxSwift的单元测试，可以了解一下<code class="highlighter-rouge">RxTest</code>和<code class="highlighter-rouge">RxBlocking</code>，本文就不展开说了。</p>
+<p>利用已经提供好的属性，既避免了ViewModel直接拿到View，可以随意的更改View属性，同时还节省了大量代码。另外一方面，由于业务逻辑已经都移到了ViewModel，对于业务的单元测试也变得极其简单，对于RxSwift的单元测试，可以了解一下<code class="language-plaintext highlighter-rouge">RxTest</code>和<code class="language-plaintext highlighter-rouge">RxBlocking</code>，本文就不展开说了。</p>
 
 <h2 id="rxswift的看法">RxSwift的看法</h2>
 <p>个人觉得，RxSwift给我们带来最大影响的Reactive思想，OOP告诉我们，在编写应用程序的时候，要考虑的是对象有什么，对象做什么，对象与对象之间的联系，而Reactive思想将对象所做的都看成是数据流，我们关注的是事件本身的影响，学习一个新的编程范式，还是非常有意思的。<br />
@@ -352,13 +350,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -387,6 +385,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -439,6 +439,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -470,7 +472,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2018/05/26/RxSwift从入门到放弃——Rxswift与MVVM的邂逅";
-    var disqus_url = "http://www.foolishtalk.org/2018/05/26/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-Rxswift%E4%B8%8EMVVM%E7%9A%84%E9%82%82%E9%80%85/";
+    var disqus_url = "http://localhost:4000/2018/05/26/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-Rxswift%E4%B8%8EMVVM%E7%9A%84%E9%82%82%E9%80%85/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -530,7 +532,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

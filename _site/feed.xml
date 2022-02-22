@@ -3,19 +3,40 @@
   <channel>
     <title>FoolishTalk</title>
     <description></description>
-    <link>http://www.foolishtalk.org/</link>
-    <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 13 Oct 2021 19:24:30 +0800</pubDate>
-    <lastBuildDate>Wed, 13 Oct 2021 19:24:30 +0800</lastBuildDate>
-    <generator>Jekyll v3.3.0</generator>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Tue, 22 Feb 2022 22:45:24 +0800</pubDate>
+    <lastBuildDate>Tue, 22 Feb 2022 22:45:24 +0800</lastBuildDate>
+    <generator>Jekyll v4.2.1</generator>
+    
+      <item>
+        <title>Installing Lightning for Xcode</title>
+        <description>&lt;p&gt;To install Lightning for Xcode in Xcode 12 (or Xcode 11):&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Quit Xcode&lt;/li&gt;
+  &lt;li&gt;Enable Lightning extension in System Preferences -&amp;gt; Extensions -&amp;gt; Xcode Source Editor&lt;/li&gt;
+  &lt;li&gt;Restart Xcode&lt;/li&gt;
+  &lt;li&gt;Select the code you want to extracting&lt;/li&gt;
+  &lt;li&gt;Use Editor -&amp;gt; Lightning menu to extracting method declarations&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;command+v&lt;/code&gt; Paste method declarations to header file,now!&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 21 Feb 2022 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2022/02/21/lightning/</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/02/21/lightning/</guid>
+        
+        <category>Lightning</category>
+        
+        
+      </item>
     
       <item>
         <title>WWDC-2018笔记---使用Signposts分析App性能</title>
         <description>&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Signposts&lt;/code&gt; 可以针对某段代码块进行性能分析，并且能在Instrument中显示,并且允许我们标记一段开始和结束，然后将这两点时间发生的事情与日志关联起来。
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Signposts&lt;/code&gt; 可以针对某段代码块进行性能分析，并且能在Instrument中显示,并且允许我们标记一段开始和结束，然后将这两点时间发生的事情与日志关联起来。
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/8E243DC9-80EC-4729-A537-262254E0A542.png&quot; alt=&quot;&quot; /&gt;
 代码如下：&lt;/p&gt;
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signpost&lt;/span&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signpost&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;refreshLog&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;OSLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;subsystem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;com.example.your-app&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;category&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;RefreshOperations&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;//标记单独获取所有图片的开始&lt;/span&gt;
@@ -28,35 +49,31 @@
     &lt;span class=&quot;nf&quot;&gt;os_signpost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Fetch Asset&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;nf&quot;&gt;os_signpost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Refresh Panel&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;同一个方法有可能被多次调用，在 Instrument 上会出现重叠的情况，如果我们希望区分是否是不同的对象调用，可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;Signpost IDs&lt;/code&gt; 实现。&lt;/p&gt;
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;spid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;OSSignpostID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;p&gt;同一个方法有可能被多次调用，在 Instrument 上会出现重叠的情况，如果我们希望区分是否是不同的对象调用，可以通过 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Signpost IDs&lt;/code&gt; 实现。&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;spid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;OSSignpostID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;nf&quot;&gt;os_signpost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Fetch Asset&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;signpostID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;nf&quot;&gt;os_signpost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Fetch Asset&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;signpostID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;如果调用的对象本身具有唯一性，还可以用对象作为&lt;code class=&quot;highlighter-rouge&quot;&gt;Signpost IDs&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;spid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;OSSignpostID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;如果调用的对象本身具有唯一性，还可以用对象作为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Signpost IDs&lt;/code&gt;。&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;spid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;OSSignpostID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;nf&quot;&gt;os_signpost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Fetch Asset&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;signpostID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;nf&quot;&gt;os_signpost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Fetch Asset&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;signpostID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;os_signpost()&lt;/code&gt;还允许我们在使用的时候通过格式化字符串的方式增加元数据。&lt;/p&gt;
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nf&quot;&gt;os_signpost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Compute Physics&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;os_signpost()&lt;/code&gt;还允许我们在使用的时候通过格式化字符串的方式增加元数据。&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nf&quot;&gt;os_signpost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Compute Physics&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
 &lt;span class=&quot;s&quot;&gt;&quot;for %{public}s at (%d, %.1f) with mass %.2f and velocity (%.1f, %.1f)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;更有利于我们后续分析和发现追踪特定场景下的问题，这里还要提到一点，对于字符串格式化，这里使用的了&lt;code class=&quot;highlighter-rouge&quot;&gt;%{public}s&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;description&lt;/code&gt;如果是静态常量的字符串时，可以使用&lt;code class=&quot;highlighter-rouge&quot;&gt;%s&lt;/code&gt;，但是需要格式化动态拼接的字符串
-时，需要使用&lt;code class=&quot;highlighter-rouge&quot;&gt;%{public}s&lt;/code&gt;，为了保护用户的隐私，苹果建议日志都使用静态字符串和数字组成。 &lt;br /&gt;
-还有个小Tips，想让数据在&lt;code class=&quot;highlighter-rouge&quot;&gt;Instrument&lt;/code&gt;上以内存大小的单位格式化，可以使用&lt;code class=&quot;highlighter-rouge&quot;&gt;%{xcode:size-in-bytes}llu&lt;/code&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;更有利于我们后续分析和发现追踪特定场景下的问题，这里还要提到一点，对于字符串格式化，这里使用的了&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%{public}s&lt;/code&gt;，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;description&lt;/code&gt;如果是静态常量的字符串时，可以使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%s&lt;/code&gt;，但是需要格式化动态拼接的字符串
+时，需要使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%{public}s&lt;/code&gt;，为了保护用户的隐私，苹果建议日志都使用静态字符串和数字组成。 &lt;br /&gt;
+还有个小Tips，想让数据在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Instrument&lt;/code&gt;上以内存大小的单位格式化，可以使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%{xcode:size-in-bytes}llu&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;苹果在WWDC上声称signpost进行了启动上优化，并且通过编译器的优化，使得它是在编译时运行而不是运行时，并且将很多工作都交给了&lt;code class=&quot;highlighter-rouge&quot;&gt;Instrument&lt;/code&gt;,使得&lt;code class=&quot;highlighter-rouge&quot;&gt;signpost&lt;/code&gt;在发送的时候只会占用非常少的系统资源。但是你依然有可能想停止&lt;code class=&quot;highlighter-rouge&quot;&gt;signpost&lt;/code&gt;的使用。如果想在代码中停止某个&lt;code class=&quot;highlighter-rouge&quot;&gt;signpost&lt;/code&gt;的使用，可以通过改变OSLog的初始化实现：&lt;/p&gt;
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;OSLog&lt;/span&gt;
+&lt;p&gt;苹果在WWDC上声称signpost进行了启动上优化，并且通过编译器的优化，使得它是在编译时运行而不是运行时，并且将很多工作都交给了&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Instrument&lt;/code&gt;,使得&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;signpost&lt;/code&gt;在发送的时候只会占用非常少的系统资源。但是你依然有可能想停止&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;signpost&lt;/code&gt;的使用。如果想在代码中停止某个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;signpost&lt;/code&gt;的使用，可以通过改变OSLog的初始化实现：&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;OSLog&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;ProcessInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;processInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;contains&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SIGNPOSTS_FOR_REFRESH&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;refreshLog&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;OSLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;subsystem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;com.example.your-app&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;category&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;RefreshOperations&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -69,13 +86,12 @@
     &lt;span class=&quot;nf&quot;&gt;os_signpost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Fetch Asset&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;nf&quot;&gt;os_signpost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;refreshLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Refresh Panel&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;signpost&lt;/code&gt;不仅支持Swift，同时也支持C、OC，API可以参考下图。&lt;br /&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;signpost&lt;/code&gt;不仅支持Swift，同时也支持C、OC，API可以参考下图。&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/7548FA58-3851-4DFE-A885-0FD67F3EBFA3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;signpost&lt;/code&gt;如何使用这里就不展开说了，非常简单，在&lt;code class=&quot;highlighter-rouge&quot;&gt;Instrument&lt;/code&gt;添加&lt;code class=&quot;highlighter-rouge&quot;&gt;os_signpost&lt;/code&gt;的选项卡就可以使用。
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;signpost&lt;/code&gt;如何使用这里就不展开说了，非常简单，在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Instrument&lt;/code&gt;添加&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;os_signpost&lt;/code&gt;的选项卡就可以使用。
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/2021-05-03-12-34-02.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;参考&quot;&gt;参考&lt;/h1&gt;
@@ -86,8 +102,8 @@
 &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2016/721/&quot;&gt;Unified Logging and Activity Tracing&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 03 May 2021 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2021/05/03/WWDC-2018%E7%AC%94%E8%AE%B0-%E4%BD%BF%E7%94%A8Signposts%E5%88%86%E6%9E%90App%E6%80%A7%E8%83%BD/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2021/05/03/WWDC-2018%E7%AC%94%E8%AE%B0-%E4%BD%BF%E7%94%A8Signposts%E5%88%86%E6%9E%90App%E6%80%A7%E8%83%BD/</guid>
+        <link>http://localhost:4000/2021/05/03/WWDC-2018%E7%AC%94%E8%AE%B0-%E4%BD%BF%E7%94%A8Signposts%E5%88%86%E6%9E%90App%E6%80%A7%E8%83%BD/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/05/03/WWDC-2018%E7%AC%94%E8%AE%B0-%E4%BD%BF%E7%94%A8Signposts%E5%88%86%E6%9E%90App%E6%80%A7%E8%83%BD/</guid>
         
         <category>WWDC</category>
         
@@ -102,23 +118,21 @@
         <title>解决博客在Chrome里http和https混合使用的问题</title>
         <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
 &lt;p&gt;今天突然发现博客的图片都无法加载了，打开浏览器控制台一看，发现是无法找到https资源报错了：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Mixed Content: The page at '&amp;lt;URL&amp;gt;' was loaded over HTTPS, but requested an insecure font '&amp;lt;URL&amp;gt;'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Mixed Content: The page at &apos;&amp;lt;URL&amp;gt;&apos; was loaded over HTTPS, but requested an insecure font &apos;&amp;lt;URL&amp;gt;&apos;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;原来是因为更新了Chrome后，如果网站是https，会把非https的资源强制转成了http，我博客用的七牛云，使用https流量是要另外收费的，所以只好找个方法曲线救国。&lt;/p&gt;
 
 &lt;h1 id=&quot;解决&quot;&gt;解决&lt;/h1&gt;
 &lt;p&gt;通过nginx反向到七牛云的域名，原本请求http://images.foolishtalk.org/xxx.png，改成请求https://www.foolishtalk.org/cloud/xxx.png&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   #反向代理，解决七牛云的图片在谷歌浏览器会自动把https转成http的问题
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   #反向代理，解决七牛云的图片在谷歌浏览器会自动把https转成http的问题
    location /cloud/ {
       proxy_pass http://images.foolishtalk.org/;
    }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Wed, 07 Oct 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+        <link>http://localhost:4000/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
         
         <category>Chrome</category>
         
@@ -134,26 +148,25 @@
 &lt;p&gt;从非Mac AppStore的地方下载的App，大家应该都有遇到过这样的提示：&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/IMG_4487.PNG&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;遇到这种情况，可以在终端输入，将&lt;code class=&quot;highlighter-rouge&quot;&gt;安全性与隐私-通用-任何来源&lt;/code&gt;开启，这样就可以解决了：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo spctl --master-disable
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;p&gt;遇到这种情况，可以在终端输入，将&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;安全性与隐私-通用-任何来源&lt;/code&gt;开启，这样就可以解决了：&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;spctl &lt;span class=&quot;nt&quot;&gt;--master-disable&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/b763e24905260962b5f85903f86472d5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;但是作为一个普通用户，会认为你的App不安全，我开发的虚拟定位因为需要依赖非沙盒环境下的Magellan，也遇到这个问题，也有国外用户因为觉得这个行为是有风险，在AppStore给了个差评。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/9d72a50bedcd69db68dbe4777d16b83f.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;从设置上看，用户是可以通过选择&lt;code class=&quot;highlighter-rouge&quot;&gt;App Store和被认可的开发者&lt;/code&gt;下载非App Store来源的应用的，问题是怎样才能成为被认可的开发者呢？&lt;/p&gt;
+&lt;p&gt;从设置上看，用户是可以通过选择&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App Store和被认可的开发者&lt;/code&gt;下载非App Store来源的应用的，问题是怎样才能成为被认可的开发者呢？&lt;/p&gt;
 
 &lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
 
-&lt;p&gt;Mac上通过&lt;code class=&quot;highlighter-rouge&quot;&gt;Gatekeeper&lt;/code&gt;的技术来确保用户运行的是自己信任的App,在&lt;code class=&quot;highlighter-rouge&quot;&gt;App Store&lt;/code&gt;上架之前应用是经过&lt;code class=&quot;highlighter-rouge&quot;&gt;Apple&lt;/code&gt;签名的，通过这种方式保证App没有被修改。&lt;/p&gt;
+&lt;p&gt;Mac上通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Gatekeeper&lt;/code&gt;的技术来确保用户运行的是自己信任的App,在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App Store&lt;/code&gt;上架之前应用是经过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Apple&lt;/code&gt;签名的，通过这种方式保证App没有被修改。&lt;/p&gt;
 
 &lt;p&gt;而从第三方网站或软件中下载的App，则需要提交应用给Apple进行公证，公证结束后再对其签名，用户下载的时候弹窗就会变成这样：&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/IMG_4488.PNG&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;公证的方式有两种，一种是通过Xcode Archives后在&lt;code class=&quot;highlighter-rouge&quot;&gt;Organizer&lt;/code&gt;进行操作，另一种方式是通过脚本自定义workflow。&lt;/p&gt;
+&lt;p&gt;公证的方式有两种，一种是通过Xcode Archives后在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Organizer&lt;/code&gt;进行操作，另一种方式是通过脚本自定义workflow。&lt;/p&gt;
 
 &lt;h2 id=&quot;xcode&quot;&gt;Xcode&lt;/h2&gt;
 &lt;p&gt;通过 Xcode导航栏上方 「Product」-&amp;gt;「Archives」,选择「Distribute App」-&amp;gt; 「Developer ID」-&amp;gt; 「Upload」&lt;br /&gt;
@@ -165,10 +178,10 @@
 &lt;h2 id=&quot;workflow&quot;&gt;Workflow&lt;/h2&gt;
 &lt;p&gt;我自己用的是脚本打包，因为mac上打包主要以dmg的形式为主，另外dSYM也需要上传到App Center上，自定义workflow更适合我。&lt;/p&gt;
 
-&lt;p&gt;先用Xcode打包的方式执行一次，将导出后文件夹中的&lt;code class=&quot;highlighter-rouge&quot;&gt;ExportOptions.plist&lt;/code&gt;复制到工程目录下，即&lt;code class=&quot;highlighter-rouge&quot;&gt;$SRCROOT/ExportOptions.plist&lt;/code&gt;下，等下会用到。&lt;/p&gt;
+&lt;p&gt;先用Xcode打包的方式执行一次，将导出后文件夹中的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ExportOptions.plist&lt;/code&gt;复制到工程目录下，即&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$SRCROOT/ExportOptions.plist&lt;/code&gt;下，等下会用到。&lt;/p&gt;
 
 &lt;p&gt;新建个构建脚本文件，放工程目录下：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#App名字&lt;/span&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#App名字&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;PRODUCT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;xxx
 &lt;span class=&quot;nv&quot;&gt;CONFIGURATION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Release
 &lt;span class=&quot;c&quot;&gt;#SCHEME名字&lt;/span&gt;
@@ -179,78 +192,67 @@
 
 &lt;span class=&quot;nv&quot;&gt;$CLEAN_COMMAND&lt;/span&gt; clean
 &lt;span class=&quot;nv&quot;&gt;$BUILD_COMMAND&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;苹果不建议我们使用明文的密码，通过下面的命令，将密码放进钥匙串：&lt;br /&gt;
 Xcode 13之后:&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#这里的WWDRTeamID，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看&lt;/span&gt;
-xcrun notarytool store-credentials &lt;span class=&quot;s2&quot;&gt;&quot;AC_PASSWORD&quot;&lt;/span&gt; --apple-id &lt;span class=&quot;s2&quot;&gt;&quot;开发者账号邮箱&quot;&lt;/span&gt; --team-id &amp;lt;WWDRTeamID&amp;gt; --password &amp;lt;secret_2FA_password&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#这里的WWDRTeamID，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看&lt;/span&gt;
+xcrun notarytool store-credentials &lt;span class=&quot;s2&quot;&gt;&quot;AC_PASSWORD&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--apple-id&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;开发者账号邮箱&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--team-id&lt;/span&gt; &amp;lt;WWDRTeamID&amp;gt; &lt;span class=&quot;nt&quot;&gt;--password&lt;/span&gt; &amp;lt;secret_2FA_password&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;Xcode 13之前:&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun altool --store-password-in-keychain-item &lt;span class=&quot;s2&quot;&gt;&quot;AC_PASSWORD&quot;&lt;/span&gt; -u &lt;span class=&quot;s2&quot;&gt;&quot;开发者账号邮箱&quot;&lt;/span&gt; -p &lt;span class=&quot;s2&quot;&gt;&quot;apple id专用密码&quot;&lt;/span&gt;  
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun altool &lt;span class=&quot;nt&quot;&gt;--store-password-in-keychain-item&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;AC_PASSWORD&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;开发者账号邮箱&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;apple id专用密码&quot;&lt;/span&gt;  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;不知道什么是专用密码的，可以看&lt;a href=&quot;https://support.apple.com/zh-cn/HT204397&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;将下面的脚本调整后，放入Post-actions中&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/7d1045b183241672996953e235bec078.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcodebuild -exportArchive -archivePath &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ARCHIVE_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; -exportOptionsPlist &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$SRCROOT&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/ExportOptions.plist&quot;&lt;/span&gt; -exportPath &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$EXPORT_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcodebuild &lt;span class=&quot;nt&quot;&gt;-exportArchive&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-archivePath&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ARCHIVE_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-exportOptionsPlist&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$SRCROOT&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/ExportOptions.plist&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-exportPath&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$EXPORT_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;APP_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$EXPORT_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PRODUCT_NAME&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.app&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;ZIP_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$EXPORT_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PRODUCT_NAME&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.zip&quot;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#如果不是打包成dmg，.app需要压缩成zip上传&lt;/span&gt;
-ditto -c -k --keepParent &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$APP_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZIP_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+ditto &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-k&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--keepParent&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$APP_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ZIP_PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;接着将压缩好的zip文件，上传到苹果服务器进行公证，Xcode 13之后：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#使用--wait，告诉notarytool只有在公证服务完成处理提交后才退出&lt;/span&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#使用--wait，告诉notarytool只有在公证服务完成处理提交后才退出&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#如果你想公证处理提交后得到一个回调，可以使用--webhook指定一个url&lt;/span&gt;
 xcrun notarytool submit &lt;span class=&quot;nv&quot;&gt;$ZIP_PATH&lt;/span&gt;
-                   --keychain-profile &lt;span class=&quot;s2&quot;&gt;&quot;AC_PASSWORD&quot;&lt;/span&gt;
-                   --wait
-                   --webhook &lt;span class=&quot;s2&quot;&gt;&quot;https://example.com/notarization&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+                   &lt;span class=&quot;nt&quot;&gt;--keychain-profile&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;AC_PASSWORD&quot;&lt;/span&gt;
+                   &lt;span class=&quot;nt&quot;&gt;--wait&lt;/span&gt;
+                   &lt;span class=&quot;nt&quot;&gt;--webhook&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;https://example.com/notarization&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;Xcode 13之前：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#这里的ProviderShortname，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看&lt;/span&gt;
-xcrun altool --notarize-app --primary-bundle-id &lt;span class=&quot;s2&quot;&gt;&quot;com.bundle.id&quot;&lt;/span&gt; --username &lt;span class=&quot;s2&quot;&gt;&quot;AC_USERNAME&quot;&lt;/span&gt; --password &lt;span class=&quot;s2&quot;&gt;&quot;@keychain:AC_PASSWORD&quot;&lt;/span&gt; --asc-provider &amp;lt;ProviderShortname&amp;gt; --file &lt;span class=&quot;nv&quot;&gt;$ZIP_PATH&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#这里的ProviderShortname，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看&lt;/span&gt;
+xcrun altool &lt;span class=&quot;nt&quot;&gt;--notarize-app&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--primary-bundle-id&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;com.bundle.id&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--username&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;AC_USERNAME&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--password&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;@keychain:AC_PASSWORD&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--asc-provider&lt;/span&gt; &amp;lt;ProviderShortname&amp;gt; &lt;span class=&quot;nt&quot;&gt;--file&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ZIP_PATH&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;上传完之后，控制台上会打印&lt;code class=&quot;highlighter-rouge&quot;&gt;RequestUUID&lt;/code&gt;,如果不成功或者想查询审核状态都需要这个id，也可以通过后面查询当前所有请求状态的命令查到&lt;code class=&quot;highlighter-rouge&quot;&gt;RequestUUID&lt;/code&gt;。&lt;br /&gt;
+&lt;p&gt;上传完之后，控制台上会打印&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RequestUUID&lt;/code&gt;,如果不成功或者想查询审核状态都需要这个id，也可以通过后面查询当前所有请求状态的命令查到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RequestUUID&lt;/code&gt;。&lt;br /&gt;
 审核通过后，对app签入公证即可：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun stapler staple &lt;span class=&quot;s2&quot;&gt;&quot;xxx.dmg&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun stapler staple &lt;span class=&quot;s2&quot;&gt;&quot;xxx.dmg&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;h3 id=&quot;查询当前所有请求状态&quot;&gt;查询当前所有请求状态&lt;/h3&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun altool --notarization-history 0 -u &lt;span class=&quot;s2&quot;&gt;&quot;AC_USERNAME&quot;&lt;/span&gt; -p &lt;span class=&quot;s2&quot;&gt;&quot;@keychain:AC_PASSWORD&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun altool &lt;span class=&quot;nt&quot;&gt;--notarization-history&lt;/span&gt; 0 &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;AC_USERNAME&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;@keychain:AC_PASSWORD&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;会返回你所有请求的状态&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Notarization History - page 0
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Notarization History - page 0
 
 Date                      RequestUUID                          Status      Status Code Status Message  
 ------------------------- ------------------------------------ ----------- ----------- ----------------
 2018-07-02 20:32:01 +0000 2EFE2717-52EF-43A5-96DC-0797E4CA1041 invalid     2           Package Invalid 
 2018-06-29 13:23:13 +0000 6D020E28-9890-48E5-851C-4275169D07CC invalid     2           Package Invalid
 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;查询某个请求的详细信息&quot;&gt;查询某个请求的详细信息&lt;/h3&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun altool --notarization-info &lt;span class=&quot;nv&quot;&gt;$替&lt;/span&gt;换成自己的RequestUUID -u &lt;span class=&quot;s2&quot;&gt;&quot;AC_USERNAME&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcrun altool &lt;span class=&quot;nt&quot;&gt;--notarization-info&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$替&lt;/span&gt;换成自己的RequestUUID &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;AC_USERNAME&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;如果有审核有问题，LogFileURL会提供日志文件，指出发现的问题，修改完后重新提交即可。&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   RequestUUID: 2EFE2717-52EF-43A5-96DC-0797E4CA1041
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   RequestUUID: 2EFE2717-52EF-43A5-96DC-0797E4CA1041
           Date: 2018-07-02 20:32:01 +0000
         Status: invalid
     LogFileURL: https://osxapps.itunes.apple.com/...
    Status Code: 2 
 Status Message: Package Invalid
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;写在最后的一些感触&quot;&gt;写在最后的一些感触&lt;/h1&gt;
 &lt;p&gt;虽然是个并不麻烦的事情，但是很多大厂的App都没有做这个，感觉都是国内用户惯的，需要用户去适应App，而不是App迎合用户。&lt;/p&gt;
@@ -263,8 +265,8 @@ Status Message: Package Invalid
 &lt;a href=&quot;https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow&quot;&gt;Customizing the Notarization Workflow&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 08 Jul 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</guid>
+        <link>http://localhost:4000/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</guid>
         
         <category>iOS</category>
         
@@ -276,39 +278,39 @@ Status Message: Package Invalid
       <item>
         <title>你真的了解p、po、v区别吗</title>
         <description>&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
-&lt;p&gt;平常在使用Xcode断点调试问题时，&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;可能是最常用到的&lt;code class=&quot;highlighter-rouge&quot;&gt;LLVM&lt;/code&gt;命令了。&lt;br /&gt;
-通过&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;命令，我们可以在Xcode的&lt;code class=&quot;highlighter-rouge&quot;&gt;LLDB&lt;/code&gt;控制台打印对象的描述，系统在运行时会提供一个默认值，如图：&lt;br /&gt;
+&lt;p&gt;平常在使用Xcode断点调试问题时，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;可能是最常用到的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LLVM&lt;/code&gt;命令了。&lt;br /&gt;
+通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;命令，我们可以在Xcode的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LLDB&lt;/code&gt;控制台打印对象的描述，系统在运行时会提供一个默认值，如图：&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/caed4a8d6cbafa4387d2fb57155cf6e7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;我们可以通过重写&lt;code class=&quot;highlighter-rouge&quot;&gt;func debugDescription()&lt;/code&gt;达到我们希望在&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;的时候返回预期的返回值。&lt;br /&gt;
+&lt;p&gt;我们可以通过重写&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;func debugDescription()&lt;/code&gt;达到我们希望在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;的时候返回预期的返回值。&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/54e45465efc65c1b4fd93f2d8995ea4e.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;的底层逻辑实现：&lt;br /&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;的底层逻辑实现：&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/57320d88124faf7812bbaa673f37fee4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;事实上打印对象有三种方法，&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;只是其中一种。&lt;/p&gt;
+&lt;p&gt;事实上打印对象有三种方法，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;只是其中一种。&lt;/p&gt;
 
-&lt;p&gt;第二种方式是&lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;第二种方式是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt;。&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;的区别在于，&lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt;不会随着&lt;code class=&quot;highlighter-rouge&quot;&gt;func debugDescription()&lt;/code&gt;方法修改而且改变打印的值。
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;的区别在于，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt;不会随着&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;func debugDescription()&lt;/code&gt;方法修改而且改变打印的值。
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/0bb5fdda413e64e8b3ba45c58d1c2ec3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;但是&lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;po&lt;/code&gt;，遵循swift的语法，在下面的例子中，是无法打印的。&lt;br /&gt;
+&lt;p&gt;但是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;，遵循swift的语法，在下面的例子中，是无法打印的。&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/f65d30492a3fc575e641976544a7aa1e.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
 同样下面的代码也会报错：&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    let student : Person = Student(name:&quot;john&quot;)
     print(student.name) //这里是会报错的
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt;的底层逻辑实现：&lt;br /&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt;的底层逻辑实现：&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/e2b0f3feefd02283937b5230a420110d.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;第三种方式是通过&lt;code class=&quot;highlighter-rouge&quot;&gt;v&lt;/code&gt;打印。&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;v&lt;/code&gt;同样不会不会随着&lt;code class=&quot;highlighter-rouge&quot;&gt;func debugDescription()&lt;/code&gt;方法修改而且改变打印的值。&lt;br /&gt;
-而且&lt;code class=&quot;highlighter-rouge&quot;&gt;v&lt;/code&gt;有自己的语法，不需要通过编译，而是进行动态类型解析，但是它无法执行代码。&lt;br /&gt;
+&lt;p&gt;第三种方式是通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;打印。&lt;br /&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;同样不会不会随着&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;func debugDescription()&lt;/code&gt;方法修改而且改变打印的值。&lt;br /&gt;
+而且&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;有自己的语法，不需要通过编译，而是进行动态类型解析，但是它无法执行代码。&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/849c0b54225807f00201d31cd8bf072c.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v&lt;/code&gt;的底层逻辑实现：&lt;br /&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;的底层逻辑实现：&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/67340b5668cffd5d75e007e1839d46fd.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;总结&quot;&gt;总结&lt;/h1&gt;
@@ -343,8 +345,8 @@ Status Message: Package Invalid
 &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2019/429/&quot;&gt;LLDB: Beyond “po”&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 01 Jun 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</guid>
+        <link>http://localhost:4000/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</guid>
         
         <category>iOS</category>
         
@@ -371,12 +373,12 @@ Or, when double-clicking on the map, the following pop-up will appear：&lt;br /
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Click on “Open Magellan Downloader”,If Magellan is installed successfully,
-there is an ico at system navigation bar as following after &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt; running successfully.&lt;br /&gt;
+there is an ico at system navigation bar as following after &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt; running successfully.&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;If &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan&lt;/code&gt; installation fails, please download and install it separately from &lt;a href=&quot;(https://www.foolishtalk.org/magellan/magellan.dmg)&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Magellan&lt;/code&gt; installation fails, please download and install it separately from &lt;a href=&quot;(https://www.foolishtalk.org/magellan/magellan.dmg)&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;
@@ -384,7 +386,7 @@ there is an ico at system navigation bar as following after &lt;code class=&quot
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/d944f3a7aa0e20280cb65dff013839e6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;If there is no installing the driver before, please click to &lt;code class=&quot;highlighter-rouge&quot;&gt;Install the driver &lt;/code&gt;firstly.&lt;br /&gt;
+    &lt;p&gt;If there is no installing the driver before, please click to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install the driver &lt;/code&gt;firstly.&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/0d0da9bb126e3bd24ebfb83bd16ef3c0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
@@ -392,34 +394,34 @@ there is an ico at system navigation bar as following after &lt;code class=&quot
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/0fcda7c41ae4197d268c1a01bb2392a8.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Please click &lt;code class=&quot;highlighter-rouge&quot;&gt;Install the Driver&lt;/code&gt; again after download successfully. After installation successfully, there will be following tips.&lt;br /&gt;
+    &lt;p&gt;Please click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install the Driver&lt;/code&gt; again after download successfully. After installation successfully, there will be following tips.&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/15393a5bdbede13840e344e94f5d4946.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;It need to run &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan app&lt;/code&gt; again after installation.&lt;/p&gt;
+    &lt;p&gt;It need to run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Magellan app&lt;/code&gt; again after installation.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h1 id=&quot;operation&quot;&gt;Operation:&lt;/h1&gt;
 &lt;ol&gt;
-  &lt;li&gt;Open &lt;code class=&quot;highlighter-rouge&quot;&gt;Virtual Location App&lt;/code&gt;&lt;br /&gt;
+  &lt;li&gt;Open &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Virtual Location App&lt;/code&gt;&lt;br /&gt;
 There are two ways to modify the position as followings:&lt;br /&gt;
 (1) &lt;br /&gt;
-Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Point&lt;/code&gt;. Double click the map on &lt;code class=&quot;highlighter-rouge&quot;&gt;Virtual Location App&lt;/code&gt;. Then you will find your position on mobile phone has already changed.&lt;br /&gt;
+Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Point&lt;/code&gt;. Double click the map on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Virtual Location App&lt;/code&gt;. Then you will find your position on mobile phone has already changed.&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_1.png&quot; alt=&quot;&quot; /&gt;)
 (2) &lt;br /&gt;
-① Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Route&lt;/code&gt;. Double click the map on &lt;code class=&quot;highlighter-rouge&quot;&gt;Virtual Location　App&lt;/code&gt;. There will be generated multi-spots on the map as picture shows.&lt;br /&gt;
+① Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Route&lt;/code&gt;. Double click the map on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Virtual Location　App&lt;/code&gt;. There will be generated multi-spots on the map as picture shows.&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_2.png&quot; alt=&quot;&quot; /&gt;)&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;② Please input Speed and click &lt;code class=&quot;highlighter-rouge&quot;&gt;Start&lt;/code&gt; finally. You will find your mobile phone is moving along programmed route.&lt;/p&gt;
+&lt;p&gt;② Please input Speed and click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Start&lt;/code&gt; finally. You will find your mobile phone is moving along programmed route.&lt;/p&gt;
 
 &lt;p&gt;If there are any questions, please feel free to contact me and send email to zykzzzz@hotmail.com. 
-In most case, it is better to provide the log file will be helpful. Please click &lt;code class=&quot;highlighter-rouge&quot;&gt;Export log file&lt;/code&gt; to generate the log file by &lt;code class=&quot;highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt;.&lt;/p&gt;
+In most case, it is better to provide the log file will be helpful. Please click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Export log file&lt;/code&gt; to generate the log file by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt;.&lt;/p&gt;
 </description>
         <pubDate>Sun, 19 Apr 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/04/19/magellan_en/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/04/19/magellan_en/</guid>
+        <link>http://localhost:4000/2020/04/19/magellan_en/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/19/magellan_en/</guid>
         
         <category>iOS</category>
         
@@ -446,7 +448,7 @@ In most case, it is better to provide the log file will be helpful. Please click
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/347335e73c15512f3125ee4d60bac4f3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;原因&quot;&gt;原因&lt;/h2&gt;
-&lt;p&gt;SBC编码器中的 &lt;code class=&quot;highlighter-rouge&quot;&gt;bitpool&lt;/code&gt; 参数会导致音质下降，通过&lt;a href=&quot;http://soundexpert.org/encoders-320-kbps&quot;&gt;这里&lt;/a&gt;可以知道 SBC编码器 在 328 kbit/s 时 bitpool 需要达到 53。&lt;/p&gt;
+&lt;p&gt;SBC编码器中的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bitpool&lt;/code&gt; 参数会导致音质下降，通过&lt;a href=&quot;http://soundexpert.org/encoders-320-kbps&quot;&gt;这里&lt;/a&gt;可以知道 SBC编码器 在 328 kbit/s 时 bitpool 需要达到 53。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/ec4f4917854d7eab2b26196d3348df60.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -455,27 +457,27 @@ In most case, it is better to provide the log file will be helpful. Please click
 &lt;h1 id=&quot;怎么解决&quot;&gt;怎么解决？&lt;/h1&gt;
 &lt;p&gt;先去苹果开发者官网下载&lt;a href=&quot;https://developer.apple.com/download/more/?=additional%20Tools&quot;&gt;Bluetooth Explorer&lt;/a&gt;工具&lt;/p&gt;
 
-&lt;p&gt;下载完之后，打开 Hardware，把 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bluetooth Explorer&lt;/code&gt; 拖到应用程序里。&lt;br /&gt;
-打开 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bluetooth Explorer&lt;/code&gt; 后，在系统导航栏找到 &lt;code class=&quot;highlighter-rouge&quot;&gt;Audio Options...&lt;/code&gt;
+&lt;p&gt;下载完之后，打开 Hardware，把 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Bluetooth Explorer&lt;/code&gt; 拖到应用程序里。&lt;br /&gt;
+打开 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Bluetooth Explorer&lt;/code&gt; 后，在系统导航栏找到 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Audio Options...&lt;/code&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/c1bfcd07315439afe2f2fd3ecdc744f4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;为了方便我就直接把这里 &lt;code class=&quot;highlighter-rouge&quot;&gt;Minimum bitpool&lt;/code&gt; 改到64了：&lt;br /&gt;
+&lt;p&gt;为了方便我就直接把这里 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Minimum bitpool&lt;/code&gt; 改到64了：&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/72d3eb4294d65375471054d6f1d290cc.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;另外如果有需要修改编码器的需求，改上面 &lt;code class=&quot;highlighter-rouge&quot;&gt;Codecs&lt;/code&gt; 的设置就好了。&lt;/p&gt;
+&lt;p&gt;另外如果有需要修改编码器的需求，改上面 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Codecs&lt;/code&gt; 的设置就好了。&lt;/p&gt;
 
 &lt;p&gt;断开蓝牙设备，再连设备，就会发现没有之前的卡顿和沙沙的声音。&lt;/p&gt;
 
 &lt;h1 id=&quot;题外话&quot;&gt;题外话&lt;/h1&gt;
-&lt;p&gt;网上的文章真是一大抄，通过终端设置 &lt;code class=&quot;highlighter-rouge&quot;&gt;bitpool&lt;/code&gt; 的方法似乎已经失效了，另外我也试过重启 &lt;code class=&quot;highlighter-rouge&quot;&gt;PRAM&lt;/code&gt;，依然无效，如果有通过终端设置的方式，请告诉我，非常感谢。&lt;/p&gt;
+&lt;p&gt;网上的文章真是一大抄，通过终端设置 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bitpool&lt;/code&gt; 的方法似乎已经失效了，另外我也试过重启 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PRAM&lt;/code&gt;，依然无效，如果有通过终端设置的方式，请告诉我，非常感谢。&lt;/p&gt;
 
 &lt;h1 id=&quot;参考链接&quot;&gt;参考链接&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&quot;https://www.areilly.com/2017/07/29/enabling-aac-and-aptx-over-bluetooth-on-macos/&quot;&gt;enabling aac and aptx over bluetooth on macos&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&quot;https://apple.stackexchange.com/questions/167245/yosemite-bluetooth-audio-is-choppy-skips/259954#259954&quot;&gt;Yosemite bluetooth audio is choppy/skips&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 10 Jan 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</guid>
+        <link>http://localhost:4000/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</guid>
         
         <category>iOS</category>
         
@@ -492,55 +494,46 @@ In most case, it is better to provide the log file will be helpful. Please click
 
 &lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
 &lt;p&gt;pip安装先把安装的脚本下载下来：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget curl https://bootstrap.pypa.io/get-pip.py
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget curl https://bootstrap.pypa.io/get-pip.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;如果默认的是python3，需要用指定python版本：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo python2.7 get-pip.py
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;python2.7 get-pip.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;安装的过程中，会发现各种超时，原因是要翻墙。我是通过privoxy实现http代理，如果环境没装，自己安装一下：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install privoxy
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;privoxy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;如果brew安装太慢。。。再挂下代理：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export ALL_PROXY=socks5://127.0.0.1:portnumber
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export ALL_PROXY=socks5://127.0.0.1:portnumber
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;在配置文件&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/local/etc/privoxy/config&lt;/code&gt;下面加上监听的端口号，以及本地socks5代理的端口号：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;listen-address 0.0.0.0:8118
+&lt;p&gt;在配置文件&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/usr/local/etc/privoxy/config&lt;/code&gt;下面加上监听的端口号，以及本地socks5代理的端口号：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;listen-address 0.0.0.0:8118
 forward-socks5 / localhost:1080 .
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;启动privoxy：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo /usr/local/sbin/privoxy /usr/local/etc/privoxy/config
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo&lt;/span&gt; /usr/local/sbin/privoxy /usr/local/etc/privoxy/config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;检查是否启动成功：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netstat -na | grep 8118
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netstat &lt;span class=&quot;nt&quot;&gt;-na&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;8118
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;将 socks5 代理转化成 http 代理：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;http_proxy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'http://localhost:8118'&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;https_proxy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'http://localhost:8118'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;如果嫌每次设置麻烦，可以把这两行加在&lt;code class=&quot;highlighter-rouge&quot;&gt;~/.bash_profile&lt;/code&gt;下。
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;http_proxy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;http://localhost:8118&apos;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;https_proxy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;http://localhost:8118&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;如果嫌每次设置麻烦，可以把这两行加在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.bash_profile&lt;/code&gt;下。
 不想使用可以通过下面的命令取消：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;unset &lt;/span&gt;http_proxy
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;unset &lt;/span&gt;http_proxy
 &lt;span class=&quot;nb&quot;&gt;unset &lt;/span&gt;https_proxy
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;参考链接：&lt;br /&gt;
 &lt;a href=&quot;https://www.zhihu.com/question/31360766/answer/149140490&quot;&gt;Homebrew有比较快的源（mirror）吗？ - skytraveler的回答 - 知乎&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&quot;https://double-c.github.io/2018/10/17/mac-ss-cmd/index.html&quot;&gt;Mac命令行终端下使用shadowsocks翻墙&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 07 Dec 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/12/07/pip%E6%8A%98%E8%85%BE%E8%AE%B0/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/12/07/pip%E6%8A%98%E8%85%BE%E8%AE%B0/</guid>
+        <link>http://localhost:4000/2019/12/07/pip%E6%8A%98%E8%85%BE%E8%AE%B0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/12/07/pip%E6%8A%98%E8%85%BE%E8%AE%B0/</guid>
         
         <category>iOS</category>
         
@@ -596,7 +589,7 @@ forward-socks5 / localhost:1080 .
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_zh_2.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;然后输入速度，最后点击&lt;code class=&quot;highlighter-rouge&quot;&gt;开始移动&lt;/code&gt;，你会发现手机正在按照规划的路线在移动。&lt;/p&gt;
+&lt;p&gt;然后输入速度，最后点击&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;开始移动&lt;/code&gt;，你会发现手机正在按照规划的路线在移动。&lt;/p&gt;
 
 &lt;h1 id=&quot;qa&quot;&gt;Q&amp;amp;A&lt;/h1&gt;
 &lt;ol&gt;
@@ -635,11 +628,11 @@ Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文�
 有可能会出现这个弹窗，直接打开就好了。&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/20191022105549.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;如果出现无法打开，因为无法确认开发者的身份的弹窗时，可以在&lt;code class=&quot;highlighter-rouge&quot;&gt;系统偏好设置-通用&lt;/code&gt;下方找到，点击仍要继续运行即可。&lt;/p&gt;
+&lt;p&gt;如果出现无法打开，因为无法确认开发者的身份的弹窗时，可以在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;系统偏好设置-通用&lt;/code&gt;下方找到，点击仍要继续运行即可。&lt;/p&gt;
 </description>
         <pubDate>Wed, 04 Dec 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/12/04/magellan/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/12/04/magellan/</guid>
+        <link>http://localhost:4000/2019/12/04/magellan/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/12/04/magellan/</guid>
         
         <category>iOS</category>
         
@@ -652,39 +645,37 @@ Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文�
         <title>在Mac app上执行AppleScript</title>
         <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
 
-&lt;p&gt;前段时间我开发了&lt;a href=&quot;https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，一脚踩进了&lt;code class=&quot;highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;的坑里无法自拔。&lt;/p&gt;
+&lt;p&gt;前段时间我开发了&lt;a href=&quot;https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，一脚踩进了&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;的坑里无法自拔。&lt;/p&gt;
 
 &lt;h1 id=&quot;applescript&quot;&gt;AppleScript&lt;/h1&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;它是什么？&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;它是什么？&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;它是苹果提供在Mac OS上实现自动化的脚本语言，语法相对简单、易懂，类似英语语法。下面这段代码，你可以通过 Mac 自带的脚本编辑器运行：&lt;br /&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;它是苹果提供在Mac OS上实现自动化的脚本语言，语法相对简单、易懂，类似英语语法。下面这段代码，你可以通过 Mac 自带的脚本编辑器运行：&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/apple-script-editor-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;运行后它会打开 iTunes ：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tell application &lt;span class=&quot;s2&quot;&gt;&quot;iTunes&quot;&lt;/span&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tell application &lt;span class=&quot;s2&quot;&gt;&quot;iTunes&quot;&lt;/span&gt;
 	play
 end tell
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;这三行可以简单的理解为：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;告诉 iTunes
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;告诉 iTunes
     播放
 结束
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tell application &quot;xxx&quot;&lt;/code&gt; 如果你是想让微信 App做点什么，就是&lt;code class=&quot;highlighter-rouge&quot;&gt;tell application &quot;微信&quot;&lt;/code&gt;,而&lt;code class=&quot;highlighter-rouge&quot;&gt;play&lt;/code&gt;这个事件，是iTunes独有的，怎么能知道app特有的事件？你可以通过&lt;code class=&quot;highlighter-rouge&quot;&gt;脚本编辑器&lt;/code&gt;的导航栏中按照以下步骤找到：&lt;br /&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tell application &quot;xxx&quot;&lt;/code&gt; 如果你是想让微信 App做点什么，就是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tell application &quot;微信&quot;&lt;/code&gt;,而&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;play&lt;/code&gt;这个事件，是iTunes独有的，怎么能知道app特有的事件？你可以通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;脚本编辑器&lt;/code&gt;的导航栏中按照以下步骤找到：&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/apple-script-editor-2.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-然后选择&lt;code class=&quot;highlighter-rouge&quot;&gt;iTunes&lt;/code&gt;:&lt;br /&gt;
+然后选择&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;iTunes&lt;/code&gt;:&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/apple-script-editor-3.png&quot; alt=&quot;&quot; /&gt; &lt;br /&gt;
 这里可以看到关于play事件的一些描述。&lt;br /&gt;
 在编写Mac app之前，可以先通过脚本编辑器把我们想实现的功能调试好，然后再把脚本移到Mac app上，确保脚本是正确的，而不是因为App沙盒、权限等问题引起。&lt;/p&gt;
 
 &lt;h1 id=&quot;system-events&quot;&gt;System Events&lt;/h1&gt;
-&lt;p&gt;上面已经说到，可以通过&lt;code class=&quot;highlighter-rouge&quot;&gt;tell application &quot;xxx&quot;&lt;/code&gt;这种方式去调用 App 允许的行为，如果你看完了上面的介绍，打算自己动手去做一些 App 自动化的事情，你会发现 App 提供的事件很少，甚至有可能没有，所以接下来讲的是 &lt;code class=&quot;highlighter-rouge&quot;&gt;System Events&lt;/code&gt; , &lt;code class=&quot;highlighter-rouge&quot;&gt;System Events&lt;/code&gt; 为我们提供了系统事件，允许我们模拟用户点击行为，可以说所有用户界面相关的操作，你都可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;System Events&lt;/code&gt; 去进行自动化操作。&lt;/p&gt;
+&lt;p&gt;上面已经说到，可以通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tell application &quot;xxx&quot;&lt;/code&gt;这种方式去调用 App 允许的行为，如果你看完了上面的介绍，打算自己动手去做一些 App 自动化的事情，你会发现 App 提供的事件很少，甚至有可能没有，所以接下来讲的是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System Events&lt;/code&gt; , &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System Events&lt;/code&gt; 为我们提供了系统事件，允许我们模拟用户点击行为，可以说所有用户界面相关的操作，你都可以通过 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System Events&lt;/code&gt; 去进行自动化操作。&lt;/p&gt;
 
-&lt;p&gt;下面这一段就是通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;System Events&lt;/code&gt; 启动 &lt;code class=&quot;highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 然后通过菜单栏的选项卡，新建标签页。&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tell application &lt;span class=&quot;s2&quot;&gt;&quot;Safari&quot;&lt;/span&gt;
+&lt;p&gt;下面这一段就是通过 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System Events&lt;/code&gt; 启动 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 然后通过菜单栏的选项卡，新建标签页。&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tell application &lt;span class=&quot;s2&quot;&gt;&quot;Safari&quot;&lt;/span&gt;
 	&lt;span class=&quot;c&quot;&gt;# 打开Safari&lt;/span&gt;
 	activate
 	tell application &lt;span class=&quot;s2&quot;&gt;&quot;System Events&quot;&lt;/span&gt;
@@ -694,12 +685,11 @@ end tell
 		end tell
 	end tell
 end tell
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h1 id=&quot;mac-app-调用-applescript-的方式&quot;&gt;Mac App 调用 AppleScript 的方式&lt;/h1&gt;
 
-&lt;p&gt;通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSAppleScript&lt;/code&gt; 运行以下代码：&lt;/p&gt;
+&lt;p&gt;通过 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NSAppleScript&lt;/code&gt; 运行以下代码：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;        let source = &quot;&quot;&quot;
 tell application &quot;Safari&quot;
@@ -720,7 +710,7 @@ end tell
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;预期结果是正常的，但是会发现打印出了这样的错误：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2019-09-22 21:15:30.094229+0800 SwiftAppleScript[1453:42847] skipped scripting addition &quot;/Library/ScriptingAdditions/SASyphonInjector.osax&quot; because it is not SIP-protected.
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2019-09-22 21:15:30.094229+0800 SwiftAppleScript[1453:42847] skipped scripting addition &quot;/Library/ScriptingAdditions/SASyphonInjector.osax&quot; because it is not SIP-protected.
 Optional({
     NSAppleScriptErrorAppName = &quot;System Events&quot;;
     NSAppleScriptErrorBriefMessage = &quot;Not authorized to send Apple events to System Events.&quot;;
@@ -728,42 +718,39 @@ Optional({
     NSAppleScriptErrorNumber = &quot;-1743&quot;;
     NSAppleScriptErrorRange = &quot;NSRange: {168, 69}&quot;;
 })
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;这个地方非常的坑，如果没有打印&lt;code class=&quot;highlighter-rouge&quot;&gt;error&lt;/code&gt;,在没有打开&lt;code class=&quot;highlighter-rouge&quot;&gt;App Sanbox&lt;/code&gt;的情况下，是有可能预期效果是正常的，Safari能正常打开然后新建标签页。&lt;/p&gt;
+&lt;p&gt;这个地方非常的坑，如果没有打印&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;error&lt;/code&gt;,在没有打开&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App Sanbox&lt;/code&gt;的情况下，是有可能预期效果是正常的，Safari能正常打开然后新建标签页。&lt;/p&gt;
 
-&lt;p&gt;如果之前是做iOS开发的，对这个错误应该会很自然的有头绪，应该就是一些权限问题，直接在Info.plist上就能找到一个看起来是这个权限的字段，&lt;code class=&quot;highlighter-rouge&quot;&gt;Privacy - AppleEvents Sending Usage Description&lt;/code&gt;，把这个字段加上后，重新运行，发现多出了这个弹窗：&lt;br /&gt;
+&lt;p&gt;如果之前是做iOS开发的，对这个错误应该会很自然的有头绪，应该就是一些权限问题，直接在Info.plist上就能找到一个看起来是这个权限的字段，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Privacy - AppleEvents Sending Usage Description&lt;/code&gt;，把这个字段加上后，重新运行，发现多出了这个弹窗：&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/2019-09-28.4.55.09.png&quot; alt=&quot;&quot; /&gt;
-如果能够正常运行，那恭喜你，说明你没有打开&lt;code class=&quot;highlighter-rouge&quot;&gt;Capabilities&lt;/code&gt;-&amp;gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;App Sanbox&lt;/code&gt;
+如果能够正常运行，那恭喜你，说明你没有打开&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Capabilities&lt;/code&gt;-&amp;gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App Sanbox&lt;/code&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/2EE70BF91F39368ACF74DD225DEF0EE0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;为什么要打开app-sanbox&quot;&gt;为什么要打开App Sanbox？&lt;/h1&gt;
 
 &lt;p&gt;Mac OSX在10.6系统之后，为了防止恶意的App通过系统漏洞攻击系统，获取控制权限，要求上架的所有的App，都必须要开启沙盒。不要以为App安全离我们很远，Mac App一不留神就有可能被利用，System Events 就可以做到这个事情。&lt;/p&gt;
 
-&lt;p&gt;讲回正题，当我们把 &lt;code class=&quot;highlighter-rouge&quot;&gt;App Sanbox&lt;/code&gt; 打开后，新的报错又来了：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Optional({
+&lt;p&gt;讲回正题，当我们把 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App Sanbox&lt;/code&gt; 打开后，新的报错又来了：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Optional({
     NSAppleScriptErrorAppName = Safari;
     NSAppleScriptErrorBriefMessage = &quot;Application isn’t running.&quot;;
     NSAppleScriptErrorMessage = &quot;Safari got an error: Application isn’t running.&quot;;
     NSAppleScriptErrorNumber = &quot;-600&quot;;
     NSAppleScriptErrorRange = &quot;NSRange: {45, 8}&quot;;
 })
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/2019110_IMG_2412.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;这次是提示 &lt;code class=&quot;highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 没有运行，我们的代码里已经加了让 &lt;code class=&quot;highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 唤醒的功能了，这说明这段代码没办法执行，既然没有解决，只能靠 google 了。&lt;/p&gt;
+&lt;p&gt;这次是提示 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 没有运行，我们的代码里已经加了让 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 唤醒的功能了，这说明这段代码没办法执行，既然没有解决，只能靠 google 了。&lt;/p&gt;
 
-&lt;p&gt;在查阅了一大波资料后，在 &lt;code class=&quot;highlighter-rouge&quot;&gt;App.entitlements&lt;/code&gt; 加上这个 &lt;code class=&quot;highlighter-rouge&quot;&gt;com.apple.security.temporary-exception.apple-events&lt;/code&gt; 权限就可以了。&lt;/p&gt;
+&lt;p&gt;在查阅了一大波资料后，在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App.entitlements&lt;/code&gt; 加上这个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;com.apple.security.temporary-exception.apple-events&lt;/code&gt; 权限就可以了。&lt;/p&gt;
 
 &lt;p&gt;到这里为止，一切正常的。&lt;br /&gt;
 在虚拟定位加入这个权限的第一个版本，上架也非常顺利，但是这之后更新的一个版本，仅涉及一些UI细节的修复，收到苹果拒审的邮件，内容如下：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;我知道你要使用 com.apple.security.temporary-exception.apple-events 干嘛，
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;我知道你要使用 com.apple.security.temporary-exception.apple-events 干嘛，
 但是我不能给你用，要么你就去掉这个功能，要么你要自己找别的方式去实现。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;既然不给我用，为什么上个版本还能给我上架成功？？？&lt;/p&gt;
 
@@ -771,29 +758,27 @@ Optional({
 
 &lt;p&gt;这个方法不行，只能另外再找方法了。&lt;/p&gt;
 
-&lt;p&gt;从苹果的&lt;a href=&quot;https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html#//apple_ref/doc/uid/TP40011195-CH4-SW25&quot;&gt;文档&lt;/a&gt;可以找到怎么通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt; 调用其他 App 功能的资料，苹果在文档中给我们举了个例子，如果要用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Mail.app&lt;/code&gt; 的邮件编写功能，可以在 &lt;code class=&quot;highlighter-rouge&quot;&gt;App.entitlements&lt;/code&gt; 加上一下的权限：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;key&amp;gt;com.apple.security.scripting-targets&amp;lt;/key&amp;gt;
+&lt;p&gt;从苹果的&lt;a href=&quot;https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html#//apple_ref/doc/uid/TP40011195-CH4-SW25&quot;&gt;文档&lt;/a&gt;可以找到怎么通过 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt; 调用其他 App 功能的资料，苹果在文档中给我们举了个例子，如果要用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Mail.app&lt;/code&gt; 的邮件编写功能，可以在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App.entitlements&lt;/code&gt; 加上一下的权限：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;key&amp;gt;com.apple.security.scripting-targets&amp;lt;/key&amp;gt;
     &amp;lt;dict&amp;gt;
         &amp;lt;key&amp;gt;com.apple.mail&amp;lt;/key&amp;gt;
         &amp;lt;array&amp;gt;
             &amp;lt;string&amp;gt;com.apple.mail.compose&amp;lt;/string&amp;gt;
         &amp;lt;/array&amp;gt;
     &amp;lt;/dict&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;这样就可以使用&lt;code class=&quot;highlighter-rouge&quot;&gt;com.apple.mail.compose&lt;/code&gt;这个访问组下的权限了，这个访问组下的权限，可以通过以下的命令看得到：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sdef /Applications/Mail.app &amp;gt; ~/Desktop/mail.xml
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;p&gt;这样就可以使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;com.apple.mail.compose&lt;/code&gt;这个访问组下的权限了，这个访问组下的权限，可以通过以下的命令看得到：&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sdef /Applications/Mail.app &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; ~/Desktop/mail.xml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;但是 Xcode 本身并没有提供一个可以修改定位的访问组权限给到我们，所以并不能使用以上的方法去解决。&lt;/p&gt;
 
-&lt;p&gt;这时候不禁会想到，&lt;code class=&quot;highlighter-rouge&quot;&gt;System Event&lt;/code&gt; 能做什么呢，为什么苹果会不允许我们使用这个权限？对此我又对这个权限有了一个更深入的了解。&lt;/p&gt;
+&lt;p&gt;这时候不禁会想到，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System Event&lt;/code&gt; 能做什么呢，为什么苹果会不允许我们使用这个权限？对此我又对这个权限有了一个更深入的了解。&lt;/p&gt;
 
 &lt;h1 id=&quot;思考&quot;&gt;思考&lt;/h1&gt;
 
-&lt;p&gt;System Events其实是一个系统App，提供控制Mac OSX GUI和应用之间的交互，在这个路径下你可以找到&lt;code class=&quot;highlighter-rouge&quot;&gt;/System/Library/CoreServices/System Events.app&lt;/code&gt;。 &lt;br /&gt;
+&lt;p&gt;System Events其实是一个系统App，提供控制Mac OSX GUI和应用之间的交互，在这个路径下你可以找到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/System/Library/CoreServices/System Events.app&lt;/code&gt;。 &lt;br /&gt;
 通过System Events，我们可以做到以下这些东西：&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;获取正在运行的App列表&lt;/li&gt;
@@ -804,8 +789,8 @@ Optional({
 
 &lt;p&gt;等等…这不就是等于能远程监控和控制别人的电脑吗？&lt;br /&gt;
 所以苹果不开放这个权限也是有原因，既然这样，也只能找别的方法看看了。&lt;br /&gt;
-苹果不允许开发者动态调用&lt;code class=&quot;highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;，但是可以调用 App 沙盒里的 &lt;code class=&quot;highlighter-rouge&quot;&gt;Application Scripts&lt;/code&gt; 目录下的文件。
-最终虚拟定位采用的方案也是这个，在&lt;code class=&quot;highlighter-rouge&quot;&gt;Info.plist&lt;/code&gt;加上&lt;code class=&quot;highlighter-rouge&quot;&gt;NSAppleEventsUsageDescription&lt;/code&gt;,并且通过弹窗引导用户把控制Xcode的脚本保存在&lt;code class=&quot;highlighter-rouge&quot;&gt;Application Scripts&lt;/code&gt;目录下：&lt;/p&gt;
+苹果不允许开发者动态调用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;，但是可以调用 App 沙盒里的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Application Scripts&lt;/code&gt; 目录下的文件。
+最终虚拟定位采用的方案也是这个，在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Info.plist&lt;/code&gt;加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NSAppleEventsUsageDescription&lt;/code&gt;,并且通过弹窗引导用户把控制Xcode的脚本保存在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Application Scripts&lt;/code&gt;目录下：&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;FileManager.default.urls(for: .applicationScriptsDirectory, in: .userDomainMask)
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -813,43 +798,15 @@ Optional({
 
 &lt;h1 id=&quot;总结&quot;&gt;总结&lt;/h1&gt;
 &lt;p&gt;App的沙盒机制，给用户带来了安全保障，但是也给开发者带来了很多开发上的困难，同时也一定程度上会增加用户在使用上带来不好的体验。&lt;br /&gt;
-如果你也想开发一款App并且上架AppStore，但是要依赖一个不是自己开发的App，大部分非Apple的App，都不会提供AppleScript的相关接口给到第三方使用，把applescript放在&lt;code class=&quot;highlighter-rouge&quot;&gt;Application Scripts&lt;/code&gt;目录下使用是目前唯一能上架成功的方式。&lt;/p&gt;
+如果你也想开发一款App并且上架AppStore，但是要依赖一个不是自己开发的App，大部分非Apple的App，都不会提供AppleScript的相关接口给到第三方使用，把applescript放在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Application Scripts&lt;/code&gt;目录下使用是目前唯一能上架成功的方式。&lt;/p&gt;
 </description>
         <pubDate>Sun, 10 Nov 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/</guid>
+        <link>http://localhost:4000/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/</guid>
         
         <category>Mac</category>
         
         <category>Xcode</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>macOS High Sierra依赖OpenSSL交叉编译</title>
-        <description>&lt;p&gt;有些比较老的库，又是依赖 openssl，要自己编译成静态库的时候，遇到了这个错误：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;configure: error: OpenSSL support explicitly requested but OpenSSL could not be found
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;如果打算通过&lt;code class=&quot;highlighter-rouge&quot;&gt;brew link openssl&lt;/code&gt;软连接，会得到这个错误：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Warning: Refusing to link macOS-provided software: openssl
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;后来查阅了一些资料，在 High Sierra 上，openssl 被 禁止通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;brew link openssl&lt;/code&gt; 软链接。&lt;/p&gt;
-
-&lt;p&gt;设置这几个环境变量就可以了：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/opt/openssl/lib:&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/opt/openssl/include:&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CPATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PKG_CONFIG_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/opt/openssl/lib/pkgconfig:&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PKG_CONFIG_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Sun, 13 Oct 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
-        
-        <category>Mac</category>
         
         
       </item>

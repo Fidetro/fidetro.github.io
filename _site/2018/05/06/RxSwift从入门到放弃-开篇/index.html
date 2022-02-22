@@ -12,7 +12,7 @@
 
     <title>RxSwift从入门到放弃——开篇 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2018/05/06/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/">
+    <link rel="canonical" href="http://localhost:4000/2018/05/06/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -233,7 +233,7 @@ border: none;
 <p>总结：使用RxSwift可以简化代码，用更少而且清晰的代码，更专注于关心事件变化的本身</p>
 
 <p>说了这么多，RxSwift其实到底干了什么？
-RxSwift将监听变化的<code class="highlighter-rouge">事件</code>封装成了可观察的<code class="highlighter-rouge">序列</code>，因此在编程的时候，通过框架已经帮我们创建好的序列或者自己创建的序列，实现对序列的监听，只关心序列的变化。</p>
+RxSwift将监听变化的<code class="language-plaintext highlighter-rouge">事件</code>封装成了可观察的<code class="language-plaintext highlighter-rouge">序列</code>，因此在编程的时候，通过框架已经帮我们创建好的序列或者自己创建的序列，实现对序列的监听，只关心序列的变化。</p>
 <blockquote>
   <p>注<br />
 可观察的事件：例如scrollView的contentOffset变化，textField每次输入时候变化的text等<br />
@@ -245,14 +245,13 @@ RxSwift将监听变化的<code class="highlighter-rouge">事件</code>封装成�
 <p>讲了这么多，talk is cheap,show me the code.</p>
 
 <p>监听collectionView的contentOffset，没有引入RxSwift的时候，我们需要实现以下方法：</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code> <span class="kd">func</span> <span class="nf">scrollViewDidScroll</span><span class="p">(</span><span class="n">_</span> <span class="nv">scrollView</span><span class="p">:</span> <span class="kt">UIScrollView</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">func</span> <span class="nf">scrollViewDidScroll</span><span class="p">(</span><span class="n">_</span> <span class="nv">scrollView</span><span class="p">:</span> <span class="kt">UIScrollView</span><span class="p">)</span> <span class="p">{</span>
      <span class="c1">//...</span>
  <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>引入RxSwift之后</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">disposeBag</span> <span class="o">=</span> <span class="kt">DisposeBag</span><span class="p">()</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">disposeBag</span> <span class="o">=</span> <span class="kt">DisposeBag</span><span class="p">()</span>
 
 
        <span class="n">collectionView</span><span class="o">.</span><span class="n">rx</span>
@@ -260,26 +259,24 @@ RxSwift将监听变化的<code class="highlighter-rouge">事件</code>封装成�
                     <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="k">in</span>
             <span class="c1">//do something</span>
         <span class="p">})</span><span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <blockquote>
   <p>注<br />
 disposeBag负责管理生命周期，相当于将当前的监听交给了disposeBag，大部分情况下disposeBag由Controller持有，并随控制器生命周期结束而结束</p>
 </blockquote>
 
 <p>KVO:</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="n">view</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="nf">observe</span><span class="p">(</span><span class="kt">CGRect</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="s">"frame"</span><span class="p">)</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">view</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="nf">observe</span><span class="p">(</span><span class="kt">CGRect</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="s">"frame"</span><span class="p">)</span>
     <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span> <span class="n">frame</span> <span class="k">in</span>
         <span class="nf">print</span><span class="p">(</span><span class="s">"Got new frame </span><span class="se">\(</span><span class="n">frame</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
     <span class="p">})</span>
     <span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Target-Action:<br />
 传统的实现方法:</p>
 
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code>    <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">button</span><span class="p">:</span> <span class="kt">UIButton</span> <span class="o">=</span> <span class="p">{</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">button</span><span class="p">:</span> <span class="kt">UIButton</span> <span class="o">=</span> <span class="p">{</span>
         <span class="k">var</span> <span class="nv">button</span> <span class="o">=</span> <span class="kt">UIButton</span><span class="p">()</span>
         <span class="n">button</span><span class="o">.</span><span class="nf">addTarget</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">#selector(</span><span class="nf">click</span><span class="kd">)</span><span class="p">,</span> <span class="nv">for</span><span class="p">:</span> <span class="o">.</span><span class="n">touchUpInside</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">button</span>
@@ -288,32 +285,29 @@ disposeBag负责管理生命周期，相当于将当前的监听交给了dispose
     <span class="kd">@objc</span> <span class="kd">func</span> <span class="nf">click</span><span class="p">()</span> <span class="p">{</span>
         <span class="c1">// do something</span>
     <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="n">button</span><span class="o">.</span><span class="n">rx</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">button</span><span class="o">.</span><span class="n">rx</span>
     <span class="o">.</span><span class="nf">controlEvent</span><span class="p">(</span><span class="o">.</span><span class="n">touchUpInside</span><span class="p">)</span>
     <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span>  <span class="p">()</span> <span class="k">in</span>
     <span class="c1">//..touchUp</span>
 
         <span class="p">})</span><span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>上面的都是简单的例子应用，下面直接用登录功能举例示例代码，<a href="https://github.com/Fidetro/rx-sample-code">代码</a>已经传到GitHub上了。<br />
 要实现的功能：点击按钮的时候，判断用户名和密码是否合法，然后请求，拿到结果。</p>
 <ol>
   <li>创建一个ViewModel
-    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">LoginViewModel</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span>
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">LoginViewModel</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span>
  <span class="c1">//由Controller负责订阅loginResult，得到登录结果</span>
  <span class="k">let</span> <span class="nv">loginResult</span><span class="p">:</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span>
 <span class="p">}</span>
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li>初始化loginResult
-    <div class="language-swift highlighter-rouge"><pre class="highlight"><code> <span class="nf">init</span><span class="p">(</span><span class="nv">input</span><span class="p">:</span> <span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">touchUp</span><span class="p">:</span> <span class="kt">ControlEvent</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="p">))</span> <span class="p">{</span>
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nf">init</span><span class="p">(</span><span class="nv">input</span><span class="p">:</span> <span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">touchUp</span><span class="p">:</span> <span class="kt">ControlEvent</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="p">))</span> <span class="p">{</span>
      <span class="c1">//将username和passowrd变形为Observable&lt;(String,String)&gt;</span>
      <span class="k">let</span> <span class="nv">usernameAndPassword</span> <span class="o">=</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">combineLatest</span><span class="p">(</span><span class="n">input</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">input</span><span class="o">.</span><span class="n">password</span><span class="p">)</span> <span class="p">{</span>
          <span class="p">(</span><span class="nv">$0</span><span class="p">,</span> <span class="nv">$1</span><span class="p">)</span>
@@ -339,11 +333,10 @@ disposeBag负责管理生命周期，相当于将当前的监听交给了dispose
          <span class="p">}</span>
      <span class="p">}</span>        
  <span class="p">}</span>
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li>在Controller监听点击后登录的结果：
-    <div class="language-swift highlighter-rouge"><pre class="highlight"><code> <span class="kd">@IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">loginButton</span><span class="p">:</span> <span class="kt">UIButton</span><span class="o">!</span>
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">@IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">loginButton</span><span class="p">:</span> <span class="kt">UIButton</span><span class="o">!</span>
  <span class="kd">@IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">usernameTextField</span><span class="p">:</span> <span class="kt">UITextField</span><span class="o">!</span>
  <span class="kd">@IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">passwordTextField</span><span class="p">:</span> <span class="kt">UITextField</span><span class="o">!</span>
  <span class="k">let</span> <span class="nv">disposeBag</span> <span class="o">=</span> <span class="kt">DisposeBag</span><span class="p">()</span>
@@ -363,8 +356,7 @@ disposeBag负责管理生命周期，相当于将当前的监听交给了dispose
          <span class="p">}</span>
      <span class="p">})</span><span class="o">.</span><span class="nf">disposed</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">disposeBag</span><span class="p">)</span>
  <span class="p">}</span>
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
 </ol>
 
@@ -372,12 +364,12 @@ disposeBag负责管理生命周期，相当于将当前的监听交给了dispose
 
 <ol>
   <li>
-    <p><code class="highlighter-rouge">Observable.just(...)</code>和<code class="highlighter-rouge">Observable.create { }</code>是干什么用的？ <br />
+    <p><code class="language-plaintext highlighter-rouge">Observable.just(...)</code>和<code class="language-plaintext highlighter-rouge">Observable.create { }</code>是干什么用的？ <br />
 这些方法都是拿来将对象包装成可观察的序列，更多的构建方法可以参考<a href="https://beeth0ven.github.io/RxSwift-Chinese-Documentation/content/decision_tree.html">这里</a></p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">observer.onNext(...)</code>又是干什么用的？<br />
-observer是<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>类型，当使用<code class="highlighter-rouge">Observable.create { }</code>创建序列的时候，闭包内会返回<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>对象,<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>对象允许你通过<code class="highlighter-rouge">.onNext(...)</code>发出一个元素，<code class="highlighter-rouge">onError(...)</code>发出一个错误，<code class="highlighter-rouge">onCompleted()</code>通知任务已经完成。</p>
+    <p><code class="language-plaintext highlighter-rouge">observer.onNext(...)</code>又是干什么用的？<br />
+observer是<code class="language-plaintext highlighter-rouge">AnyObserver&lt;...&gt;</code>类型，当使用<code class="language-plaintext highlighter-rouge">Observable.create { }</code>创建序列的时候，闭包内会返回<code class="language-plaintext highlighter-rouge">AnyObserver&lt;...&gt;</code>对象,<code class="language-plaintext highlighter-rouge">AnyObserver&lt;...&gt;</code>对象允许你通过<code class="language-plaintext highlighter-rouge">.onNext(...)</code>发出一个元素，<code class="language-plaintext highlighter-rouge">onError(...)</code>发出一个错误，<code class="language-plaintext highlighter-rouge">onCompleted()</code>通知任务已经完成。</p>
   </li>
 </ol>
 
@@ -455,13 +447,13 @@ observer是<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>类型�
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -490,6 +482,8 @@ observer是<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>类型�
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -542,6 +536,8 @@ observer是<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>类型�
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -573,7 +569,7 @@ observer是<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>类型�
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2018/05/06/RxSwift从入门到放弃——开篇";
-    var disqus_url = "http://www.foolishtalk.org/2018/05/06/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/";
+    var disqus_url = "http://localhost:4000/2018/05/06/RxSwift%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-%E5%BC%80%E7%AF%87/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -633,7 +629,7 @@ observer是<code class="highlighter-rouge">AnyObserver&lt;...&gt;</code>类型�
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

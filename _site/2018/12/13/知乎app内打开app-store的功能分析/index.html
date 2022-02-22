@@ -12,7 +12,7 @@
 
     <title>知乎app内打开app store的功能分析 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2018/12/13/%E7%9F%A5%E4%B9%8Eapp%E5%86%85%E6%89%93%E5%BC%80app-store%E7%9A%84%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90/">
+    <link rel="canonical" href="http://localhost:4000/2018/12/13/%E7%9F%A5%E4%B9%8Eapp%E5%86%85%E6%89%93%E5%BC%80app-store%E7%9A%84%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -208,18 +208,17 @@ border: none;
 无非就是几个思路，先看看原来的vc是否有子view属性，通过继承去重写约束，其次就是使用一些比较hack的手段。</p>
 
 <h1 id="正文">正文</h1>
-<p>先从<code class="highlighter-rouge">SKStoreProductViewController</code>着手，不难发现，这个类并没有公开相关的属性，或者方法允许你直接改变原来的高度。<br />
-既然如此，我们就从<code class="highlighter-rouge">UIViewController</code>的view下手：</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code>            <span class="k">let</span> <span class="nv">storeVC</span> <span class="o">=</span> <span class="kt">SKStoreProductViewController</span><span class="p">()</span>
+<p>先从<code class="language-plaintext highlighter-rouge">SKStoreProductViewController</code>着手，不难发现，这个类并没有公开相关的属性，或者方法允许你直接改变原来的高度。<br />
+既然如此，我们就从<code class="language-plaintext highlighter-rouge">UIViewController</code>的view下手：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            <span class="k">let</span> <span class="nv">storeVC</span> <span class="o">=</span> <span class="kt">SKStoreProductViewController</span><span class="p">()</span>
             <span class="n">storeVC</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
                 <span class="nf">present</span><span class="p">(</span><span class="n">storeVC</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">{</span>
                 <span class="n">storeVC</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="mi">150</span>
             <span class="p">})</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>这时候，的确效果达到了，但是如果你试着把控件放在上面，会发现点击并没有反应，因为我们把控制器的view往下移动了，这时候我们添加的控件超出了父视图，是没有办法响应点击事件的。所以直接修改控制器view的y是不可行的。<br />
 另外一个思路是获取控制器上view的子视图，让它们所有都往下，这时候控制器的view的frame并没有改变，这样就能实现我们想要的效果了。</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code>            <span class="k">let</span> <span class="nv">storeVC</span> <span class="o">=</span> <span class="kt">SKStoreProductViewController</span><span class="p">()</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            <span class="k">let</span> <span class="nv">storeVC</span> <span class="o">=</span> <span class="kt">SKStoreProductViewController</span><span class="p">()</span>
             <span class="n">storeVC</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
                 <span class="nf">present</span><span class="p">(</span><span class="n">storeVC</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">{</span>
                 <span class="k">for</span> <span class="n">subview</span> <span class="k">in</span> <span class="n">storeVC</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">subviews</span> <span class="p">{</span>
@@ -229,13 +228,12 @@ border: none;
                 <span class="n">button</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="o">.</span><span class="n">red</span>
                 <span class="n">storeVC</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
             <span class="p">})</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>效果如下:<br />
 <img src="https://www.foolishtalk.org/cloud/2018-10-13-image-yuepao-ad.jpeg" alt="" /></p>
 
 <p>到了这里，基本已经差不多了，但是其实还有些小细节要注意，这样直接修改的话，会发现没办法将页面滚到最底下。这时候还需要将view的高度减少：</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code>            <span class="k">let</span> <span class="nv">storeVC</span> <span class="o">=</span> <span class="kt">SKStoreProductViewController</span><span class="p">()</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            <span class="k">let</span> <span class="nv">storeVC</span> <span class="o">=</span> <span class="kt">SKStoreProductViewController</span><span class="p">()</span>
             <span class="n">storeVC</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
                 <span class="nf">present</span><span class="p">(</span><span class="n">storeVC</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">{</span>
                 <span class="k">for</span> <span class="n">subview</span> <span class="k">in</span> <span class="n">storeVC</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">subviews</span> <span class="p">{</span>
@@ -246,10 +244,9 @@ border: none;
                 <span class="n">button</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="o">.</span><span class="n">red</span>
                 <span class="n">storeVC</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
             <span class="p">})</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<p>另外知乎其实是先push到一个原来已经放着videoView的Controller，然后在<code class="highlighter-rouge">viewDidLoad</code>的时候再present到<code class="highlighter-rouge">SKStoreProductViewController</code>。只是一些交互上的细节，这点没有在上面分析。</p>
+<p>另外知乎其实是先push到一个原来已经放着videoView的Controller，然后在<code class="language-plaintext highlighter-rouge">viewDidLoad</code>的时候再present到<code class="language-plaintext highlighter-rouge">SKStoreProductViewController</code>。只是一些交互上的细节，这点没有在上面分析。</p>
 
 
                 <hr>
@@ -320,13 +317,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -355,6 +352,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -407,6 +406,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -438,7 +439,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2018/12/13/知乎app内打开app store的功能分析";
-    var disqus_url = "http://www.foolishtalk.org/2018/12/13/%E7%9F%A5%E4%B9%8Eapp%E5%86%85%E6%89%93%E5%BC%80app-store%E7%9A%84%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90/";
+    var disqus_url = "http://localhost:4000/2018/12/13/%E7%9F%A5%E4%B9%8Eapp%E5%86%85%E6%89%93%E5%BC%80app-store%E7%9A%84%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -498,7 +499,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

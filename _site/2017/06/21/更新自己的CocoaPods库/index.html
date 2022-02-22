@@ -12,7 +12,7 @@
 
     <title>更新自己的CocoaPods库 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/06/21/%E6%9B%B4%E6%96%B0%E8%87%AA%E5%B7%B1%E7%9A%84CocoaPods%E5%BA%93/">
+    <link rel="canonical" href="http://localhost:4000/2017/06/21/%E6%9B%B4%E6%96%B0%E8%87%AA%E5%B7%B1%E7%9A%84CocoaPods%E5%BA%93/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -201,7 +201,7 @@ border: none;
 
 				<p>以自己写的一个库为例子</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="no">Pod</span><span class="o">::</span><span class="no">Spec</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Pod</span><span class="o">::</span><span class="no">Spec</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
 
   <span class="n">s</span><span class="p">.</span><span class="nf">name</span>         <span class="o">=</span> <span class="s2">"FFDB"</span>
   <span class="n">s</span><span class="p">.</span><span class="nf">version</span>      <span class="o">=</span> <span class="s2">"1.7.0"</span>
@@ -218,26 +218,22 @@ border: none;
 
 <span class="k">end</span>
 
-</code></pre>
-</div>
-<p>原本在CocoaPods的版本是<code class="highlighter-rouge">s.version = "1.7.0"</code>
-如果要更新成<code class="highlighter-rouge">1.8.0</code>版本，先改成<code class="highlighter-rouge">s.version = "1.8.0"</code>
-同时把<code class="highlighter-rouge">s.source</code>的tag改成<code class="highlighter-rouge"> s.source       = { :git =&gt; "https://github.com/Fidetro/FFDB.git", :tag =&gt; "1.8.0" }</code></p>
-<div class="highlighter-rouge"><pre class="highlight"><code>git add *
+</code></pre></div></div>
+<p>原本在CocoaPods的版本是<code class="language-plaintext highlighter-rouge">s.version = "1.7.0"</code>
+如果要更新成<code class="language-plaintext highlighter-rouge">1.8.0</code>版本，先改成<code class="language-plaintext highlighter-rouge">s.version = "1.8.0"</code>
+同时把<code class="language-plaintext highlighter-rouge">s.source</code>的tag改成<code class="language-plaintext highlighter-rouge"> s.source       = { :git =&gt; "https://github.com/Fidetro/FFDB.git", :tag =&gt; "1.8.0" }</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add *
 git commit -m "tag 1.8.0"
 git push origin -u master
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>再打上标签</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>git tag 1.8.0
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag 1.8.0
 git push --tags
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>最后提交到Pod</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>pod trunk push FFDB.podspec
-</code></pre>
-</div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pod trunk push FFDB.podspec
+</code></pre></div></div>
 
 
                 <hr>
@@ -308,13 +304,13 @@ git push --tags
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -343,6 +339,8 @@ git push --tags
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -395,6 +393,8 @@ git push --tags
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -426,7 +426,7 @@ git push --tags
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2017/06/21/更新自己的CocoaPods库";
-    var disqus_url = "http://www.foolishtalk.org/2017/06/21/%E6%9B%B4%E6%96%B0%E8%87%AA%E5%B7%B1%E7%9A%84CocoaPods%E5%BA%93/";
+    var disqus_url = "http://localhost:4000/2017/06/21/%E6%9B%B4%E6%96%B0%E8%87%AA%E5%B7%B1%E7%9A%84CocoaPods%E5%BA%93/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -486,7 +486,7 @@ git push --tags
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

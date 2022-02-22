@@ -12,7 +12,7 @@
 
     <title>解决博客在Chrome里http和https混合使用的问题 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/">
+    <link rel="canonical" href="http://localhost:4000/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -201,19 +201,17 @@ border: none;
 
 				<h1 id="前言">前言</h1>
 <p>今天突然发现博客的图片都无法加载了，打开浏览器控制台一看，发现是无法找到https资源报错了：</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>Mixed Content: The page at '&lt;URL&gt;' was loaded over HTTPS, but requested an insecure font '&lt;URL&gt;'
-</code></pre>
-</div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Mixed Content: The page at '&lt;URL&gt;' was loaded over HTTPS, but requested an insecure font '&lt;URL&gt;'
+</code></pre></div></div>
 <p>原来是因为更新了Chrome后，如果网站是https，会把非https的资源强制转成了http，我博客用的七牛云，使用https流量是要另外收费的，所以只好找个方法曲线救国。</p>
 
 <h1 id="解决">解决</h1>
 <p>通过nginx反向到七牛云的域名，原本请求http://images.foolishtalk.org/xxx.png，改成请求https://www.foolishtalk.org/cloud/xxx.png</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>   #反向代理，解决七牛云的图片在谷歌浏览器会自动把https转成http的问题
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   #反向代理，解决七牛云的图片在谷歌浏览器会自动把https转成http的问题
    location /cloud/ {
       proxy_pass http://images.foolishtalk.org/;
    }
-</code></pre>
-</div>
+</code></pre></div></div>
 
 
                 <hr>
@@ -284,13 +282,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -319,6 +317,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -371,6 +371,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -402,7 +404,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2020/10/07/解决博客在Chrome里http和https混合使用的问题";
-    var disqus_url = "http://www.foolishtalk.org/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/";
+    var disqus_url = "http://localhost:4000/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -462,7 +464,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

@@ -12,7 +12,7 @@
 
     <title>iOS基于灰度的均值哈希算法实现图像匹配 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2016/08/22/iOS%E5%9F%BA%E4%BA%8E%E7%81%B0%E5%BA%A6%E7%9A%84%E5%9D%87%E5%80%BC%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%9B%BE%E5%83%8F%E5%8C%B9%E9%85%8D/">
+    <link rel="canonical" href="http://localhost:4000/2016/08/22/iOS%E5%9F%BA%E4%BA%8E%E7%81%B0%E5%BA%A6%E7%9A%84%E5%9D%87%E5%80%BC%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%9B%BE%E5%83%8F%E5%8C%B9%E9%85%8D/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -246,7 +246,7 @@ border: none;
 
 <p>共64位，不相同的值小于5，说明非常相似，大于10说明有差距</p>
 
-<div class="language-objc highlighter-rouge"><pre class="highlight"><code>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
 <span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">getSuitabilityWithImageA</span><span class="p">:(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">imageA</span> <span class="nf">imageB</span><span class="p">:(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">imageB</span><span class="p">{</span>
 <span class="err">  </span> <span class="err"> </span>
@@ -254,8 +254,8 @@ border: none;
 <span class="err"> </span> <span class="err"> </span> <span class="n">self</span><span class="p">.</span><span class="n">imageB</span><span class="err"> </span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">getGrayImage</span><span class="p">:[</span><span class="n">imageB</span> <span class="nf">scaleToSize</span><span class="p">:</span><span class="n">CGSizeMake</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)]];</span>
 <span class="err"> </span> <span class="err"> </span> <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nf">similarityArrayA</span><span class="p">:[</span><span class="n">self</span> <span class="nf">similarityValueWithImage</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">imageA</span><span class="p">]</span> <span class="nf">similarityArrayB</span><span class="p">:[</span><span class="n">self</span> <span class="nf">similarityValueWithImage</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">imageB</span><span class="p">]];</span>
 <span class="p">}</span>
-<span class="c1">//比较两张图的哈希值
-</span><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">similarityArrayA</span><span class="p">:(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">arrayA</span> <span class="nf">similarityArrayB</span><span class="p">:(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">arrayB</span><span class="p">{</span>
+<span class="c1">//比较两张图的哈希值</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">similarityArrayA</span><span class="p">:(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">arrayA</span> <span class="nf">similarityArrayB</span><span class="p">:(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">arrayB</span><span class="p">{</span>
 <span class="err"> </span> <span class="err"> </span> <span class="n">NSInteger</span> <span class="n">similarity</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="err"> </span> <span class="err"> </span> <span class="k">for</span> <span class="p">(</span><span class="n">NSInteger</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">arrayA</span><span class="p">.</span><span class="n">count</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="k">if</span> <span class="p">([</span><span class="n">arrayA</span><span class="p">[</span><span class="nf">i</span><span class="p">]</span> <span class="nf">isEqualToNumber</span><span class="p">:</span><span class="n">arrayB</span><span class="p">[</span><span class="nf">i</span><span class="p">]])</span> <span class="p">{</span>
@@ -266,8 +266,7 @@ border: none;
 <span class="p">}</span>
 
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>之前一直没有忘了放demo，正好最近在用swift，顺便把图像识别也放进去
 <a href="https://github.com/Fidetro/FIDToolKit">demo地址</a></p>
@@ -337,13 +336,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -372,6 +371,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -424,6 +425,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -455,7 +458,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2016/08/22/iOS基于灰度的均值哈希算法实现图像匹配";
-    var disqus_url = "http://www.foolishtalk.org/2016/08/22/iOS%E5%9F%BA%E4%BA%8E%E7%81%B0%E5%BA%A6%E7%9A%84%E5%9D%87%E5%80%BC%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%9B%BE%E5%83%8F%E5%8C%B9%E9%85%8D/";
+    var disqus_url = "http://localhost:4000/2016/08/22/iOS%E5%9F%BA%E4%BA%8E%E7%81%B0%E5%BA%A6%E7%9A%84%E5%9D%87%E5%80%BC%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%9B%BE%E5%83%8F%E5%8C%B9%E9%85%8D/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -515,7 +518,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

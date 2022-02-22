@@ -12,7 +12,7 @@
 
     <title>如何在阿里云上部署Perfect服务器 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/08/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E4%B8%8A%E9%83%A8%E7%BD%B2Perfect%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+    <link rel="canonical" href="http://localhost:4000/2017/08/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E4%B8%8A%E9%83%A8%E7%BD%B2Perfect%E6%9C%8D%E5%8A%A1%E5%99%A8/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -269,82 +269,72 @@ border: none;
 
 <ol>
   <li>通过APT安装项目必要的依存关系库
-    <div class="highlighter-rouge"><pre class="highlight"><code>apt-get install make git clang libicu-dev libmysqlclient-dev libpq-dev sqlite3 libsqlite3-dev apache2-dev pkg-config libssl-dev libsasl2-dev libcurl4-openssl-dev uuid-dev wget
-</code></pre>
-    </div>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install make git clang libicu-dev libmysqlclient-dev libpq-dev sqlite3 libsqlite3-dev apache2-dev pkg-config libssl-dev libsasl2-dev libcurl4-openssl-dev uuid-dev wget
+</code></pre></div>    </div>
   </li>
   <li>将swift软件包下载到服务器中
 swift在linux或者ubuntu上编译需要依赖swift软件包
 <a href="https://swift.org/download/#releases">下载链接</a>，选择自己要用的swift版本，以及服务器的系统版本。
 例如我要下载swift4.0，服务器是Unbuntu 16.04的版本
-    <div class="highlighter-rouge"><pre class="highlight"><code>//将软件包下载到home目录下，这里只是做个演示，事实上可以放在任意地方
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//将软件包下载到home目录下，这里只是做个演示，事实上可以放在任意地方
 $ cd /home/
 //下载软件包
 $ wget https://swift.org/builds/swift-4.0-branch/ubuntu1604/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-16-a/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-16-a-ubuntu16.04.tar.gz
 //下载验证签名
 $ wget https://swift.org/builds/swift-4.0-branch/ubuntu1604/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-16-a/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-16-a-ubuntu16.04.tar.gz.sig
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li>将PGP密钥导入密钥环：
-    <div class="highlighter-rouge"><pre class="highlight"><code>$ gpg --keyserver hkp://pool.sks-keyservers.net \
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gpg --keyserver hkp://pool.sks-keyservers.net \
    --recv-keys \
    '7463 A81A 4B2E EA1B 551F  FBCF D441 C977 412B 37AD' \
    '1BE1 E29A 084C B305 F397  D62A 9F59 7F4D 21A5 6D5F' \
    'A3BA FD35 56A5 9079 C068  94BD 63BC 1CFE 91D3 06C6'
-</code></pre>
-    </div>
+</code></pre></div>    </div>
     <p>或者</p>
-    <div class="highlighter-rouge"><pre class="highlight"><code>$ wget -q -O - https://swift.org/keys/all-keys.asc | \
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ wget -q -O - https://swift.org/keys/all-keys.asc | \
   gpg --import -
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li>验证签名
-    <div class="highlighter-rouge"><pre class="highlight"><code>//下载最新的签名证书
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//下载最新的签名证书
 $ gpg --keyserver hkp://pool.sks-keyservers.net --refresh-keys Swift
 //用下载的签名验证下载下来的swift软件包
 //注意将swift-&lt;VERSION&gt;-&lt;PLATFORM&gt;.tar.gz.sig替换成你下载下来的文件名
 $ gpg --verify swift-3.1.1-RELEASE-ubuntu16.04.tar.gz.sig
 ...
 gpg: Good signature from "Swift Automatic Signing Key #1 &lt;swift-infrastructure@swift.org&gt;"
-</code></pre>
-    </div>
-    <p>如果出现提示<code class="highlighter-rouge">gpg: Can't check signature: No public key</code>请根据以下步骤<a href="https://swift.org/download/#active-signing-keys">导入公钥</a>
+</code></pre></div>    </div>
+    <p>如果出现提示<code class="language-plaintext highlighter-rouge">gpg: Can't check signature: No public key</code>请根据以下步骤<a href="https://swift.org/download/#active-signing-keys">导入公钥</a>
 如果出现了下面的警告，但是你按照了以上的步骤操作并检验了软件包，那就是没有问题的。</p>
-    <div class="highlighter-rouge"><pre class="highlight"><code>gpg: WARNING: This key is not certified with a trusted signature!
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg: WARNING: This key is not certified with a trusted signature!
 gpg:          There is no indication that the signature belongs to the owner.
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li>解压下载的文件
-    <div class="highlighter-rouge"><pre class="highlight"><code>//注意将swift-&lt;VERSION&gt;-&lt;PLATFORM&gt;.tar.gz替换成你下载下来的文件名
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//注意将swift-&lt;VERSION&gt;-&lt;PLATFORM&gt;.tar.gz替换成你下载下来的文件名
 $ tar xzf swift-3.1.1-RELEASE-ubuntu16.04.tar.gz
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li>将swift工具链添加到路径
-    <div class="highlighter-rouge"><pre class="highlight"><code>//   /home/swift-3.1.1-RELEASE-ubuntu16.04/usr/bin是你刚刚解压出来的路径
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//   /home/swift-3.1.1-RELEASE-ubuntu16.04/usr/bin是你刚刚解压出来的路径
 $ export PATH=/path/to/usr/bin:/home/swift-3.1.1-RELEASE-ubuntu16.04/usr/bin
-</code></pre>
-    </div>
-    <p>这时候执行<code class="highlighter-rouge">$ swift</code>应该已经可以运行了
+</code></pre></div>    </div>
+    <p>这时候执行<code class="language-plaintext highlighter-rouge">$ swift</code>应该已经可以运行了
 如果要将其设置成永久的环境变量，可以按照以下步骤</p>
-    <div class="highlighter-rouge"><pre class="highlight"><code>$ vim /etc/profile
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vim /etc/profile
 在文件内容最后加上
 export PATH=/home/swift-3.1.1-RELEASE-ubuntu16.04/usr/bin:$PATH
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
 </ol>
 
 <p>到这里为止，swift的环境已经是配置好了，然后可以下载perfect上的demo测试一下</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>$ git clone https://github.com/PerfectlySoft/PerfectTemplate.git
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone https://github.com/PerfectlySoft/PerfectTemplate.git
 $ cd PerfectTemplate
 $ swift build
 $ .build/debug/PerfectTemplate
-</code></pre>
-</div>
+</code></pre></div></div>
 <p><a href="http://www.jianshu.com/u/097a14a11101">吕毅楽</a>在评论区提到了安全规则的问题，这种情况需要：</p>
 
 <p><img src="https://www.foolishtalk.org/cloud/444F8C63-D47D-4C4D-8A2F-DCCA61BBF07D.png" alt="屏幕快照 2017-09-16 下午3.34.46.png" /></p>
@@ -424,13 +414,13 @@ $ .build/debug/PerfectTemplate
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -459,6 +449,8 @@ $ .build/debug/PerfectTemplate
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -511,6 +503,8 @@ $ .build/debug/PerfectTemplate
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -542,7 +536,7 @@ $ .build/debug/PerfectTemplate
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2017/08/21/如何在阿里云上部署Perfect服务器";
-    var disqus_url = "http://www.foolishtalk.org/2017/08/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E4%B8%8A%E9%83%A8%E7%BD%B2Perfect%E6%9C%8D%E5%8A%A1%E5%99%A8/";
+    var disqus_url = "http://localhost:4000/2017/08/21/%E5%A6%82%E4%BD%95%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E4%B8%8A%E9%83%A8%E7%BD%B2Perfect%E6%9C%8D%E5%8A%A1%E5%99%A8/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -602,7 +596,7 @@ $ .build/debug/PerfectTemplate
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

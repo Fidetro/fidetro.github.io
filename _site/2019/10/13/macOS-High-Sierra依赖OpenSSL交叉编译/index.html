@@ -12,7 +12,7 @@
 
     <title>macOS High Sierra依赖OpenSSL交叉编译 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">
+    <link rel="canonical" href="http://localhost:4000/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -198,21 +198,18 @@ border: none;
                 post-container">
 
 				<p>有些比较老的库，又是依赖 openssl，要自己编译成静态库的时候，遇到了这个错误：</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>configure: error: OpenSSL support explicitly requested but OpenSSL could not be found
-</code></pre>
-</div>
-<p>如果打算通过<code class="highlighter-rouge">brew link openssl</code>软连接，会得到这个错误：</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>Warning: Refusing to link macOS-provided software: openssl
-</code></pre>
-</div>
-<p>后来查阅了一些资料，在 High Sierra 上，openssl 被 禁止通过 <code class="highlighter-rouge">brew link openssl</code> 软链接。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>configure: error: OpenSSL support explicitly requested but OpenSSL could not be found
+</code></pre></div></div>
+<p>如果打算通过<code class="language-plaintext highlighter-rouge">brew link openssl</code>软连接，会得到这个错误：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning: Refusing to link macOS-provided software: openssl
+</code></pre></div></div>
+<p>后来查阅了一些资料，在 High Sierra 上，openssl 被 禁止通过 <code class="language-plaintext highlighter-rouge">brew link openssl</code> 软链接。</p>
 
 <p>设置这几个环境变量就可以了：</p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/usr/local/opt/openssl/lib:<span class="s2">"</span><span class="k">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="k">}</span><span class="s2">"</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/usr/local/opt/openssl/lib:<span class="s2">"</span><span class="k">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="k">}</span><span class="s2">"</span>
 <span class="nb">export </span><span class="nv">CPATH</span><span class="o">=</span>/usr/local/opt/openssl/include:<span class="s2">"</span><span class="k">${</span><span class="nv">CPATH</span><span class="k">}</span><span class="s2">"</span>
 <span class="nb">export </span><span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span>/usr/local/opt/openssl/lib/pkgconfig:<span class="s2">"</span><span class="k">${</span><span class="nv">PKG_CONFIG_PATH</span><span class="k">}</span><span class="s2">"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 
                 <hr>
@@ -283,13 +280,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -318,6 +315,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -370,6 +369,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -401,7 +402,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2019/10/13/macOS High Sierra依赖OpenSSL交叉编译";
-    var disqus_url = "http://www.foolishtalk.org/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/";
+    var disqus_url = "http://localhost:4000/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -461,7 +462,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

@@ -12,7 +12,7 @@
 
     <title>你真的了解p、po、v区别吗 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/">
+    <link rel="canonical" href="http://localhost:4000/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -200,39 +200,39 @@ border: none;
                 post-container">
 
 				<h1 id="正文">正文</h1>
-<p>平常在使用Xcode断点调试问题时，<code class="highlighter-rouge">po</code>可能是最常用到的<code class="highlighter-rouge">LLVM</code>命令了。<br />
-通过<code class="highlighter-rouge">po</code>命令，我们可以在Xcode的<code class="highlighter-rouge">LLDB</code>控制台打印对象的描述，系统在运行时会提供一个默认值，如图：<br />
+<p>平常在使用Xcode断点调试问题时，<code class="language-plaintext highlighter-rouge">po</code>可能是最常用到的<code class="language-plaintext highlighter-rouge">LLVM</code>命令了。<br />
+通过<code class="language-plaintext highlighter-rouge">po</code>命令，我们可以在Xcode的<code class="language-plaintext highlighter-rouge">LLDB</code>控制台打印对象的描述，系统在运行时会提供一个默认值，如图：<br />
 <img src="https://www.foolishtalk.org/cloud/caed4a8d6cbafa4387d2fb57155cf6e7.png" alt="" /></p>
 
-<p>我们可以通过重写<code class="highlighter-rouge">func debugDescription()</code>达到我们希望在<code class="highlighter-rouge">po</code>的时候返回预期的返回值。<br />
+<p>我们可以通过重写<code class="language-plaintext highlighter-rouge">func debugDescription()</code>达到我们希望在<code class="language-plaintext highlighter-rouge">po</code>的时候返回预期的返回值。<br />
 <img src="https://www.foolishtalk.org/cloud/54e45465efc65c1b4fd93f2d8995ea4e.png" alt="" /></p>
 
-<p><code class="highlighter-rouge">po</code>的底层逻辑实现：<br />
+<p><code class="language-plaintext highlighter-rouge">po</code>的底层逻辑实现：<br />
 <img src="https://www.foolishtalk.org/cloud/57320d88124faf7812bbaa673f37fee4.png" alt="" /></p>
 
-<p>事实上打印对象有三种方法，<code class="highlighter-rouge">po</code>只是其中一种。</p>
+<p>事实上打印对象有三种方法，<code class="language-plaintext highlighter-rouge">po</code>只是其中一种。</p>
 
-<p>第二种方式是<code class="highlighter-rouge">p</code>。</p>
+<p>第二种方式是<code class="language-plaintext highlighter-rouge">p</code>。</p>
 
-<p><code class="highlighter-rouge">p</code>和<code class="highlighter-rouge">po</code>的区别在于，<code class="highlighter-rouge">p</code>不会随着<code class="highlighter-rouge">func debugDescription()</code>方法修改而且改变打印的值。
+<p><code class="language-plaintext highlighter-rouge">p</code>和<code class="language-plaintext highlighter-rouge">po</code>的区别在于，<code class="language-plaintext highlighter-rouge">p</code>不会随着<code class="language-plaintext highlighter-rouge">func debugDescription()</code>方法修改而且改变打印的值。
 <img src="https://www.foolishtalk.org/cloud/0bb5fdda413e64e8b3ba45c58d1c2ec3.png" alt="" /></p>
 
-<p>但是<code class="highlighter-rouge">p</code>和<code class="highlighter-rouge">po</code>，遵循swift的语法，在下面的例子中，是无法打印的。<br />
+<p>但是<code class="language-plaintext highlighter-rouge">p</code>和<code class="language-plaintext highlighter-rouge">po</code>，遵循swift的语法，在下面的例子中，是无法打印的。<br />
 <img src="https://www.foolishtalk.org/cloud/f65d30492a3fc575e641976544a7aa1e.png" alt="" /><br />
 同样下面的代码也会报错：</p>
 <pre><code class="language-Swift">    let student : Person = Student(name:"john")
     print(student.name) //这里是会报错的
 </code></pre>
 
-<p><code class="highlighter-rouge">p</code>的底层逻辑实现：<br />
+<p><code class="language-plaintext highlighter-rouge">p</code>的底层逻辑实现：<br />
 <img src="https://www.foolishtalk.org/cloud/e2b0f3feefd02283937b5230a420110d.png" alt="" /></p>
 
-<p>第三种方式是通过<code class="highlighter-rouge">v</code>打印。<br />
-<code class="highlighter-rouge">v</code>同样不会不会随着<code class="highlighter-rouge">func debugDescription()</code>方法修改而且改变打印的值。<br />
-而且<code class="highlighter-rouge">v</code>有自己的语法，不需要通过编译，而是进行动态类型解析，但是它无法执行代码。<br />
+<p>第三种方式是通过<code class="language-plaintext highlighter-rouge">v</code>打印。<br />
+<code class="language-plaintext highlighter-rouge">v</code>同样不会不会随着<code class="language-plaintext highlighter-rouge">func debugDescription()</code>方法修改而且改变打印的值。<br />
+而且<code class="language-plaintext highlighter-rouge">v</code>有自己的语法，不需要通过编译，而是进行动态类型解析，但是它无法执行代码。<br />
 <img src="https://www.foolishtalk.org/cloud/849c0b54225807f00201d31cd8bf072c.png" alt="" /></p>
 
-<p><code class="highlighter-rouge">v</code>的底层逻辑实现：<br />
+<p><code class="language-plaintext highlighter-rouge">v</code>的底层逻辑实现：<br />
 <img src="https://www.foolishtalk.org/cloud/67340b5668cffd5d75e007e1839d46fd.png" alt="" /></p>
 
 <h1 id="总结">总结</h1>
@@ -335,13 +335,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -370,6 +370,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -422,6 +424,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -453,7 +457,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2020/06/01/你真的了解p、po、v区别吗 copy";
-    var disqus_url = "http://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/";
+    var disqus_url = "http://localhost:4000/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -513,7 +517,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

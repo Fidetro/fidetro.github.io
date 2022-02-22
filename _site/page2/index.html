@@ -12,7 +12,7 @@
 
     <title>FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/page2/">
+    <link rel="canonical" href="http://localhost:4000/page2/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -157,6 +157,30 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">
+        <h2 class="post-title">
+            macOS High Sierra依赖OpenSSL交叉编译
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Xcode
+        </h3>
+        
+        <div class="post-content-preview">
+            有些比较老的库，又是依赖 openssl，要自己编译成静态库的时候，遇到了这个错误：
+configure: error: OpenSSL support explicitly requested but OpenSSL could not be found
+
+如果打算通过brew link openssl软连接，会得到这个错误：
+Warning: Refusing to link macOS...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Karim on October 13, 2019
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2019/04/11/mocklocation/">
         <h2 class="post-title">
             iOS模拟移动定位
@@ -236,7 +260,6 @@
 }
 
 
-
         </div>
     </a>
     <p class="post-meta">
@@ -309,7 +332,7 @@
 
 在iOS 11后，有个接力的功能非常好用，可以在iPhone和Mac上共享剪贴板等。但是自己用的时候，总有很多小问题，明明需要打开的都打开了接力失效、上一次复制的是图片后来复制的是文本，iPhone直接剪贴板都不出来了。经历了一顿需求分析之后，决定自己动手做一个。
 既然要实现跨平台，免不了要涉及到服务器，选择自己去写还是使用现有的云服务，成为了当前选择的最大问题。
-为了解决又快懒~~...
+为了解决又快懒又安...
         </div>
     </a>
     <p class="post-meta">
@@ -391,36 +414,6 @@ ReplayKit是WWDC15推出的苹果原生录屏框架，目的在于让开发者�
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/">
-        <h2 class="post-title">
-            NS_ASSUME_NONNULL_BEGIN和NS_ASSUME_NONNULL_END
-        </h2>
-        
-        <h3 class="post-subtitle">
-            iOS，Xcode 10
-        </h3>
-        
-        <div class="post-content-preview">
-            更新了Xcode 10之后在新建OC的类的时候，都会默认加上了NS_ASSUME_NONNULL_BEGIN和NS_ASSUME_NONNULL_END。
-NS_ASSUME_NONNULL_BEGIN
-
-@interface Person : NSObject
-
-@end
-
-NS_ASSUME_NONNULL_END
-
-
-在Objective-C中，是没有像swift中!和?的概念，为了解...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on September 20, 2018
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -461,13 +454,13 @@ NS_ASSUME_NONNULL_END
                             
                         
                             
-                                <a href="/tags/#iOS" title="iOS" rel="38">
+                                <a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
                         
                             
-                                <a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                                <a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -496,6 +489,8 @@ NS_ASSUME_NONNULL_END
                                 <a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+                        
                             
                         
                             
@@ -534,6 +529,8 @@ NS_ASSUME_NONNULL_END
                                 <a href="/tags/#Mac" title="Mac" rel="2">
                                     Mac
                                 </a>
+                            
+                        
                             
                         
                             
@@ -665,7 +662,7 @@ NS_ASSUME_NONNULL_END
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

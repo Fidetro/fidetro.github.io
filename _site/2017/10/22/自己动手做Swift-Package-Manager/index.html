@@ -12,7 +12,7 @@
 
     <title>自己动手做Swift-Package-Manager - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/10/22/%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%81%9ASwift-Package-Manager/">
+    <link rel="canonical" href="http://localhost:4000/2017/10/22/%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%81%9ASwift-Package-Manager/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -200,45 +200,40 @@ border: none;
                 post-container">
 
 				<p>Swift Package Manager是苹果自家的包管理工具，他和iOS开发中的Cocoapod或者Carthage类似，但是我们可以从他<a href="https://github.com/apple/swift-package-manager">GitHub</a>文档看到</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>Note that at this time the Package Manager has no support for iOS, watchOS, or tvOS platforms.
-</code></pre>
-</div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Note that at this time the Package Manager has no support for iOS, watchOS, or tvOS platforms.
+</code></pre></div></div>
 <p>就是SPM是不支持  iOS, watchOS, or tvOS 平台，不过如果你想在不是mac OS的系统下使用swift，那就能用到SPM了。</p>
 
 <p>建立一个以下的目录</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>example[这是个文件夹，起什么名字都行]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>example[这是个文件夹，起什么名字都行]
 ├── Sources[这是个文件夹，默认这个名字，里面放你需要生成库的.swift文件]
 │   ├── Person.swift
 │   ├── Cat.swift
 │   └── Dog.swift
 └── Package.swift[必须这个名字]
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>然后在Package.swift中写上依赖的内容</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">PackageDescription</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">PackageDescription</span>
 
 <span class="k">let</span> <span class="nv">package</span> <span class="o">=</span> <span class="kt">Package</span><span class="p">(</span>
     <span class="nv">name</span><span class="p">:</span> <span class="s">"exmaple"</span> <span class="c1">// 这里填你这个Package的名字</span>
 <span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>然后去github生成一个远程仓库，在example目录下</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="err">$</span> <span class="n">git</span> <span class="kd">init</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">git</span> <span class="kd">init</span>
 <span class="err">$</span> <span class="n">git</span> <span class="n">add</span> <span class="o">*</span>
 <span class="err">$</span> <span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s">"SPM example"</span>
 <span class="err">$</span> <span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">origin</span> <span class="n">git</span><span class="kd">@github</span><span class="o">.</span><span class="nv">com</span><span class="p">:</span><span class="n">xxx</span><span class="o">/</span><span class="n">example</span><span class="o">.</span><span class="n">git</span>
 <span class="err">$</span> <span class="n">git</span> <span class="n">push</span> <span class="o">-</span><span class="n">u</span> <span class="n">origin</span> <span class="n">master</span>
 <span class="err">$</span> <span class="n">git</span> <span class="n">tag</span> <span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
 <span class="err">$</span> <span class="n">git</span> <span class="n">push</span> <span class="o">--</span><span class="n">tags</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>这时候就可以新建一个目录测试是否成功了</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>$ mkdir test
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mkdir test
 $ cd test
 $ vim Package.swift
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>在Package.swift中输入</p>
 <pre><code class="language-iswift">import PackageDescription
 
@@ -252,18 +247,17 @@ majorVersion: 1)
 )
 </code></pre>
 <p>在 test 目录下：</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>$ swift build
-</code></pre>
-</div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ swift build
+</code></pre></div></div>
 <p>这时候应该看到提示成功了，到这里已经完成了</p>
 
 <h2 id="附带一些自己踩过的坑">附带一些自己踩过的坑</h2>
 <ol>
-  <li>如果example的目录下有很多别的文件夹，在<code class="highlighter-rouge">$ swift build</code>的时候有可能会出现这个错误
-<code class="highlighter-rouge">package has unsupported layout; multiple source roots found:</code></li>
+  <li>如果example的目录下有很多别的文件夹，在<code class="language-plaintext highlighter-rouge">$ swift build</code>的时候有可能会出现这个错误
+<code class="language-plaintext highlighter-rouge">package has unsupported layout; multiple source roots found:</code></li>
 </ol>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>example
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>example
 ├── Sources
 │   ├── Person.swift
 │   ├── Cat.swift
@@ -272,19 +266,17 @@ majorVersion: 1)
 │── a[不需要参与编译的文件]
 │── b[不需要参与编译的文件]
 └── Package.swift
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>出现这个错误的时候example/Package.swift 需要这样写：</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">PackageDescription</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">PackageDescription</span>
 
 <span class="k">let</span> <span class="nv">package</span> <span class="o">=</span> <span class="kt">Package</span><span class="p">(</span>
     <span class="nv">name</span><span class="p">:</span> <span class="s">"exmaple"</span><span class="p">,</span> <span class="c1">// 这里填你这个Package的名字</span>
     <span class="nv">exclude</span><span class="p">:[</span><span class="s">"a"</span><span class="p">,</span><span class="s">"b"</span><span class="p">]</span>
 <span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>如果你这个库还依赖了别的库，还可以这样写：</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">PackageDescription</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">PackageDescription</span>
 
 <span class="k">let</span> <span class="nv">package</span> <span class="o">=</span> <span class="kt">Package</span><span class="p">(</span>
     <span class="nv">name</span><span class="p">:</span> <span class="s">"exmaple"</span><span class="p">,</span> <span class="c1">// 这里填你这个Package的名字</span>
@@ -293,31 +285,28 @@ majorVersion: 1)
 	<span class="p">],</span>
     <span class="nv">exclude</span><span class="p">:[</span><span class="s">"a"</span><span class="p">,</span><span class="s">"b"</span><span class="p">]</span>
 <span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <ol>
   <li>majorVersion只能是Int，我如果发布的不是整数tag怎么办？
 可以换成选择版本范围，默认是根据当前范围最高的版本更新的
-    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">PackageDescription</span>
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">PackageDescription</span>
 <span class="k">let</span> <span class="nv">package</span> <span class="o">=</span> <span class="kt">Package</span><span class="p">(</span>
  <span class="nv">name</span><span class="p">:</span> <span class="s">"test"</span><span class="p">,</span> 
  <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
           <span class="o">.</span><span class="kt">Package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/xxx/example.git"</span><span class="p">,</span><span class="nv">versions</span><span class="p">:</span> <span class="kt">Version</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">..&lt;</span><span class="kt">Version</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="o">.</span><span class="n">max</span><span class="p">))]</span>
  <span class="p">]</span>
 <span class="p">)</span>
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li>swift build了很久最后出现 error: reachedTimeLimit
 这种情况我之前遇到过，具体是为什么导致当时没留意，但是你可以从这几个方面排查：
     <ol>
       <li>Package指定的版本是否有错</li>
-      <li>更新了新的版本，不能直接<code class="highlighter-rouge">$ swift build</code>需要：
-        <div class="highlighter-rouge"><pre class="highlight"><code>$ rm -rf .build/
+      <li>更新了新的版本，不能直接<code class="language-plaintext highlighter-rouge">$ swift build</code>需要：
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ rm -rf .build/
 $ rm Package.resolved
-</code></pre>
-        </div>
+</code></pre></div>        </div>
       </li>
     </ol>
   </li>
@@ -394,13 +383,13 @@ $ rm Package.resolved
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -429,6 +418,8 @@ $ rm Package.resolved
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -481,6 +472,8 @@ $ rm Package.resolved
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -512,7 +505,7 @@ $ rm Package.resolved
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2017/10/22/自己动手做Swift-Package-Manager";
-    var disqus_url = "http://www.foolishtalk.org/2017/10/22/%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%81%9ASwift-Package-Manager/";
+    var disqus_url = "http://localhost:4000/2017/10/22/%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E5%81%9ASwift-Package-Manager/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -572,7 +565,7 @@ $ rm Package.resolved
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

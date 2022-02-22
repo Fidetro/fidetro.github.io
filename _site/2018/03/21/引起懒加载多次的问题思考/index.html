@@ -12,7 +12,7 @@
 
     <title>引起懒加载多次的问题思考 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2018/03/21/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/">
+    <link rel="canonical" href="http://localhost:4000/2018/03/21/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -205,7 +205,7 @@ border: none;
   <p>懒加载是为了保证属性只会初始化一次，同时在没有使用时，节能内存而使用的。苹果也非常推荐我们使用。但是今天在使用的时候，发现居然会懒加载了2次，为了更容易让别人看懂，我精炼了以下的代码，更好解释为什么会出现懒加载2次的情况。</p>
 </blockquote>
 
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">BViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">BViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
 
     <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">bgView</span><span class="p">:</span> <span class="kt">UIView</span> <span class="o">=</span> <span class="p">{</span>
         <span class="k">var</span> <span class="nv">bgView</span> <span class="o">=</span> <span class="kt">UIView</span><span class="p">()</span>
@@ -229,14 +229,12 @@ border: none;
         
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<p>假设这时候AController通过<code class="highlighter-rouge">init(color :UIColor)</code>调用BController push进来</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code>        <span class="k">let</span> <span class="nv">bvc</span> <span class="o">=</span> <span class="kt">BViewController</span><span class="p">(</span><span class="nv">color</span><span class="p">:</span> <span class="o">.</span><span class="n">red</span><span class="p">)</span>
+<p>假设这时候AController通过<code class="language-plaintext highlighter-rouge">init(color :UIColor)</code>调用BController push进来</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="k">let</span> <span class="nv">bvc</span> <span class="o">=</span> <span class="kt">BViewController</span><span class="p">(</span><span class="nv">color</span><span class="p">:</span> <span class="o">.</span><span class="n">red</span><span class="p">)</span>
         <span class="nf">present</span><span class="p">(</span><span class="n">bvc</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>先来思考一下，bvc会是什么颜色？</p>
 
 <blockquote>
@@ -248,7 +246,7 @@ border: none;
 &lt;UIView: 0x7f97e06098b0; frame = (0 0; 0 0); layer = &lt;CALayer: 0x60000022be60&gt;&gt;
 
 </code></pre>
-<p>原来是因为bgView进行了两次懒加载，先讲下怎么解决这个问题，后面会详细分析原因，引起这个问题的原因其实就是因为这一行<code class="highlighter-rouge">view.addSubview(bgView)</code>,此时把<code class="highlighter-rouge">view.addSubview(bgView)</code>放到<code class="highlighter-rouge">viewDidLoad()</code>再次运行，打印信息如下：</p>
+<p>原来是因为bgView进行了两次懒加载，先讲下怎么解决这个问题，后面会详细分析原因，引起这个问题的原因其实就是因为这一行<code class="language-plaintext highlighter-rouge">view.addSubview(bgView)</code>,此时把<code class="language-plaintext highlighter-rouge">view.addSubview(bgView)</code>放到<code class="language-plaintext highlighter-rouge">viewDidLoad()</code>再次运行，打印信息如下：</p>
 <pre><code class="language-LLVM">&lt;UIView: 0x7fb94ac0e6b0; frame = (0 0; 0 0); layer = &lt;CALayer: 0x604000224020&gt;&gt;
 </code></pre>
 <p>问题解决！<br />
@@ -259,7 +257,7 @@ border: none;
 
 <p><img src="https://www.foolishtalk.org/cloud/2018-3-21-lazy-2.png" alt="" /></p>
 
-<p>从这个问题，可以猜测Controller的view在生成的时候就会触发<code class="highlighter-rouge">viewDidLoad</code>,为了避免出现这样的问题，还是应该尽量少在Controller的初始化方法里进行操作。</p>
+<p>从这个问题，可以猜测Controller的view在生成的时候就会触发<code class="language-plaintext highlighter-rouge">viewDidLoad</code>,为了避免出现这样的问题，还是应该尽量少在Controller的初始化方法里进行操作。</p>
 
 
                 <hr>
@@ -330,13 +328,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -365,6 +363,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -417,6 +417,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -448,7 +450,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2018/03/21/引起懒加载多次的问题思考";
-    var disqus_url = "http://www.foolishtalk.org/2018/03/21/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/";
+    var disqus_url = "http://localhost:4000/2018/03/21/%E5%BC%95%E8%B5%B7%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%9A%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -508,7 +510,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

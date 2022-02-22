@@ -12,7 +12,7 @@
 
     <title>Mac App公证 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/">
+    <link rel="canonical" href="http://localhost:4000/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -204,26 +204,25 @@ border: none;
 <p>从非Mac AppStore的地方下载的App，大家应该都有遇到过这样的提示：<br />
 <img src="https://www.foolishtalk.org/cloud/IMG_4487.PNG" alt="" /></p>
 
-<p>遇到这种情况，可以在终端输入，将<code class="highlighter-rouge">安全性与隐私-通用-任何来源</code>开启，这样就可以解决了：</p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo spctl --master-disable
-</code></pre>
-</div>
+<p>遇到这种情况，可以在终端输入，将<code class="language-plaintext highlighter-rouge">安全性与隐私-通用-任何来源</code>开启，这样就可以解决了：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>spctl <span class="nt">--master-disable</span>
+</code></pre></div></div>
 <p><img src="https://www.foolishtalk.org/cloud/b763e24905260962b5f85903f86472d5.png" alt="" /></p>
 
 <p>但是作为一个普通用户，会认为你的App不安全，我开发的虚拟定位因为需要依赖非沙盒环境下的Magellan，也遇到这个问题，也有国外用户因为觉得这个行为是有风险，在AppStore给了个差评。</p>
 
 <p><img src="https://www.foolishtalk.org/cloud/9d72a50bedcd69db68dbe4777d16b83f.png" alt="" /></p>
 
-<p>从设置上看，用户是可以通过选择<code class="highlighter-rouge">App Store和被认可的开发者</code>下载非App Store来源的应用的，问题是怎样才能成为被认可的开发者呢？</p>
+<p>从设置上看，用户是可以通过选择<code class="language-plaintext highlighter-rouge">App Store和被认可的开发者</code>下载非App Store来源的应用的，问题是怎样才能成为被认可的开发者呢？</p>
 
 <h1 id="正文">正文</h1>
 
-<p>Mac上通过<code class="highlighter-rouge">Gatekeeper</code>的技术来确保用户运行的是自己信任的App,在<code class="highlighter-rouge">App Store</code>上架之前应用是经过<code class="highlighter-rouge">Apple</code>签名的，通过这种方式保证App没有被修改。</p>
+<p>Mac上通过<code class="language-plaintext highlighter-rouge">Gatekeeper</code>的技术来确保用户运行的是自己信任的App,在<code class="language-plaintext highlighter-rouge">App Store</code>上架之前应用是经过<code class="language-plaintext highlighter-rouge">Apple</code>签名的，通过这种方式保证App没有被修改。</p>
 
 <p>而从第三方网站或软件中下载的App，则需要提交应用给Apple进行公证，公证结束后再对其签名，用户下载的时候弹窗就会变成这样：<br />
 <img src="https://www.foolishtalk.org/cloud/IMG_4488.PNG" alt="" /></p>
 
-<p>公证的方式有两种，一种是通过Xcode Archives后在<code class="highlighter-rouge">Organizer</code>进行操作，另一种方式是通过脚本自定义workflow。</p>
+<p>公证的方式有两种，一种是通过Xcode Archives后在<code class="language-plaintext highlighter-rouge">Organizer</code>进行操作，另一种方式是通过脚本自定义workflow。</p>
 
 <h2 id="xcode">Xcode</h2>
 <p>通过 Xcode导航栏上方 「Product」-&gt;「Archives」,选择「Distribute App」-&gt; 「Developer ID」-&gt; 「Upload」<br />
@@ -235,10 +234,10 @@ border: none;
 <h2 id="workflow">Workflow</h2>
 <p>我自己用的是脚本打包，因为mac上打包主要以dmg的形式为主，另外dSYM也需要上传到App Center上，自定义workflow更适合我。</p>
 
-<p>先用Xcode打包的方式执行一次，将导出后文件夹中的<code class="highlighter-rouge">ExportOptions.plist</code>复制到工程目录下，即<code class="highlighter-rouge">$SRCROOT/ExportOptions.plist</code>下，等下会用到。</p>
+<p>先用Xcode打包的方式执行一次，将导出后文件夹中的<code class="language-plaintext highlighter-rouge">ExportOptions.plist</code>复制到工程目录下，即<code class="language-plaintext highlighter-rouge">$SRCROOT/ExportOptions.plist</code>下，等下会用到。</p>
 
 <p>新建个构建脚本文件，放工程目录下：</p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#App名字</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#App名字</span>
 <span class="nv">PRODUCT_NAME</span><span class="o">=</span>xxx
 <span class="nv">CONFIGURATION</span><span class="o">=</span>Release
 <span class="c">#SCHEME名字</span>
@@ -249,78 +248,67 @@ border: none;
 
 <span class="nv">$CLEAN_COMMAND</span> clean
 <span class="nv">$BUILD_COMMAND</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>苹果不建议我们使用明文的密码，通过下面的命令，将密码放进钥匙串：<br />
 Xcode 13之后:</p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#这里的WWDRTeamID，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看</span>
-xcrun notarytool store-credentials <span class="s2">"AC_PASSWORD"</span> --apple-id <span class="s2">"开发者账号邮箱"</span> --team-id &lt;WWDRTeamID&gt; --password &lt;secret_2FA_password&gt;
-</code></pre>
-</div>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#这里的WWDRTeamID，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看</span>
+xcrun notarytool store-credentials <span class="s2">"AC_PASSWORD"</span> <span class="nt">--apple-id</span> <span class="s2">"开发者账号邮箱"</span> <span class="nt">--team-id</span> &lt;WWDRTeamID&gt; <span class="nt">--password</span> &lt;secret_2FA_password&gt;
+</code></pre></div></div>
 <p>Xcode 13之前:</p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>xcrun altool --store-password-in-keychain-item <span class="s2">"AC_PASSWORD"</span> -u <span class="s2">"开发者账号邮箱"</span> -p <span class="s2">"apple id专用密码"</span>  
-</code></pre>
-</div>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcrun altool <span class="nt">--store-password-in-keychain-item</span> <span class="s2">"AC_PASSWORD"</span> <span class="nt">-u</span> <span class="s2">"开发者账号邮箱"</span> <span class="nt">-p</span> <span class="s2">"apple id专用密码"</span>  
+</code></pre></div></div>
 <p>不知道什么是专用密码的，可以看<a href="https://support.apple.com/zh-cn/HT204397">这里</a></p>
 
 <p>将下面的脚本调整后，放入Post-actions中<br />
 <img src="https://www.foolishtalk.org/cloud/7d1045b183241672996953e235bec078.png" alt="" /></p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>xcodebuild -exportArchive -archivePath <span class="s2">"</span><span class="nv">$ARCHIVE_PATH</span><span class="s2">"</span> -exportOptionsPlist <span class="s2">"</span><span class="nv">$SRCROOT</span><span class="s2">/ExportOptions.plist"</span> -exportPath <span class="s2">"</span><span class="nv">$EXPORT_PATH</span><span class="s2">"</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcodebuild <span class="nt">-exportArchive</span> <span class="nt">-archivePath</span> <span class="s2">"</span><span class="nv">$ARCHIVE_PATH</span><span class="s2">"</span> <span class="nt">-exportOptionsPlist</span> <span class="s2">"</span><span class="nv">$SRCROOT</span><span class="s2">/ExportOptions.plist"</span> <span class="nt">-exportPath</span> <span class="s2">"</span><span class="nv">$EXPORT_PATH</span><span class="s2">"</span>
 
 <span class="nv">APP_PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$EXPORT_PATH</span><span class="s2">/</span><span class="nv">$PRODUCT_NAME</span><span class="s2">.app"</span>
 <span class="nv">ZIP_PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$EXPORT_PATH</span><span class="s2">/</span><span class="nv">$PRODUCT_NAME</span><span class="s2">.zip"</span>
 <span class="c">#如果不是打包成dmg，.app需要压缩成zip上传</span>
-ditto -c -k --keepParent <span class="s2">"</span><span class="nv">$APP_PATH</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ZIP_PATH</span><span class="s2">"</span>
-</code></pre>
-</div>
+ditto <span class="nt">-c</span> <span class="nt">-k</span> <span class="nt">--keepParent</span> <span class="s2">"</span><span class="nv">$APP_PATH</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ZIP_PATH</span><span class="s2">"</span>
+</code></pre></div></div>
 <p>接着将压缩好的zip文件，上传到苹果服务器进行公证，Xcode 13之后：</p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#使用--wait，告诉notarytool只有在公证服务完成处理提交后才退出</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#使用--wait，告诉notarytool只有在公证服务完成处理提交后才退出</span>
 <span class="c">#如果你想公证处理提交后得到一个回调，可以使用--webhook指定一个url</span>
 xcrun notarytool submit <span class="nv">$ZIP_PATH</span>
-                   --keychain-profile <span class="s2">"AC_PASSWORD"</span>
-                   --wait
-                   --webhook <span class="s2">"https://example.com/notarization"</span>
-</code></pre>
-</div>
+                   <span class="nt">--keychain-profile</span> <span class="s2">"AC_PASSWORD"</span>
+                   <span class="nt">--wait</span>
+                   <span class="nt">--webhook</span> <span class="s2">"https://example.com/notarization"</span>
+</code></pre></div></div>
 <p>Xcode 13之前：</p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#这里的ProviderShortname，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看</span>
-xcrun altool --notarize-app --primary-bundle-id <span class="s2">"com.bundle.id"</span> --username <span class="s2">"AC_USERNAME"</span> --password <span class="s2">"@keychain:AC_PASSWORD"</span> --asc-provider &lt;ProviderShortname&gt; --file <span class="nv">$ZIP_PATH</span>
-</code></pre>
-</div>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#这里的ProviderShortname，其实是你的开发者账号的team id，可以通过https://developer.apple.com/account 「Membership」查看</span>
+xcrun altool <span class="nt">--notarize-app</span> <span class="nt">--primary-bundle-id</span> <span class="s2">"com.bundle.id"</span> <span class="nt">--username</span> <span class="s2">"AC_USERNAME"</span> <span class="nt">--password</span> <span class="s2">"@keychain:AC_PASSWORD"</span> <span class="nt">--asc-provider</span> &lt;ProviderShortname&gt; <span class="nt">--file</span> <span class="nv">$ZIP_PATH</span>
+</code></pre></div></div>
 
-<p>上传完之后，控制台上会打印<code class="highlighter-rouge">RequestUUID</code>,如果不成功或者想查询审核状态都需要这个id，也可以通过后面查询当前所有请求状态的命令查到<code class="highlighter-rouge">RequestUUID</code>。<br />
+<p>上传完之后，控制台上会打印<code class="language-plaintext highlighter-rouge">RequestUUID</code>,如果不成功或者想查询审核状态都需要这个id，也可以通过后面查询当前所有请求状态的命令查到<code class="language-plaintext highlighter-rouge">RequestUUID</code>。<br />
 审核通过后，对app签入公证即可：</p>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>xcrun stapler staple <span class="s2">"xxx.dmg"</span>
-</code></pre>
-</div>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcrun stapler staple <span class="s2">"xxx.dmg"</span>
+</code></pre></div></div>
 <h3 id="查询当前所有请求状态">查询当前所有请求状态</h3>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>xcrun altool --notarization-history 0 -u <span class="s2">"AC_USERNAME"</span> -p <span class="s2">"@keychain:AC_PASSWORD"</span>
-</code></pre>
-</div>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcrun altool <span class="nt">--notarization-history</span> 0 <span class="nt">-u</span> <span class="s2">"AC_USERNAME"</span> <span class="nt">-p</span> <span class="s2">"@keychain:AC_PASSWORD"</span>
+</code></pre></div></div>
 <p>会返回你所有请求的状态</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>Notarization History - page 0
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Notarization History - page 0
 
 Date                      RequestUUID                          Status      Status Code Status Message  
 ------------------------- ------------------------------------ ----------- ----------- ----------------
 2018-07-02 20:32:01 +0000 2EFE2717-52EF-43A5-96DC-0797E4CA1041 invalid     2           Package Invalid 
 2018-06-29 13:23:13 +0000 6D020E28-9890-48E5-851C-4275169D07CC invalid     2           Package Invalid
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="查询某个请求的详细信息">查询某个请求的详细信息</h3>
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>xcrun altool --notarization-info <span class="nv">$替</span>换成自己的RequestUUID -u <span class="s2">"AC_USERNAME"</span>
-</code></pre>
-</div>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcrun altool <span class="nt">--notarization-info</span> <span class="nv">$替</span>换成自己的RequestUUID <span class="nt">-u</span> <span class="s2">"AC_USERNAME"</span>
+</code></pre></div></div>
 <p>如果有审核有问题，LogFileURL会提供日志文件，指出发现的问题，修改完后重新提交即可。</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>   RequestUUID: 2EFE2717-52EF-43A5-96DC-0797E4CA1041
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   RequestUUID: 2EFE2717-52EF-43A5-96DC-0797E4CA1041
           Date: 2018-07-02 20:32:01 +0000
         Status: invalid
     LogFileURL: https://osxapps.itunes.apple.com/...
    Status Code: 2 
 Status Message: Package Invalid
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h1 id="写在最后的一些感触">写在最后的一些感触</h1>
 <p>虽然是个并不麻烦的事情，但是很多大厂的App都没有做这个，感觉都是国内用户惯的，需要用户去适应App，而不是App迎合用户。</p>
@@ -401,13 +389,13 @@ Status Message: Package Invalid
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -436,6 +424,8 @@ Status Message: Package Invalid
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -488,6 +478,8 @@ Status Message: Package Invalid
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -519,7 +511,7 @@ Status Message: Package Invalid
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2020/07/08/Mac App公证";
-    var disqus_url = "http://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/";
+    var disqus_url = "http://localhost:4000/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -579,7 +571,7 @@ Status Message: Package Invalid
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

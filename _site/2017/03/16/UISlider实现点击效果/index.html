@@ -12,7 +12,7 @@
 
     <title>UISlider实现点击效果 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/03/16/UISlider%E5%AE%9E%E7%8E%B0%E7%82%B9%E5%87%BB%E6%95%88%E6%9E%9C/">
+    <link rel="canonical" href="http://localhost:4000/2017/03/16/UISlider%E5%AE%9E%E7%8E%B0%E7%82%B9%E5%87%BB%E6%95%88%E6%9E%9C/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -202,7 +202,7 @@ border: none;
 				<p>找了很久网上文章都是各种复制，而且不管用，最后在stackOverFlow找到怎么解决，记录一下<a href="http://stackoverflow.com/questions/22717167/how-to-enable-tap-and-slide-in-a-uislider">链接</a></p>
 
 <p>关键是用UILongPressGestureRecognizer，实现拖动和点击</p>
-<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">actionLongGesture</span><span class="p">:(</span><span class="n">UILongPressGestureRecognizer</span> <span class="o">*</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">actionLongGesture</span><span class="p">:(</span><span class="n">UILongPressGestureRecognizer</span> <span class="o">*</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
     
     <span class="k">if</span> <span class="p">(</span><span class="n">sender</span><span class="p">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">UIGestureRecognizerStateBegan</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">CGPoint</span> <span class="n">touchPoint</span> <span class="o">=</span> <span class="p">[</span><span class="n">sender</span> <span class="nf">locationInView</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">];</span>
@@ -219,8 +219,7 @@ border: none;
     <span class="p">}</span>
  
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 
                 <hr>
@@ -291,13 +290,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -326,6 +325,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -378,6 +379,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -409,7 +412,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2017/03/16/UISlider实现点击效果";
-    var disqus_url = "http://www.foolishtalk.org/2017/03/16/UISlider%E5%AE%9E%E7%8E%B0%E7%82%B9%E5%87%BB%E6%95%88%E6%9E%9C/";
+    var disqus_url = "http://localhost:4000/2017/03/16/UISlider%E5%AE%9E%E7%8E%B0%E7%82%B9%E5%87%BB%E6%95%88%E6%9E%9C/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -469,7 +472,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

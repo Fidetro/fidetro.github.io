@@ -12,7 +12,7 @@
 
     <title>FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/page4/">
+    <link rel="canonical" href="http://localhost:4000/page4/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -157,6 +157,33 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2018/03/09/%E7%94%A8Swift%E6%89%93%E9%80%A0%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7POP%E7%9A%84%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%BA%93/">
+        <h2 class="post-title">
+            用Swift打造一个轻量级POP的网络请求库
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Swift，Tips，Alamofire
+        </h3>
+        
+        <div class="post-content-preview">
+            我从Objective-C转到Swift已经有好些时间了，Swift起码在iOS开发这块，开源组件已经很完善，为什么还要再造轮子呢？
+
+  目的只有一个，为了简化对业务层的操作。
+事实上，在写这篇文章的时候，这个轮子已经做好了,所以来聊聊他做了什么：
+在Objective-C时候我所遇到很多网络层都是这样的结构:
+   ______________
+|              |
+| AF...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Karim on March 9, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2018/03/06/Swift%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/">
         <h2 class="post-title">
             Swift高阶函数的使用
@@ -175,11 +202,10 @@
 map
 let a = [1,2,3,4,5,6]
 
-
 如果要把这个数组中的元素每个都+1，按照以前的做法
 var b = [Int]()
     for ele in a {
-        b.append(ele+...
+        b.append(ele+1...
         </div>
     </a>
     <p class="post-meta">
@@ -230,8 +256,7 @@ how-to-rotate-a-uiimage-90-degrees
 [@"123" substringWithRange:NSMakeRange(1, 2)];
 
 
-
-在Swift 4之前，也是有类似的方法"ss".substring(with: &lt;Range&lt;String.Index&gt;&gt;)  ,但是在Swift 4之后被弃用了，我...
+在Swift 4之前，也是有类似的方法"ss".substring(with: &lt;Range&lt;String.Index&gt;&gt;)  ,但是在Swift 4之后被弃用了，我们...
         </div>
     </a>
     <p class="post-meta">
@@ -266,26 +291,23 @@ how-to-rotate-a-uiimage-90-degrees
 <div class="post-preview">
     <a href="/2018/01/12/%E5%9C%A8UITableView%E4%B8%AD%E4%BD%BF%E7%94%A8RunLoop%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">
         <h2 class="post-title">
-            在uitableview中使用runloop遇到的坑
+            在UITableView中使用RunLoop遇到的坑
         </h2>
         
+        <h3 class="post-subtitle">
+            Swift，iOS，Objective-C
+        </h3>
+        
         <div class="post-content-preview">
-            ﻿—
-layout:     post
-title:      “在UITableView中使用RunLoop遇到的坑”
-subtitle:   “Swift，iOS，Objective-C”
-date:       2018-1-12
-author:     “Karim”
-header-img: “img/post-bg-sea.jpg”
-tags:
+            
+  在做Pet Day的时候，遇到一个这样的需求，假定tableView中的section初始值为50,在往上或者往下的时候，需要通过计算得知更多的dataSource
 
-  问题随笔
-  RunLoop
-...
+
+然后我一开始的做法，是在- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexP...
         </div>
     </a>
     <p class="post-meta">
-        Posted by FoolishTalk on January 12, 2018
+        Posted by Karim on January 12, 2018
     </p>
 </div>
 <hr>
@@ -329,8 +351,7 @@ extension FIDRequest {
             Swift Package Manager是苹果自家的包管理工具，他和iOS开发中的Cocoapod或者Carthage类似，但是我们可以从他GitHub文档看到
 Note that at this time the Package Manager has no support for iOS, watchOS, or tvOS platforms.
 
-
-就是SPM是不支持  iOS, wa...
+就是SPM是不支持  iOS, wat...
         </div>
     </a>
     <p class="post-meta">
@@ -386,27 +407,6 @@ $ apt-get install make git clang libicu-dev libmysqlclient-dev libpq...
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2017/10/14/%E5%8F%88%E5%A4%A7%E4%B8%80%E5%B2%81-%E5%85%88%E8%81%8A%E8%81%8A%E7%BC%96%E7%A8%8B-%E5%86%8D%E8%81%8A%E8%81%8A%E7%94%9F%E6%B4%BB-%E6%9C%80%E5%90%8E%E5%86%8D%E8%81%8A%E5%9B%9E%E7%BC%96%E7%A8%8B/">
-        <h2 class="post-title">
-            又大一岁，先聊聊编程，再聊聊生活，最后再聊回编程
-        </h2>
-        
-        <h3 class="post-subtitle">
-            生活
-        </h3>
-        
-        <div class="post-content-preview">
-            算起来已经23岁了，iOS开发1年5个月了。在上一间公司加班加到曾经一度认为自己已经24-25岁，开发了2年半。
-现在回想起来，从2016年5月3日开始，我已经是一名iOS开发了，从那时候每天朝9晚6的工作，变成了到后来朝9晚8，晚9，晚10…偶尔晚到凌晨1点的工作，我想现在每天编程的时间应该是在10-12小时左右吧，如果把睡觉的时间去掉，平时coding的时间都要比生活的时间长，很庆幸自己...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on October 14, 2017
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -447,13 +447,13 @@ $ apt-get install make git clang libicu-dev libmysqlclient-dev libpq...
                             
                         
                             
-                                <a href="/tags/#iOS" title="iOS" rel="38">
+                                <a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
                         
                             
-                                <a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                                <a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -482,6 +482,8 @@ $ apt-get install make git clang libicu-dev libmysqlclient-dev libpq...
                                 <a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+                        
                             
                         
                             
@@ -520,6 +522,8 @@ $ apt-get install make git clang libicu-dev libmysqlclient-dev libpq...
                                 <a href="/tags/#Mac" title="Mac" rel="2">
                                     Mac
                                 </a>
+                            
+                        
                             
                         
                             
@@ -651,7 +655,7 @@ $ apt-get install make git clang libicu-dev libmysqlclient-dev libpq...
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

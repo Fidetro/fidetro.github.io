@@ -12,7 +12,7 @@
 
     <title>记录点自己做CocoaPod时遇到的坑 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2017/06/19/%E8%AE%B0%E5%BD%95%E7%82%B9%E8%87%AA%E5%B7%B1%E5%81%9ACocoaPod%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">
+    <link rel="canonical" href="http://localhost:4000/2017/06/19/%E8%AE%B0%E5%BD%95%E7%82%B9%E8%87%AA%E5%B7%B1%E5%81%9ACocoaPod%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -199,16 +199,14 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<div class="highlighter-rouge"><pre class="highlight"><code>[!] The spec did not pass validation, due to 1 error.
+				<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[!] The spec did not pass validation, due to 1 error.
 [!] The validator for Swift projects uses Swift 3.0 by default, if you are using a different version of swift you can use a `.swift-version` file to set the version for your Pod. For example to use Swift 2.3, run: 
     `echo "2.3" &gt; .swift-version`.
 
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>这是因为需要知道支持哪个swift版本，一般来讲现在都是支持Swift3的，输入这段就好了</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>echo "3.0" &gt; .swift-version
-</code></pre>
-</div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "3.0" &gt; .swift-version
+</code></pre></div></div>
 
 
                 <hr>
@@ -279,13 +277,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -314,6 +312,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -366,6 +366,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -397,7 +399,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2017/06/19/记录点自己做CocoaPod时遇到的坑";
-    var disqus_url = "http://www.foolishtalk.org/2017/06/19/%E8%AE%B0%E5%BD%95%E7%82%B9%E8%87%AA%E5%B7%B1%E5%81%9ACocoaPod%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/";
+    var disqus_url = "http://localhost:4000/2017/06/19/%E8%AE%B0%E5%BD%95%E7%82%B9%E8%87%AA%E5%B7%B1%E5%81%9ACocoaPod%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -457,7 +459,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

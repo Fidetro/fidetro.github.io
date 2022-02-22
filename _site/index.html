@@ -12,7 +12,7 @@
 
     <title>FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/">
+    <link rel="canonical" href="http://localhost:4000/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -157,6 +157,31 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2022/02/21/lightning/">
+        <h2 class="post-title">
+            Installing Lightning for Xcode
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Lightning
+        </h3>
+        
+        <div class="post-content-preview">
+            To install Lightning for Xcode in Xcode 12 (or Xcode 11):
+
+  Quit Xcode
+  Enable Lightning extension in System Preferences -&gt; Extensions -&gt; Xcode Source Editor
+  Restart Xcode
+  Select the co...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Karim on February 21, 2022
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2021/05/03/WWDC-2018%E7%AC%94%E8%AE%B0-%E4%BD%BF%E7%94%A8Signposts%E5%88%86%E6%9E%90App%E6%80%A7%E8%83%BD/">
         <h2 class="post-title">
             WWDC-2018笔记---使用Signposts分析App性能
@@ -197,8 +222,7 @@ let refreshLog = OSLog(subsystem: "com.example.your-app", category: "RefreshOper
 今天突然发现博客的图片都无法加载了，打开浏览器控制台一看，发现是无法找到https资源报错了：
 Mixed Content: The page at '&lt;URL&gt;' was loaded over HTTPS, but requested an insecure font '&lt;URL&gt;'
 
-
-原来是因为更新了Chrome后，如果网站是https，会把非https...
+原来是因为更新了Chrome后，如果网站是https，会把非https的...
         </div>
     </a>
     <p class="post-meta">
@@ -228,8 +252,7 @@ $ sudo spctl --master-disable
 
 
 
-
-但是作为一个普通用户，会认为你的App不安全，我开发的虚拟定位因为需要依赖非沙盒环境下的Magellan，也遇到这个问题，也有国外用户因为觉得这个行...
+但是作为一个普通用户，会认为你的App不安全，我开发的虚拟定位因为需要依赖非沙盒环境下的Magellan，也遇到这个问题，也有国外用户因为觉得这个行为...
         </div>
     </a>
     <p class="post-meta">
@@ -351,8 +374,7 @@ The Virtual Location interface looks like this:
 pip安装先把安装的脚本下载下来：
 wget curl https://bootstrap.pypa.io/get-pip.py
 
-
-如果默认的是python3，需要用指定p...
+如果默认的是python3，需要用指定py...
         </div>
     </a>
     <p class="post-meta">
@@ -431,31 +453,6 @@ tell application "iTune...
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">
-        <h2 class="post-title">
-            macOS High Sierra依赖OpenSSL交叉编译
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Xcode
-        </h3>
-        
-        <div class="post-content-preview">
-            有些比较老的库，又是依赖 openssl，要自己编译成静态库的时候，遇到了这个错误：
-configure: error: OpenSSL support explicitly requested but OpenSSL could not be found
-
-
-如果打算通过brew link openssl软连接，会得到这个错误：
-Warning: Refusing to link macO...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on October 13, 2019
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -492,13 +489,13 @@ Warning: Refusing to link macO...
                             
                         
                             
-                                <a href="/tags/#iOS" title="iOS" rel="38">
+                                <a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
                         
                             
-                                <a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                                <a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -527,6 +524,8 @@ Warning: Refusing to link macO...
                                 <a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+                        
                             
                         
                             
@@ -565,6 +564,8 @@ Warning: Refusing to link macO...
                                 <a href="/tags/#Mac" title="Mac" rel="2">
                                     Mac
                                 </a>
+                            
+                        
                             
                         
                             
@@ -696,7 +697,7 @@ Warning: Refusing to link macO...
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

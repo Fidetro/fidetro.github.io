@@ -12,7 +12,7 @@
 
     <title>CloudKit实践 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2018/12/15/CloudKit%E5%AE%9E%E8%B7%B5/">
+    <link rel="canonical" href="http://localhost:4000/2018/12/15/CloudKit%E5%AE%9E%E8%B7%B5/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -203,33 +203,31 @@ border: none;
 
 <p>在iOS 11后，有个<a href="https://support.apple.com/zh-cn/HT204681">接力</a>的功能非常好用，可以在iPhone和Mac上共享剪贴板等。但是自己用的时候，总有很多小问题，明明需要打开的都打开了接力失效、上一次复制的是图片后来复制的是文本，iPhone直接剪贴板都不出来了。经历了一顿需求分析之后，决定自己动手做一个。<br />
 既然要实现跨平台，免不了要涉及到服务器，选择自己去写还是使用现有的云服务，成为了当前选择的最大问题。
-为了解决又快<del>懒~~又安全</del>懒~~的问题，我最终选择了苹果自带的<code class="highlighter-rouge">CloudKit</code>。</p>
+为了解决又快<del>懒</del>又安全<del>懒</del>的问题，我最终选择了苹果自带的<code class="language-plaintext highlighter-rouge">CloudKit</code>。</p>
 
 <h1 id="cloudkit">CloudKit</h1>
-<p><code class="highlighter-rouge">CloudKit</code>是苹果在WWDC2014推出通过iCloud服务存储结构化应用程序和用户数据的框架，通过<code class="highlighter-rouge">CloudKit</code>获取app现有数据并将其存储在云中，实现用户多设备访问。</p>
+<p><code class="language-plaintext highlighter-rouge">CloudKit</code>是苹果在WWDC2014推出通过iCloud服务存储结构化应用程序和用户数据的框架，通过<code class="language-plaintext highlighter-rouge">CloudKit</code>获取app现有数据并将其存储在云中，实现用户多设备访问。</p>
 
 <h2 id="容器containers">容器（Containers）</h2>
 
 <p>一个App可以创建和拥有多个容器：<br />
 <img src="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitQuickStart/Art/3_specifycontainers2_2x.png" alt="" /></p>
 
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">//创建容器</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//创建容器</span>
 <span class="k">let</span> <span class="nv">container</span> <span class="o">=</span> <span class="kt">CKContainer</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="s">"在Capabilities选择的容器identifier"</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<p>一个容器中拥有<code class="highlighter-rouge">Public</code>、<code class="highlighter-rouge">Private</code>、<code class="highlighter-rouge">Shared</code>三种数据库，通过<code class="highlighter-rouge">CKContainer</code>的实例获取：</p>
-<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">CKContainer</span> <span class="p">{</span>
+<p>一个容器中拥有<code class="language-plaintext highlighter-rouge">Public</code>、<code class="language-plaintext highlighter-rouge">Private</code>、<code class="language-plaintext highlighter-rouge">Shared</code>三种数据库，通过<code class="language-plaintext highlighter-rouge">CKContainer</code>的实例获取：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">CKContainer</span> <span class="p">{</span>
 
-    <span class="n">open</span> <span class="k">var</span> <span class="nv">privateCloudDatabase</span><span class="p">:</span> <span class="kt">CKDatabase</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+    <span class="kd">open</span> <span class="k">var</span> <span class="nv">privateCloudDatabase</span><span class="p">:</span> <span class="kt">CKDatabase</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
 
-    <span class="n">open</span> <span class="k">var</span> <span class="nv">publicCloudDatabase</span><span class="p">:</span> <span class="kt">CKDatabase</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+    <span class="kd">open</span> <span class="k">var</span> <span class="nv">publicCloudDatabase</span><span class="p">:</span> <span class="kt">CKDatabase</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
 
-    <span class="kd">@available(OSX 10.12, *)</span>
-    <span class="n">open</span> <span class="k">var</span> <span class="nv">sharedCloudDatabase</span><span class="p">:</span> <span class="kt">CKDatabase</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+    <span class="kd">@available</span><span class="p">(</span><span class="kt">OSX</span> <span class="mf">10.12</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+    <span class="kd">open</span> <span class="k">var</span> <span class="nv">sharedCloudDatabase</span><span class="p">:</span> <span class="kt">CKDatabase</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>不同类型的数据库，可以通过下面的表格对比：</p>
 
 <table>
@@ -266,37 +264,33 @@ border: none;
 <h1 id="使用">使用</h1>
 
 <blockquote>
-  <p>在写代码之前，需要先去<a href="https://icloud.developer.apple.com/dashboard/">CloudKit dashboard</a>，创建<code class="highlighter-rouge">Record Type</code>，同时在新建的Record Type页面新增字段，增加完字段之后，记得要为字段添加<code class="highlighter-rouge">recordName</code>索引，不然查询的时候会报错。</p>
+  <p>在写代码之前，需要先去<a href="https://icloud.developer.apple.com/dashboard/">CloudKit dashboard</a>，创建<code class="language-plaintext highlighter-rouge">Record Type</code>，同时在新建的Record Type页面新增字段，增加完字段之后，记得要为字段添加<code class="language-plaintext highlighter-rouge">recordName</code>索引，不然查询的时候会报错。</p>
 </blockquote>
 
 <p><img src="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitQuickStart/Art/2017RecordTypes_2x.png" alt="" /></p>
 
 <ol>
   <li>创建指定唯一记录名称的记录ID。
-    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">artworkRecordID</span> <span class="o">=</span> <span class="kt">CKRecordID</span><span class="err">（</span><span class="n">recordName</span><span class="err">：“</span><span class="mi">115</span><span class="err">”）</span>
-</code></pre>
-    </div>
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">artworkRecordID</span> <span class="o">=</span> <span class="kt">CKRecordID</span><span class="err">（</span><span class="n">recordName</span><span class="err">：“</span><span class="mi">115</span><span class="err">”）</span>
+</code></pre></div>    </div>
   </li>
   <li>创建一个记录对象。
-    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">artworkRecord</span> <span class="o">=</span> <span class="kt">CKRecord</span><span class="err">（</span><span class="n">recordType</span><span class="err">：“</span><span class="kt">Artwork</span><span class="err">”，</span><span class="n">recordID</span><span class="err">：</span><span class="n">artworkRecordID</span><span class="err">）</span>
-</code></pre>
-    </div>
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">artworkRecord</span> <span class="o">=</span> <span class="kt">CKRecord</span><span class="err">（</span><span class="n">recordType</span><span class="err">：“</span><span class="kt">Artwork</span><span class="err">”，</span><span class="n">recordID</span><span class="err">：</span><span class="n">artworkRecordID</span><span class="err">）</span>
+</code></pre></div>    </div>
   </li>
   <li>设置记录的字段
-    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="n">artworkRecord</span><span class="p">[</span><span class="s">"title"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"MacKerricher State Park"</span>
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">artworkRecord</span><span class="p">[</span><span class="s">"title"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"MacKerricher State Park"</span>
 <span class="n">artworkRecord</span><span class="p">[</span><span class="s">"artist"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Mei Chen"</span>
 <span class="n">artworkRecord</span><span class="p">[</span><span class="s">"address"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Fort Bragg, CA"</span>
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li>初始化容器并获取数据库对象
-    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">myContainer</span> <span class="o">=</span> <span class="kt">CKContainer</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="s">"iCloud.com.example.ajohnson.GalleryShared"</span><span class="p">)</span> <span class="c1">//如果使用默认容器，CKContainer.default()  </span>
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">myContainer</span> <span class="o">=</span> <span class="kt">CKContainer</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="s">"iCloud.com.example.ajohnson.GalleryShared"</span><span class="p">)</span> <span class="c1">//如果使用默认容器，CKContainer.default()  </span>
 <span class="k">let</span> <span class="nv">publicDatabase</span> <span class="o">=</span> <span class="n">myContainer</span><span class="o">.</span><span class="n">publicCloudDatabase</span>
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li>保存对象
-    <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="n">publicDatabase</span><span class="o">.</span><span class="nf">save</span><span class="p">(</span><span class="n">artworkRecord</span><span class="p">)</span> <span class="p">{</span>
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">publicDatabase</span><span class="o">.</span><span class="nf">save</span><span class="p">(</span><span class="n">artworkRecord</span><span class="p">)</span> <span class="p">{</span>
  <span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="k">in</span>
  <span class="k">guard</span> <span class="k">let</span> <span class="nv">error</span> <span class="o">=</span> <span class="n">error</span> <span class="k">else</span> <span class="p">{</span>
      <span class="c1">// 处理错误</span>
@@ -304,11 +298,10 @@ border: none;
  <span class="p">}</span>
  <span class="c1">// ...保存成功之后的处理</span>
 <span class="p">}</span>
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li>查询
-    <div class="language-swift highlighter-rouge"><pre class="highlight"><code>     <span class="k">let</span> <span class="nv">predicate</span> <span class="o">=</span> <span class="kt">NSPredicate</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     <span class="k">let</span> <span class="nv">predicate</span> <span class="o">=</span> <span class="kt">NSPredicate</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
      <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">CKQuery</span><span class="p">(</span><span class="nv">recordType</span><span class="p">:</span> <span class="s">"Artwork"</span><span class="p">,</span> <span class="nv">predicate</span><span class="p">:</span> <span class="n">predicate</span><span class="p">)</span>
      <span class="n">myContainer</span>
      <span class="o">.</span><span class="n">publicCloudDatabase</span>
@@ -322,13 +315,12 @@ border: none;
                  <span class="c1">// ...保存成功之后的处理</span>
          <span class="p">}</span>
      <span class="p">})</span>
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
 </ol>
 
 <h1 id="应用">应用</h1>
-<p>通过<code class="highlighter-rouge">CloudKit</code>，我分别在iOS上使用Today Widget，在Mac上监听键盘组合键来实现了接力中的共享粘贴板功能，目前功能还比较简单，不过基本也满足了我自己的需求了，后续有时间还是会完善一下复制图片、预览这些小功能的，<a href="https://github.com/Fidetro/KTCloud">代码</a>在这里，感兴趣可以看一下。</p>
+<p>通过<code class="language-plaintext highlighter-rouge">CloudKit</code>，我分别在iOS上使用Today Widget，在Mac上监听键盘组合键来实现了接力中的共享粘贴板功能，目前功能还比较简单，不过基本也满足了我自己的需求了，后续有时间还是会完善一下复制图片、预览这些小功能的，<a href="https://github.com/Fidetro/KTCloud">代码</a>在这里，感兴趣可以看一下。</p>
 
 <h1 id="参考链接">参考链接</h1>
 <p><a href="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitQuickStart/Introduction/Introduction.html#//apple_ref/doc/uid/TP40014987-CH1-SW1">CloudKit官方文档</a><br />
@@ -403,13 +395,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -438,6 +430,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -490,6 +484,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -521,7 +517,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2018/12/15/CloudKit实践";
-    var disqus_url = "http://www.foolishtalk.org/2018/12/15/CloudKit%E5%AE%9E%E8%B7%B5/";
+    var disqus_url = "http://localhost:4000/2018/12/15/CloudKit%E5%AE%9E%E8%B7%B5/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -581,7 +577,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

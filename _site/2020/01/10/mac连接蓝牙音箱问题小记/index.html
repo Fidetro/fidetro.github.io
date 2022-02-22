@@ -12,7 +12,7 @@
 
     <title>mac连接蓝牙音箱问题小记 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/">
+    <link rel="canonical" href="http://localhost:4000/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -215,7 +215,7 @@ border: none;
 <img src="https://www.foolishtalk.org/cloud/347335e73c15512f3125ee4d60bac4f3.png" alt="" /></p>
 
 <h2 id="原因">原因</h2>
-<p>SBC编码器中的 <code class="highlighter-rouge">bitpool</code> 参数会导致音质下降，通过<a href="http://soundexpert.org/encoders-320-kbps">这里</a>可以知道 SBC编码器 在 328 kbit/s 时 bitpool 需要达到 53。</p>
+<p>SBC编码器中的 <code class="language-plaintext highlighter-rouge">bitpool</code> 参数会导致音质下降，通过<a href="http://soundexpert.org/encoders-320-kbps">这里</a>可以知道 SBC编码器 在 328 kbit/s 时 bitpool 需要达到 53。</p>
 
 <p><img src="https://www.foolishtalk.org/cloud/ec4f4917854d7eab2b26196d3348df60.png" alt="" /></p>
 
@@ -224,19 +224,19 @@ border: none;
 <h1 id="怎么解决">怎么解决？</h1>
 <p>先去苹果开发者官网下载<a href="https://developer.apple.com/download/more/?=additional%20Tools">Bluetooth Explorer</a>工具</p>
 
-<p>下载完之后，打开 Hardware，把 <code class="highlighter-rouge">Bluetooth Explorer</code> 拖到应用程序里。<br />
-打开 <code class="highlighter-rouge">Bluetooth Explorer</code> 后，在系统导航栏找到 <code class="highlighter-rouge">Audio Options...</code>
+<p>下载完之后，打开 Hardware，把 <code class="language-plaintext highlighter-rouge">Bluetooth Explorer</code> 拖到应用程序里。<br />
+打开 <code class="language-plaintext highlighter-rouge">Bluetooth Explorer</code> 后，在系统导航栏找到 <code class="language-plaintext highlighter-rouge">Audio Options...</code>
 <img src="https://www.foolishtalk.org/cloud/c1bfcd07315439afe2f2fd3ecdc744f4.png" alt="" /></p>
 
-<p>为了方便我就直接把这里 <code class="highlighter-rouge">Minimum bitpool</code> 改到64了：<br />
+<p>为了方便我就直接把这里 <code class="language-plaintext highlighter-rouge">Minimum bitpool</code> 改到64了：<br />
 <img src="https://www.foolishtalk.org/cloud/72d3eb4294d65375471054d6f1d290cc.png" alt="" /></p>
 
-<p>另外如果有需要修改编码器的需求，改上面 <code class="highlighter-rouge">Codecs</code> 的设置就好了。</p>
+<p>另外如果有需要修改编码器的需求，改上面 <code class="language-plaintext highlighter-rouge">Codecs</code> 的设置就好了。</p>
 
 <p>断开蓝牙设备，再连设备，就会发现没有之前的卡顿和沙沙的声音。</p>
 
 <h1 id="题外话">题外话</h1>
-<p>网上的文章真是一大抄，通过终端设置 <code class="highlighter-rouge">bitpool</code> 的方法似乎已经失效了，另外我也试过重启 <code class="highlighter-rouge">PRAM</code>，依然无效，如果有通过终端设置的方式，请告诉我，非常感谢。</p>
+<p>网上的文章真是一大抄，通过终端设置 <code class="language-plaintext highlighter-rouge">bitpool</code> 的方法似乎已经失效了，另外我也试过重启 <code class="language-plaintext highlighter-rouge">PRAM</code>，依然无效，如果有通过终端设置的方式，请告诉我，非常感谢。</p>
 
 <h1 id="参考链接">参考链接</h1>
 <p><a href="https://www.areilly.com/2017/07/29/enabling-aac-and-aptx-over-bluetooth-on-macos/">enabling aac and aptx over bluetooth on macos</a><br />
@@ -311,13 +311,13 @@ border: none;
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -346,6 +346,8 @@ border: none;
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -398,6 +400,8 @@ border: none;
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -429,7 +433,7 @@ border: none;
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2020/01/10/mac连接蓝牙音箱问题小记";
-    var disqus_url = "http://www.foolishtalk.org/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/";
+    var disqus_url = "http://localhost:4000/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -489,7 +493,7 @@ border: none;
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">

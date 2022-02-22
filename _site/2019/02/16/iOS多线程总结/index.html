@@ -12,7 +12,7 @@
 
     <title>iOS多线程总结 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/">
+    <link rel="canonical" href="http://localhost:4000/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -213,19 +213,17 @@ border: none;
 <h3 id="什么是进程">什么是进程？</h3>
 <p>在操作系统中，开启一个任务会开启一个进程。<br />
 在iOS上，一个app对应一个进程。每个进程运行在其专用且受保护的内存空间中。<br />
-例如在mac上打开终端，然后再输入<code class="highlighter-rouge">ps</code>就会看到开启了一条<code class="highlighter-rouge">bash</code></p>
-<div class="highlighter-rouge"><pre class="highlight"><code>MacdeMacBook-Pro:~ Fidetro$ ps
+例如在mac上打开终端，然后再输入<code class="language-plaintext highlighter-rouge">ps</code>就会看到开启了一条<code class="language-plaintext highlighter-rouge">bash</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MacdeMacBook-Pro:~ Fidetro$ ps
   PID TTY           TIME CMD
  8329 ttys000    0:00.03 -bash
-</code></pre>
-</div>
-<p>如果再开打开一个终端，再次输入<code class="highlighter-rouge">ps</code>就会看到开启了两个<code class="highlighter-rouge">bash</code></p>
-<div class="highlighter-rouge"><pre class="highlight"><code>MacdeMacBook-Pro:~ Karim$ ps
+</code></pre></div></div>
+<p>如果再开打开一个终端，再次输入<code class="language-plaintext highlighter-rouge">ps</code>就会看到开启了两个<code class="language-plaintext highlighter-rouge">bash</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MacdeMacBook-Pro:~ Karim$ ps
   PID TTY           TIME CMD
  8329 ttys000    0:00.03 -bash
  8651 ttys001    0:00.02 -bash
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>一个进程中又至少会开启一条线程，在iOS中，我们把那条线程叫做主线程。一个进程可以开启多条线程。</p>
 <h3 id="什么是线程">什么是线程？</h3>
 
@@ -246,8 +244,8 @@ border: none;
 <h3 id="gcd">GCD</h3>
 <p>GCD是一套C语言编写的接口，其代码也是<a href="https://apple.github.io/swift-corelibs-libdispatch/">开源</a>,它为我们提供多线程技术，GCD中最核心的两个概念，任务和队列。</p>
 
-<p>在iOS中使用GCD创建队列，调用<code class="highlighter-rouge">dispatch_queue_t dispatch_queue_create(const char *label, dispatch_queue_attr_t attr);</code><br />
-第一个参数代表队列的名字，第二参数代表队列的类型，使用<code class="highlighter-rouge">DISPATCH_QUEUE_SERIAL</code>创建串行队列，使用<code class="highlighter-rouge">DISPATCH_QUEUE_CONCURRENT</code>创建并行队列。</p>
+<p>在iOS中使用GCD创建队列，调用<code class="language-plaintext highlighter-rouge">dispatch_queue_t dispatch_queue_create(const char *label, dispatch_queue_attr_t attr);</code><br />
+第一个参数代表队列的名字，第二参数代表队列的类型，使用<code class="language-plaintext highlighter-rouge">DISPATCH_QUEUE_SERIAL</code>创建串行队列，使用<code class="language-plaintext highlighter-rouge">DISPATCH_QUEUE_CONCURRENT</code>创建并行队列。</p>
 
 <h4 id="串行队列">串行队列</h4>
 <p><img src="https://www.foolishtalk.org/cloud/2019-2-14-sync.png" alt="" /><br />
@@ -275,35 +273,34 @@ border: none;
     <tr>
       <td style="text-align: center">串行队列</td>
       <td style="text-align: left">不会创建新的线程，而是在当前线程执行。任务按顺序执行，等待内部代码执行完毕后往下执行。</td>
-      <td style="text-align: left">调用<code class="highlighter-rouge">dispatch_queue_create()</code>会创建新的线程，任务按顺序执行，不会等待内部代码全部执行完然后返回，而是直接往下执行。</td>
+      <td style="text-align: left">调用<code class="language-plaintext highlighter-rouge">dispatch_queue_create()</code>会创建新的线程，任务按顺序执行，不会等待内部代码全部执行完然后返回，而是直接往下执行。</td>
     </tr>
     <tr>
       <td style="text-align: center">并行队列</td>
       <td style="text-align: left">与串行同步一致。</td>
-      <td style="text-align: left">调用<code class="highlighter-rouge">dispatch_async()</code>会创建新的线程，任务在不同的线程下执行。</td>
+      <td style="text-align: left">调用<code class="language-plaintext highlighter-rouge">dispatch_async()</code>会创建新的线程，任务在不同的线程下执行。</td>
     </tr>
   </tbody>
 </table>
 
 <h4 id="dispatch_after">dispatch_after</h4>
 
-<p><code class="highlighter-rouge">dispatch_after()</code>是iOS最常用的延时方法。</p>
+<p><code class="language-plaintext highlighter-rouge">dispatch_after()</code>是iOS最常用的延时方法。</p>
 
-<div class="language-objc highlighter-rouge"><pre class="highlight"><code>    <span class="n">dispatch_after</span><span class="p">(</span><span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">)),</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
-        <span class="c1">//两秒后执行
-</span>    <span class="p">});</span>
-</code></pre>
-</div>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">dispatch_after</span><span class="p">(</span><span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">)),</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+        <span class="c1">//两秒后执行</span>
+    <span class="p">});</span>
+</code></pre></div></div>
 
 <h4 id="dispatch_group_t">dispatch_group_t</h4>
 
-<p><code class="highlighter-rouge">dispatch_group_t</code>用来监听多个异步任务的完成。<br />
-GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_t</code>完成的回调。<br />
-第一种是<code class="highlighter-rouge">dispatch_group_notify()</code>，不会阻塞当前线程，在所有任务完成后，回调到block；<br />
-第二种是<code class="highlighter-rouge">dispatch_group_wait()</code>，会阻塞当前线程，等待所有任务完成后才往下走，<strong><code class="highlighter-rouge">dispatch_group_wait()</code>不可以在主线程调用，否则会造成死锁。</strong></p>
+<p><code class="language-plaintext highlighter-rouge">dispatch_group_t</code>用来监听多个异步任务的完成。<br />
+GCD提供了两种方式去获取<code class="language-plaintext highlighter-rouge">dispatch_group_t</code>完成的回调。<br />
+第一种是<code class="language-plaintext highlighter-rouge">dispatch_group_notify()</code>，不会阻塞当前线程，在所有任务完成后，回调到block；<br />
+第二种是<code class="language-plaintext highlighter-rouge">dispatch_group_wait()</code>，会阻塞当前线程，等待所有任务完成后才往下走，<strong><code class="language-plaintext highlighter-rouge">dispatch_group_wait()</code>不可以在主线程调用，否则会造成死锁。</strong></p>
 
-<p><code class="highlighter-rouge">dispatch_group_notify()</code>的例子如下：</p>
-<div class="language-objc highlighter-rouge"><pre class="highlight"><code>   <span class="n">dispatch_group_t</span> <span class="n">group</span> <span class="o">=</span> <span class="n">dispatch_group_create</span><span class="p">();</span>
+<p><code class="language-plaintext highlighter-rouge">dispatch_group_notify()</code>的例子如下：</p>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="n">dispatch_group_t</span> <span class="n">group</span> <span class="o">=</span> <span class="n">dispatch_group_create</span><span class="p">();</span>
     <span class="n">dispatch_queue_t</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
     <span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="o">^</span><span class="p">(){</span>
         <span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">(){</span>
@@ -328,8 +325,7 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
         <span class="n">NSLog</span><span class="p">(</span><span class="s">@"3"</span><span class="p">);</span>
     <span class="p">});</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>输出结果：</p>
 <pre><code class="language-clang">2018-12-19 15:12:27.770146+0800 GCD[70391:2895561] 2
@@ -337,8 +333,8 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
 2018-12-19 15:12:29.220987+0800 GCD[70391:2895561] 3
 </code></pre>
 
-<p><code class="highlighter-rouge">dispatch_group_wait()</code>例子如下：</p>
-<div class="language-objc highlighter-rouge"><pre class="highlight"><code><span class="n">dispatch_queue_t</span> <span class="n">asyncQueue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">"com.group.queue"</span><span class="p">,</span> <span class="n">DISPATCH_QUEUE_CONCURRENT</span><span class="p">);</span>
+<p><code class="language-plaintext highlighter-rouge">dispatch_group_wait()</code>例子如下：</p>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dispatch_queue_t</span> <span class="n">asyncQueue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">"com.group.queue"</span><span class="p">,</span> <span class="n">DISPATCH_QUEUE_CONCURRENT</span><span class="p">);</span>
     <span class="n">dispatch_async</span><span class="p">(</span><span class="n">asyncQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
         <span class="n">dispatch_group_t</span> <span class="n">group</span> <span class="o">=</span> <span class="n">dispatch_group_create</span><span class="p">();</span>
         <span class="n">dispatch_queue_t</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
@@ -363,8 +359,7 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
         <span class="n">dispatch_group_wait</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">DISPATCH_TIME_FOREVER</span><span class="p">);</span>
         <span class="n">NSLog</span><span class="p">(</span><span class="s">@"3"</span><span class="p">);</span>
     <span class="p">});</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>输出结果：</p>
 <pre><code class="language-clang">2019-02-16 12:21:12.300569+0800 GCD[79234:3427553] 2
 2019-02-16 12:21:13.751251+0800 GCD[79234:3427553] 1
@@ -373,17 +368,17 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
 
 <h4 id="dispatch_barrier_async">dispatch_barrier_async</h4>
 
-<p><code class="highlighter-rouge">dispatch_barrier</code>相当于一个“栅栏”的作用，在相同的队列中，会先执行在<code class="highlighter-rouge">dispatch_barrier</code>之前的任务，然后<code class="highlighter-rouge">dispatch_barrier</code>之后的任务，都需要等待<code class="highlighter-rouge">dispatch_barrier</code>完成之后，才会执行block里面的内容。</p>
+<p><code class="language-plaintext highlighter-rouge">dispatch_barrier</code>相当于一个“栅栏”的作用，在相同的队列中，会先执行在<code class="language-plaintext highlighter-rouge">dispatch_barrier</code>之前的任务，然后<code class="language-plaintext highlighter-rouge">dispatch_barrier</code>之后的任务，都需要等待<code class="language-plaintext highlighter-rouge">dispatch_barrier</code>完成之后，才会执行block里面的内容。</p>
 
 <p>另外苹果文档中有写道：</p>
 <blockquote>
   <p>The queue you specify should be a concurrent queue that you create yourself using the dispatch_queue_create function. If the queue you pass to this function is a serial queue or one of the global concurrent queues, this function behaves like the dispatch_sync function.</p>
 </blockquote>
 
-<p>使用<code class="highlighter-rouge">dispatch_barrier_async</code>的时候，需要自定义队列才有效，如果使用全局队列或者同步队列，效果和<code class="highlighter-rouge">dispatch_sync()</code>同步函数一样。</p>
+<p>使用<code class="language-plaintext highlighter-rouge">dispatch_barrier_async</code>的时候，需要自定义队列才有效，如果使用全局队列或者同步队列，效果和<code class="language-plaintext highlighter-rouge">dispatch_sync()</code>同步函数一样。</p>
 
-<div class="language-objc highlighter-rouge"><pre class="highlight"><code>    <span class="c1">//防止文件读写冲突，可以创建一个串行队列，操作都在这个队列中进行，没有更新数据读用并行，写用串行。
-</span>    <span class="n">dispatch_queue_t</span> <span class="n">dataQueue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">"com.karim.gcd.dataqueue"</span><span class="p">,</span> <span class="n">DISPATCH_QUEUE_CONCURRENT</span><span class="p">);</span>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">//防止文件读写冲突，可以创建一个串行队列，操作都在这个队列中进行，没有更新数据读用并行，写用串行。</span>
+    <span class="n">dispatch_queue_t</span> <span class="n">dataQueue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">"com.karim.gcd.dataqueue"</span><span class="p">,</span> <span class="n">DISPATCH_QUEUE_CONCURRENT</span><span class="p">);</span>
     <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
         <span class="p">[</span><span class="n">NSThread</span> <span class="nf">sleepForTimeInterval</span><span class="p">:</span><span class="mi">2</span><span class="p">.</span><span class="n">f</span><span class="p">];</span>
         <span class="n">NSLog</span><span class="p">(</span><span class="s">@"read data 1"</span><span class="p">);</span>
@@ -391,8 +386,8 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
     <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
         <span class="n">NSLog</span><span class="p">(</span><span class="s">@"read data 2"</span><span class="p">);</span>
     <span class="p">});</span>
-    <span class="c1">//等待前面的都完成，在执行barrier后面的
-</span>    <span class="n">dispatch_barrier_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+    <span class="c1">//等待前面的都完成，在执行barrier后面的</span>
+    <span class="n">dispatch_barrier_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
         <span class="n">NSLog</span><span class="p">(</span><span class="s">@"write data 1"</span><span class="p">);</span>
         <span class="p">[</span><span class="n">NSThread</span> <span class="nf">sleepForTimeInterval</span><span class="p">:</span><span class="mi">1</span><span class="p">];</span>
     <span class="p">});</span>
@@ -403,8 +398,7 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
     <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dataQueue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
         <span class="n">NSLog</span><span class="p">(</span><span class="s">@"read data 4"</span><span class="p">);</span>
     <span class="p">});</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>输出结果如下：</p>
 <pre><code class="language-clang">2018-12-19 15:26:50.297477+0800 GCD[70716:2943544] read data 2
 2018-12-19 15:26:52.302570+0800 GCD[70716:2943541] read data 1
@@ -492,13 +486,13 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="38">
+                				<a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
         				
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="12">
+                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
@@ -527,6 +521,8 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
                 				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
+                            
+        				
                             
         				
                             
@@ -579,6 +575,8 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
         				
                             
         				
+                            
+        				
         			</div>
                 </section>
                 
@@ -610,7 +608,7 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
     var disqus_identifier = "/2019/02/16/iOS多线程总结";
-    var disqus_url = "http://www.foolishtalk.org/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/";
+    var disqus_url = "http://localhost:4000/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -670,7 +668,7 @@ GCD提供了两种方式去获取<code class="highlighter-rouge">dispatch_group_
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; FoolishTalk 2021
+                    Copyright &copy; FoolishTalk 2022
                     <br>
                 </p>
                 <p class="copyright text-muted">
