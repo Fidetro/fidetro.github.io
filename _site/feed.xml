@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 24 Feb 2022 22:53:48 +0800</pubDate>
-    <lastBuildDate>Thu, 24 Feb 2022 22:53:48 +0800</lastBuildDate>
+    <pubDate>Thu, 24 Feb 2022 22:59:49 +0800</pubDate>
+    <lastBuildDate>Thu, 24 Feb 2022 22:59:49 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
     
       <item>
@@ -23,8 +23,8 @@
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;command+v&lt;/code&gt; Paste method declarations to header file,now!&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;#Tips&lt;br /&gt;
-You can set a shortcut (Key Binding) for any command via Xcode -&amp;gt; Preferences -&amp;gt; Key Bindings. &lt;br /&gt;
+&lt;h1 id=&quot;tips&quot;&gt;Tips&lt;/h1&gt;
+&lt;p&gt;You can set a shortcut (Key Binding) for any command via Xcode -&amp;gt; Preferences -&amp;gt; Key Bindings. &lt;br /&gt;
 &lt;img src=&quot;http://images.foolishtalk.org/D7233F8D-4E03-4B53-8A14-8B402BF4051A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;If there are any questions, please feel free to contact me and send email to zykzzzz@hotmail.com.&lt;/p&gt;

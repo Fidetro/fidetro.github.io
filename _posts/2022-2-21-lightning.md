@@ -20,7 +20,7 @@ To install Lightning - Generate for Xcode in Xcode 12 (or Xcode 11):
 - `command+v` Paste method declarations to header file,now!
 
 
-#Tips  
+# Tips  
 You can set a shortcut (Key Binding) for any command via Xcode -> Preferences -> Key Bindings.   
 ![](http://images.foolishtalk.org/D7233F8D-4E03-4B53-8A14-8B402BF4051A.png) 
 
