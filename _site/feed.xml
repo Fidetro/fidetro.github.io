@@ -5,12 +5,12 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 09 Mar 2022 23:06:54 +0800</pubDate>
-    <lastBuildDate>Wed, 09 Mar 2022 23:06:54 +0800</lastBuildDate>
+    <pubDate>Wed, 09 Mar 2022 23:10:41 +0800</pubDate>
+    <lastBuildDate>Wed, 09 Mar 2022 23:10:41 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
     
       <item>
-        <title></title>
+        <title>全局git hook的几种方式</title>
         <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
 &lt;p&gt;随着自己开发的个人项目越来越多，也给自己制定了一些git的规范，例如&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git commit&lt;/code&gt;提交日志的规范。&lt;br /&gt;
 因为我的个人项目都是放在GitHub上，我在给项目开发新需求的时候，会新建一个issue，GitHub会给这个issue，创建一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id&lt;/code&gt;(不知道正确叫法是什么)，然后在开发新需求的时候，会把分支名称改成&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id&lt;/code&gt;，这样就可以方便的跟踪项目后续问题回溯，同时还会在提交日志加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id&lt;/code&gt;，类似这样的格式：&lt;/p&gt;

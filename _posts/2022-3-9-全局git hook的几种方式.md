@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      ""
-subtitle:   "全局git hook的几种方式"
+title:      "全局git hook的几种方式"
+subtitle:   "git"
 date:       2022-3-9
 author:     "Karim"
 header-img: "img/post-white-room.png"
