@@ -5,9 +5,62 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 24 Feb 2022 22:59:49 +0800</pubDate>
-    <lastBuildDate>Thu, 24 Feb 2022 22:59:49 +0800</lastBuildDate>
+    <pubDate>Wed, 09 Mar 2022 23:06:54 +0800</pubDate>
+    <lastBuildDate>Wed, 09 Mar 2022 23:06:54 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
+    
+      <item>
+        <title></title>
+        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+&lt;p&gt;随着自己开发的个人项目越来越多，也给自己制定了一些git的规范，例如&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git commit&lt;/code&gt;提交日志的规范。&lt;br /&gt;
+因为我的个人项目都是放在GitHub上，我在给项目开发新需求的时候，会新建一个issue，GitHub会给这个issue，创建一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id&lt;/code&gt;(不知道正确叫法是什么)，然后在开发新需求的时候，会把分支名称改成&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id&lt;/code&gt;，这样就可以方便的跟踪项目后续问题回溯，同时还会在提交日志加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id&lt;/code&gt;，类似这样的格式：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#id-问题/功能描述
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;这样的格式，可以在GitHub的页面直接跳转到对应的issue或者pull request，非常方便。&lt;br /&gt;
+但是每次都得手动加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id-&lt;/code&gt;，这样会比较麻烦，所以我想到了用git-hooks，在提交日志的时候，自动加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id-&lt;/code&gt;，这样就可以让我们不用手动加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id-&lt;/code&gt;了。&lt;/p&gt;
+
+&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
+&lt;p&gt;关于git-hooks，我就不多说了，可以看看这里对git-hooks的&lt;a href=&quot;https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90&quot;&gt;介绍&lt;/a&gt;,如果只想把hook的规则单独使用在某个项目中，可以在项目的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.git/hooks&lt;/code&gt;下创建hook脚本。&lt;br /&gt;
+如果想要在全局使用，有两种方式&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;init.templatedir&lt;/code&gt;或者&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;core.hooksPath&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;inittemplatedir&quot;&gt;init.templatedir&lt;/h2&gt;
+&lt;p&gt;这种方式会在你的项目&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git init&lt;/code&gt;的时候，自动创建一个hooks文件夹，然后把所有的hook脚本都放在这个文件夹下，如果是旧的项目就需要再次执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git init&lt;/code&gt;才会生效。&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#创建hooks文件夹
+mkdir -p ~/.git-templates/hooks
+#配置全局git templates
+git config --global init.templatedir &apos;~/.git-templates&apos;  
+#确保脚本可以执行
+chmod a+x ~/.git-hooksPath/hooks/xxx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;将hook的脚本放入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.git-templates/hooks&lt;/code&gt;中即可。&lt;/p&gt;
+
+&lt;h2 id=&quot;corehookspath&quot;&gt;core.hooksPath&lt;/h2&gt;
+&lt;p&gt;这种方式需要git的版本在2.9+以上才能正常使用，比第一种方式方便在旧项目不需要再次init就可以使用。&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#创建hooks文件夹
+mkdir -p ~/.git-hooksPath/hooks
+#配置全局git hooksPath
+git config --global core.hooksPath ~/.git-hooksPath/hooks  
+#确保脚本可以执行
+chmod a+x ~/.git-hooksPath/hooks/xxx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;将hook的脚本放入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.git-hooksPath/hooks&lt;/code&gt;中即可。&lt;/p&gt;
+
+&lt;p&gt;如果有个别项目不需要使用全局的git hooks，可以在项目的根目录下重新配置git hooksPath，比如：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config core.hooksPath .git/hooks 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;参考&quot;&gt;参考&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/2293498/applying-a-git-post-commit-hook-to-all-current-and-future-repositories&quot;&gt;Applying a git post-commit hook to all current and future repositories&lt;/a&gt; &lt;br /&gt;
+&lt;a href=&quot;https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90&quot;&gt;Git 钩子&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 09 Mar 2022 00:00:00 +0800</pubDate>
+        <link>http://www.foolishtalk.org/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</guid>
+        
+        <category>git</category>
+        
+        
+      </item>
     
       <item>
         <title>Installing Lightning for Xcode</title>
@@ -643,176 +696,6 @@ Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文�
         <guid isPermaLink="true">http://www.foolishtalk.org/2019/12/04/magellan/</guid>
         
         <category>iOS</category>
-        
-        <category>Xcode</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>在Mac app上执行AppleScript</title>
-        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
-
-&lt;p&gt;前段时间我开发了&lt;a href=&quot;https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;虚拟定位&lt;/a&gt;，一脚踩进了&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;的坑里无法自拔。&lt;/p&gt;
-
-&lt;h1 id=&quot;applescript&quot;&gt;AppleScript&lt;/h1&gt;
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;它是什么？&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;它是苹果提供在Mac OS上实现自动化的脚本语言，语法相对简单、易懂，类似英语语法。下面这段代码，你可以通过 Mac 自带的脚本编辑器运行：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/apple-script-editor-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;运行后它会打开 iTunes ：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tell application &lt;span class=&quot;s2&quot;&gt;&quot;iTunes&quot;&lt;/span&gt;
-	play
-end tell
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;这三行可以简单的理解为：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;告诉 iTunes
-    播放
-结束
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tell application &quot;xxx&quot;&lt;/code&gt; 如果你是想让微信 App做点什么，就是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tell application &quot;微信&quot;&lt;/code&gt;,而&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;play&lt;/code&gt;这个事件，是iTunes独有的，怎么能知道app特有的事件？你可以通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;脚本编辑器&lt;/code&gt;的导航栏中按照以下步骤找到：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/apple-script-editor-2.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-然后选择&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;iTunes&lt;/code&gt;:&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/apple-script-editor-3.png&quot; alt=&quot;&quot; /&gt; &lt;br /&gt;
-这里可以看到关于play事件的一些描述。&lt;br /&gt;
-在编写Mac app之前，可以先通过脚本编辑器把我们想实现的功能调试好，然后再把脚本移到Mac app上，确保脚本是正确的，而不是因为App沙盒、权限等问题引起。&lt;/p&gt;
-
-&lt;h1 id=&quot;system-events&quot;&gt;System Events&lt;/h1&gt;
-&lt;p&gt;上面已经说到，可以通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tell application &quot;xxx&quot;&lt;/code&gt;这种方式去调用 App 允许的行为，如果你看完了上面的介绍，打算自己动手去做一些 App 自动化的事情，你会发现 App 提供的事件很少，甚至有可能没有，所以接下来讲的是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System Events&lt;/code&gt; , &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System Events&lt;/code&gt; 为我们提供了系统事件，允许我们模拟用户点击行为，可以说所有用户界面相关的操作，你都可以通过 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System Events&lt;/code&gt; 去进行自动化操作。&lt;/p&gt;
-
-&lt;p&gt;下面这一段就是通过 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System Events&lt;/code&gt; 启动 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 然后通过菜单栏的选项卡，新建标签页。&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tell application &lt;span class=&quot;s2&quot;&gt;&quot;Safari&quot;&lt;/span&gt;
-	&lt;span class=&quot;c&quot;&gt;# 打开Safari&lt;/span&gt;
-	activate
-	tell application &lt;span class=&quot;s2&quot;&gt;&quot;System Events&quot;&lt;/span&gt;
-		tell process &lt;span class=&quot;s2&quot;&gt;&quot;Safari&quot;&lt;/span&gt;
-			&lt;span class=&quot;c&quot;&gt;# 点击Safari菜单栏-文件-新建标签页&lt;/span&gt;
-			click menu item &lt;span class=&quot;s2&quot;&gt;&quot;新建标签页&quot;&lt;/span&gt; of menu 1 of menu bar item &lt;span class=&quot;s2&quot;&gt;&quot;文件&quot;&lt;/span&gt; of menu bar 1
-		end tell
-	end tell
-end tell
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;mac-app-调用-applescript-的方式&quot;&gt;Mac App 调用 AppleScript 的方式&lt;/h1&gt;
-
-&lt;p&gt;通过 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NSAppleScript&lt;/code&gt; 运行以下代码：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;        let source = &quot;&quot;&quot;
-tell application &quot;Safari&quot;
-    # 打开Safari
-    activate
-    tell application &quot;System Events&quot;
-        tell process &quot;Safari&quot;
-            # 点击Safari菜单栏-文件-新建标签页
-            click menu item &quot;新建标签页&quot; of menu 1 of menu bar item &quot;文件&quot; of menu bar 1
-        end tell
-    end tell
-end tell
-&quot;&quot;&quot;
-        let script = NSAppleScript(source: source)!
-        var error : NSDictionary?
-        script.executeAndReturnError(&amp;amp;error)
-        print(error)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;预期结果是正常的，但是会发现打印出了这样的错误：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2019-09-22 21:15:30.094229+0800 SwiftAppleScript[1453:42847] skipped scripting addition &quot;/Library/ScriptingAdditions/SASyphonInjector.osax&quot; because it is not SIP-protected.
-Optional({
-    NSAppleScriptErrorAppName = &quot;System Events&quot;;
-    NSAppleScriptErrorBriefMessage = &quot;Not authorized to send Apple events to System Events.&quot;;
-    NSAppleScriptErrorMessage = &quot;Not authorized to send Apple events to System Events.&quot;;
-    NSAppleScriptErrorNumber = &quot;-1743&quot;;
-    NSAppleScriptErrorRange = &quot;NSRange: {168, 69}&quot;;
-})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;这个地方非常的坑，如果没有打印&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;error&lt;/code&gt;,在没有打开&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App Sanbox&lt;/code&gt;的情况下，是有可能预期效果是正常的，Safari能正常打开然后新建标签页。&lt;/p&gt;
-
-&lt;p&gt;如果之前是做iOS开发的，对这个错误应该会很自然的有头绪，应该就是一些权限问题，直接在Info.plist上就能找到一个看起来是这个权限的字段，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Privacy - AppleEvents Sending Usage Description&lt;/code&gt;，把这个字段加上后，重新运行，发现多出了这个弹窗：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/2019-09-28.4.55.09.png&quot; alt=&quot;&quot; /&gt;
-如果能够正常运行，那恭喜你，说明你没有打开&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Capabilities&lt;/code&gt;-&amp;gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App Sanbox&lt;/code&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/2EE70BF91F39368ACF74DD225DEF0EE0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;为什么要打开app-sanbox&quot;&gt;为什么要打开App Sanbox？&lt;/h1&gt;
-
-&lt;p&gt;Mac OSX在10.6系统之后，为了防止恶意的App通过系统漏洞攻击系统，获取控制权限，要求上架的所有的App，都必须要开启沙盒。不要以为App安全离我们很远，Mac App一不留神就有可能被利用，System Events 就可以做到这个事情。&lt;/p&gt;
-
-&lt;p&gt;讲回正题，当我们把 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App Sanbox&lt;/code&gt; 打开后，新的报错又来了：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Optional({
-    NSAppleScriptErrorAppName = Safari;
-    NSAppleScriptErrorBriefMessage = &quot;Application isn’t running.&quot;;
-    NSAppleScriptErrorMessage = &quot;Safari got an error: Application isn’t running.&quot;;
-    NSAppleScriptErrorNumber = &quot;-600&quot;;
-    NSAppleScriptErrorRange = &quot;NSRange: {45, 8}&quot;;
-})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/2019110_IMG_2412.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;这次是提示 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 没有运行，我们的代码里已经加了让 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Safari&lt;/code&gt; 唤醒的功能了，这说明这段代码没办法执行，既然没有解决，只能靠 google 了。&lt;/p&gt;
-
-&lt;p&gt;在查阅了一大波资料后，在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App.entitlements&lt;/code&gt; 加上这个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;com.apple.security.temporary-exception.apple-events&lt;/code&gt; 权限就可以了。&lt;/p&gt;
-
-&lt;p&gt;到这里为止，一切正常的。&lt;br /&gt;
-在虚拟定位加入这个权限的第一个版本，上架也非常顺利，但是这之后更新的一个版本，仅涉及一些UI细节的修复，收到苹果拒审的邮件，内容如下：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;我知道你要使用 com.apple.security.temporary-exception.apple-events 干嘛，
-但是我不能给你用，要么你就去掉这个功能，要么你要自己找别的方式去实现。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;既然不给我用，为什么上个版本还能给我上架成功？？？&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/2019110_IMG_2412.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;这个方法不行，只能另外再找方法了。&lt;/p&gt;
-
-&lt;p&gt;从苹果的&lt;a href=&quot;https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html#//apple_ref/doc/uid/TP40011195-CH4-SW25&quot;&gt;文档&lt;/a&gt;可以找到怎么通过 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt; 调用其他 App 功能的资料，苹果在文档中给我们举了个例子，如果要用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Mail.app&lt;/code&gt; 的邮件编写功能，可以在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App.entitlements&lt;/code&gt; 加上一下的权限：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;key&amp;gt;com.apple.security.scripting-targets&amp;lt;/key&amp;gt;
-    &amp;lt;dict&amp;gt;
-        &amp;lt;key&amp;gt;com.apple.mail&amp;lt;/key&amp;gt;
-        &amp;lt;array&amp;gt;
-            &amp;lt;string&amp;gt;com.apple.mail.compose&amp;lt;/string&amp;gt;
-        &amp;lt;/array&amp;gt;
-    &amp;lt;/dict&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;这样就可以使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;com.apple.mail.compose&lt;/code&gt;这个访问组下的权限了，这个访问组下的权限，可以通过以下的命令看得到：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sdef /Applications/Mail.app &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; ~/Desktop/mail.xml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;但是 Xcode 本身并没有提供一个可以修改定位的访问组权限给到我们，所以并不能使用以上的方法去解决。&lt;/p&gt;
-
-&lt;p&gt;这时候不禁会想到，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System Event&lt;/code&gt; 能做什么呢，为什么苹果会不允许我们使用这个权限？对此我又对这个权限有了一个更深入的了解。&lt;/p&gt;
-
-&lt;h1 id=&quot;思考&quot;&gt;思考&lt;/h1&gt;
-
-&lt;p&gt;System Events其实是一个系统App，提供控制Mac OSX GUI和应用之间的交互，在这个路径下你可以找到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/System/Library/CoreServices/System Events.app&lt;/code&gt;。 &lt;br /&gt;
-通过System Events，我们可以做到以下这些东西：&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;获取正在运行的App列表&lt;/li&gt;
-  &lt;li&gt;（得到/点击）任意一个正在运行App中的UI元素&lt;/li&gt;
-  &lt;li&gt;（打开/移动/删除）文件&lt;/li&gt;
-  &lt;li&gt;…&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;等等…这不就是等于能远程监控和控制别人的电脑吗？&lt;br /&gt;
-所以苹果不开放这个权限也是有原因，既然这样，也只能找别的方法看看了。&lt;br /&gt;
-苹果不允许开发者动态调用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AppleScript&lt;/code&gt;，但是可以调用 App 沙盒里的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Application Scripts&lt;/code&gt; 目录下的文件。
-最终虚拟定位采用的方案也是这个，在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Info.plist&lt;/code&gt;加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NSAppleEventsUsageDescription&lt;/code&gt;,并且通过弹窗引导用户把控制Xcode的脚本保存在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Application Scripts&lt;/code&gt;目录下：&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;FileManager.default.urls(for: .applicationScriptsDirectory, in: .userDomainMask)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;最终，总算顺利上架成功了。&lt;/p&gt;
-
-&lt;h1 id=&quot;总结&quot;&gt;总结&lt;/h1&gt;
-&lt;p&gt;App的沙盒机制，给用户带来了安全保障，但是也给开发者带来了很多开发上的困难，同时也一定程度上会增加用户在使用上带来不好的体验。&lt;br /&gt;
-如果你也想开发一款App并且上架AppStore，但是要依赖一个不是自己开发的App，大部分非Apple的App，都不会提供AppleScript的相关接口给到第三方使用，把applescript放在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Application Scripts&lt;/code&gt;目录下使用是目前唯一能上架成功的方式。&lt;/p&gt;
-</description>
-        <pubDate>Sun, 10 Nov 2019 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2019/11/10/%E5%9C%A8Mac-app%E4%B8%8A%E6%89%A7%E8%A1%8CAppleScript/</guid>
-        
-        <category>Mac</category>
         
         <category>Xcode</category>
         

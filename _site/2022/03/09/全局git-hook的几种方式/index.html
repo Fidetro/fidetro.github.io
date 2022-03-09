@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>聊聊ReplayKit踩过来的坑 - FoolishTalk 技术分享</title>
+    <title> - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2018/12/10/%E8%81%8A%E8%81%8AReplayKit%E8%B8%A9%E8%BF%87%E6%9D%A5%E7%9A%84%E5%9D%91/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -156,12 +156,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-ismael.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-white-room.png" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-ismael.jpg')
+        background-image: url('/img/post-white-room.png')
     }
 </style>
 <header class="intro-header" >
@@ -172,17 +172,15 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
-                        
-                        <a class="tag" href="/tags/#Objective-C" title="Objective-C">Objective-C</a>
+                        <a class="tag" href="/tags/#git" title="git">git</a>
                         
                     </div>
-                    <h1>聊聊ReplayKit踩过来的坑</h1>
+                    <h1></h1>
                     
                     
-                    <h2 class="subheading">iOS，动画，ReplayKit</h2>
+                    <h2 class="subheading">全局git hook的几种方式</h2>
                     
-                    <span class="meta">Posted by Karim on December 10, 2018</span>
+                    <span class="meta">Posted by Karim on March 9, 2022</span>
                 </div>
             </div>
         </div>
@@ -200,91 +198,46 @@ border: none;
                 post-container">
 
 				<h1 id="前言">前言</h1>
+<p>随着自己开发的个人项目越来越多，也给自己制定了一些git的规范，例如<code class="language-plaintext highlighter-rouge">git commit</code>提交日志的规范。<br />
+因为我的个人项目都是放在GitHub上，我在给项目开发新需求的时候，会新建一个issue，GitHub会给这个issue，创建一个<code class="language-plaintext highlighter-rouge">#id</code>(不知道正确叫法是什么)，然后在开发新需求的时候，会把分支名称改成<code class="language-plaintext highlighter-rouge">#id</code>，这样就可以方便的跟踪项目后续问题回溯，同时还会在提交日志加上<code class="language-plaintext highlighter-rouge">#id</code>，类似这样的格式：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#id-问题/功能描述
+</code></pre></div></div>
+<p>这样的格式，可以在GitHub的页面直接跳转到对应的issue或者pull request，非常方便。<br />
+但是每次都得手动加上<code class="language-plaintext highlighter-rouge">#id-</code>，这样会比较麻烦，所以我想到了用git-hooks，在提交日志的时候，自动加上<code class="language-plaintext highlighter-rouge">#id-</code>，这样就可以让我们不用手动加上<code class="language-plaintext highlighter-rouge">#id-</code>了。</p>
 
-<p><code class="language-plaintext highlighter-rouge">ReplayKit</code>是WWDC15推出的苹果原生录屏框架，目的在于让开发者更方便的使用屏幕录制功能，在悦跑圈的项目中也有用到，API对开发者可以说是非常友好了。我们先来看看<code class="language-plaintext highlighter-rouge">ReplayKit</code>的API。</p>
+<h1 id="正文">正文</h1>
+<p>关于git-hooks，我就不多说了，可以看看这里对git-hooks的<a href="https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90">介绍</a>,如果只想把hook的规则单独使用在某个项目中，可以在项目的<code class="language-plaintext highlighter-rouge">.git/hooks</code>下创建hook脚本。<br />
+如果想要在全局使用，有两种方式<code class="language-plaintext highlighter-rouge">init.templatedir</code>或者<code class="language-plaintext highlighter-rouge">core.hooksPath</code>。</p>
 
-<p>开始录制</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="p">[[</span><span class="n">RPScreenRecorder</span> <span class="nf">sharedRecorder</span><span class="p">]</span> <span class="nf">startRecordingWithHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
-       
-    <span class="p">}];</span>
+<h2 id="inittemplatedir">init.templatedir</h2>
+<p>这种方式会在你的项目<code class="language-plaintext highlighter-rouge">git init</code>的时候，自动创建一个hooks文件夹，然后把所有的hook脚本都放在这个文件夹下，如果是旧的项目就需要再次执行<code class="language-plaintext highlighter-rouge">git init</code>才会生效。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#创建hooks文件夹
+mkdir -p ~/.git-templates/hooks
+#配置全局git templates
+git config --global init.templatedir '~/.git-templates'  
+#确保脚本可以执行
+chmod a+x ~/.git-hooksPath/hooks/xxx
+</code></pre></div></div>
+<p>将hook的脚本放入<code class="language-plaintext highlighter-rouge">~/.git-templates/hooks</code>中即可。</p>
+
+<h2 id="corehookspath">core.hooksPath</h2>
+<p>这种方式需要git的版本在2.9+以上才能正常使用，比第一种方式方便在旧项目不需要再次init就可以使用。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#创建hooks文件夹
+mkdir -p ~/.git-hooksPath/hooks
+#配置全局git hooksPath
+git config --global core.hooksPath ~/.git-hooksPath/hooks  
+#确保脚本可以执行
+chmod a+x ~/.git-hooksPath/hooks/xxx
+</code></pre></div></div>
+<p>将hook的脚本放入<code class="language-plaintext highlighter-rouge">~/.git-hooksPath/hooks</code>中即可。</p>
+
+<p>如果有个别项目不需要使用全局的git hooks，可以在项目的根目录下重新配置git hooksPath，比如：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config core.hooksPath .git/hooks 
 </code></pre></div></div>
 
-<p>停止录制</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[[RPScreenRecorder sharedRecorder] stopRecordingWithHandler:^(RPPreviewViewController * _Nullable previewViewController, NSError * _Nullable error) {
-        
-}];
-</code></pre></div></div>
-<p>另外停止录制的时候，会返回一个系统的previewViewController，对此可以进行最基本视频剪辑的。<br />
-只需要在回调的时候调用一下：</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
-<span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">previewViewController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
-
-<span class="cp">#pragma mark - RPPreviewViewControllerpreviewControllerDelegate
-</span><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">previewControllerDidFinish</span><span class="p">:(</span><span class="n">RPPreviewViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">previewController</span> <span class="p">{</span>
-    <span class="c1">//处理dismiss回来的回调</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>整体上来看，可以说是真的对开发者非常友好了，然而这里面的坑还是不少。</p>
-
-<h1 id="细数replaykit的坑">细数ReplayKit的坑</h1>
-
-<ol>
-  <li>开始录屏和停止录屏的回调，并不是在主线程。
-    <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="p">[[</span><span class="n">RPScreenRecorder</span> <span class="nf">sharedRecorder</span><span class="p">]</span> <span class="nf">startRecordingWithHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
-     <span class="p">[[</span><span class="n">NSOperationQueue</span> <span class="nf">mainQueue</span><span class="p">]</span><span class="nf">addOperationWithBlock</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
-         <span class="c1">//要注意回到主线程，避免线程问题</span>
-     <span class="p">}];</span>
- <span class="p">}];</span>
-</code></pre></div>    </div>
-  </li>
-  <li>停止录屏的previewViewController有可能为空
-    <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="p">[[</span><span class="n">RPScreenRecorder</span> <span class="nf">sharedRecorder</span><span class="p">]</span> <span class="nf">stopRecordingWithHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">RPPreviewViewController</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">previewViewController</span><span class="p">,</span> <span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
-     <span class="p">[[</span><span class="n">NSOperationQueue</span> <span class="nf">mainQueue</span><span class="p">]</span><span class="nf">addOperationWithBlock</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
-         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span> <span class="o">&amp;&amp;</span> <span class="n">previewViewController</span><span class="p">)</span> 
-         <span class="p">{</span>
-             <span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
-             <span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">previewViewController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span> 
-         <span class="p">}</span><span class="k">else</span>
-         <span class="p">{</span>
-                
-         <span class="p">}</span>
-     <span class="p">}];</span>
- <span class="p">}];</span>
-</code></pre></div>    </div>
-  </li>
-  <li>previewViewController没有适配全面屏
-    <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">if</span> <span class="p">(</span><span class="cm">/* 全面屏 &amp;&amp; iOS 11以上 */</span><span class="p">)</span> <span class="p">{</span>
-     <span class="n">UIEdgeInsets</span> <span class="n">safeArea</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">safeAreaInsets</span><span class="p">;</span>
-     <span class="n">CGFloat</span> <span class="n">safeAreaHeight</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">-</span> <span class="p">(</span><span class="n">safeArea</span><span class="p">.</span><span class="n">top</span> <span class="o">+</span> <span class="n">safeArea</span><span class="p">.</span><span class="n">bottom</span><span class="p">);</span>
-     <span class="n">CGFloat</span> <span class="n">safeAreaWidth</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">-</span> <span class="p">(</span><span class="n">safeArea</span><span class="p">.</span><span class="n">left</span> <span class="o">+</span> <span class="n">safeArea</span><span class="p">.</span><span class="n">right</span><span class="p">);</span>
-     <span class="n">CGFloat</span> <span class="n">scaleX</span> <span class="o">=</span> <span class="n">safeAreaWidth</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
- <span class="n">CGFloat</span> <span class="n">scaleY</span> <span class="o">=</span> <span class="n">safeAreaHeight</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
- <span class="n">CGFloat</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">MIN</span><span class="p">(</span><span class="n">scaleX</span><span class="p">,</span> <span class="n">scaleY</span><span class="p">);</span>
- <span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerpreviewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
- <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">CGAffineTransformMakeScale</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">scale</span><span class="p">);</span>
- <span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">previewViewController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:^</span><span class="p">{</span>
-     <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">x</span><span class="o">+</span><span class="n">safeArea</span><span class="p">.</span><span class="n">left</span><span class="p">,</span> <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span><span class="o">+</span><span class="n">safeArea</span><span class="p">.</span><span class="n">top</span><span class="p">,</span> <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">);</span>
- <span class="p">}];</span>
-<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
- <span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerpreviewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
- <span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">previewViewController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
-<span class="p">}</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>停止录屏后present到previewViewController有可能黑屏（window如果是白色是白屏）<br />
-这个问题目前没办法解决，在<a href="https://stackoverflow.com/search?q=replaykit+black">stackoverflow</a>上也有许多相同的问题，暂时没办法解决</p>
-  </li>
-  <li>调用停止录屏方法，不管成功或失败有几率不进入回调<br />
-这个问题同样无法解决，在<a href="https://forums.developer.apple.com/thread/87007">forums-develop</a>中，也同样有人提出，被苹果标记为已知重复的问题（但是至今没修复…</li>
-</ol>
-
-<h1 id="解决">解决</h1>
-<p>通过翻阅RPPreviewViewController的私有属性和方法，发现有一个<code class="language-plaintext highlighter-rouge">movieURL</code>的属性。</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">NSURL</span> <span class="o">*</span><span class="n">movieURL</span> <span class="o">=</span> <span class="p">[</span><span class="n">previewViewController</span> <span class="nf">valueForKey</span><span class="p">:</span><span class="s">@"movieURL"</span><span class="p">];</span>
-</code></pre></div></div>
-<p>可以通过获取KVC的方式，获取视频地址，这样就可以避免黑屏的问题了，只是这样，如果要做视频剪辑，就需要另外自定义页面了。但是停止录屏不进入回调和previewViewController有可能为nil的问题，依旧无法解决。</p>
+<h1 id="参考">参考</h1>
+<p><a href="https://stackoverflow.com/questions/2293498/applying-a-git-post-commit-hook-to-all-current-and-future-repositories">Applying a git post-commit hook to all current and future repositories</a> <br />
+<a href="https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90">Git 钩子</a></p>
 
 
                 <hr>
@@ -312,13 +265,9 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/10/15/24%E5%B2%81%E7%9A%84%E6%9D%82%E8%B0%88/" data-toggle="tooltip" data-placement="top" title="24岁的杂谈">&larr; Previous Post</a>
+                        <a href="/2022/02/21/lightning/" data-toggle="tooltip" data-placement="top" title="Installing Lightning for Xcode">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2018/12/13/%E7%9F%A5%E4%B9%8Eapp%E5%86%85%E6%89%93%E5%BC%80app-store%E7%9A%84%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90/" data-toggle="tooltip" data-placement="top" title="知乎app内打开app store的功能分析">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -478,8 +427,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2018/12/10/聊聊ReplayKit踩过来的坑";
-    var disqus_url = "http://www.foolishtalk.org/2018/12/10/%E8%81%8A%E8%81%8AReplayKit%E8%B8%A9%E8%BF%87%E6%9D%A5%E7%9A%84%E5%9D%91/";
+    var disqus_identifier = "/2022/03/09/全局git hook的几种方式";
+    var disqus_url = "http://www.foolishtalk.org/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
