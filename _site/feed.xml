@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 09 Mar 2022 23:10:41 +0800</pubDate>
-    <lastBuildDate>Wed, 09 Mar 2022 23:10:41 +0800</lastBuildDate>
+    <pubDate>Sat, 12 Mar 2022 15:37:34 +0800</pubDate>
+    <lastBuildDate>Sat, 12 Mar 2022 15:37:34 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
     
       <item>
@@ -64,17 +64,27 @@ chmod a+x ~/.git-hooksPath/hooks/xxx
     
       <item>
         <title>Installing Lightning for Xcode</title>
-        <description>&lt;p&gt;To install Lightning - Generate for Xcode in Xcode 12 (or Xcode 11):&lt;/p&gt;
+        <description>&lt;p&gt;Lightning for Xcode is an Xcode developer plugin that improves development efficiency for iOS and Mac developers.&lt;/p&gt;
+
+&lt;p&gt;Lightning for Xcode has the following features:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;Quit Xcode&lt;/li&gt;
-  &lt;li&gt;Enable Lightning extension in System Preferences -&amp;gt; Extensions -&amp;gt; Xcode Source Editor&lt;br /&gt;
- &lt;img src=&quot;http://images.foolishtalk.org/C54AFAC1-558F-4682-AF83-C7AC04E89E75.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
- &lt;img src=&quot;http://images.foolishtalk.org/E1AA6956-0246-4377-B085-DA45E9FAF733.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;Restart Xcode&lt;/li&gt;
-  &lt;li&gt;Select the code you want to extracting&lt;/li&gt;
-  &lt;li&gt;Use Editor -&amp;gt; Lightning menu to extracting method declarations&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;command+v&lt;/code&gt; Paste method declarations to header file,now!&lt;/li&gt;
+  &lt;li&gt;Extracting Method Declarations
+copy the implementation of the function to extract the Method declaration&lt;/li&gt;
+  &lt;li&gt;Generating Lazy Variable
+Copy the property declaration to Generating Lazy Variable code&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;h1 id=&quot;to-install-lightning-for-xcode-in-xcode&quot;&gt;To install Lightning for Xcode in Xcode:&lt;/h1&gt;
+&lt;ol&gt;
+  &lt;li&gt;Quit Xcode;&lt;/li&gt;
+  &lt;li&gt;Enable Lightning extension in System Preferences -&amp;gt; Extensions -&amp;gt; Xcode Source Editor;
+&lt;img src=&quot;http://images.foolishtalk.org/C54AFAC1-558F-4682-AF83-C7AC04E89E75.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;http://images.foolishtalk.org/E1AA6956-0246-4377-B085-DA45E9FAF733.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Restart Xcode;&lt;/li&gt;
+  &lt;li&gt;Select the code you want to extracting;&lt;/li&gt;
+  &lt;li&gt;Use Xcode Editor -&amp;gt; Lightning menu;&lt;/li&gt;
+  &lt;li&gt;Enjoy coding!&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h1 id=&quot;tips&quot;&gt;Tips&lt;/h1&gt;
 &lt;p&gt;You can set a shortcut (Key Binding) for any command via Xcode -&amp;gt; Preferences -&amp;gt; Key Bindings. &lt;br /&gt;
