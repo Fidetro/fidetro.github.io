@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>iOS模拟移动定位 - FoolishTalk 技术分享</title>
+    <title>FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2019/04/11/mocklocation/">
+    <link rel="canonical" href="http://www.foolishtalk.org/page7/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -125,302 +125,257 @@
 </script>
 
 
-    <style type="text/css">
-/* 新浪微博 */
-.-mob-share-weibo {
-background-image: url("https://www.foolishtalk.org/cloud/sina_share.png")!important;
-background-repeat:no-repeat;
-background-color: #ffffff;
-width: 30px;
-height: 30px;
-border: none;
-}
-/* 微信 */
-.-mob-share-weixin {
-background-image: url("https://www.foolishtalk.org/cloud/wechat_share.png")!important;
-background-repeat:no-repeat;
-background-color: #ffffff;
-width: 30px;
-height: 30px;
-border: none;
-}
-/* QQ */
-.-mob-share-qq {
-background-image: url("https://www.foolishtalk.org/cloud/qq_share.png")!important;
-background-repeat:no-repeat;
-background-color: #ffffff;
-width: 30px;
-height: 30px;
-border: none;
-}
-</style>
-<!-- Image to hack wechat -->
-<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-andre-benz.jpg" width="0" height="0"> -->
-
-<!-- Post Header -->
-<style type="text/css">
-    header.intro-header{
-        background-image: url('/img/post-bg-andre-benz.jpg')
-    }
-</style>
-<header class="intro-header" >
+    <!-- Page Header -->
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
     <script data-ad-client="ca-pub-2211183676955599" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
-                        
-                        <a class="tag" href="/tags/#Xcode" title="Xcode">Xcode</a>
-                        
-                    </div>
-                    <h1>iOS模拟移动定位</h1>
-                    
-                    
-                    <h2 class="subheading">Xcode，iOS，定位</h2>
-                    
-                    <span class="meta">Posted by Karim on April 11, 2019</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>FoolishTalk</h1>
+                    <!--<hr class="small">-->
+                    <span class="subheading">谈谈技术，聊聊生活</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">            
-    <!-- Post Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
+        
 
-				<h1 id="前言">前言</h1>
-<p>在阅读这篇文章之前，先保证你必须符合以下几个条件：</p>
-<ul>
-  <li>有台Mac可以使用</li>
-  <li>有一定的编程经验（如果你愿意折腾，没有经验也是可以的）</li>
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
+    		<div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+    			
+<div class="post-preview">
+    <a href="/2016/08/22/iOS%E5%9F%BA%E4%BA%8E%E7%81%B0%E5%BA%A6%E7%9A%84%E5%9D%87%E5%80%BC%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%9B%BE%E5%83%8F%E5%8C%B9%E9%85%8D/">
+        <h2 class="post-title">
+            iOS基于灰度的均值哈希算法实现图像匹配
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Swift，iOS，Objective-C
+        </h3>
+        
+        <div class="post-content-preview">
+            流程：
+
+
+  先获取相机的实时数据，得到image，这里需要用到自定义相机
+这里已经写的很详细了，我是参考了苹果的Demo自己写了一个  
+ iOS开发–AVFoundation自定义相机 
+
+
+图像识别主要分为3种基于灰度相关，基于特征，基于关系。
+
+  这里也有详细的介绍
+
+常用的图像匹配算法及优缺点有哪些？
+剩下的是一些参考过别的语言实现的资料，有些没写上因为当时找的时候记下来，只能...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Karim on August 22, 2016
+    </p>
+</div>
+<hr>
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    <li class="previous">
+        <a href="/page6">&larr; Newer Posts</a>
+    </li>
+    
+    
 </ul>
 
-<h1 id="正文">正文</h1>
 
-<p><a href="https://www.foolishtalk.org/2019/12/04/magellan/">这里</a>有个最新的方式，已经不需要用下面的方法了。</p>
-
-<p>因为有太多人说看不懂了，所以我又录了个<a href="https://www.bilibili.com/video/av53629147">视频</a></p>
-
-<p>先打开Mac应用虚拟定位，可以看到以下的界面，可以在这里<a href="https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12">下载</a>，另外有什么App使用上的问题和建议，也可以来<a href="https://weibo.com/p/1005052095454814">微博</a>私信我：</p>
-
-<p><img src="https://www.foolishtalk.org/cloud/mock_location_12.png" alt="" /></p>
-
-<ol>
-  <li>双击选择你要定位的位置点；</li>
-  <li>在左上角填速度，每个点之间移动的速度会根据这个速度移动；</li>
-  <li>右上角保存会生成出一个gpx文件；</li>
-</ol>
-
-<p>先用Xcode新建一个工程，按照以下步骤操作，Xcode可以在App Store<a href="https://itunes.apple.com/cn/app/xcode/id497799835?mt=12">下载</a>：</p>
-
-<p><img src="https://www.foolishtalk.org/cloud/mock_location_2.png" alt="" /></p>
-
-<ol>
-  <li>选择创建iOS App：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_3.png" alt="" /></li>
-  <li>输入工程名，<code class="language-plaintext highlighter-rouge">Organization Name</code>随便填就可以了，<code class="language-plaintext highlighter-rouge">Organization Identifier</code>填”com.xxx.xxx”，xxx替换成任意英文即可：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_4.png" alt="" /></li>
-  <li>按照以下步骤，选择工程，然后添加账号，这里填你苹果账号：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_5.png" alt="" /></li>
-  <li>把手机连到Mac上，然后选中你的手机，如果没有看到你的手机，可以打开iTunes看看手机是否有连接，如果也没有，拔掉线重新连，应该会看到iTunes有个弹窗，点击信任此电脑，手机上也需要点击信任此电脑：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_8.png" alt="" /></li>
-  <li>输入你手机iOS系统的版本，这里代表可以运行的最低版本，例如你是iOS 10.2，输入10就可以了：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_11.png" alt="" /></li>
-  <li>
-    <p>下载<a href="https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12">虚拟定位</a>，然后按照你想模拟的路径双击地图，按保存会生成一个GPX文件，把生成的GPX文件拖进去工程目录中：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_6.png" alt="" /><br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_7.png" alt="" /></p>
-  </li>
-  <li>点击运行，首次运行可能会弹出需要信任证书的提示，这时候点击手机的设置-通用-描述文件与设备管理-「找到自己的开发证书」-点击信任，再重新运行一遍：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_9.png" alt="" /></li>
-  <li>选中你拖进去gpx文件名字的选项：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_10.png" alt="" /></li>
-  <li>这时候你会发现定位已经改变了，但是要注意，这时候手机和Mac是不能断开连接的，以及运行的App不能被杀死，否则定位修改都会失败。</li>
-</ol>
-
-
-                <hr>
-            <div>
-                <p>请保持转载后文章内容的完整，以及文章出处。本人保留所有版权相关权利。</p>
-                <!-- 要是你找到这个，想打赏就打赏吧 <p>如果你看了文章，觉得有收获，可以通过下面的支付宝二维码打赏。</p>
-                <b>
-                <img height="100" width="100" src="https://www.foolishtalk.org/cloud/qrcode.png">
-                </b> -->
-            </div>
-                <!-- 分享代码 -->                
-<div class="-foot-share-buttons">
-    <b>分享到：</b>
-    <button class="-mob-share-weibo"></button>
-    <button class="-mob-share-weixin"></button>
-    <button class="-mob-share-qq"></button>
-    <p>Disqus经常被墙，需要评论请科学上网</p>
-</div>
-<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=23ba60f5704b3"></script>
-                
-                <hr>
-                
-
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2019/03/05/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-toggle="tooltip" data-placement="top" title="音视频学习笔记">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="macOS High Sierra依赖OpenSSL交叉编译">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-
-                
-
-                
-                <!-- disqus 评论框 start -->
-                <div class="comment">
-                    <div id="disqus_thread" class="disqus-thread"></div>
-                </div>
-                <!-- disqus 评论框 end -->
-                
-
-            </div>
-
+    		</div>
     <!-- Sidebar Container -->
             <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
                 <!-- Featured Tags -->
                 
                 <section>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-        				
+                        
                             
-                				<a href="/tags/#Objective-C" title="Objective-C" rel="2">
+                                <a href="/tags/#Objective-C" title="Objective-C" rel="2">
                                     Objective-C
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#iOS" title="iOS" rel="39">
+                                <a href="/tags/#iOS" title="iOS" rel="39">
                                     iOS
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                                <a href="/tags/#问题随笔" title="问题随笔" rel="13">
                                     问题随笔
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#Code-Life" title="Code-Life" rel="2">
+                                <a href="/tags/#Code-Life" title="Code-Life" rel="2">
                                     Code-Life
                                 </a>
                             
-        				
+                        
                             
-        				
+                        
                             
-                				<a href="/tags/#WWDC" title="WWDC" rel="3">
+                                <a href="/tags/#WWDC" title="WWDC" rel="3">
                                     WWDC
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#Swift" title="Swift" rel="18">
+                                <a href="/tags/#Swift" title="Swift" rel="18">
                                     Swift
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
+                                <a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
                                     Perfect-Server
                                 </a>
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-                				<a href="/tags/#Swift-Tips" title="Swift-Tips" rel="4">
+                                <a href="/tags/#Swift-Tips" title="Swift-Tips" rel="4">
                                     Swift-Tips
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#杂谈" title="杂谈" rel="3">
+                                <a href="/tags/#杂谈" title="杂谈" rel="3">
                                     杂谈
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#RxSwift" title="RxSwift" rel="2">
+                                <a href="/tags/#RxSwift" title="RxSwift" rel="2">
                                     RxSwift
                                 </a>
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-                				<a href="/tags/#Xcode" title="Xcode" rel="6">
+                                <a href="/tags/#Xcode" title="Xcode" rel="6">
                                     Xcode
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#Mac" title="Mac" rel="2">
+                                <a href="/tags/#Mac" title="Mac" rel="2">
                                     Mac
                                 </a>
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
-        			</div>
+                        
+                    </div>
                 </section>
                 
 
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
+                    <div class="short-about">
+                        
+                            <img src="/img/avatar-fidetro.jpg" />
+                        
+                        
+                            <p>程序员做事，不谈收益。</p>
+                        
+                        <!-- SNS Link -->
+                        <ul class="list-inline">
+                            
+                            <li>
+                                <a href="/feed.xml">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                            
+                            
+                            
+                            <li>
+                                <a target="_blank" href="http://weibo.com/2095454814">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                            
+                            
+                            <li>
+                                <a target="_blank" href="https://github.com/fidetro">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </section>
                 <!-- Friends Blog -->
                 
                 <hr>
@@ -431,36 +386,14 @@ border: none;
                     
                 </ul>
                 
+                <ul>
+            <!-- http://thinkhard.tech/2018/05/20/%E7%BB%99%E5%8D%9A%E5%AE%A2%E5%8A%A0%E4%B8%AA%E7%90%83-%E8%AE%BF%E5%AE%A2%E7%BB%9F%E8%AE%A1/ -->
+            <script type="text/javascript" src="//ra.revolvermaps.com/0/0/6.js?i=0a4vxtj6z8u&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80" async="async"></script>
+                </ul>
             </div>
-        </div>
-    </div>
-</article>
-<canvas height="990" style="position: fixed; top: 0px; left: 0px; z-index: -1; opacity: 0.1;" width="1920">
-</canvas>
-<script src="/js/mylines.js" type="text/javascript">
-</script>
-
-
-
-
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2019/04/11/mocklocation";
-    var disqus_url = "http://www.foolishtalk.org/2019/04/11/mocklocation/";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus 公共JS代码 end -->
-
-
-
-
+        
+	</div>
+</div>
 
 
     <!-- Footer -->

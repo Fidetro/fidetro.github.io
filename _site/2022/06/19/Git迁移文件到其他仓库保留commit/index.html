@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>iOS模拟移动定位 - FoolishTalk 技术分享</title>
+    <title>Git迁移文件到其他仓库保留commit - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://www.foolishtalk.org/2019/04/11/mocklocation/">
+    <link rel="canonical" href="http://www.foolishtalk.org/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -156,12 +156,12 @@ border: none;
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-andre-benz.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-white-room.png" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-andre-benz.jpg')
+        background-image: url('/img/post-white-room.png')
     }
 </style>
 <header class="intro-header" >
@@ -172,17 +172,15 @@ border: none;
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
-                        
-                        <a class="tag" href="/tags/#Xcode" title="Xcode">Xcode</a>
+                        <a class="tag" href="/tags/#Git" title="Git">Git</a>
                         
                     </div>
-                    <h1>iOS模拟移动定位</h1>
+                    <h1>Git迁移文件到其他仓库保留commit</h1>
                     
                     
-                    <h2 class="subheading">Xcode，iOS，定位</h2>
+                    <h2 class="subheading">Git</h2>
                     
-                    <span class="meta">Posted by Karim on April 11, 2019</span>
+                    <span class="meta">Posted by Karim on June 19, 2022</span>
                 </div>
             </div>
         </div>
@@ -199,55 +197,59 @@ border: none;
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<h1 id="前言">前言</h1>
-<p>在阅读这篇文章之前，先保证你必须符合以下几个条件：</p>
+				<p>在开发的过程中，往往存在架构上调整导致类需要迁移到其他的仓库，假设A仓库的目录如下：</p>
+
+<pre><code class="language-t">------------------
+src/
+    views/
+        index.html
+        ...
+    models/
+        index.js
+        ...
+    controllers/
+        index.js
+        ...
+</code></pre>
+
+<p>我们要将A仓库中models，迁移到B仓库，并保留A仓库的commit，这个时候需要用到<code class="language-plaintext highlighter-rouge">git filter-repo</code>,
+macOS上的git并没有自带<code class="language-plaintext highlighter-rouge">filter-repo</code>，这时候需要用到homebrew安装：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>git-filter-repo
+</code></pre></div></div>
+
+<p>首先我们需要fork A仓库，因为<code class="language-plaintext highlighter-rouge">git-filter-repo</code>会只保留你迁移的文件，其他都会被移除。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#从fork_A仓库中执行下方的命令,folder_path为A仓库下保留的文件夹路径</span>
+fork_A % git filter-repo <span class="nt">--path</span> <span class="k">${</span><span class="nv">folder_path</span><span class="k">}</span>/
+<span class="c">#多目录可以这样使用</span>
+fork_A % git filter-repo <span class="nt">--path</span> <span class="k">${</span><span class="nv">folder_path_A</span><span class="k">}</span>/ <span class="nt">--path</span> <span class="k">${</span><span class="nv">folder_path_B</span><span class="k">}</span>/
+</code></pre></div></div>
 <ul>
-  <li>有台Mac可以使用</li>
-  <li>有一定的编程经验（如果你愿意折腾，没有经验也是可以的）</li>
+  <li><code class="language-plaintext highlighter-rouge">--path</code> 会保留原来仓库目录下的文件</li>
+  <li><code class="language-plaintext highlighter-rouge">--invert-paths --path</code> 会删除path目录下的文件</li>
+  <li><code class="language-plaintext highlighter-rouge">--subdirectory-filter</code> 会仅保留根目录，同时将目录下所有文件都移动到根目录下</li>
 </ul>
 
-<h1 id="正文">正文</h1>
+<p>还有更多的参数可以参考<a href="https://github.com/newren/git-filter-repo/blob/main/Documentation/git-filter-repo.txt">官方文档</a>，这里就不一一细说了。</p>
 
-<p><a href="https://www.foolishtalk.org/2019/12/04/magellan/">这里</a>有个最新的方式，已经不需要用下面的方法了。</p>
+<p>执行上方命令后，会发现本地仓库，只剩下<code class="language-plaintext highlighter-rouge">${folder_path}</code>下的文件目录结构</p>
 
-<p>因为有太多人说看不懂了，所以我又录了个<a href="https://www.bilibili.com/video/av53629147">视频</a></p>
+<p>然后去到我们要将<code class="language-plaintext highlighter-rouge">${folder_path}</code>文件下迁移到的B仓库目录下</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#&lt;repo_A_directory&gt;为本地路径</span>
+B % git remote add from_repo_A &lt;repo_A_directory&gt;
+B % git pull from_repo_A main <span class="nt">--allow-unrelated-histories</span> 
+B % git remote <span class="nb">rm </span>from_repo_A
+</code></pre></div></div>
 
-<p>先打开Mac应用虚拟定位，可以看到以下的界面，可以在这里<a href="https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12">下载</a>，另外有什么App使用上的问题和建议，也可以来<a href="https://weibo.com/p/1005052095454814">微博</a>私信我：</p>
+<p>然后就能看到B仓库的目录结构如下：</p>
+<pre><code class="language-t">B/
+    models/
+        index.js
+</code></pre>
 
-<p><img src="https://www.foolishtalk.org/cloud/mock_location_12.png" alt="" /></p>
-
-<ol>
-  <li>双击选择你要定位的位置点；</li>
-  <li>在左上角填速度，每个点之间移动的速度会根据这个速度移动；</li>
-  <li>右上角保存会生成出一个gpx文件；</li>
-</ol>
-
-<p>先用Xcode新建一个工程，按照以下步骤操作，Xcode可以在App Store<a href="https://itunes.apple.com/cn/app/xcode/id497799835?mt=12">下载</a>：</p>
-
-<p><img src="https://www.foolishtalk.org/cloud/mock_location_2.png" alt="" /></p>
-
-<ol>
-  <li>选择创建iOS App：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_3.png" alt="" /></li>
-  <li>输入工程名，<code class="language-plaintext highlighter-rouge">Organization Name</code>随便填就可以了，<code class="language-plaintext highlighter-rouge">Organization Identifier</code>填”com.xxx.xxx”，xxx替换成任意英文即可：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_4.png" alt="" /></li>
-  <li>按照以下步骤，选择工程，然后添加账号，这里填你苹果账号：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_5.png" alt="" /></li>
-  <li>把手机连到Mac上，然后选中你的手机，如果没有看到你的手机，可以打开iTunes看看手机是否有连接，如果也没有，拔掉线重新连，应该会看到iTunes有个弹窗，点击信任此电脑，手机上也需要点击信任此电脑：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_8.png" alt="" /></li>
-  <li>输入你手机iOS系统的版本，这里代表可以运行的最低版本，例如你是iOS 10.2，输入10就可以了：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_11.png" alt="" /></li>
-  <li>
-    <p>下载<a href="https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12">虚拟定位</a>，然后按照你想模拟的路径双击地图，按保存会生成一个GPX文件，把生成的GPX文件拖进去工程目录中：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_6.png" alt="" /><br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_7.png" alt="" /></p>
-  </li>
-  <li>点击运行，首次运行可能会弹出需要信任证书的提示，这时候点击手机的设置-通用-描述文件与设备管理-「找到自己的开发证书」-点击信任，再重新运行一遍：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_9.png" alt="" /></li>
-  <li>选中你拖进去gpx文件名字的选项：<br />
-<img src="https://www.foolishtalk.org/cloud/mock_location_10.png" alt="" /></li>
-  <li>这时候你会发现定位已经改变了，但是要注意，这时候手机和Mac是不能断开连接的，以及运行的App不能被杀死，否则定位修改都会失败。</li>
-</ol>
+<h1 id="参考链接">参考链接</h1>
+<p><a href="https://www.jianshu.com/p/b71d901e8ffe"></a>
+<a href="https://www.jianshu.com/p/7b4247f2d0fd"></a></p>
 
 
                 <hr>
@@ -275,13 +277,9 @@ border: none;
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2019/03/05/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-toggle="tooltip" data-placement="top" title="音视频学习笔记">&larr; Previous Post</a>
+                        <a href="/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98%E9%9A%8F%E7%AC%94/" data-toggle="tooltip" data-placement="top" title="shell空格问题随笔">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2019/10/13/macOS-High-Sierra%E4%BE%9D%E8%B5%96OpenSSL%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="macOS High Sierra依赖OpenSSL交叉编译">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -447,8 +445,8 @@ border: none;
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2019/04/11/mocklocation";
-    var disqus_url = "http://www.foolishtalk.org/2019/04/11/mocklocation/";
+    var disqus_identifier = "/2022/06/19/Git迁移文件到其他仓库保留commit";
+    var disqus_url = "http://www.foolishtalk.org/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
