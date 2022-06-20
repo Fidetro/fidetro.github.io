@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 20 Jun 2022 21:54:23 +0800</pubDate>
-    <lastBuildDate>Mon, 20 Jun 2022 21:54:23 +0800</lastBuildDate>
+    <pubDate>Mon, 20 Jun 2022 22:27:55 +0800</pubDate>
+    <lastBuildDate>Mon, 20 Jun 2022 22:27:55 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
     
       <item>
@@ -75,7 +75,7 @@ B % git remote &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;from_repo_A
       </item>
     
       <item>
-        <title>shell空格问题随笔</title>
+        <title>shell空格问题</title>
         <description>&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;folder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;test example&quot;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#会出现报错&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#ls: example: No such file or directory&lt;/span&gt;
@@ -88,10 +88,12 @@ B % git remote &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;from_repo_A
 在第一种情况下，shell实际上会当成以下命令执行，将test example当成了两个参数：&lt;/p&gt;
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;ls test &lt;/span&gt;example
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;加上双引号就会当成一个参数处理，就能解决这个问题了。&lt;/p&gt;
 </description>
         <pubDate>Sat, 18 Jun 2022 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98%E9%9A%8F%E7%AC%94/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98%E9%9A%8F%E7%AC%94/</guid>
+        <link>http://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">http://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</guid>
         
         <category>随笔</category>
         
