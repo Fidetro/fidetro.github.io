@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 01 Jul 2022 01:18:52 +0800</pubDate>
-    <lastBuildDate>Fri, 01 Jul 2022 01:18:52 +0800</lastBuildDate>
+    <pubDate>Fri, 01 Jul 2022 01:19:46 +0800</pubDate>
+    <lastBuildDate>Fri, 01 Jul 2022 01:19:46 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
     
       <item>
@@ -62,7 +62,7 @@ B % git remote &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;from_repo_A
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h1 id=&quot;参考链接&quot;&gt;参考链接&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.jianshu.com/p/b71d901e8ffe&quot;&gt;利用git-filter-repo无缝迁移git项目&lt;/a&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.jianshu.com/p/b71d901e8ffe&quot;&gt;利用git-filter-repo无缝迁移git项目&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&quot;https://www.jianshu.com/p/7b4247f2d0fd&quot;&gt;Git跨仓库迁移代码文件，并保留git历史记录&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 19 Jun 2022 00:00:00 +0800</pubDate>
