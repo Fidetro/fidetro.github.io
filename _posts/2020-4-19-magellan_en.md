@@ -29,10 +29,6 @@ there is an ico at system navigation bar as following after `Magellan App` runni
 
 If `Magellan` installation fails, please download and install it separately from [here]((https://www.foolishtalk.org/magellan/magellan.dmg))
 
-In iOS 16 and above, you need to enable developer mode to work. go to Settings > Privacy & Security on the iOS device.Scroll down to the Developer Mode list item and navigate into it. To toggle Developer mode, use the “Developer Mode” switch.  
-If you are interested, you can click [Learn more](https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device)  
-
-
 3.	Connect the mobile phone to your computer, then choose your personal mobile.  
 ![](https://www.foolishtalk.org/cloud/d944f3a7aa0e20280cb65dff013839e6.png)
 
@@ -46,6 +42,10 @@ If you are interested, you can click [Learn more](https://developer.apple.com/do
 ![](https://www.foolishtalk.org/cloud/15393a5bdbede13840e344e94f5d4946.png)
 
 7.	It need to run `Magellan app` again after installation.
+
+In iOS 16 and above, you need to enable developer mode to work. go to Settings > Privacy & Security on the iOS device.Scroll down to the Developer Mode list item and navigate into it. To toggle Developer mode, use the “Developer Mode” switch.  
+If you are interested, you can click [Learn more](https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device)  
+
 
 # Operation:
 1.	Open `Virtual Location App`  
