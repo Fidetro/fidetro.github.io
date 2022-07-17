@@ -43,6 +43,11 @@ tags:
 或者：  
 ![](https://www.foolishtalk.org/cloud/2019_12_15_8.46.55.png)  
 
+### iOS 16
+在iOS 16上，苹果增加了开发者模式的开关，导致还需要在手机上开启开发者模式后，才能正常使用，  
+前往iPhone的「设置」->「隐私与安全性」->「开发者模式」->打开「开发者模式」    
+感兴趣可以点击[了解更多](https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device)  
+
 ##### 如果是首次安装驱动，记得要重新插拔一次手机，不然可能会没法识别。
 如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者[微博](https://weibo.com/u/2095454814)联系到我，我会尽快帮你解决问题。
 

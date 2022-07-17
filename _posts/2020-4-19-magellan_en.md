@@ -29,6 +29,10 @@ there is an ico at system navigation bar as following after `Magellan App` runni
 
 If `Magellan` installation fails, please download and install it separately from [here]((https://www.foolishtalk.org/magellan/magellan.dmg))
 
+In iOS 16 and above, you need to enable developer mode to work. go to Settings > Privacy & Security on the iOS device.Scroll down to the Developer Mode list item and navigate into it. To toggle Developer mode, use the “Developer Mode” switch.  
+If you are interested, you can click [Learn more](https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device)  
+
+
 3.	Connect the mobile phone to your computer, then choose your personal mobile.  
 ![](https://www.foolishtalk.org/cloud/d944f3a7aa0e20280cb65dff013839e6.png)
 

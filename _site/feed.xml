@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 01 Jul 2022 01:19:46 +0800</pubDate>
-    <lastBuildDate>Fri, 01 Jul 2022 01:19:46 +0800</lastBuildDate>
+    <pubDate>Sun, 17 Jul 2022 20:22:20 +0800</pubDate>
+    <lastBuildDate>Sun, 17 Jul 2022 20:22:20 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
     
       <item>
@@ -543,6 +543,9 @@ there is an ico at system navigation bar as following after &lt;code class=&quot
 &lt;/ol&gt;
 
 &lt;p&gt;If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Magellan&lt;/code&gt; installation fails, please download and install it separately from &lt;a href=&quot;(https://www.foolishtalk.org/magellan/magellan.dmg)&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In iOS 16 and above, you need to enable developer mode to work. go to Settings &amp;gt; Privacy &amp;amp; Security on the iOS device.Scroll down to the Developer Mode list item and navigate into it. To toggle Developer mode, use the “Developer Mode” switch.&lt;br /&gt;
+If you are interested, you can click &lt;a href=&quot;https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device&quot;&gt;Learn more&lt;/a&gt;&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;
