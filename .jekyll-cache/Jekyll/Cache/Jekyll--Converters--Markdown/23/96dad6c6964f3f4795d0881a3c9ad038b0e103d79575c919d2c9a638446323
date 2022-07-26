@@ -1,0 +1,30 @@
+I"�<p>Perfect在11号的时候就发布了v3版本，v3版本开始支持swift 4，今天正好有空，把Perfect升级了一下，顺便写了个脚本方便集成环境，如果不清楚这个脚本是干嘛的，可以看下我之前的文章<a href="http://www.jianshu.com/p/fc4971b72737">如何在阿里云上部署Perfect服务器
+</a></p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+<span class="nv">$ </span>apt-get <span class="nb">install </span>make git clang libicu-dev libmysqlclient-dev libpq-dev sqlite3 libsqlite3-dev apache2-dev pkg-config libssl-dev libsasl2-dev libcurl4-openssl-dev uuid-dev wget
+<span class="c"># 在lib下建立swift文件夹，将工具链放入文件夹中</span>
+<span class="nv">$ </span><span class="nb">mkdir</span> /lib/swift
+<span class="nv">$ </span><span class="nb">cd</span> /lib/swift
+<span class="c"># 下载4.0工具链</span>
+<span class="nv">$ </span>wget  https://swift.org/builds/swift-4.0-release/ubuntu1604/swift-4.0-RELEASE/swift-4.0-RELEASE-ubuntu16.04.tar.gz
+<span class="c"># 下载签名</span>
+<span class="nv">$ </span>wget  https://swift.org/builds/swift-4.0-release/ubuntu1604/swift-4.0-RELEASE/swift-4.0-RELEASE-ubuntu16.04.tar.gz.sig
+<span class="nv">$ </span>wget <span class="nt">-q</span> <span class="nt">-O</span> - https://swift.org/keys/all-keys.asc |  gpg <span class="nt">--import</span> -
+<span class="nv">$ </span>gpg <span class="nt">--keyserver</span> hkp://pool.sks-keyservers.net <span class="nt">--refresh-keys</span> Swift
+<span class="nv">$ </span>gpg <span class="nt">--verify</span> swift-4.0-RELEASE-ubuntu16.04.tar.gz.sig
+<span class="nv">$ </span><span class="nb">tar </span>xzf swift-4.0-RELEASE-ubuntu16.04.tar.gz
+</code></pre></div></div>
+<p>这些所有完成之后，设置系统变量</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vim /etc/profile
+</code></pre></div></div>
+<p>在<code class="language-plaintext highlighter-rouge">profile</code>最后一行写上
+<code class="language-plaintext highlighter-rouge">export PATH=/lib/swift/swift-4.0-RELEASE-ubuntu16.04/usr/bin:$PATH</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>esc
+$ :wq
+</code></pre></div></div>
+<p>设置完成之后需要重启服务器之后才会生效
+<code class="language-plaintext highlighter-rouge">$ reboot</code>
+上面的都完成之后去编译之前的服务器代码，会发现报错，因为之前的配置是<code class="language-plaintext highlighter-rouge">majorVersion:2</code>，需要修改成<code class="language-plaintext highlighter-rouge">majorVersion:3</code>
+<img src="https://www.foolishtalk.org/cloud/4AFAF1D2-EB80-4CFB-9A46-B4439EE8A96B.png" alt="" />
+如果你之前用的数据库是<code class="language-plaintext highlighter-rouge">Perfect-MySQL</code>，还需要将以前导入的库名修改，在Perfect v2，用的是<code class="language-plaintext highlighter-rouge">import MySQL</code>,现在改成了<code class="language-plaintext highlighter-rouge">import PerfectMySQL</code></p>
+:ET

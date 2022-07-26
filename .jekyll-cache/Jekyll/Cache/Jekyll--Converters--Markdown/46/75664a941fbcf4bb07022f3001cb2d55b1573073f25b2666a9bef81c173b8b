@@ -1,0 +1,9 @@
+I"�<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[!] The spec did not pass validation, due to 1 error.
+[!] The validator for Swift projects uses Swift 3.0 by default, if you are using a different version of swift you can use a `.swift-version` file to set the version for your Pod. For example to use Swift 2.3, run: 
+    `echo "2.3" &gt; .swift-version`.
+
+</code></pre></div></div>
+<p>这是因为需要知道支持哪个swift版本，一般来讲现在都是支持Swift3的，输入这段就好了</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "3.0" &gt; .swift-version
+</code></pre></div></div>
+:ET

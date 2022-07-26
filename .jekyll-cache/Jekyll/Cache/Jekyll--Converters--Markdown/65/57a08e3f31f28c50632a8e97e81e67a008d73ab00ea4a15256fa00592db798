@@ -1,0 +1,44 @@
+I"�<p>在给Alamofire用protocol封装一层业务的时候，定义了以下的协议和方法</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">BaseRequest</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="kd">extension</span> <span class="kt">FIDRequest</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">complete</span><span class="p">(</span><span class="n">_</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">DataResponse</span><span class="o">&lt;</span><span class="kt">Any</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()))</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="nf">baseURL</span><span class="p">()</span><span class="o">+</span><span class="nf">requestURI</span><span class="p">()</span>
+            <span class="kt">Alamofire</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nv">method</span><span class="p">:</span> <span class="nf">method</span><span class="p">(),</span> <span class="nv">parameters</span><span class="p">:</span> <span class="nf">parameters</span><span class="p">(),</span> <span class="nv">encoding</span><span class="p">:</span> <span class="nf">encoding</span><span class="p">(),</span> <span class="nv">headers</span><span class="p">:</span> <span class="nf">headers</span><span class="p">())</span><span class="o">.</span><span class="nf">responseJSON</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="n">completionHandler</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">protocol</span> <span class="kt">Request</span> <span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">Request</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">request</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">WBBaseRequest</span> <span class="p">{</span>
+            <span class="n">complete</span> <span class="p">{</span>  <span class="p">(</span><span class="n">response</span><span class="p">)</span>  <span class="k">in</span>
+<span class="c1">//这里还有段代码造成循环引用</span>
+            <span class="p">}</span>
+       <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>这时候问题就来了，正常情况下，应该使用<code class="language-plaintext highlighter-rouge">[weak self]</code>就可以解决了，但是在使用<code class="language-plaintext highlighter-rouge">protocol</code>的时候，是无法使用<code class="language-plaintext highlighter-rouge">[weak self]</code>的，然后就会有以下的报错
+<code class="language-plaintext highlighter-rouge">'weak' may only be applied to class and class-bound protocol types, not 'Self'</code></p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">func</span> <span class="nf">request</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">WBBaseRequest</span> <span class="p">{</span>
+            <span class="n">complete</span> <span class="p">{</span>  <span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span>  <span class="k">in</span> <span class="c1">//这个地方会报错 'weak' may only be applied to class and class-bound protocol types, not 'Self'</span>
+<span class="c1">//这里还有段代码造成循环引用</span>
+            <span class="p">}</span>
+       <span class="p">}</span>
+</code></pre></div></div>
+
+<p>直接解决这个问题的方式是，将 <code class="language-plaintext highlighter-rouge">BaseRequest</code>声明为只有类才可以使用</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">BaseRequest</span> <span class="p">:</span> <span class="kd">class</span> <span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>然后就可以愉快的使用<code class="language-plaintext highlighter-rouge">[weak self]</code></p>
+
+<p>总结：
+<code class="language-plaintext highlighter-rouge">weak</code>只能用在类或者类的协议中，如果在协议扩展中使用了类而造成了循环引用，协议就需要指定必须是<code class="language-plaintext highlighter-rouge">class</code>才可以使用，<code class="language-plaintext highlighter-rouge">struct</code>和<code class="language-plaintext highlighter-rouge">enum</code>是不会造成循环引用的
+参考链接： 
+<a href="https://stackoverflow.com/questions/38841127/why-can-the-keyword-weak-only-be-applied-to-class-and-class-bound-protocol-typ">Why can the keyword “weak” only be applied to class and class-bound protocol types</a>
+ <a href="https://stackoverflow.com/questions/24066304/how-can-i-make-a-weak-protocol-reference-in-pure-swift-w-o-objc">How can I make a weak protocol reference in ‘pure’ Swift (w/o @objc)</a></p>
+
+:ET

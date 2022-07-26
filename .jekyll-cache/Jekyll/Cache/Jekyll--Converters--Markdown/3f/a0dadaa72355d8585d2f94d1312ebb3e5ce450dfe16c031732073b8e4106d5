@@ -1,0 +1,18 @@
+I"w<p>iOS在打开相机的时候会发生内存泄漏，使用instruments会发现</p>
+
+<p><img src="https://www.foolishtalk.org/cloud/034EC7E4-E9F2-4C90-B3E2-41190810BEEB.png" alt="C2C97AF5-571C-49A1-B4FB-53D2593964A1.png" /></p>
+
+<p>翻了谷歌也没有找到能解决的资料，下了apple官方的demo同时用insturments调试，同样也发现有这个错</p>
+
+<blockquote>
+  <p><a href="https://developer.apple.com/library/content/samplecode/PhotoPicker/Introduction/Intro.html#//apple_ref/doc/uid/DTS40010196-Intro-DontLinkElementID_2">官方demo地址</a></p>
+</blockquote>
+
+<p>同时stackflow也有人提出这个问题，而且是在5年前。。。</p>
+<blockquote>
+  <p><a href="http://stackoverflow.com/questions/6554225/uiimagepickercontroller-memory-leak">stackflow的传送门</a></p>
+</blockquote>
+
+<p>难道这个bug已经持续了5年了么。。（一脸懵逼</p>
+
+:ET

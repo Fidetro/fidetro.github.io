@@ -1,0 +1,139 @@
+I"�H<blockquote>
+  <p>本文内容基于Swift 4</p>
+</blockquote>
+
+<p>在读《Swift进阶》的时候发现,Swift提供了很多内置的高阶函数用于数组变形，使用高阶函数最大优势在于，用更少量的代码去解决问题。</p>
+<h1 id="map">map</h1>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+</code></pre></div></div>
+<p>如果要把这个数组中的元素每个都+1，按照以前的做法</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="nv">b</span> <span class="o">=</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]()</span>
+    <span class="k">for</span> <span class="n">ele</span> <span class="k">in</span> <span class="n">a</span> <span class="p">{</span>
+        <span class="n">b</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="n">ele</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="c1">//[2,3,4,5,6,7]</span>
+</code></pre></div></div>
+<p>但使用map之后</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="p">(</span><span class="n">ele</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="k">in</span>
+        <span class="k">return</span> <span class="n">ele</span><span class="o">+</span><span class="mi">1</span>
+    <span class="p">}</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="c1">//[2,3,4,5,6,7]</span>
+</code></pre></div></div>
+<p>同时也因为<code class="language-plaintext highlighter-rouge">Swift</code>闭包的特性，上面的代码还可以写成</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">map</span><span class="p">{</span>
+        <span class="nv">$0</span><span class="o">+</span><span class="mi">1</span>
+    <span class="p">}</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="c1">//[2,3,4,5,6,7]</span>
+</code></pre></div></div>
+<h1 id="flatmap">flatMap</h1>
+<p><code class="language-plaintext highlighter-rouge">flatMap</code>和<code class="language-plaintext highlighter-rouge">map</code>的用法很相像，通过对比两者的不难发现：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">map</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">transform</span><span class="p">:</span> <span class="p">(</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">T</span><span class="p">)</span> <span class="k">rethrows</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">T</span><span class="p">]</span>
+
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">flatMap</span><span class="p">(</span><span class="n">_</span> <span class="nv">transform</span><span class="p">:</span> <span class="p">(</span><span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?)</span> <span class="k">rethrows</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
+</code></pre></div></div>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">flatMap</code>允许返回<code class="language-plaintext highlighter-rouge">nil</code>值，对元素进行过滤再变形</li>
+  <li><code class="language-plaintext highlighter-rouge">flatMap</code>可以将多维数组转成一维数组</li>
+</ol>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span>
+    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">flatMap</span> <span class="p">{</span>
+        <span class="nv">$0</span>
+    <span class="p">}</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="c1">//[1,2,3,4,5,6]</span>
+</code></pre></div></div>
+
+<h1 id="filter">filter</h1>
+<p><code class="language-plaintext highlighter-rouge">filter</code>用于过滤元素</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+    <span class="c1">//去掉a数组内&lt;4的元素</span>
+    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">filter</span> <span class="p">{</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="k">in</span>
+        <span class="k">return</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">4</span>
+    <span class="p">}</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="reduce">reduce</h1>
+<p><code class="language-plaintext highlighter-rouge">reduce</code>可以将数组中的元素合并到一个值</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="c1">//如果要将a数组内所有元素相加，再+7，以前的写法是这样：</span>
+<span class="k">let</span> <span class="nv">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">value</span> <span class="k">in</span> <span class="n">a</span> <span class="p">{</span>
+   <span class="n">count</span> <span class="o">+=</span> <span class="n">value</span>
+<span class="p">}</span>
+<span class="n">count</span> <span class="o">+=</span> <span class="mi">7</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">count</span><span class="p">)</span><span class="c1">//28</span>
+</code></pre></div></div>
+<p>在使用reduce之后，事件就变得非常简单</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="k">in</span>
+        <span class="k">return</span> <span class="n">count</span><span class="o">+</span><span class="n">value</span>
+    <span class="p">}</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="c1">//28</span>
+</code></pre></div></div>
+
+<h1 id="sequence">sequence</h1>
+<p>通过<code class="language-plaintext highlighter-rouge">sequence</code>可以生成无限的序列
+假设我们要从遍历从0到100的偶数，以前的写法是：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">0</span><span class="o">..&lt;</span><span class="mi">26</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span> <span class="c1">//0,2,4...48,50</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+<p>而<code class="language-plaintext highlighter-rouge">sequence</code>只需要:</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="nf">sequence</span><span class="p">(</span><span class="nv">first</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">next</span><span class="p">:</span> <span class="p">{</span><span class="nv">$0</span><span class="o">+</span><span class="mi">2</span><span class="p">})</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">50</span> <span class="p">{</span>
+            <span class="k">break</span>
+        <span class="p">}</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="c1">//0,2,4...48,50</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="sorted">sorted</h1>
+<p>用于排序</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//倒序</span>
+    <span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span>  <span class="n">a</span><span class="o">.</span><span class="n">sorted</span> <span class="p">{</span> <span class="p">(</span><span class="n">next</span><span class="p">,</span> <span class="n">last</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="k">in</span>
+        <span class="k">return</span> <span class="n">next</span> <span class="o">&gt;</span> <span class="n">last</span>
+    <span class="p">}</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="c1">//[6, 5, 4, 3, 2, 1]</span>
+
+    <span class="c1">//根据字母顺序倒序</span>
+    <span class="k">let</span> <span class="nv">students</span><span class="p">:</span> <span class="kt">Set</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Kofi"</span><span class="p">,</span> <span class="s">"Abena"</span><span class="p">,</span> <span class="s">"Peter"</span><span class="p">,</span> <span class="s">"Kweku"</span><span class="p">,</span> <span class="s">"Akosua"</span><span class="p">]</span>
+    <span class="k">let</span> <span class="nv">descendingStudents</span> <span class="o">=</span> <span class="n">students</span><span class="o">.</span><span class="nf">sorted</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="o">&gt;</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">descendingStudents</span><span class="p">)</span>
+    <span class="c1">// Prints "["Peter", "Kweku", "Kofi", "Akosua", "Abena"]"</span>
+</code></pre></div></div>
+
+<h1 id="split">split</h1>
+<p>分割数组</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+    <span class="c1">//按照0分割数组，数组中没有0</span>
+    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span>  <span class="n">a</span><span class="o">.</span><span class="nf">split</span><span class="p">(</span><span class="nv">separator</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="c1">//[1, 2, 3, 4, 5, 6]</span>
+</code></pre></div></div>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+    <span class="c1">//按照3分割数组</span>
+    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span>  <span class="n">a</span><span class="o">.</span><span class="nf">split</span><span class="p">(</span><span class="nv">separator</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="c1">//[ArraySlice([1, 2]), ArraySlice([4]), ArraySlice([6])]</span>
+</code></pre></div></div>
+
+<h1 id="prefix">prefix</h1>
+<p><code class="language-plaintext highlighter-rouge">prefix</code>和<code class="language-plaintext highlighter-rouge">filter</code>类似，过滤条件为true的时候会到结果中，区别在于，当为false的时候会直接结束</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span>  <span class="n">a</span><span class="o">.</span><span class="nf">prefix</span><span class="p">(</span><span class="nv">upTo</span><span class="p">:</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="c1">//[1,2,3,4]</span>
+</code></pre></div></div>
+
+<h1 id="drop">drop</h1>
+<p><code class="language-plaintext highlighter-rouge">drop</code>和<code class="language-plaintext highlighter-rouge">prefix</code>相反，当为true的时候元素会被丢弃，为false的时候会直接结束</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span>  <span class="n">a</span><span class="o">.</span><span class="nf">drop</span><span class="p">(</span><span class="nv">while</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="k">in</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">true</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kc">false</span>
+    <span class="p">})</span>
+     <span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="c1">//[3, 4, 3, 6]</span>
+</code></pre></div></div>
+:ET

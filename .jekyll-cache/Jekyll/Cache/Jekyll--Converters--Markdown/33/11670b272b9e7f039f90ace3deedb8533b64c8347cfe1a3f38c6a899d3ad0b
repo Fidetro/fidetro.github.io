@@ -1,0 +1,91 @@
+I"5<h1 id="前言">前言</h1>
+
+<p>首先你需要通过Mac AppStore下载<a href="https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12">虚拟定位(点这下载)</a>。
+虚拟定位的界面如下：
+<img src="https://www.foolishtalk.org/cloud/guide_zh_1.png" alt="" /></p>
+
+<p>同时需要安装Magellan（下面会有详细说到）</p>
+
+<h1 id="magellan如何运行">Magellan如何运行</h1>
+<p>如果没有安装Magellan，在虚拟定位首次启动时，会出现:
+<img src="https://www.foolishtalk.org/cloud/b7cdd9f10f727ca59420902b277aa9c8_zh.png" alt="" /><br />
+或者在双击地图时，会出现以下弹窗：<br />
+<img src="https://www.foolishtalk.org/cloud/14d2cba4eeda3d9fa77b1efd8a1aa6d9_zh.png" alt="" /></p>
+
+<p>点击”打开 Magellan 下载器”</p>
+
+<p>运行成功后，状态栏上方会出现一顶小帽子图标。<br />
+<img src="https://www.foolishtalk.org/cloud/bc9e8955850855ca07147e65957f8087.png" alt="" /></p>
+
+<p>如果上面没有运行成功，请看文章最底部的单独安装Magellan教程。</p>
+
+<h1 id="正文">正文</h1>
+
+<p>首先手机要连接电脑，然后选择设备。<br />
+<img src="https://www.foolishtalk.org/cloud/c81ff0aa45218b3cf8131ad8592eea96.png" alt="" />
+然后再点击安装驱动：<br />
+<img src="https://www.foolishtalk.org/cloud/d762c75e8c2838d7f7bd7d1afff0c881.png" alt="" />
+如果出现：<br />
+<img src="https://www.foolishtalk.org/cloud/2019_12_15_8.44.35.png" alt="" /><br />
+或者：<br />
+<img src="https://www.foolishtalk.org/cloud/2019_12_15_8.46.55.png" alt="" /></p>
+
+<h3 id="ios-16">iOS 16</h3>
+<p>在iOS 16上，苹果增加了开发者模式的开关，导致还需要在手机上开启开发者模式后，才能正常使用，<br />
+前往iPhone的「设置」-&gt;「隐私与安全性」-&gt;「开发者模式」-&gt;打开「开发者模式」  <br />
+感兴趣可以点击<a href="https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device">了解更多</a></p>
+
+<h5 id="如果是首次安装驱动记得要重新插拔一次手机不然可能会没法识别">如果是首次安装驱动，记得要重新插拔一次手机，不然可能会没法识别。</h5>
+<p>如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者<a href="https://weibo.com/u/2095454814">微博</a>联系到我，我会尽快帮你解决问题。</p>
+
+<p>接下来，打开<a href="https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12">虚拟定位</a>，把手机连接上电脑。</p>
+
+<p>改定位的方式有两种：</p>
+<ol>
+  <li>选中单点模式，双击虚拟定位App上的地图，就会发现手机上的定位已经被修改。
+<img src="https://www.foolishtalk.org/cloud/guide_zh_1.png" alt="" /></li>
+  <li>选中轨迹模式，直接双击地图，在地图上生成多个点，类似这样：
+<img src="https://www.foolishtalk.org/cloud/guide_zh_2.png" alt="" /></li>
+</ol>
+
+<p>然后输入速度，最后点击<code class="language-plaintext highlighter-rouge">开始移动</code>，你会发现手机正在按照规划的路线在移动。</p>
+
+<h1 id="qa">Q&amp;A</h1>
+<ol>
+  <li>
+    <p>显示“暂无可用设备”，找不到自己的设备怎么办？<br />
+先通过 iTunes 检查手机是否连接成功，如果是旧版本的 iTunes 有可能会导致无法检测到设备，iTunes 需要更新到最新版本。</p>
+  </li>
+  <li>
+    <p>拿来改定位（玩游戏/打卡）会不会被封？<br />
+请勿用于违法/作弊行为，App的初心是用于平时开发测试定位移动。</p>
+  </li>
+  <li>
+    <p>提示“暂不支持 xx 版本，请联系作者升级”，怎么办？<br />
+如果你之前已经安装过驱动了，就不需要管这个提示，依然可以正常使用，如果是从来没有安装过的，出现这个提示，请联系我，我会更新新的版本解决这个问题。</p>
+  </li>
+  <li>
+    <p>修改定位是所有App都有用吗？<br />
+修改定位是全局的，整个App都会生效。</p>
+  </li>
+  <li>
+    <p>手机需要越狱吗？<br />
+手机不需要越狱。</p>
+  </li>
+  <li>
+    <p>支持iPad吗？<br />
+支持iPad。</p>
+  </li>
+</ol>
+
+<h1 id="单独安装magellan">单独安装Magellan</h1>
+<p>虚拟定位的每个版本都会内置最新的Magellan版本，一般来说不需要独立安装，下面这段的安装方式可以忽略。
+<a href="https://www.foolishtalk.org/magellan/magellan.dmg">Magellan(点这下载)</a>
+Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文件夹中，
+<img src="https://www.foolishtalk.org/cloud/20191022225610.png" alt="" /><br />
+然后双击运行，就可以了。<br />
+有可能会出现这个弹窗，直接打开就好了。<br />
+<img src="https://www.foolishtalk.org/cloud/20191022105549.png" alt="" /></p>
+
+<p>如果出现无法打开，因为无法确认开发者的身份的弹窗时，可以在<code class="language-plaintext highlighter-rouge">系统偏好设置-通用</code>下方找到，点击仍要继续运行即可。</p>
+:ET

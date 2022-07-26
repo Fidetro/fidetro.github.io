@@ -1,0 +1,87 @@
+I"�4<h1 id="前言">前言</h1>
+
+<p><code class="language-plaintext highlighter-rouge">ReplayKit</code>是WWDC15推出的苹果原生录屏框架，目的在于让开发者更方便的使用屏幕录制功能，在悦跑圈的项目中也有用到，API对开发者可以说是非常友好了。我们先来看看<code class="language-plaintext highlighter-rouge">ReplayKit</code>的API。</p>
+
+<p>开始录制</p>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="p">[[</span><span class="n">RPScreenRecorder</span> <span class="nf">sharedRecorder</span><span class="p">]</span> <span class="nf">startRecordingWithHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+       
+    <span class="p">}];</span>
+</code></pre></div></div>
+
+<p>停止录制</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[[RPScreenRecorder sharedRecorder] stopRecordingWithHandler:^(RPPreviewViewController * _Nullable previewViewController, NSError * _Nullable error) {
+        
+}];
+</code></pre></div></div>
+<p>另外停止录制的时候，会返回一个系统的previewViewController，对此可以进行最基本视频剪辑的。<br />
+只需要在回调的时候调用一下：</p>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">previewViewController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
+
+<span class="cp">#pragma mark - RPPreviewViewControllerpreviewControllerDelegate
+</span><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">previewControllerDidFinish</span><span class="p">:(</span><span class="n">RPPreviewViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">previewController</span> <span class="p">{</span>
+    <span class="c1">//处理dismiss回来的回调</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>整体上来看，可以说是真的对开发者非常友好了，然而这里面的坑还是不少。</p>
+
+<h1 id="细数replaykit的坑">细数ReplayKit的坑</h1>
+
+<ol>
+  <li>开始录屏和停止录屏的回调，并不是在主线程。
+    <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="p">[[</span><span class="n">RPScreenRecorder</span> <span class="nf">sharedRecorder</span><span class="p">]</span> <span class="nf">startRecordingWithHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+     <span class="p">[[</span><span class="n">NSOperationQueue</span> <span class="nf">mainQueue</span><span class="p">]</span><span class="nf">addOperationWithBlock</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
+         <span class="c1">//要注意回到主线程，避免线程问题</span>
+     <span class="p">}];</span>
+ <span class="p">}];</span>
+</code></pre></div>    </div>
+  </li>
+  <li>停止录屏的previewViewController有可能为空
+    <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="p">[[</span><span class="n">RPScreenRecorder</span> <span class="nf">sharedRecorder</span><span class="p">]</span> <span class="nf">stopRecordingWithHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">RPPreviewViewController</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">previewViewController</span><span class="p">,</span> <span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+     <span class="p">[[</span><span class="n">NSOperationQueue</span> <span class="nf">mainQueue</span><span class="p">]</span><span class="nf">addOperationWithBlock</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
+         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span> <span class="o">&amp;&amp;</span> <span class="n">previewViewController</span><span class="p">)</span> 
+         <span class="p">{</span>
+             <span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+             <span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">previewViewController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span> 
+         <span class="p">}</span><span class="k">else</span>
+         <span class="p">{</span>
+                
+         <span class="p">}</span>
+     <span class="p">}];</span>
+ <span class="p">}];</span>
+</code></pre></div>    </div>
+  </li>
+  <li>previewViewController没有适配全面屏
+    <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">if</span> <span class="p">(</span><span class="cm">/* 全面屏 &amp;&amp; iOS 11以上 */</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">UIEdgeInsets</span> <span class="n">safeArea</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">safeAreaInsets</span><span class="p">;</span>
+     <span class="n">CGFloat</span> <span class="n">safeAreaHeight</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">-</span> <span class="p">(</span><span class="n">safeArea</span><span class="p">.</span><span class="n">top</span> <span class="o">+</span> <span class="n">safeArea</span><span class="p">.</span><span class="n">bottom</span><span class="p">);</span>
+     <span class="n">CGFloat</span> <span class="n">safeAreaWidth</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">-</span> <span class="p">(</span><span class="n">safeArea</span><span class="p">.</span><span class="n">left</span> <span class="o">+</span> <span class="n">safeArea</span><span class="p">.</span><span class="n">right</span><span class="p">);</span>
+     <span class="n">CGFloat</span> <span class="n">scaleX</span> <span class="o">=</span> <span class="n">safeAreaWidth</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
+ <span class="n">CGFloat</span> <span class="n">scaleY</span> <span class="o">=</span> <span class="n">safeAreaHeight</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+ <span class="n">CGFloat</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">MIN</span><span class="p">(</span><span class="n">scaleX</span><span class="p">,</span> <span class="n">scaleY</span><span class="p">);</span>
+ <span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerpreviewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+ <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">CGAffineTransformMakeScale</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">scale</span><span class="p">);</span>
+ <span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">previewViewController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:^</span><span class="p">{</span>
+     <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">x</span><span class="o">+</span><span class="n">safeArea</span><span class="p">.</span><span class="n">left</span><span class="p">,</span> <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span><span class="o">+</span><span class="n">safeArea</span><span class="p">.</span><span class="n">top</span><span class="p">,</span> <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">previewViewController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">);</span>
+ <span class="p">}];</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+ <span class="n">previewViewController</span><span class="p">.</span><span class="n">previewControllerpreviewControllerDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+ <span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">previewViewController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>停止录屏后present到previewViewController有可能黑屏（window如果是白色是白屏）<br />
+这个问题目前没办法解决，在<a href="https://stackoverflow.com/search?q=replaykit+black">stackoverflow</a>上也有许多相同的问题，暂时没办法解决</p>
+  </li>
+  <li>调用停止录屏方法，不管成功或失败有几率不进入回调<br />
+这个问题同样无法解决，在<a href="https://forums.developer.apple.com/thread/87007">forums-develop</a>中，也同样有人提出，被苹果标记为已知重复的问题（但是至今没修复…</li>
+</ol>
+
+<h1 id="解决">解决</h1>
+<p>通过翻阅RPPreviewViewController的私有属性和方法，发现有一个<code class="language-plaintext highlighter-rouge">movieURL</code>的属性。</p>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">NSURL</span> <span class="o">*</span><span class="n">movieURL</span> <span class="o">=</span> <span class="p">[</span><span class="n">previewViewController</span> <span class="nf">valueForKey</span><span class="p">:</span><span class="s">@"movieURL"</span><span class="p">];</span>
+</code></pre></div></div>
+<p>可以通过获取KVC的方式，获取视频地址，这样就可以避免黑屏的问题了，只是这样，如果要做视频剪辑，就需要另外自定义页面了。但是停止录屏不进入回调和previewViewController有可能为nil的问题，依旧无法解决。</p>
+:ET

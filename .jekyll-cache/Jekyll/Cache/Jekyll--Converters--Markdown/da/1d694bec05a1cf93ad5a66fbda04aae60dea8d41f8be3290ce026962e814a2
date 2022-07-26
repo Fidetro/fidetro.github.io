@@ -1,0 +1,124 @@
+I"Q?<h1 id="前言">前言</h1>
+<p>在上篇<a href="http://www.foolishtalk.org/2018/08/12/iOS%E6%88%AA%E5%9B%BE%E5%BC%95%E8%B5%B7%E7%9A%84%E6%80%9D%E8%80%83/">iOS截图引起的思考</a>留下了一些疑问，会在这篇全部解开。<br />
+在上一篇结尾的时候，我提出了：</p>
+<blockquote>
+  <p>即使是相同的path，drawRect也是有可能会比CAShapeLayer要快的。</p>
+</blockquote>
+
+<h1 id="正文">正文</h1>
+
+<p>先来看两段贝塞尔画出来的路径：</p>
+<ol>
+  <li>这一段路径是在悦跑圈实际遇到的轨迹情况
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">setupAPath</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UIBezierPath</span> <span class="p">{</span>
+ <span class="k">let</span> <span class="nv">bezier</span> <span class="o">=</span> <span class="kt">UIBezierPath</span><span class="p">()</span>
+ <span class="c1">//https://github.com/Fidetro/drawPath/blob/master/DrawPath/test.plist</span>
+ <span class="k">let</span> <span class="nv">plistPath</span> <span class="o">=</span> <span class="kt">Bundle</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="nf">path</span><span class="p">(</span><span class="nv">forResource</span><span class="p">:</span> <span class="s">"test"</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="s">"plist"</span><span class="p">)</span><span class="o">!</span>
+ <span class="k">let</span> <span class="nv">points</span> <span class="o">=</span> <span class="p">(</span><span class="kt">NSArray</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">contentsOfFile</span><span class="p">:</span> <span class="n">plistPath</span><span class="p">)</span> <span class="k">as!</span> <span class="p">[</span><span class="kt">String</span><span class="p">])</span><span class="o">.</span><span class="n">map</span><span class="p">{</span><span class="kt">CGPointFromString</span><span class="p">(</span><span class="nv">$0</span><span class="p">)}</span>
+ <span class="k">for</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">point</span><span class="p">)</span> <span class="k">in</span> <span class="n">points</span><span class="o">.</span><span class="nf">enumerated</span><span class="p">()</span> <span class="p">{</span>
+     <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+         <span class="n">bezier</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="n">point</span><span class="p">)</span>
+     <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+         <span class="n">bezier</span><span class="o">.</span><span class="nf">addLine</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="n">point</span><span class="p">)</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="k">return</span> <span class="n">bezier</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>这一段路径是两点之间来回绘制5000次
+    <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">setupBPath</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UIBezierPath</span> <span class="p">{</span>
+ <span class="k">let</span> <span class="nv">bezier</span> <span class="o">=</span> <span class="kt">UIBezierPath</span><span class="p">()</span>
+ <span class="k">for</span> <span class="n">index</span> <span class="k">in</span> <span class="mi">0</span><span class="o">..&lt;</span><span class="mi">10000</span> <span class="p">{</span>
+     <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+         <span class="n">bezier</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">))</span>
+     <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+         <span class="k">let</span> <span class="nv">point</span> <span class="o">=</span> <span class="n">index</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span> <span class="p">?</span> <span class="kt">CGPoint</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span> <span class="p">:</span> <span class="kt">CGPoint</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+         <span class="n">bezier</span><span class="o">.</span><span class="nf">addLine</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="n">point</span><span class="p">)</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="k">return</span> <span class="n">bezier</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>这两段路径分别使用<code class="language-plaintext highlighter-rouge">CAShapeLayer</code>和<code class="language-plaintext highlighter-rouge">CGContext</code>绘制，下面是粗略统计的耗时时间：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">耗时</th>
+      <th style="text-align: center">APath</th>
+      <th style="text-align: center">BPath</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">CAShapeLayer</td>
+      <td style="text-align: center">3~4s</td>
+      <td style="text-align: center">5~6min</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">drawRect</td>
+      <td style="text-align: center">4~5min</td>
+      <td style="text-align: center">5~6s</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>这里有一点要注意的是，<code class="language-plaintext highlighter-rouge">CGContext</code>会消耗CPU和内存，使用Xcode或者Instruments可以发现，在绘制APath的时候CPU使用率基本在90%以上，CAShapeLayer使用GPU绘制，但仍然会造成卡顿。（还没找到监测GPU使用的方法，如果有可以评论告诉我。</p>
+
+<p>要了解造成这两者之间差异的原因，就得知道<code class="language-plaintext highlighter-rouge">CAShapeLayer</code>和<code class="language-plaintext highlighter-rouge">CGContext</code>的由来。</p>
+
+<p>在上一篇中已经简单介绍过，从官方文档中可以得知，CAShapeLayer是基于Core Animation上封装的类，用于绘制抗锯齿形状图层。而<code class="language-plaintext highlighter-rouge">CGContext</code>是使用<code class="language-plaintext highlighter-rouge">Core Graphics</code>。光知道他们调用是底层是什么，并不能够解决现在的问题，还需要更深入去了解<code class="language-plaintext highlighter-rouge">Core Animation</code>和<code class="language-plaintext highlighter-rouge">Core Graphics</code>。</p>
+
+<h1 id="core-animation">Core Animation</h1>
+<p><img src="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Art/ca_architecture_2x.png" alt="" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">Core Animation</code>是<code class="language-plaintext highlighter-rouge">Metal</code>和<code class="language-plaintext highlighter-rouge">Core Graphics</code>更上层的框架。使用<code class="language-plaintext highlighter-rouge">Core Animation</code>绘制，只需要设置一些参数（例如起点和终点），然后<code class="language-plaintext highlighter-rouge">Core Animation</code>会将绘制工作交给GPU去渲染。</p>
+
+<h2 id="cashapelayer">CAShapeLayer</h2>
+<p>同时关于<code class="language-plaintext highlighter-rouge">CAShapeLayer</code>，苹果更建议我们在一些简单的路径的时候去使用。<br />
+<code class="language-plaintext highlighter-rouge">CAShapeLayer</code>在合成的时候根据提供的路径去渲染位图，优势是尽可能的用更好的分辨率去绘制路径，但是这种优势是要以额外的渲染时间作为代价，如果提供的路径非常复杂，那么可能会导致栅格化的代价十分昂贵。同时如果图层大小不断变化，导致经常需要重新绘制，那么绘制花费的时间最终可能会变成性能瓶颈。</p>
+
+<h1 id="core-graphics">Core Graphics</h1>
+<p>Core Graphics也叫做Quartz 2D，是二维绘图引擎，Quartz 2D提供低级、轻量级2D渲染，很方便实现透明层，基于路径的绘图，离屏渲染，高级颜色管理，消除锯齿渲染以及PDF创建，显示和解析。</p>
+
+<p><code class="language-plaintext highlighter-rouge">Core Graphics</code>建议我们在遇到以下情况的时候使用<code class="language-plaintext highlighter-rouge">CGLayer</code>去绘制。</p>
+<ul>
+  <li>重复使用高质量的离屏渲染。例如你在构建一个需要复用的场景时候，将背景绘制在图层上，然后在需要的时候绘制图层。</li>
+  <li>重复绘制。如果你打算绘制一个由多个相同的项目组成的图层，将其绘制到CGLayer上，能得到性能提升。(参考下图)</li>
+  <li>缓冲。虽然你可能会因此使用layer，但是Quartz Compositor并不需要缓冲，如果你必须绘制到缓冲区，请使用layer而不是context。</li>
+</ul>
+
+<p><img src="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/stamp_layers.gif" alt="12-1" /></p>
+
+<p>使用<code class="language-plaintext highlighter-rouge">CGLayerRef</code>能实现最佳性能，Quartz会根据关联的图形上下文来缓存CGLayer。例与视显卡相关联的图形上下文可以缓存显卡上的图层，这会让绘制图层中的内容比从位图上下文构造的图像渲染的更快。因为，与位图图形上下文相比，Layer通常是离屏渲染的更好选择。</p>
+
+<p><code class="language-plaintext highlighter-rouge">CGLayerRef</code>的使用可以参考下面这段代码,CGLayerRef在swift中对应的是CGLayer</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="k">let</span> <span class="nv">context</span> <span class="o">=</span> <span class="kt">UIGraphicsGetCurrentContext</span><span class="p">()</span><span class="o">!</span>
+        <span class="k">let</span> <span class="nv">layer</span> <span class="o">=</span> <span class="kt">CGLayer</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="n">rect</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="nv">auxiliaryInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">layerCtx</span> <span class="o">=</span> <span class="n">layer</span><span class="o">!.</span><span class="n">context</span><span class="o">!</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">beginPath</span><span class="p">()</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">addLine</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">100</span><span class="p">))</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">setLineWidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">setStrokeColor</span><span class="p">(</span><span class="kt">UIColor</span><span class="o">.</span><span class="n">red</span><span class="o">.</span><span class="n">cgColor</span><span class="p">)</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">strokePath</span><span class="p">()</span>
+        <span class="n">layerCtx</span><span class="o">.</span><span class="nf">closePath</span><span class="p">()</span>
+        <span class="n">context</span><span class="o">.</span><span class="nf">draw</span><span class="p">(</span><span class="n">layer</span><span class="o">!</span><span class="p">,</span> <span class="nv">in</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">frame</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="总结">总结</h1>
+<p>通过两者文档的对比，似乎<code class="language-plaintext highlighter-rouge">CGLayerRef</code>比<code class="language-plaintext highlighter-rouge">CAShapLayer</code>要更好，但是实际上，在绘制复杂的路径的时候，个人还是更偏向使用<code class="language-plaintext highlighter-rouge">CAShapeLayer</code>，大部分情况下，CPU的性能比GPU的性能更加昂贵，在两者之间选择的时候，应该根据实际要求，如果需要更高质量的图形渲染，应该选择<code class="language-plaintext highlighter-rouge">Core Graphics</code>。<br />
+另外在刚开始的时候提出<code class="language-plaintext highlighter-rouge">CAShapeLayer</code>绘制BPath路径的时候会更加卡顿的问题，尽管苹果推荐我们<code class="language-plaintext highlighter-rouge">CAShapeLayer</code>应该去绘制简单的路径，但是苹果也在文档中给出了解决的方法：
+通过将复杂的形状分解成更简单的形状可以减少绘制花费的时间，将多个<code class="language-plaintext highlighter-rouge">CAShapeLayer</code>对象叠加在一起要比单独绘制一个<code class="language-plaintext highlighter-rouge">CAShapeLayer</code>对象快得多。因为绘制操作是在CPU上，而合成是在GPU上。但是这部分的性能优化，需要根据实际的情况去制定基线。</p>
+
+<h1 id="参考链接">参考链接</h1>
+
+<p><a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40004514">Core Animation Programming Guide</a><br />
+<a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Introduction/Introduction.html#//apple_ref/doc/uid/TP30001066">Quartz 2D Programming Guide</a><br />
+<a href="https://github.com/Fidetro/drawPath">示例Demo</a></p>
+
+:ET

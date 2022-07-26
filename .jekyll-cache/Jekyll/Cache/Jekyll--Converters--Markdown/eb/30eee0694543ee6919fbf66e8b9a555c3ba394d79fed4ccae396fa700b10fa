@@ -1,0 +1,36 @@
+I".<p>以自己写的一个库为例子</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Pod</span><span class="o">::</span><span class="no">Spec</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
+
+  <span class="n">s</span><span class="p">.</span><span class="nf">name</span>         <span class="o">=</span> <span class="s2">"FFDB"</span>
+  <span class="n">s</span><span class="p">.</span><span class="nf">version</span>      <span class="o">=</span> <span class="s2">"1.7.0"</span>
+  <span class="n">s</span><span class="p">.</span><span class="nf">summary</span>      <span class="o">=</span> <span class="s2">"easy to use FMDB"</span>
+  <span class="n">s</span><span class="p">.</span><span class="nf">homepage</span>     <span class="o">=</span> <span class="s2">"https://github.com/Fidetro/FFDB"</span>
+  <span class="n">s</span><span class="p">.</span><span class="nf">license</span>          <span class="o">=</span> <span class="p">{</span> <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="s2">"MIT"</span><span class="p">,</span> <span class="ss">:file</span> <span class="o">=&gt;</span> <span class="s2">"LICENSE"</span> <span class="p">}</span>
+  <span class="n">s</span><span class="p">.</span><span class="nf">author</span>             <span class="o">=</span> <span class="p">{</span> <span class="s2">"fidetro"</span> <span class="o">=&gt;</span> <span class="s2">"zykzzzz@hotmail.com"</span> <span class="p">}</span>
+  <span class="n">s</span><span class="p">.</span><span class="nf">platform</span>     <span class="o">=</span> <span class="ss">:ios</span><span class="p">,</span> <span class="s2">"8.0"</span>
+  <span class="n">s</span><span class="p">.</span><span class="nf">source</span>       <span class="o">=</span> <span class="p">{</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s2">"https://github.com/Fidetro/FFDB.git"</span><span class="p">,</span> <span class="ss">:tag</span> <span class="o">=&gt;</span> <span class="s2">"1.7.0"</span> <span class="p">}</span>
+  <span class="n">s</span><span class="p">.</span><span class="nf">source_files</span>  <span class="o">=</span> <span class="s2">"FFDB"</span><span class="p">,</span> <span class="s2">"FFDB/*.{h,m}"</span>
+  <span class="n">s</span><span class="p">.</span><span class="nf">library</span> <span class="o">=</span> <span class="s1">'sqlite3'</span>
+  <span class="n">s</span><span class="p">.</span><span class="nf">dependency</span> <span class="s2">"FMDB"</span><span class="p">,</span><span class="s2">"~&gt; 2.6.2"</span>
+
+
+<span class="k">end</span>
+
+</code></pre></div></div>
+<p>原本在CocoaPods的版本是<code class="language-plaintext highlighter-rouge">s.version = "1.7.0"</code>
+如果要更新成<code class="language-plaintext highlighter-rouge">1.8.0</code>版本，先改成<code class="language-plaintext highlighter-rouge">s.version = "1.8.0"</code>
+同时把<code class="language-plaintext highlighter-rouge">s.source</code>的tag改成<code class="language-plaintext highlighter-rouge"> s.source       = { :git =&gt; "https://github.com/Fidetro/FFDB.git", :tag =&gt; "1.8.0" }</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add *
+git commit -m "tag 1.8.0"
+git push origin -u master
+</code></pre></div></div>
+
+<p>再打上标签</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag 1.8.0
+git push --tags
+</code></pre></div></div>
+<p>最后提交到Pod</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pod trunk push FFDB.podspec
+</code></pre></div></div>
+:ET

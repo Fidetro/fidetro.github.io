@@ -1,0 +1,54 @@
+I"@<p>在开发的过程中，往往存在架构上调整导致类需要迁移到其他的仓库，假设A仓库的目录如下：</p>
+
+<pre><code class="language-t">------------------
+src/
+    views/
+        index.html
+        ...
+    models/
+        index.js
+        ...
+    controllers/
+        index.js
+        ...
+</code></pre>
+
+<p>我们要将A仓库中models，迁移到B仓库，并保留A仓库的commit，这个时候需要用到<code class="language-plaintext highlighter-rouge">git filter-repo</code>,
+macOS上的git并没有自带<code class="language-plaintext highlighter-rouge">filter-repo</code>，这时候需要用到homebrew安装：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>git-filter-repo
+</code></pre></div></div>
+
+<p>首先我们需要fork A仓库，因为<code class="language-plaintext highlighter-rouge">git-filter-repo</code>会只保留你迁移的文件，其他都会被移除。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#从fork_A仓库中执行下方的命令,folder_path为A仓库下保留的文件夹路径</span>
+fork_A % git filter-repo <span class="nt">--path</span> <span class="k">${</span><span class="nv">folder_path</span><span class="k">}</span>/
+<span class="c">#多目录可以这样使用</span>
+fork_A % git filter-repo <span class="nt">--path</span> <span class="k">${</span><span class="nv">folder_path_A</span><span class="k">}</span>/ <span class="nt">--path</span> <span class="k">${</span><span class="nv">folder_path_B</span><span class="k">}</span>/
+</code></pre></div></div>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">--path</code> 会保留原来仓库目录下的文件</li>
+  <li><code class="language-plaintext highlighter-rouge">--invert-paths --path</code> 会删除path目录下的文件</li>
+  <li><code class="language-plaintext highlighter-rouge">--subdirectory-filter</code> 会仅保留根目录，同时将目录下所有文件都移动到根目录下</li>
+</ul>
+
+<p>还有更多的参数可以参考<a href="https://github.com/newren/git-filter-repo/blob/main/Documentation/git-filter-repo.txt">官方文档</a>，这里就不一一细说了。</p>
+
+<p>执行上方命令后，会发现本地仓库，只剩下<code class="language-plaintext highlighter-rouge">${folder_path}</code>下的文件目录结构</p>
+
+<p>然后去到我们要将<code class="language-plaintext highlighter-rouge">${folder_path}</code>文件下迁移到的B仓库目录下</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#&lt;repo_A_directory&gt;为本地路径</span>
+B % git remote add from_repo_A &lt;repo_A_directory&gt;
+B % git pull from_repo_A main <span class="nt">--allow-unrelated-histories</span> 
+B % git remote <span class="nb">rm </span>from_repo_A
+</code></pre></div></div>
+
+<p>然后就能看到B仓库的目录结构如下：</p>
+<pre><code class="language-t">B/
+    models/
+        index.js
+</code></pre>
+
+<h1 id="参考链接">参考链接</h1>
+<p><a href="https://www.jianshu.com/p/b71d901e8ffe">利用git-filter-repo无缝迁移git项目</a><br />
+<a href="https://www.jianshu.com/p/7b4247f2d0fd">Git跨仓库迁移代码文件，并保留git历史记录</a></p>
+:ET

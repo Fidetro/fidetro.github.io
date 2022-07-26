@@ -1,0 +1,67 @@
+I"�<h1 id="正文">正文</h1>
+<p>平常在使用Xcode断点调试问题时，<code class="language-plaintext highlighter-rouge">po</code>可能是最常用到的<code class="language-plaintext highlighter-rouge">LLVM</code>命令了。<br />
+通过<code class="language-plaintext highlighter-rouge">po</code>命令，我们可以在Xcode的<code class="language-plaintext highlighter-rouge">LLDB</code>控制台打印对象的描述，系统在运行时会提供一个默认值，如图：<br />
+<img src="https://www.foolishtalk.org/cloud/caed4a8d6cbafa4387d2fb57155cf6e7.png" alt="" /></p>
+
+<p>我们可以通过重写<code class="language-plaintext highlighter-rouge">func debugDescription()</code>达到我们希望在<code class="language-plaintext highlighter-rouge">po</code>的时候返回预期的返回值。<br />
+<img src="https://www.foolishtalk.org/cloud/54e45465efc65c1b4fd93f2d8995ea4e.png" alt="" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">po</code>的底层逻辑实现：<br />
+<img src="https://www.foolishtalk.org/cloud/57320d88124faf7812bbaa673f37fee4.png" alt="" /></p>
+
+<p>事实上打印对象有三种方法，<code class="language-plaintext highlighter-rouge">po</code>只是其中一种。</p>
+
+<p>第二种方式是<code class="language-plaintext highlighter-rouge">p</code>。</p>
+
+<p><code class="language-plaintext highlighter-rouge">p</code>和<code class="language-plaintext highlighter-rouge">po</code>的区别在于，<code class="language-plaintext highlighter-rouge">p</code>不会随着<code class="language-plaintext highlighter-rouge">func debugDescription()</code>方法修改而且改变打印的值。
+<img src="https://www.foolishtalk.org/cloud/0bb5fdda413e64e8b3ba45c58d1c2ec3.png" alt="" /></p>
+
+<p>但是<code class="language-plaintext highlighter-rouge">p</code>和<code class="language-plaintext highlighter-rouge">po</code>，遵循swift的语法，在下面的例子中，是无法打印的。<br />
+<img src="https://www.foolishtalk.org/cloud/f65d30492a3fc575e641976544a7aa1e.png" alt="" /><br />
+同样下面的代码也会报错：</p>
+<pre><code class="language-Swift">    let student : Person = Student(name:"john")
+    print(student.name) //这里是会报错的
+</code></pre>
+
+<p><code class="language-plaintext highlighter-rouge">p</code>的底层逻辑实现：<br />
+<img src="https://www.foolishtalk.org/cloud/e2b0f3feefd02283937b5230a420110d.png" alt="" /></p>
+
+<p>第三种方式是通过<code class="language-plaintext highlighter-rouge">v</code>打印。<br />
+<code class="language-plaintext highlighter-rouge">v</code>同样不会不会随着<code class="language-plaintext highlighter-rouge">func debugDescription()</code>方法修改而且改变打印的值。<br />
+而且<code class="language-plaintext highlighter-rouge">v</code>有自己的语法，不需要通过编译，而是进行动态类型解析，但是它无法执行代码。<br />
+<img src="https://www.foolishtalk.org/cloud/849c0b54225807f00201d31cd8bf072c.png" alt="" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">v</code>的底层逻辑实现：<br />
+<img src="https://www.foolishtalk.org/cloud/67340b5668cffd5d75e007e1839d46fd.png" alt="" /></p>
+
+<h1 id="总结">总结</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">po</th>
+      <th style="text-align: center">p</th>
+      <th style="text-align: center">v</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">显示对象的方式</td>
+      <td style="text-align: center">通过对象描述方法打印</td>
+      <td style="text-align: center">通过格式化打印</td>
+      <td style="text-align: center">通过格式化打印</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">计算结果的方式</td>
+      <td style="text-align: center">通过编译表达，可以完整访问编程语言</td>
+      <td style="text-align: center">通过编译表达，可以完整访问编程语言</td>
+      <td style="text-align: center">有自己的语法、解释和表达，解释过程中会多次动态类型解析</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="参考链接">参考链接</h1>
+
+<p><a href="https://developer.apple.com/videos/play/wwdc2019/429/">LLDB: Beyond “po”</a></p>
+:ET

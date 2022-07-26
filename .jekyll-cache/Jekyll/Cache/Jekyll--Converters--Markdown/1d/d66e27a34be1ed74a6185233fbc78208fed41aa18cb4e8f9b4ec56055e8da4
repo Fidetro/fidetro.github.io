@@ -1,0 +1,58 @@
+I"�<blockquote>
+  <p>懒加载是为了保证属性只会初始化一次，同时在没有使用时，节能内存而使用的。苹果也非常推荐我们使用。但是今天在使用的时候，发现居然会懒加载了2次，为了更容易让别人看懂，我精炼了以下的代码，更好解释为什么会出现懒加载2次的情况。</p>
+</blockquote>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">BViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+
+    <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">bgView</span><span class="p">:</span> <span class="kt">UIView</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">bgView</span> <span class="o">=</span> <span class="kt">UIView</span><span class="p">()</span>
+        <span class="n">view</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">bgView</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">bgView</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">bgView</span>
+    <span class="p">}()</span>
+    
+    <span class="nf">init</span><span class="p">(</span><span class="nv">color</span> <span class="p">:</span><span class="kt">UIColor</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">nibName</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+        <span class="n">bgView</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="n">color</span>
+    <span class="p">}</span>
+    
+    <span class="kd">required</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">fatalError</span><span class="p">(</span><span class="s">"init(coder:) has not been implemented"</span><span class="p">)</span>
+    <span class="p">}</span>
+    
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+        <span class="n">bgView</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">frame</span>
+        
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>假设这时候AController通过<code class="language-plaintext highlighter-rouge">init(color :UIColor)</code>调用BController push进来</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="k">let</span> <span class="nv">bvc</span> <span class="o">=</span> <span class="kt">BViewController</span><span class="p">(</span><span class="nv">color</span><span class="p">:</span> <span class="o">.</span><span class="n">red</span><span class="p">)</span>
+        <span class="nf">present</span><span class="p">(</span><span class="n">bvc</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+</code></pre></div></div>
+<p>先来思考一下，bvc会是什么颜色？</p>
+
+<blockquote>
+  <p>答案是:黑色的(友情提示：Controller没有设置View颜色的时候，默认黑色)</p>
+</blockquote>
+
+<p>这时候看一下打印信息：</p>
+<pre><code class="language-LLVM">&lt;UIView: 0x7f97e0602fa0; frame = (0 0; 0 0); layer = &lt;CALayer: 0x60000022c2e0&gt;&gt;
+&lt;UIView: 0x7f97e06098b0; frame = (0 0; 0 0); layer = &lt;CALayer: 0x60000022be60&gt;&gt;
+
+</code></pre>
+<p>原来是因为bgView进行了两次懒加载，先讲下怎么解决这个问题，后面会详细分析原因，引起这个问题的原因其实就是因为这一行<code class="language-plaintext highlighter-rouge">view.addSubview(bgView)</code>,此时把<code class="language-plaintext highlighter-rouge">view.addSubview(bgView)</code>放到<code class="language-plaintext highlighter-rouge">viewDidLoad()</code>再次运行，打印信息如下：</p>
+<pre><code class="language-LLVM">&lt;UIView: 0x7fb94ac0e6b0; frame = (0 0; 0 0); layer = &lt;CALayer: 0x604000224020&gt;&gt;
+</code></pre>
+<p>问题解决！<br />
+为了方便解释，我特地画了个图来解释第一次代码的生命周期：<br />
+<img src="https://www.foolishtalk.org/cloud/2018-3-21-lazy-1.png" alt="" /></p>
+
+<p>换到第二个方式之后，就简单多了：</p>
+
+<p><img src="https://www.foolishtalk.org/cloud/2018-3-21-lazy-2.png" alt="" /></p>
+
+<p>从这个问题，可以猜测Controller的view在生成的时候就会触发<code class="language-plaintext highlighter-rouge">viewDidLoad</code>,为了避免出现这样的问题，还是应该尽量少在Controller的初始化方法里进行操作。</p>
+:ET

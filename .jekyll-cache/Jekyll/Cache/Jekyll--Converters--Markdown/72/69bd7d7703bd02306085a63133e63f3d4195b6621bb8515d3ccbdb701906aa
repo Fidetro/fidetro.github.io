@@ -1,0 +1,43 @@
+I"<h1 id="前言">前言</h1>
+
+<p>过年的时候，公司发了个蓝牙音箱，我的Mac Pro左声道已经坏了很久了，正好可以拿来当音箱用。<br />
+但是电脑连了蓝牙音箱后，一直会卡卡的和出现沙沙的声音，手机却没有问题，猜想是因为电脑码率比较高导致，带着这个猜想开始搜索相关的一些问题，发现原来不止这款音箱会，别的一些蓝牙设备，包括AirPods也会出现这样的问题。</p>
+
+<h1 id="正文">正文</h1>
+
+<p>先上一组电脑在放歌时的传输速率：<br />
+<img src="https://www.foolishtalk.org/cloud/39ce65c86ee89caeba6d367d0f82786d.png" alt="" /></p>
+
+<p>通过这组数据可以知道，在听歌的时候，传输速度约为 39000 Bytes/s,即 312 kbit/s（1 kbit/s = 125 Bytes/s）</p>
+
+<p>而我们公司的蓝牙音箱使用的是SBC编码器（小tips：按住option点击导航栏的蓝牙图标，可以查看蓝牙设备的信息）<br />
+<img src="https://www.foolishtalk.org/cloud/347335e73c15512f3125ee4d60bac4f3.png" alt="" /></p>
+
+<h2 id="原因">原因</h2>
+<p>SBC编码器中的 <code class="language-plaintext highlighter-rouge">bitpool</code> 参数会导致音质下降，通过<a href="http://soundexpert.org/encoders-320-kbps">这里</a>可以知道 SBC编码器 在 328 kbit/s 时 bitpool 需要达到 53。</p>
+
+<p><img src="https://www.foolishtalk.org/cloud/ec4f4917854d7eab2b26196d3348df60.png" alt="" /></p>
+
+<p>问题原因知道了，这样就好解决了。</p>
+
+<h1 id="怎么解决">怎么解决？</h1>
+<p>先去苹果开发者官网下载<a href="https://developer.apple.com/download/more/?=additional%20Tools">Bluetooth Explorer</a>工具</p>
+
+<p>下载完之后，打开 Hardware，把 <code class="language-plaintext highlighter-rouge">Bluetooth Explorer</code> 拖到应用程序里。<br />
+打开 <code class="language-plaintext highlighter-rouge">Bluetooth Explorer</code> 后，在系统导航栏找到 <code class="language-plaintext highlighter-rouge">Audio Options...</code>
+<img src="https://www.foolishtalk.org/cloud/c1bfcd07315439afe2f2fd3ecdc744f4.png" alt="" /></p>
+
+<p>为了方便我就直接把这里 <code class="language-plaintext highlighter-rouge">Minimum bitpool</code> 改到64了：<br />
+<img src="https://www.foolishtalk.org/cloud/72d3eb4294d65375471054d6f1d290cc.png" alt="" /></p>
+
+<p>另外如果有需要修改编码器的需求，改上面 <code class="language-plaintext highlighter-rouge">Codecs</code> 的设置就好了。</p>
+
+<p>断开蓝牙设备，再连设备，就会发现没有之前的卡顿和沙沙的声音。</p>
+
+<h1 id="题外话">题外话</h1>
+<p>网上的文章真是一大抄，通过终端设置 <code class="language-plaintext highlighter-rouge">bitpool</code> 的方法似乎已经失效了，另外我也试过重启 <code class="language-plaintext highlighter-rouge">PRAM</code>，依然无效，如果有通过终端设置的方式，请告诉我，非常感谢。</p>
+
+<h1 id="参考链接">参考链接</h1>
+<p><a href="https://www.areilly.com/2017/07/29/enabling-aac-and-aptx-over-bluetooth-on-macos/">enabling aac and aptx over bluetooth on macos</a><br />
+<a href="https://apple.stackexchange.com/questions/167245/yosemite-bluetooth-audio-is-choppy-skips/259954#259954">Yosemite bluetooth audio is choppy/skips</a></p>
+:ET

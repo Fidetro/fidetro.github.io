@@ -1,0 +1,50 @@
+I"�<h1 id="前言">前言</h1>
+<p>在阅读这篇文章之前，先保证你必须符合以下几个条件：</p>
+<ul>
+  <li>有台Mac可以使用</li>
+  <li>有一定的编程经验（如果你愿意折腾，没有经验也是可以的）</li>
+</ul>
+
+<h1 id="正文">正文</h1>
+
+<p><a href="https://www.foolishtalk.org/2019/12/04/magellan/">这里</a>有个最新的方式，已经不需要用下面的方法了。</p>
+
+<p>因为有太多人说看不懂了，所以我又录了个<a href="https://www.bilibili.com/video/av53629147">视频</a></p>
+
+<p>先打开Mac应用虚拟定位，可以看到以下的界面，可以在这里<a href="https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12">下载</a>，另外有什么App使用上的问题和建议，也可以来<a href="https://weibo.com/p/1005052095454814">微博</a>私信我：</p>
+
+<p><img src="https://www.foolishtalk.org/cloud/mock_location_12.png" alt="" /></p>
+
+<ol>
+  <li>双击选择你要定位的位置点；</li>
+  <li>在左上角填速度，每个点之间移动的速度会根据这个速度移动；</li>
+  <li>右上角保存会生成出一个gpx文件；</li>
+</ol>
+
+<p>先用Xcode新建一个工程，按照以下步骤操作，Xcode可以在App Store<a href="https://itunes.apple.com/cn/app/xcode/id497799835?mt=12">下载</a>：</p>
+
+<p><img src="https://www.foolishtalk.org/cloud/mock_location_2.png" alt="" /></p>
+
+<ol>
+  <li>选择创建iOS App：<br />
+<img src="https://www.foolishtalk.org/cloud/mock_location_3.png" alt="" /></li>
+  <li>输入工程名，<code class="language-plaintext highlighter-rouge">Organization Name</code>随便填就可以了，<code class="language-plaintext highlighter-rouge">Organization Identifier</code>填”com.xxx.xxx”，xxx替换成任意英文即可：<br />
+<img src="https://www.foolishtalk.org/cloud/mock_location_4.png" alt="" /></li>
+  <li>按照以下步骤，选择工程，然后添加账号，这里填你苹果账号：<br />
+<img src="https://www.foolishtalk.org/cloud/mock_location_5.png" alt="" /></li>
+  <li>把手机连到Mac上，然后选中你的手机，如果没有看到你的手机，可以打开iTunes看看手机是否有连接，如果也没有，拔掉线重新连，应该会看到iTunes有个弹窗，点击信任此电脑，手机上也需要点击信任此电脑：<br />
+<img src="https://www.foolishtalk.org/cloud/mock_location_8.png" alt="" /></li>
+  <li>输入你手机iOS系统的版本，这里代表可以运行的最低版本，例如你是iOS 10.2，输入10就可以了：<br />
+<img src="https://www.foolishtalk.org/cloud/mock_location_11.png" alt="" /></li>
+  <li>
+    <p>下载<a href="https://itunes.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12">虚拟定位</a>，然后按照你想模拟的路径双击地图，按保存会生成一个GPX文件，把生成的GPX文件拖进去工程目录中：<br />
+<img src="https://www.foolishtalk.org/cloud/mock_location_6.png" alt="" /><br />
+<img src="https://www.foolishtalk.org/cloud/mock_location_7.png" alt="" /></p>
+  </li>
+  <li>点击运行，首次运行可能会弹出需要信任证书的提示，这时候点击手机的设置-通用-描述文件与设备管理-「找到自己的开发证书」-点击信任，再重新运行一遍：<br />
+<img src="https://www.foolishtalk.org/cloud/mock_location_9.png" alt="" /></li>
+  <li>选中你拖进去gpx文件名字的选项：<br />
+<img src="https://www.foolishtalk.org/cloud/mock_location_10.png" alt="" /></li>
+  <li>这时候你会发现定位已经改变了，但是要注意，这时候手机和Mac是不能断开连接的，以及运行的App不能被杀死，否则定位修改都会失败。</li>
+</ol>
+:ET

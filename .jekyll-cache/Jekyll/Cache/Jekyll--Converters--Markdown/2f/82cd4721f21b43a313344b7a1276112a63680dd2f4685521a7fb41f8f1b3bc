@@ -1,0 +1,58 @@
+I"�<blockquote>
+  <p>在做Pet Day的时候，遇到一个这样的需求，假定<code class="language-plaintext highlighter-rouge">tableView</code>中的section初始值为50,在往上或者往下的时候，需要通过计算得知更多的<code class="language-plaintext highlighter-rouge">dataSource</code></p>
+</blockquote>
+
+<p>然后我一开始的做法，是在<code class="language-plaintext highlighter-rouge">- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;</code>的方法在接近顶部或者接近底部的时候，进行计算</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span>
+                   <span class="n">willDisplay</span> <span class="nv">cell</span><span class="p">:</span> <span class="kt">UITableViewCell</span><span class="p">,</span>
+                   <span class="n">forRowAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//如果大于数据源总数-30，需要开始计算后面的内容</span>
+        <span class="k">if</span> <span class="n">indexPath</span><span class="o">.</span><span class="n">section</span> <span class="o">&gt;</span> <span class="n">dataSource</span><span class="o">.</span><span class="n">count</span> <span class="o">-</span> <span class="mi">30</span> <span class="p">{</span>
+           
+        <span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="n">indexPath</span><span class="o">.</span><span class="n">section</span> <span class="o">&lt;</span> <span class="mi">30</span> <span class="p">{</span><span class="c1">//如果小于30，需要开始计算前面的内容</span>
+           
+    <span class="p">}</span>
+</code></pre></div></div>
+<hr />
+<p><strong>但是，这样做会有问题</strong>，在遇到向上刷新的时候，会多次调用<code class="language-plaintext highlighter-rouge">- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;</code>的方法，导致数据突然增多。</p>
+
+<p>后来用定时器实现触发后0.5秒内拦截，代码如下：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">guard</span> <span class="n">share</span><span class="o">.</span><span class="n">operations</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span> <span class="o">==</span> <span class="kc">false</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="k">let</span> <span class="nv">timer</span> <span class="o">=</span> <span class="kt">Timer</span><span class="o">.</span><span class="nf">bs_scheduledTimer</span><span class="p">(</span><span class="nv">withTimeInterval</span><span class="p">:</span> <span class="n">interval</span><span class="p">,</span> <span class="nv">block</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">timer</span><span class="p">)</span> <span class="k">in</span>
+            <span class="k">weak</span> <span class="k">var</span> <span class="nv">weakTimer</span> <span class="o">=</span> <span class="n">timer</span>
+
+            <span class="n">weakTimer</span><span class="p">?</span><span class="o">.</span><span class="nf">invalidate</span><span class="p">()</span>
+            <span class="n">weakTimer</span> <span class="o">=</span> <span class="kc">nil</span>
+        <span class="p">},</span> <span class="nv">repeats</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
+        <span class="n">share</span><span class="o">.</span><span class="n">operations</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+        <span class="n">timer</span><span class="o">.</span><span class="nf">fire</span><span class="p">()</span>
+        <span class="nf">shareRunLoop</span><span class="p">()</span><span class="o">.</span><span class="nf">add</span><span class="p">(</span><span class="n">timer</span><span class="p">,</span> <span class="nv">forMode</span><span class="p">:</span> <span class="o">.</span><span class="n">defaultRunLoopMode</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<h3 id="这时候runloop的坑就来了"><strong>这时候RunLoop的坑就来了</strong></h3>
+<p>第一次触发…正常<br />
+第二次触发…0.5秒过了，好几秒过去了，还是没有反应<br />
+…<br />
+终于在停止刷新后，再往上刷，正常了</p>
+
+<p>原因是TableView在滑动的时候，主线程的Runloop会切换到UITrackingRunLoopMode，这时候只会执行UITrackingRunLoopMode下的任务，等UITrackingRunLoopMode的任务执行完了，再切换到NSDefaultRunLoopMode才会执行定时器。<br />
+想解决这个问题，可以把加入到定时器的时候将Runloop设置为NSRunLoopCommonModes</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">runLoop</span><span class="o">.</span><span class="nf">add</span><span class="p">(</span><span class="kt">NSMachPort</span><span class="p">(),</span> <span class="nv">forMode</span><span class="p">:</span> <span class="o">.</span><span class="n">commonModes</span><span class="p">)</span>
+</code></pre></div></div>
+<p>或者改用GCD实现</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        
+        <span class="k">guard</span> <span class="n">share</span><span class="o">.</span><span class="n">operations</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span> <span class="o">==</span> <span class="kc">false</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+            <span class="nf">operation</span><span class="p">()</span>
+        
+        <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="nf">asyncAfter</span><span class="p">(</span><span class="nv">deadline</span><span class="p">:</span> <span class="kt">DispatchTime</span><span class="o">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">interval</span><span class="p">,</span> <span class="nv">execute</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">share</span><span class="o">.</span><span class="n">operations</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+        <span class="p">})</span>
+        
+        <span class="n">share</span><span class="o">.</span><span class="n">operations</span><span class="o">.</span><span class="nf">insert</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+</code></pre></div></div>
+:ET

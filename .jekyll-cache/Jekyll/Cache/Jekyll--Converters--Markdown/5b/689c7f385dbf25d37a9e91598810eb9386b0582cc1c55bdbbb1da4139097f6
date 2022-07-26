@@ -1,0 +1,30 @@
+I"�<p>隐藏状态栏是一个相对比较常见的需求，为了让隐藏状态栏更加平滑过渡，我们会给他增加一个动画效果。像常见的渐变透明隐藏效果和上下滚动隐藏效果，系统已经提供好对应的api给我们使用了。在需要隐藏状态栏的Controller下使用这段代码就可以实现了：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">override</span> <span class="kd">func</span> <span class="nf">touchesBegan</span><span class="p">(</span><span class="n">_</span> <span class="nv">touches</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">UITouch</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">with</span> <span class="nv">event</span><span class="p">:</span> <span class="kt">UIEvent</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="n">isStatusBarHidden</span> <span class="o">=</span> <span class="o">!</span><span class="n">isStatusBarHidden</span>
+        <span class="kt">UIView</span><span class="o">.</span><span class="nf">animate</span><span class="p">(</span><span class="nv">withDuration</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="nf">setNeedsStatusBarAppearanceUpdate</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="k">override</span> <span class="k">var</span> <span class="nv">prefersStatusBarHidden</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">isStatusBarHidden</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="k">var</span> <span class="nv">preferredStatusBarUpdateAnimation</span><span class="p">:</span> <span class="kt">UIStatusBarAnimation</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">.</span><span class="n">slide</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>如果是<code class="language-plaintext highlighter-rouge">present</code>过去ViewController还在<code class="language-plaintext highlighter-rouge">present</code>之前需要设置：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vc</span><span class="o">.</span><span class="n">modalPresentationCapturesStatusBarAppearance</span> <span class="o">=</span> <span class="kc">true</span>
+</code></pre></div></div>
+
+<p>要注意的一点是，使用这个方法需要在<code class="language-plaintext highlighter-rouge">info.plist</code>中将<code class="language-plaintext highlighter-rouge">View controller-based status bar appearance</code>字段设置成<code class="language-plaintext highlighter-rouge">YES</code>。（PS:没有设置的默认为YES</p>
+
+<p>如果项目中<code class="language-plaintext highlighter-rouge">View controller-based status bar appearance</code>字段已经设置成了为<code class="language-plaintext highlighter-rouge">NO</code>,上面的方法是不会生效的，这时候可以使用：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">UIApplication</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">setStatusBarHidden</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="nv">with</span><span class="p">:</span> <span class="o">.</span><span class="n">slide</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>这样就能完美解决隐藏导航栏动画的问题了，但是要注意这个方法在iOS 9后已经废弃，尽量还是使用第一种方法。</p>
+:ET

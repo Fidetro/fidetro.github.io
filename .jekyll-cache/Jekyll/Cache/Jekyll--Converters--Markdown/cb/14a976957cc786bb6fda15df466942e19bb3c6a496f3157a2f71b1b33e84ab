@@ -1,0 +1,251 @@
+I"�j<p>我从<code class="language-plaintext highlighter-rouge">Objective-C</code>转到<code class="language-plaintext highlighter-rouge">Swift</code>已经有好些时间了，<code class="language-plaintext highlighter-rouge">Swift</code>起码在iOS开发这块，开源组件已经很完善，为什么还要再造轮子呢？</p>
+<blockquote>
+  <p>目的只有一个，为了简化对业务层的操作。<br />
+事实上，在写这篇文章的时候，这个<a href="https://github.com/Fidetro/PSea">轮子</a>已经做好了,所以来聊聊他做了什么：<br />
+在<code class="language-plaintext highlighter-rouge">Objective-C</code>时候我所遇到很多网络层都是这样的结构:</p>
+  <div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">______________</span>
+<span class="o">|</span>              <span class="o">|</span>
+<span class="o">|</span> <span class="n">AFNetWorking</span> <span class="o">|</span> 
+<span class="o">|</span><span class="n">______________</span><span class="o">|</span>
+        <span class="o">|</span>
+        <span class="o">|</span>
+        <span class="n">v</span>
+ <span class="n">______________</span>
+<span class="o">|</span>              <span class="o">|</span>
+<span class="o">|</span>  <span class="n">APIManager</span>  <span class="o">|</span> 
+<span class="o">|</span><span class="n">______________</span><span class="o">|</span>
+        <span class="o">|</span>
+        <span class="o">|</span>
+        <span class="n">v</span>
+ <span class="n">______________</span>
+<span class="o">|</span>              <span class="o">|</span>
+<span class="o">|</span>  <span class="n">Controller</span>  <span class="o">|</span> 
+<span class="o">|</span><span class="n">______________</span><span class="o">|</span>        
+</code></pre></div>  </div>
+</blockquote>
+
+<p>然后APIManager只管请求，然后回调都在Controller上处理</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">successHanlder</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="kt">NSDictonary</span> <span class="o">*</span><span class="n">dict</span><span class="p">){</span>
+<span class="c1">//转模型  </span>
+
+<span class="kt">Model</span> <span class="o">*</span><span class="n">model</span> <span class="o">=</span> <span class="p">[</span><span class="kt">Model</span> <span class="nv">jsonToModel</span><span class="p">:</span><span class="n">dict</span><span class="p">];</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">errorCode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>  
+
+    <span class="c1">//数据加工  </span>
+    <span class="c1">//刷新页面    </span>
+
+<span class="p">}</span><span class="k">else</span><span class="p">{</span>  
+
+    <span class="c1">//处理错误    </span>
+    <span class="c1">//错误显示    </span>
+
+<span class="p">}</span>
+
+<span class="p">}</span> <span class="nv">errorHanlder</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="kt">NSDictionry</span> <span class="o">*</span><span class="n">dict</span><span class="p">,</span><span class="kt">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">){</span>
+
+<span class="p">};</span>
+
+</code></pre></div></div>
+<p>总结一下关于业务层能抽象出来的部分有哪些呢？</p>
+<ol>
+  <li>判断数据是否正确</li>
+  <li>转成数据模型</li>
+  <li>处理业务错误</li>
+  <li>错误提示</li>
+</ol>
+
+<p>知道要解决的问题之后，剩下就是怎么去解决了，还在用<code class="language-plaintext highlighter-rouge">Objective-C</code>的时候，使用过<code class="language-plaintext highlighter-rouge">YTKNetwork</code>，<code class="language-plaintext highlighter-rouge">YTKNetwork</code>是用继承解决的，但是<code class="language-plaintext highlighter-rouge">Swift</code>中更推荐使用<code class="language-plaintext highlighter-rouge">protocol</code>和<code class="language-plaintext highlighter-rouge">extension</code>这套组合拳来解决问题。</p>
+
+<p><code class="language-plaintext highlighter-rouge">PSea</code>如果说是网络请求库可能不太准确，它更像是一种思想，它依赖<code class="language-plaintext highlighter-rouge">Alamofire</code>,介于网络层和业务通用层之间的媒介。在这基础上，我给他增加了链式，让他更加Swiftly一点。</p>
+
+<ol>
+  <li>基本设置</li>
+</ol>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PSea</span><span class="p">:</span> <span class="kd">class</span> <span class="p">{</span>
+
+    <span class="c1">/// 请求方式</span>
+    <span class="kd">func</span> <span class="nf">method</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">HTTPMethod</span>
+    <span class="c1">/// 设置域名</span>
+    <span class="kd">func</span> <span class="nf">baseURL</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+    <span class="c1">/// 请求路由</span>
+    <span class="kd">func</span> <span class="nf">requestURI</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+    <span class="c1">/// 请求参数</span>
+    <span class="kd">func</span> <span class="nf">parameters</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Parameters</span><span class="p">?</span>
+    <span class="c1">/// 请求头</span>
+    <span class="kd">func</span> <span class="nf">headers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">HTTPHeaders</span><span class="p">?</span>
+    <span class="c1">/// 参数编码</span>
+    <span class="kd">func</span> <span class="nf">encoding</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">ParameterEncoding</span>
+    
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>这部分是http最基本的支持，用法如下：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">headers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">HTTPHeaders</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s">"Content-type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>
+                <span class="s">"Accept"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="kd">func</span> <span class="nf">baseURL</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">"http://localhost:23333"</span>
+    <span class="p">}</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">parameters</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Parameters</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s">"hello"</span><span class="p">:</span><span class="s">"world"</span><span class="p">]</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">func</span> <span class="nf">complete</span><span class="p">(</span><span class="n">_</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">DataResponse</span><span class="o">&lt;</span><span class="kt">Any</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()))</span>
+</code></pre></div></div>
+<p>`    func complete(_ completionHandler: @escaping ((DataResponse<Any>) -&gt; ()))`是和`Alamofire`接触，实现请求的方法</Any></p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">func</span> <span class="nf">successParse</span><span class="p">(</span><span class="nv">response</span><span class="p">:</span> <span class="kt">DataResponse</span><span class="o">&lt;</span><span class="kt">Any</span><span class="o">&gt;</span><span class="p">)</span>
+    <span class="kd">func</span> <span class="nf">errorParse</span><span class="p">(</span><span class="nv">response</span><span class="p">:</span> <span class="kt">DataResponse</span><span class="o">&lt;</span><span class="kt">Any</span><span class="o">&gt;</span><span class="p">)</span>
+    <span class="kd">func</span> <span class="nf">failureParse</span><span class="p">(</span><span class="nv">response</span><span class="p">:</span><span class="kt">DataResponse</span><span class="o">&lt;</span><span class="kt">Any</span><span class="o">&gt;</span><span class="p">,</span><span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>这三个是<code class="language-plaintext highlighter-rouge">protocol</code>中的接口，需要遵循<code class="language-plaintext highlighter-rouge">PSea</code>的类去解析<br />
+整个<code class="language-plaintext highlighter-rouge">PSea</code>目前100行代码不到，因为<code class="language-plaintext highlighter-rouge">PSea</code>只提供了把<code class="language-plaintext highlighter-rouge">Alamofire</code>的用法转成的POP，具体涉及业务层是需要通过遵循<code class="language-plaintext highlighter-rouge">PSea</code>再衍生出一个业务类，还是废话少说，上代码。</p>
+
+<p>就拿我个人项目来讲</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PetRequest</span> <span class="p">:</span> <span class="kt">PSea</span> <span class="p">{</span>
+   <span class="c1">/// 是否需要token</span>
+    <span class="kd">func</span> <span class="nf">needToken</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+    <span class="c1">/// 请求参数</span>
+    <span class="kd">func</span> <span class="nf">petParameters</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Parameters</span><span class="p">?</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">func needToken()</code>和<code class="language-plaintext highlighter-rouge">func petParameters()</code>都是对外需要重写的，可以先不管<br />
+接下来是把<code class="language-plaintext highlighter-rouge">PSea</code>需要重写的接口，实现</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">PetRequest</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">headers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">HTTPHeaders</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s">"Content-type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>
+                <span class="s">"Accept"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="kd">func</span> <span class="nf">baseURL</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">"设置域名"</span>
+    <span class="p">}</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">parameters</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Parameters</span><span class="p">?</span> <span class="p">{</span>
+        <span class="c1">//对参数进行处理</span>
+        <span class="k">let</span> <span class="nv">params</span> <span class="o">=</span> <span class="nf">petParameters</span><span class="p">()</span>    
+    
+        <span class="k">return</span> <span class="n">params</span>
+    <span class="p">}</span>
+    
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">encoding</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">ParameterEncoding</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nf">method</span><span class="p">()</span> <span class="o">==</span> <span class="o">.</span><span class="k">get</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kt">URLEncoding</span><span class="p">(</span><span class="nv">destination</span><span class="p">:</span> <span class="o">.</span><span class="n">methodDependent</span><span class="p">)</span>
+        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+            <span class="k">return</span> <span class="kt">JSONEncoding</span><span class="o">.</span><span class="k">default</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="c1">//成功结果的解析</span>
+    <span class="kd">func</span> <span class="nf">successParse</span><span class="p">(</span><span class="nv">response</span><span class="p">:</span><span class="kt">DataResponse</span><span class="o">&lt;</span><span class="kt">Any</span><span class="o">&gt;</span><span class="p">){</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">value</span> <span class="k">as?</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">Any</span><span class="p">],</span>
+            <span class="k">let</span> <span class="nv">_</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s">"errcode"</span><span class="p">]</span> <span class="k">as?</span> <span class="kt">Int</span> <span class="k">else</span><span class="p">{</span>
+                <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">handler</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">successHandler</span> <span class="p">{</span>
+            <span class="nf">handler</span><span class="p">(</span><span class="n">response</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+            <span class="c1">//成功不处理</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">//请求成功，但结果不是我们需要的解析</span>
+    <span class="kd">func</span> <span class="nf">errorParse</span><span class="p">(</span><span class="nv">response</span><span class="p">:</span><span class="kt">DataResponse</span><span class="o">&lt;</span><span class="kt">Any</span><span class="o">&gt;</span><span class="p">){</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">value</span> <span class="k">as?</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">Any</span><span class="p">],</span>
+            <span class="k">let</span> <span class="nv">code</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s">"errcode"</span><span class="p">]</span> <span class="k">as?</span> <span class="kt">Int</span> <span class="k">else</span><span class="p">{</span>
+                <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="k">let</span> <span class="nv">errmsg</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s">"errmsg"</span><span class="p">]</span> <span class="k">as?</span> <span class="kt">String</span>
+        <span class="k">guard</span> <span class="n">code</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="k">let</span> <span class="nv">handler</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">errorHandler</span> <span class="p">{</span>
+                <span class="nf">handler</span><span class="p">(</span><span class="n">response</span><span class="p">,</span><span class="n">code</span><span class="p">,</span><span class="n">errmsg</span> <span class="p">??</span> <span class="s">""</span><span class="p">)</span>
+            <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                <span class="c1">//不处理的时候会提示</span>
+                <span class="kt">SVProgressHUD</span><span class="o">.</span><span class="nf">showError</span><span class="p">(</span><span class="nv">withStatus</span><span class="p">:</span> <span class="n">errmsg</span> <span class="p">??</span> <span class="s">""</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">//网络错误的解析</span>
+    <span class="kd">func</span> <span class="nf">failureParse</span><span class="p">(</span><span class="nv">response</span><span class="p">:</span> <span class="kt">DataResponse</span><span class="o">&lt;</span><span class="kt">Any</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">_</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">value</span> <span class="k">as?</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">Any</span><span class="p">]</span> <span class="k">else</span><span class="p">{</span>
+            <span class="k">if</span> <span class="k">let</span> <span class="nv">handler</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">failureHandler</span> <span class="p">{</span>
+                <span class="nf">handler</span><span class="p">(</span><span class="n">response</span><span class="p">,</span><span class="n">error</span><span class="p">)</span>
+            <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                <span class="c1">//TODO: 提示请求超时</span>
+                <span class="kt">SVProgressHUD</span><span class="o">.</span><span class="nf">showError</span><span class="p">(</span><span class="nv">withStatus</span><span class="p">:</span> <span class="s">"网络连接超时"</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>这样就通过<code class="language-plaintext highlighter-rouge">PSea</code>设计好了一个简单的POP网络请求库，再举一个简单的登录api使用例子：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">LoginApi</span><span class="p">:</span> <span class="kt">PetRequest</span> <span class="p">{</span>
+
+    <span class="k">var</span> <span class="nv">username</span> <span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"xxx"</span>
+    <span class="k">var</span> <span class="nv">password</span> <span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"xxx"</span>
+    <span class="k">var</span> <span class="nv">successHandler</span><span class="p">:</span> <span class="kt">SccuessCallBack</span><span class="p">?</span>    
+    <span class="k">var</span> <span class="nv">errorHandler</span><span class="p">:</span> <span class="kt">ErrorCallBack</span><span class="p">?</span>
+    <span class="k">var</span> <span class="nv">failureHandler</span><span class="p">:</span> <span class="kt">FailureCallBack</span><span class="p">?</span>
+
+    <span class="kd">func</span> <span class="nf">needToken</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">false</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">petParameters</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Parameters</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s">"username"</span><span class="p">:</span><span class="n">username</span><span class="p">,</span>
+                <span class="s">"password"</span><span class="p">:</span><span class="n">password</span><span class="p">]</span>
+    <span class="p">}</span>
+    
+    <span class="kd">func</span> <span class="nf">method</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">HTTPMethod</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">.</span><span class="n">post</span>
+    <span class="p">}</span>
+    
+    <span class="kd">func</span> <span class="nf">requestURI</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">"/petday/login"</span>
+    <span class="p">}</span>
+  
+<span class="p">}</span>
+
+<span class="c1">//使用例子</span>
+        <span class="kt">LoginApi</span><span class="p">()</span><span class="o">.</span><span class="nf">request</span><span class="p">()</span><span class="o">.</span><span class="n">success</span> <span class="p">{</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">in</span>
+            
+            <span class="p">}</span><span class="o">.</span><span class="n">failure</span> <span class="p">{</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="k">in</span>
+                
+                
+            <span class="p">}</span><span class="o">.</span><span class="n">error</span> <span class="p">{</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="k">in</span>                
+                
+        <span class="p">}</span>
+
+<span class="c1">//然后又因为failure和error都已经经过业务层做处理了，不是特殊情况下，不需要额外做处理，又可以简写成</span>
+        <span class="kt">LoginApi</span><span class="p">()</span><span class="o">.</span><span class="nf">request</span><span class="p">()</span><span class="o">.</span><span class="n">success</span> <span class="p">{</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">in</span>
+            
+            <span class="p">}</span>
+</code></pre></div></div>
+
+<p>另外如果需要将成功的结果返回的时候转成对象，
+首先在处理</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">successParse</span><span class="p">(</span><span class="nv">response</span><span class="p">:</span> <span class="kt">DataResponse</span><span class="o">&lt;</span><span class="kt">Any</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+           <span class="k">guard</span> <span class="k">let</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">value</span> <span class="k">as?</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">Any</span><span class="p">]</span> <span class="k">else</span><span class="p">{</span>
+                <span class="k">return</span>
+        <span class="p">}</span>
+    <span class="c1">//经过处理一系列结果</span>
+    <span class="c1">//...</span>
+    <span class="c1">//...</span>
+    <span class="k">let</span> <span class="nv">modelJSON</span> <span class="o">=</span>  <span class="c1">//...需要转换成对象的合法JSON字典</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">handler</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">successHandler</span> <span class="p">{</span>
+            <span class="nf">handler</span><span class="p">(</span><span class="n">modelJSON</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>然后可以写成这样:</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">ListApi</span><span class="p">()</span><span class="o">.</span><span class="nf">request</span><span class="p">()</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="kt">ListModel</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">value</span><span class="p">)</span> <span class="k">in</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+:ET

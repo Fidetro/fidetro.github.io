@@ -1,0 +1,53 @@
+I"�<h1 id="前言">前言</h1>
+<p>在最初写这篇的时候，并没有考虑到要写「iOS绘制方案调研」为题的一篇的文章，原来只是想记录在悦跑圈4.0开发中遇到的一个关于截图耗时特别长的一个问题，随即在写问题记录的时候，写下来的模拟demo结果却出乎意料，然后决定在以后会写一篇「iOS绘制方案调研」。</p>
+<h1 id="正文">正文</h1>
+<p>在开发悦跑圈4.0版本的时候，遇到了一个很有意思的问题，需要将跑步路线的经纬度在View上绘制一段轨迹，这里的一个原来的做法是先轨迹绘制在一个View上，然后截图传给水印相机的VC。</p>
+
+<p>主要的几个方法如下：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">override</span> <span class="kd">func</span> <span class="nf">draw</span><span class="p">(</span><span class="n">_</span> <span class="nv">rect</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">let</span> <span class="nv">bezier</span> <span class="o">=</span> <span class="nf">setupPath</span><span class="p">()</span>
+        <span class="n">bezier</span><span class="o">.</span><span class="n">lineWidth</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="kt">UIColor</span><span class="o">.</span><span class="n">black</span><span class="o">.</span><span class="nf">setStroke</span><span class="p">()</span>
+        <span class="n">bezier</span><span class="o">.</span><span class="n">lineJoinStyle</span> <span class="o">=</span> <span class="o">.</span><span class="n">round</span>
+        <span class="n">bezier</span><span class="o">.</span><span class="n">lineCapStyle</span> <span class="o">=</span> <span class="o">.</span><span class="n">round</span>
+        <span class="n">bezier</span><span class="o">.</span><span class="nf">stroke</span><span class="p">()</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     <span class="kd">func</span> <span class="nf">getImageForView</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UIImage</span><span class="p">?</span> <span class="p">{</span>
+        <span class="kt">UIGraphicsBeginImageContext</span><span class="p">(</span><span class="n">bounds</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">context</span> <span class="o">=</span> <span class="kt">UIGraphicsGetCurrentContext</span><span class="p">()</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
+        <span class="n">layer</span><span class="o">.</span><span class="nf">render</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="n">context</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">image</span> <span class="o">=</span> <span class="kt">UIGraphicsGetImageFromCurrentImageContext</span><span class="p">()</span>
+        <span class="kt">UIGraphicsEndImageContext</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">image</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+<p>这时候问题就来了，测试同学反馈某条测试数据卡顿高达5、6分钟，在iPhone6以下的机型大概出现闪退的情况。 
+debug一轮后，发现问题是卡顿是出在获取图片的方法：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">layer</span><span class="o">.</span><span class="nf">render</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="n">context</span><span class="p">)</span>
+</code></pre></div></div>
+<p>在调用这个方法的时候，CPU使用率长期在90%以上<br />
+至于原因，在stackoverflow上已经有人给出的答案了，<code class="language-plaintext highlighter-rouge">renderInContext:</code>是在CPU上运行的，在iOS 7之后使用<code class="language-plaintext highlighter-rouge">drawHierarchy(in: , afterScreenUpdates: )</code>会更快。<a href="https://stackoverflow.com/a/19067099/6202715">参考链接</a><br />
+将原来的截图方法，换成了</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">func</span> <span class="nf">getImageForView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span><span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIImage</span><span class="p">?</span> <span class="p">{</span>
+        <span class="kt">UIGraphicsBeginImageContextWithOptions</span><span class="p">(</span><span class="n">bounds</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="nf">drawHierarchy</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="n">bounds</span><span class="p">,</span> <span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="n">afterScreenUpdates</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">image</span> <span class="o">=</span> <span class="kt">UIGraphicsGetImageFromCurrentImageContext</span><span class="p">()</span>
+        <span class="kt">UIGraphicsEndImageContext</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">image</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+<p>效果依旧不明显，还是非常耗时。<br />
+搜索一番后，没有找到合适的解决方法后，我决定开始自己定位问题，寻找解决方案。<br />
+原来的绘制是使用<code class="language-plaintext highlighter-rouge">CGContext</code>，要知道<code class="language-plaintext highlighter-rouge">CGContext</code>的绘制是调用<code class="language-plaintext highlighter-rouge">Core Graphics</code>的方法实现，<code class="language-plaintext highlighter-rouge">Core Graphics</code>占用CPU和消耗内存。<br />
+像是绘制这种轨迹的需求，其实除了drawRect以外，还有一个方案，那就是<code class="language-plaintext highlighter-rouge">CAShapeLayer</code>。<br />
+CAShapeLayer需要通过贝塞尔曲线的CGPath，然后提交到GPU上渲染。<br />
+<code class="language-plaintext highlighter-rouge">CAShapeLayer</code>通过GPU渲染图形，不消耗内存。<br />
+另外有部分文章指出：</p>
+<blockquote>
+  <p>“CAShapeLayer使用了硬件加速，绘制同一图形会比用Core Graphics快很多。”</p>
+</blockquote>
+
+<p>这一点，在我写demo的时候发现了并不是这样，即使是相同的path，drawRect也是有可能会比CAShapeLayer要快的。关于这一点，我会把这点放在iOS绘制方案调研去讲。<br />
+在使用<code class="language-plaintext highlighter-rouge">CAShapeLayer</code>和<code class="language-plaintext highlighter-rouge">drawHierarchy(in: , afterScreenUpdates: )</code>之后，原本一段需要5、6分钟才能生成的轨迹，现在只需要1秒就就可以生成出来了。业务问题的确已经解决了，但是绘制的问题并没有结束，我在文章开头就已经写了，在写这个Demo的时候，测试的结果确出乎意料，这部分的讨论将会放在下篇去讨论。</p>
+:ET
