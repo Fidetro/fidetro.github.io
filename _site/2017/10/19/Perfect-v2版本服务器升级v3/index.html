@@ -126,33 +126,35 @@
 
 
     <style type="text/css">
-/* 新浪微博 */
-.-mob-share-weibo {
-background-image: url("https://www.foolishtalk.org/cloud/sina_share.png")!important;
-background-repeat:no-repeat;
-background-color: #ffffff;
-width: 30px;
-height: 30px;
-border: none;
-}
-/* 微信 */
-.-mob-share-weixin {
-background-image: url("https://www.foolishtalk.org/cloud/wechat_share.png")!important;
-background-repeat:no-repeat;
-background-color: #ffffff;
-width: 30px;
-height: 30px;
-border: none;
-}
-/* QQ */
-.-mob-share-qq {
-background-image: url("https://www.foolishtalk.org/cloud/qq_share.png")!important;
-background-repeat:no-repeat;
-background-color: #ffffff;
-width: 30px;
-height: 30px;
-border: none;
-}
+    /* 新浪微博 */
+    .-mob-share-weibo {
+        background-image: url("https://www.foolishtalk.org/cloud/sina_share.png") !important;
+        background-repeat: no-repeat;
+        background-color: #ffffff;
+        width: 30px;
+        height: 30px;
+        border: none;
+    }
+
+    /* 微信 */
+    .-mob-share-weixin {
+        background-image: url("https://www.foolishtalk.org/cloud/wechat_share.png") !important;
+        background-repeat: no-repeat;
+        background-color: #ffffff;
+        width: 30px;
+        height: 30px;
+        border: none;
+    }
+
+    /* QQ */
+    .-mob-share-qq {
+        background-image: url("https://www.foolishtalk.org/cloud/qq_share.png") !important;
+        background-repeat: no-repeat;
+        background-color: #ffffff;
+        width: 30px;
+        height: 30px;
+        border: none;
+    }
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
@@ -160,12 +162,13 @@ border: none;
 
 <!-- Post Header -->
 <style type="text/css">
-    header.intro-header{
+    header.intro-header {
         background-image: url('/img/post-bg-old.jpg')
     }
 </style>
-<header class="intro-header" >
-    <script data-ad-client="ca-pub-2211183676955599" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<header class="intro-header">
+    <script data-ad-client="ca-pub-2211183676955599" async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -191,15 +194,40 @@ border: none;
 
 <!-- Post Content -->
 <article>
+    <script src="/live2d/live2d/L2Dwidget.min.js"></script>
+    <script type="text/javascript">
+        L2Dwidget.init({
+            model: {
+                jsonPath: '/live2d/live2d/tororo/assets/tororo.model.json',
+            },
+            display: {
+                superSample: 2,
+                width: 100,
+                height: 100,
+                position: 'left',
+                hOffset: 0,
+                vOffset: 0,
+            },
+            mobile: {
+                show: true,
+                scale: 1,
+                motion: true,
+            },
+            react: {
+                opacityDefault: 0.8,
+                opacityOnHover: 0.2,
+            }
+        })
+    </script>
     <div class="container">
-        <div class="row">            
-    <!-- Post Container -->
+        <div class="row">
+            <!-- Post Container -->
             <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>Perfect在11号的时候就发布了v3版本，v3版本开始支持swift 4，今天正好有空，把Perfect升级了一下，顺便写了个脚本方便集成环境，如果不清楚这个脚本是干嘛的，可以看下我之前的文章<a href="http://www.jianshu.com/p/fc4971b72737">如何在阿里云上部署Perfect服务器
+                <p>Perfect在11号的时候就发布了v3版本，v3版本开始支持swift 4，今天正好有空，把Perfect升级了一下，顺便写了个脚本方便集成环境，如果不清楚这个脚本是干嘛的，可以看下我之前的文章<a href="http://www.jianshu.com/p/fc4971b72737">如何在阿里云上部署Perfect服务器
 </a></p>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
 <span class="nv">$ </span>apt-get <span class="nb">install </span>make git clang libicu-dev libmysqlclient-dev libpq-dev sqlite3 libsqlite3-dev apache2-dev pkg-config libssl-dev libsasl2-dev libcurl4-openssl-dev uuid-dev wget
@@ -231,23 +259,24 @@ $ :wq
 
 
                 <hr>
-            <div>
-                <p>请保持转载后文章内容的完整，以及文章出处。本人保留所有版权相关权利。</p>
-                <!-- 要是你找到这个，想打赏就打赏吧 <p>如果你看了文章，觉得有收获，可以通过下面的支付宝二维码打赏。</p>
+                <div>
+                    <p>请保持转载后文章内容的完整，以及文章出处。本人保留所有版权相关权利。</p>
+                    <!-- 要是你找到这个，想打赏就打赏吧 <p>如果你看了文章，觉得有收获，可以通过下面的支付宝二维码打赏。</p>
                 <b>
                 <img height="100" width="100" src="https://www.foolishtalk.org/cloud/qrcode.png">
                 </b> -->
-            </div>
-                <!-- 分享代码 -->                
-<div class="-foot-share-buttons">
-    <b>分享到：</b>
-    <button class="-mob-share-weibo"></button>
-    <button class="-mob-share-weixin"></button>
-    <button class="-mob-share-qq"></button>
-    <p>Disqus经常被墙，需要评论请科学上网</p>
-</div>
-<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=23ba60f5704b3"></script>
-                
+                </div>
+                <!-- 分享代码 -->
+                <div class="-foot-share-buttons">
+                    <b>分享到：</b>
+                    <button class="-mob-share-weibo"></button>
+                    <button class="-mob-share-weixin"></button>
+                    <button class="-mob-share-qq"></button>
+                    <p>Disqus经常被墙，需要评论请科学上网</p>
+                </div>
+                <script id="-mob-share"
+                    src="https://f1.webshare.mob.com/code/mob-share.js?appkey=23ba60f5704b3"></script>
+
                 <hr>
                 
 
@@ -255,12 +284,15 @@ $ :wq
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/10/14/%E5%8F%88%E5%A4%A7%E4%B8%80%E5%B2%81-%E5%85%88%E8%81%8A%E8%81%8A%E7%BC%96%E7%A8%8B-%E5%86%8D%E8%81%8A%E8%81%8A%E7%94%9F%E6%B4%BB-%E6%9C%80%E5%90%8E%E5%86%8D%E8%81%8A%E5%9B%9E%E7%BC%96%E7%A8%8B/" data-toggle="tooltip" data-placement="top" title="又大一岁，先聊聊编程，再聊聊生活，最后再聊回编程">&larr; Previous Post</a>
+                        <a href="/2017/10/14/%E5%8F%88%E5%A4%A7%E4%B8%80%E5%B2%81-%E5%85%88%E8%81%8A%E8%81%8A%E7%BC%96%E7%A8%8B-%E5%86%8D%E8%81%8A%E8%81%8A%E7%94%9F%E6%B4%BB-%E6%9C%80%E5%90%8E%E5%86%8D%E8%81%8A%E5%9B%9E%E7%BC%96%E7%A8%8B/"
+                            data-toggle="tooltip" data-placement="top" title="又大一岁，先聊聊编程，再聊聊生活，最后再聊回编程">&larr; Previous
+                            Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/10/21/Xcode%E5%88%A4%E6%96%AD%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/" data-toggle="tooltip" data-placement="top" title="Xcode判断编译环境">Next Post &rarr;</a>
+                        <a href="/2017/10/21/Xcode%E5%88%A4%E6%96%AD%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/" data-toggle="tooltip"
+                            data-placement="top" title="Xcode判断编译环境">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -278,7 +310,7 @@ $ :wq
 
             </div>
 
-    <!-- Sidebar Container -->
+            <!-- Sidebar Container -->
             <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
@@ -290,114 +322,114 @@ $ :wq
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-        				
-                            
-                				<a href="/tags/#Objective-C" title="Objective-C" rel="2">
-                                    Objective-C
-                                </a>
-                            
-        				
-                            
-                				<a href="/tags/#iOS" title="iOS" rel="39">
-                                    iOS
-                                </a>
-                            
-        				
-                            
-                				<a href="/tags/#问题随笔" title="问题随笔" rel="13">
-                                    问题随笔
-                                </a>
-                            
-        				
-                            
-                				<a href="/tags/#Code-Life" title="Code-Life" rel="2">
-                                    Code-Life
-                                </a>
-                            
-        				
-                            
-        				
-                            
-                				<a href="/tags/#WWDC" title="WWDC" rel="3">
-                                    WWDC
-                                </a>
-                            
-        				
-                            
-                				<a href="/tags/#Swift" title="Swift" rel="18">
-                                    Swift
-                                </a>
-                            
-        				
-                            
-                				<a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
-                                    Perfect-Server
-                                </a>
-                            
-        				
-                            
-        				
-                            
-        				
-                            
-        				
-                            
-                				<a href="/tags/#Swift-Tips" title="Swift-Tips" rel="4">
-                                    Swift-Tips
-                                </a>
-                            
-        				
-                            
-                				<a href="/tags/#杂谈" title="杂谈" rel="3">
-                                    杂谈
-                                </a>
-                            
-        				
-                            
-                				<a href="/tags/#RxSwift" title="RxSwift" rel="2">
-                                    RxSwift
-                                </a>
-                            
-        				
-                            
-        				
-                            
-        				
-                            
-                				<a href="/tags/#Xcode" title="Xcode" rel="6">
-                                    Xcode
-                                </a>
-                            
-        				
-                            
-                				<a href="/tags/#Mac" title="Mac" rel="2">
-                                    Mac
-                                </a>
-                            
-        				
-                            
-        				
-                            
-        				
-                            
-        				
-                            
-        				
-                            
-        				
-                            
-        				
-                            
-        				
-                            
-        				
-                            
-        				
-                            
-        				
-                            
-        				
-        			</div>
+                        
+                        
+                        <a href="/tags/#Objective-C" title="Objective-C" rel="2">
+                            Objective-C
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#iOS" title="iOS" rel="39">
+                            iOS
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                            问题随笔
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#Code-Life" title="Code-Life" rel="2">
+                            Code-Life
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/#WWDC" title="WWDC" rel="3">
+                            WWDC
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#Swift" title="Swift" rel="18">
+                            Swift
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
+                            Perfect-Server
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/#Swift-Tips" title="Swift-Tips" rel="4">
+                            Swift-Tips
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#杂谈" title="杂谈" rel="3">
+                            杂谈
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#RxSwift" title="RxSwift" rel="2">
+                            RxSwift
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/#Xcode" title="Xcode" rel="6">
+                            Xcode
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#Mac" title="Mac" rel="2">
+                            Mac
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
                 </section>
                 
 
@@ -407,7 +439,7 @@ $ :wq
                 <h5>FRIENDS</h5>
                 <ul class="list-inline">
                     
-                        <li><a href="https://www.maaiting.com">make</a></li>
+                    <li><a href="https://www.maaiting.com">make</a></li>
                     
                 </ul>
                 
@@ -430,14 +462,13 @@ $ :wq
     var disqus_identifier = "/2017/10/19/Perfect-v2版本服务器升级v3";
     var disqus_url = "http://www.foolishtalk.org/2017/10/19/Perfect-v2%E7%89%88%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%87%E7%BA%A7v3/";
 
-    (function() {
+    (function () {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
 <!-- disqus 公共JS代码 end -->
-
 
 
 
