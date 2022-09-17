@@ -44,8 +44,8 @@ tags:
 ![](https://www.foolishtalk.org/cloud/2019_12_15_8.46.55.png)  
 
 ### iOS 16
-在iOS 16上，苹果增加了开发者模式的开关，导致还需要在手机上开启开发者模式后，才能正常使用，  
-前往iPhone的「设置」->「隐私与安全性」->「开发者模式」->打开「开发者模式」    
+在iOS 16上，苹果增加了开发者模式的开关，导致还需要在手机上开启开发者模式后，才能正常使用。
+需要先在Magellan点击「激活开发者模式」，然后前往iPhone的「设置」->「隐私与安全性」->「开发者模式」->打开「开发者模式」    
 感兴趣可以点击[了解更多](https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device)  
 
 ##### 如果是首次安装驱动，记得要重新插拔一次手机，不然可能会没法识别。

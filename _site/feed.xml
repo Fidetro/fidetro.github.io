@@ -5,9 +5,9 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 26 Jul 2022 21:34:21 +0800</pubDate>
-    <lastBuildDate>Tue, 26 Jul 2022 21:34:21 +0800</lastBuildDate>
-    <generator>Jekyll v4.2.1</generator>
+    <pubDate>Sat, 17 Sep 2022 13:31:24 +0800</pubDate>
+    <lastBuildDate>Sat, 17 Sep 2022 13:31:24 +0800</lastBuildDate>
+    <generator>Jekyll v4.2.2</generator>
     
       <item>
         <title>Git迁移文件到其他仓库保留commit</title>
@@ -121,7 +121,7 @@ B % git remote &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;from_repo_A
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#创建hooks文件夹
 mkdir -p ~/.git-templates/hooks
 #配置全局git templates
-git config --global init.templatedir &apos;~/.git-templates&apos;  
+git config --global init.templatedir '~/.git-templates'  
 #确保脚本可以执行
 chmod a+x ~/.git-hooksPath/hooks/xxx
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -282,7 +282,7 @@ Copy the property declaration to Generating Lazy Variable code&lt;/li&gt;
         <title>解决博客在Chrome里http和https混合使用的问题</title>
         <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
 &lt;p&gt;今天突然发现博客的图片都无法加载了，打开浏览器控制台一看，发现是无法找到https资源报错了：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Mixed Content: The page at &apos;&amp;lt;URL&amp;gt;&apos; was loaded over HTTPS, but requested an insecure font &apos;&amp;lt;URL&amp;gt;&apos;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Mixed Content: The page at '&amp;lt;URL&amp;gt;' was loaded over HTTPS, but requested an insecure font '&amp;lt;URL&amp;gt;'
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;原来是因为更新了Chrome后，如果网站是https，会把非https的资源强制转成了http，我博客用的七牛云，使用https流量是要另外收费的，所以只好找个方法曲线救国。&lt;/p&gt;
 
@@ -566,7 +566,8 @@ there is an ico at system navigation bar as following after &lt;code class=&quot
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;In iOS 16 and above, you need to enable developer mode to work. go to Settings &amp;gt; Privacy &amp;amp; Security on the iOS device.Scroll down to the Developer Mode list item and navigate into it. To toggle Developer mode, use the “Developer Mode” switch.&lt;br /&gt;
+&lt;p&gt;In iOS 16 and above, you need to enable developer mode to work.
+First you need to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Activate developer mode&lt;/code&gt; by clicking on Magellan,and then go to iPhone/iPad Settings &amp;gt; Privacy &amp;amp; Security on the iOS device.Scroll down to the Developer Mode list item and navigate into it. To toggle Developer mode, use the “Developer Mode” switch.&lt;br /&gt;
 If you are interested, you can click &lt;a href=&quot;https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device&quot;&gt;Learn more&lt;/a&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;operation&quot;&gt;Operation:&lt;/h1&gt;
