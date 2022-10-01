@@ -44,7 +44,10 @@ If `Magellan` installation fails, please download and install it separately from
 7.	It need to run `Magellan app` again after installation.
 
 In iOS 16 and above, you need to enable developer mode to work.
-First you need to `Activate developer mode` by clicking on Magellan,and then go to iPhone/iPad Settings > Privacy & Security on the iOS device.Scroll down to the Developer Mode list item and navigate into it. To toggle Developer mode, use the “Developer Mode” switch.  
+First you need to `Activate developer mode` by clicking on Magellan.   
+![](https://www.foolishtalk.org/cloud/MTY2NDYxOTAwOQ%3D%3D.png)  
+
+And then go to iPhone/iPad Settings > Privacy & Security on the iOS device.Scroll down to the Developer Mode list item and navigate into it. To toggle Developer mode, use the “Developer Mode” switch.  
 If you are interested, you can click [Learn more](https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device)  
 
 

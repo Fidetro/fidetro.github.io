@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 17 Sep 2022 13:31:24 +0800</pubDate>
-    <lastBuildDate>Sat, 17 Sep 2022 13:31:24 +0800</lastBuildDate>
+    <pubDate>Sat, 01 Oct 2022 18:15:26 +0800</pubDate>
+    <lastBuildDate>Sat, 01 Oct 2022 18:15:26 +0800</lastBuildDate>
     <generator>Jekyll v4.2.2</generator>
     
       <item>
@@ -567,7 +567,10 @@ there is an ico at system navigation bar as following after &lt;code class=&quot
 &lt;/ol&gt;
 
 &lt;p&gt;In iOS 16 and above, you need to enable developer mode to work.
-First you need to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Activate developer mode&lt;/code&gt; by clicking on Magellan,and then go to iPhone/iPad Settings &amp;gt; Privacy &amp;amp; Security on the iOS device.Scroll down to the Developer Mode list item and navigate into it. To toggle Developer mode, use the “Developer Mode” switch.&lt;br /&gt;
+First you need to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Activate developer mode&lt;/code&gt; by clicking on Magellan. &lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/MTY2NDYxOTAwOQ%3D%3D.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And then go to iPhone/iPad Settings &amp;gt; Privacy &amp;amp; Security on the iOS device.Scroll down to the Developer Mode list item and navigate into it. To toggle Developer mode, use the “Developer Mode” switch.&lt;br /&gt;
 If you are interested, you can click &lt;a href=&quot;https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device&quot;&gt;Learn more&lt;/a&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;operation&quot;&gt;Operation:&lt;/h1&gt;
