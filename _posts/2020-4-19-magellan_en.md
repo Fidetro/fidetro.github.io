@@ -56,10 +56,10 @@ If you are interested, you can click [Learn more](https://developer.apple.com/do
 There are two ways to modify the position as followings:  
 (1)   
 Select `Point`. Double click the map on `Virtual Location App`. Then you will find your position on mobile phone has already changed.  
-![](https://www.foolishtalk.org/cloud/guide_en_1.png))
+![](https://www.foolishtalk.org/cloud/guide_en_1.png)
 (2)   
 ① Select `Route`. Double click the map on `Virtual Location　App`. There will be generated multi-spots on the map as picture shows.  
-![](https://www.foolishtalk.org/cloud/guide_en_2.png))
+![](https://www.foolishtalk.org/cloud/guide_en_2.png)
 
 ② Please input Speed and click `Start` finally. You will find your mobile phone is moving along programmed route.
 

@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 01 Oct 2022 18:15:26 +0800</pubDate>
-    <lastBuildDate>Sat, 01 Oct 2022 18:15:26 +0800</lastBuildDate>
+    <pubDate>Sat, 01 Oct 2022 18:22:26 +0800</pubDate>
+    <lastBuildDate>Sat, 01 Oct 2022 18:22:26 +0800</lastBuildDate>
     <generator>Jekyll v4.2.2</generator>
     
       <item>
@@ -579,10 +579,10 @@ If you are interested, you can click &lt;a href=&quot;https://developer.apple.co
 There are two ways to modify the position as followings:&lt;br /&gt;
 (1) &lt;br /&gt;
 Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Point&lt;/code&gt;. Double click the map on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Virtual Location App&lt;/code&gt;. Then you will find your position on mobile phone has already changed.&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_1.png&quot; alt=&quot;&quot; /&gt;)
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_1.png&quot; alt=&quot;&quot; /&gt;
 (2) &lt;br /&gt;
 ① Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Route&lt;/code&gt;. Double click the map on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Virtual Location　App&lt;/code&gt;. There will be generated multi-spots on the map as picture shows.&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_2.png&quot; alt=&quot;&quot; /&gt;)&lt;/li&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_2.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;② Please input Speed and click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Start&lt;/code&gt; finally. You will find your mobile phone is moving along programmed route.&lt;/p&gt;
