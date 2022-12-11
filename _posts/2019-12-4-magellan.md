@@ -50,6 +50,8 @@ tags:
 ![](https://www.foolishtalk.org/cloud/MTY2NDYxOTAzMA%3D%3D.png)   
 
 然后前往iPhone的「设置」->「隐私与安全性」->「开发者模式」->打开「开发者模式」    
+![](https://docs-assets.developer.apple.com/published/72b149b975624bfaf5f6fb577655b200/developer-mode-03~dark@2x.png)  
+
 感兴趣了解为什么iOS 16需要这样做，可以点击[了解更多](https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device)  
 
 ##### 如果是首次安装驱动，记得要重新插拔一次手机，不然可能会没法识别。

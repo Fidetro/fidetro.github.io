@@ -48,6 +48,8 @@ First you need to `Activate developer mode` by clicking on Magellan.
 ![](https://www.foolishtalk.org/cloud/MTY2NDYxOTAwOQ%3D%3D.png)  
 
 And then go to iPhone/iPad Settings > Privacy & Security on the iOS device.Scroll down to the Developer Mode list item and navigate into it. To toggle Developer mode, use the “Developer Mode” switch.  
+![](https://docs-assets.developer.apple.com/published/72b149b975624bfaf5f6fb577655b200/developer-mode-03~dark@2x.png)  
+
 If you are interested, you can click [Learn more](https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device)  
 
 
