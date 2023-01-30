@@ -89,12 +89,7 @@ tags:
 
 
 
-# 单独安装Magellan  
-虚拟定位的每个版本都会内置最新的Magellan版本，一般来说不需要独立安装，下面这段的安装方式可以忽略。
-[Magellan(点这下载)](https://www.foolishtalk.org/magellan/magellan.dmg)
-Magellan 的使用方式很简单，下载后，把 App 拖进 应用程序文件夹中，
-![](https://www.foolishtalk.org/cloud/20191022225610.png)  
-然后双击运行，就可以了。  
+# 安装Magellan  
 有可能会出现这个弹窗，直接打开就好了。  
 ![](https://www.foolishtalk.org/cloud/20191022105549.png)  
 
