@@ -90,6 +90,7 @@ tags:
 
 
 # 安装Magellan  
+在这里[下载](https://foolishtalk.org/magellan/magellan.pkg)  
 有可能会出现这个弹窗，直接打开就好了。  
 ![](https://www.foolishtalk.org/cloud/20191022105549.png)  
 
