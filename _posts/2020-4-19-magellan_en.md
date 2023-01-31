@@ -13,7 +13,7 @@ tags:
 
 # Installation:
 
-Firstly, download [Virtual Location App](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12) and [Magellan App](https://www.foolishtalk.org/magellan/magellan.dmg). It requires running both these two apps to modify the location.
+Firstly, download [Virtual Location App](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12) and [Magellan App](https://www.foolishtalk.org/magellan/magellan.pkg). It requires running both these two apps to modify the location.
 
 The Virtual Location interface looks like this:
 ![](https://www.foolishtalk.org/cloud/guide_en_1.png)
@@ -27,7 +27,7 @@ Or, when double-clicking on the map, the following pop-up will appear：
 there is an ico at system navigation bar as following after `Magellan App` running successfully.  
 ![](https://www.foolishtalk.org/cloud/bc9e8955850855ca07147e65957f8087.png) 
 
-If `Magellan` installation fails, please download and install it separately from [here]((https://www.foolishtalk.org/magellan/magellan.dmg))
+If `Magellan` installation fails, please download and install it separately from [here]((https://www.foolishtalk.org/magellan/magellan.pkg))
 
 3.	Connect the mobile phone to your computer, then choose your personal mobile.  
 ![](https://www.foolishtalk.org/cloud/d944f3a7aa0e20280cb65dff013839e6.png)
