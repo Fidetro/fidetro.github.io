@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 16 May 2023 01:03:49 +0800</pubDate>
-    <lastBuildDate>Tue, 16 May 2023 01:03:49 +0800</lastBuildDate>
+    <pubDate>Wed, 17 May 2023 00:43:55 +0800</pubDate>
+    <lastBuildDate>Wed, 17 May 2023 00:43:55 +0800</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -129,14 +129,64 @@ chmod a+x ~/.git-hooksPath/hooks/xxx
 
 &lt;h2 id=&quot;corehookspath&quot;&gt;core.hooksPath&lt;/h2&gt;
 &lt;p&gt;这种方式需要git的版本在2.9+以上才能正常使用，比第一种方式方便在旧项目不需要再次init就可以使用。&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#创建hooks文件夹
-mkdir -p ~/.git-hooksPath/hooks
-#配置全局git hooksPath
-git config --global core.hooksPath ~/.git-hooksPath/hooks  
-#确保脚本可以执行
-chmod a+x ~/.git-hooksPath/hooks/xxx
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#创建hooks文件夹&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; ~/.git-hooksPath/hooks
+&lt;span class=&quot;c&quot;&gt;#配置全局git hooksPath&lt;/span&gt;
+git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; core.hooksPath ~/.git-hooksPath/hooks  
+&lt;span class=&quot;c&quot;&gt;#确保脚本可以执行&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;a+x ~/.git-hooksPath/hooks/commit-msg
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;将hook的脚本放入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.git-hooksPath/hooks&lt;/code&gt;中即可。&lt;/p&gt;
+&lt;p&gt;将hook的脚本放入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.git-hooksPath/hooks&lt;/code&gt;中即可。&lt;br /&gt;
+实现上面的功能，可以参考下面的脚本：&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# An example hook script to check the commit log message.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Called by &quot;git commit&quot; with one argument, the name of the file&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# that has the commit message.  The hook should exit with non-zero&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# status after issuing an appropriate message if it wants to stop the&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# commit.  The hook is allowed to edit the commit message file.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# To enable this hook, rename this file to &quot;commit-msg&quot;.&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Uncomment the below to add a Signed-off-by line to the message.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Doing this in a hook is a bad idea in general, but the prepare-commit-msg&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# hook is more suited to it.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*&amp;gt;\).*$/Signed-off-by: \1/p')&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# grep -qs &quot;^$SOB&quot; &quot;$1&quot; || echo &quot;$SOB&quot; &amp;gt;&amp;gt; &quot;$1&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# This example catches duplicate Signed-off-by lines.&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#获取当前分支&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;branch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;git symbolic-ref &lt;span class=&quot;nt&quot;&gt;--short&lt;/span&gt; HEAD&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;commit_msg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+changeCommitMsg&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;    
+    &lt;span class=&quot;c&quot;&gt;#根据#分割branch取最后一个&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;branch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;##*/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;#如果有下划线，分割下划线前面&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$sub_branch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;_&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;then
+    	&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;%%_*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;fi
+
+    
+    &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$sub_branch&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;#&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$result&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+        &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#other&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# echo $sub_branch&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#$sub_branch替换$message中的[branch]字符串&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;commit_msg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;//\[branch\]/&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$sub_branch&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$commit_msg&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$commit_msg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;~ &lt;span class=&quot;s2&quot;&gt;&quot;[branch]&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+   &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;newmsg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;changeCommitMsg&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt; 
+   &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$newmsg&lt;/span&gt;
+   &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$newmsg&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;如果有个别项目不需要使用全局的git hooks，可以在项目的根目录下重新配置git hooksPath，比如：&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config core.hooksPath .git/hooks 

@@ -250,14 +250,64 @@ chmod a+x ~/.git-hooksPath/hooks/xxx
 
 <h2 id="corehookspath">core.hooksPath</h2>
 <p>这种方式需要git的版本在2.9+以上才能正常使用，比第一种方式方便在旧项目不需要再次init就可以使用。</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#创建hooks文件夹
-mkdir -p ~/.git-hooksPath/hooks
-#配置全局git hooksPath
-git config --global core.hooksPath ~/.git-hooksPath/hooks  
-#确保脚本可以执行
-chmod a+x ~/.git-hooksPath/hooks/xxx
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#创建hooks文件夹</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> ~/.git-hooksPath/hooks
+<span class="c">#配置全局git hooksPath</span>
+git config <span class="nt">--global</span> core.hooksPath ~/.git-hooksPath/hooks  
+<span class="c">#确保脚本可以执行</span>
+<span class="nb">chmod </span>a+x ~/.git-hooksPath/hooks/commit-msg
 </code></pre></div></div>
-<p>将hook的脚本放入<code class="language-plaintext highlighter-rouge">~/.git-hooksPath/hooks</code>中即可。</p>
+<p>将hook的脚本放入<code class="language-plaintext highlighter-rouge">~/.git-hooksPath/hooks</code>中即可。<br />
+实现上面的功能，可以参考下面的脚本：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+<span class="c">#</span>
+<span class="c"># An example hook script to check the commit log message.</span>
+<span class="c"># Called by "git commit" with one argument, the name of the file</span>
+<span class="c"># that has the commit message.  The hook should exit with non-zero</span>
+<span class="c"># status after issuing an appropriate message if it wants to stop the</span>
+<span class="c"># commit.  The hook is allowed to edit the commit message file.</span>
+<span class="c">#</span>
+<span class="c"># To enable this hook, rename this file to "commit-msg".</span>
+
+<span class="c"># Uncomment the below to add a Signed-off-by line to the message.</span>
+<span class="c"># Doing this in a hook is a bad idea in general, but the prepare-commit-msg</span>
+<span class="c"># hook is more suited to it.</span>
+<span class="c">#</span>
+<span class="c"># SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*&gt;\).*$/Signed-off-by: \1/p')</span>
+<span class="c"># grep -qs "^$SOB" "$1" || echo "$SOB" &gt;&gt; "$1"</span>
+
+<span class="c"># This example catches duplicate Signed-off-by lines.</span>
+
+<span class="nb">set</span> <span class="nt">-e</span>
+<span class="c">#获取当前分支</span>
+<span class="nv">branch</span><span class="o">=</span><span class="si">$(</span>git symbolic-ref <span class="nt">--short</span> HEAD<span class="si">)</span>
+<span class="nv">message</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span><span class="si">)</span>
+<span class="nv">commit_msg</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span><span class="si">)</span>
+changeCommitMsg<span class="o">()</span> <span class="o">{</span>    
+    <span class="c">#根据#分割branch取最后一个</span>
+    <span class="nv">sub_branch</span><span class="o">=</span><span class="k">${</span><span class="nv">branch</span><span class="p">##*/</span><span class="k">}</span>
+	<span class="c">#如果有下划线，分割下划线前面</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$sub_branch</span> <span class="o">==</span> <span class="k">*</span><span class="s2">"_"</span><span class="k">*</span> <span class="o">]]</span><span class="p">;</span><span class="k">then
+    	</span><span class="nv">sub_branch</span><span class="o">=</span><span class="k">${</span><span class="nv">sub_branch</span><span class="p">%%_*</span><span class="k">}</span>
+    <span class="k">fi
+
+    
+    </span><span class="nv">result</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nv">$sub_branch</span> | <span class="nb">grep</span> <span class="s2">"#"</span><span class="si">)</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">"</span><span class="nv">$result</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">""</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+        </span><span class="nv">sub_branch</span><span class="o">=</span><span class="s2">"#other"</span>
+    <span class="k">fi</span>
+    <span class="c"># echo $sub_branch</span>
+    <span class="c">#$sub_branch替换$message中的[branch]字符串</span>
+    <span class="nv">commit_msg</span><span class="o">=</span><span class="k">${</span><span class="nv">message</span><span class="p">//\[branch\]/</span><span class="nv">$sub_branch</span><span class="k">}</span>
+    <span class="nb">echo</span> <span class="nv">$commit_msg</span>
+<span class="o">}</span>
+
+<span class="k">if</span> <span class="o">[[</span> <span class="nv">$commit_msg</span> <span class="o">=</span>~ <span class="s2">"[branch]"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+   </span><span class="nv">newmsg</span><span class="o">=</span><span class="si">$(</span>changeCommitMsg<span class="si">)</span> 
+   <span class="nb">echo</span> <span class="nv">$newmsg</span>
+   <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$newmsg</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="k">fi</span>
+</code></pre></div></div>
 
 <p>如果有个别项目不需要使用全局的git hooks，可以在项目的根目录下重新配置git hooksPath，比如：</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config core.hooksPath .git/hooks 
