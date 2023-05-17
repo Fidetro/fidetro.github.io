@@ -5,8 +5,8 @@
     <description></description>
     <link>http://www.foolishtalk.org/</link>
     <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 17 May 2023 23:41:46 +0800</pubDate>
-    <lastBuildDate>Wed, 17 May 2023 23:41:46 +0800</lastBuildDate>
+    <pubDate>Wed, 17 May 2023 23:56:09 +0800</pubDate>
+    <lastBuildDate>Wed, 17 May 2023 23:56:09 +0800</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -157,7 +157,6 @@ git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; core.hooksPath
 
 &lt;span class=&quot;c&quot;&gt;# This example catches duplicate Signed-off-by lines.&lt;/span&gt;
 
-&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#获取当前分支&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;branch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;git symbolic-ref &lt;span class=&quot;nt&quot;&gt;--short&lt;/span&gt; HEAD&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
@@ -165,9 +164,9 @@ git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; core.hooksPath
 changeCommitMsg&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;    
     &lt;span class=&quot;c&quot;&gt;#根据#分割branch取最后一个&lt;/span&gt;
     &lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;branch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;##*/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
-	&lt;span class=&quot;c&quot;&gt;#如果有下划线，分割下划线前面&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#如果有下划线，分割下划线前面&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$sub_branch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;_&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;then
-    	&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;%%_*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+        &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;%%_*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;fi
 
     
@@ -175,7 +174,7 @@ changeCommitMsg&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&q
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$result&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
         &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#other&quot;&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# echo $sub_branch&lt;/span&gt;
+
     &lt;span class=&quot;c&quot;&gt;#$sub_branch替换$message中的[branch]字符串&lt;/span&gt;
     &lt;span class=&quot;nv&quot;&gt;commit_msg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;//\[branch\]/&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$sub_branch&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$commit_msg&lt;/span&gt;
@@ -183,7 +182,6 @@ changeCommitMsg&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&q
 
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$commit_msg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;~ &lt;span class=&quot;s2&quot;&gt;&quot;[branch]&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
    &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;newmsg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;changeCommitMsg&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt; 
-   &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$newmsg&lt;/span&gt;
    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$newmsg&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;

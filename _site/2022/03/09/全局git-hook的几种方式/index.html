@@ -278,7 +278,6 @@ git config <span class="nt">--global</span> core.hooksPath ~/.git-hooksPath/hook
 
 <span class="c"># This example catches duplicate Signed-off-by lines.</span>
 
-<span class="nb">set</span> <span class="nt">-e</span>
 <span class="c">#获取当前分支</span>
 <span class="nv">branch</span><span class="o">=</span><span class="si">$(</span>git symbolic-ref <span class="nt">--short</span> HEAD<span class="si">)</span>
 <span class="nv">message</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span><span class="si">)</span>
@@ -286,9 +285,9 @@ git config <span class="nt">--global</span> core.hooksPath ~/.git-hooksPath/hook
 changeCommitMsg<span class="o">()</span> <span class="o">{</span>    
     <span class="c">#根据#分割branch取最后一个</span>
     <span class="nv">sub_branch</span><span class="o">=</span><span class="k">${</span><span class="nv">branch</span><span class="p">##*/</span><span class="k">}</span>
-	<span class="c">#如果有下划线，分割下划线前面</span>
+    <span class="c">#如果有下划线，分割下划线前面</span>
     <span class="k">if</span> <span class="o">[[</span> <span class="nv">$sub_branch</span> <span class="o">==</span> <span class="k">*</span><span class="s2">"_"</span><span class="k">*</span> <span class="o">]]</span><span class="p">;</span><span class="k">then
-    	</span><span class="nv">sub_branch</span><span class="o">=</span><span class="k">${</span><span class="nv">sub_branch</span><span class="p">%%_*</span><span class="k">}</span>
+        </span><span class="nv">sub_branch</span><span class="o">=</span><span class="k">${</span><span class="nv">sub_branch</span><span class="p">%%_*</span><span class="k">}</span>
     <span class="k">fi
 
     
@@ -296,7 +295,7 @@ changeCommitMsg<span class="o">()</span> <span class="o">{</span>
     <span class="k">if</span> <span class="o">[[</span> <span class="s2">"</span><span class="nv">$result</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">""</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
         </span><span class="nv">sub_branch</span><span class="o">=</span><span class="s2">"#other"</span>
     <span class="k">fi</span>
-    <span class="c"># echo $sub_branch</span>
+
     <span class="c">#$sub_branch替换$message中的[branch]字符串</span>
     <span class="nv">commit_msg</span><span class="o">=</span><span class="k">${</span><span class="nv">message</span><span class="p">//\[branch\]/</span><span class="nv">$sub_branch</span><span class="k">}</span>
     <span class="nb">echo</span> <span class="nv">$commit_msg</span>
@@ -304,7 +303,6 @@ changeCommitMsg<span class="o">()</span> <span class="o">{</span>
 
 <span class="k">if</span> <span class="o">[[</span> <span class="nv">$commit_msg</span> <span class="o">=</span>~ <span class="s2">"[branch]"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
    </span><span class="nv">newmsg</span><span class="o">=</span><span class="si">$(</span>changeCommitMsg<span class="si">)</span> 
-   <span class="nb">echo</span> <span class="nv">$newmsg</span>
    <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$newmsg</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
 <span class="k">fi</span>
 </code></pre></div></div>

@@ -68,7 +68,6 @@ chmod a+x ~/.git-hooksPath/hooks/commit-msg
 
 # This example catches duplicate Signed-off-by lines.
 
-set -e
 #获取当前分支
 branch=$(git symbolic-ref --short HEAD)
 message=$(cat $1)
@@ -76,9 +75,9 @@ commit_msg=$(cat $1)
 changeCommitMsg() {    
     #根据#分割branch取最后一个
     sub_branch=${branch##*/}
-	#如果有下划线，分割下划线前面
+    #如果有下划线，分割下划线前面
     if [[ $sub_branch == *"_"* ]];then
-    	sub_branch=${sub_branch%%_*}
+        sub_branch=${sub_branch%%_*}
     fi
 
     
@@ -86,7 +85,7 @@ changeCommitMsg() {
     if [[ "$result" == "" ]]; then
         sub_branch="#other"
     fi
-    # echo $sub_branch
+
     #$sub_branch替换$message中的[branch]字符串
     commit_msg=${message//\[branch\]/$sub_branch}
     echo $commit_msg
@@ -94,7 +93,6 @@ changeCommitMsg() {
 
 if [[ $commit_msg =~ "[branch]" ]]; then
    newmsg=$(changeCommitMsg) 
-   echo $newmsg
    echo "$newmsg" > "$1"
 fi
 ```
