@@ -12,7 +12,7 @@ tags:
 
 # 前言  
 
-首先你需要通过Mac AppStore下载[虚拟定位(点这下载)](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)并且同时下载[Magellan](https://foolishtalk.org/magellan/magellan.pkg)。
+首先你需要通过Mac AppStore下载[虚拟定位(点这下载)](https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12)并且同时下载[Magellan](https://www.foolishtalk.org/magellan/magellan.pkg)。
 虚拟定位的界面如下：
 ![](https://www.foolishtalk.org/cloud/guide_zh_1.png)   
 
