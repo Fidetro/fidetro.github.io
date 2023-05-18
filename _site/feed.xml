@@ -3,10 +3,10 @@
   <channel>
     <title>FoolishTalk</title>
     <description></description>
-    <link>http://www.foolishtalk.org/</link>
-    <atom:link href="http://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 17 May 2023 23:56:09 +0800</pubDate>
-    <lastBuildDate>Wed, 17 May 2023 23:56:09 +0800</lastBuildDate>
+    <link>https://www.foolishtalk.org/</link>
+    <atom:link href="https://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Thu, 18 May 2023 20:22:44 +0800</pubDate>
+    <lastBuildDate>Thu, 18 May 2023 20:22:44 +0800</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -66,8 +66,8 @@ B % git remote &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;from_repo_A
 &lt;a href=&quot;https://www.jianshu.com/p/7b4247f2d0fd&quot;&gt;Git跨仓库迁移代码文件，并保留git历史记录&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 19 Jun 2022 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</guid>
+        <link>https://www.foolishtalk.org/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</guid>
         
         <category>Git</category>
         
@@ -92,8 +92,8 @@ B % git remote &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;from_repo_A
 &lt;p&gt;加上双引号就会当成一个参数处理，就能解决这个问题了。&lt;/p&gt;
 </description>
         <pubDate>Sat, 18 Jun 2022 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</guid>
+        <link>https://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</guid>
         
         <category>随笔</category>
         
@@ -195,8 +195,8 @@ changeCommitMsg&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&q
 &lt;a href=&quot;https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90&quot;&gt;Git 钩子&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 09 Mar 2022 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</guid>
+        <link>https://www.foolishtalk.org/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</guid>
         
         <category>git</category>
         
@@ -219,8 +219,8 @@ Copy the property declaration to Generating Lazy Variable code&lt;/li&gt;
 &lt;ol&gt;
   &lt;li&gt;Quit Xcode;&lt;/li&gt;
   &lt;li&gt;Enable Lightning extension in System Preferences -&amp;gt; Extensions -&amp;gt; Xcode Source Editor;
-&lt;img src=&quot;http://www.foolishtalk.org/cloud/C54AFAC1-558F-4682-AF83-C7AC04E89E75.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://www.foolishtalk.org/cloud/E1AA6956-0246-4377-B085-DA45E9FAF733.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/C54AFAC1-558F-4682-AF83-C7AC04E89E75.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/E1AA6956-0246-4377-B085-DA45E9FAF733.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;Restart Xcode;&lt;/li&gt;
   &lt;li&gt;Select the code you want to extracting;&lt;/li&gt;
   &lt;li&gt;Use Xcode Editor -&amp;gt; Lightning menu;&lt;/li&gt;
@@ -229,13 +229,13 @@ Copy the property declaration to Generating Lazy Variable code&lt;/li&gt;
 
 &lt;h1 id=&quot;tips&quot;&gt;Tips&lt;/h1&gt;
 &lt;p&gt;You can set a shortcut (Key Binding) for any command via Xcode -&amp;gt; Preferences -&amp;gt; Key Bindings. &lt;br /&gt;
-&lt;img src=&quot;http://www.foolishtalk.org/cloud/D7233F8D-4E03-4B53-8A14-8B402BF4051A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/D7233F8D-4E03-4B53-8A14-8B402BF4051A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;If there are any questions, please feel free to contact me and send email to zykzzzz@hotmail.com.&lt;/p&gt;
 </description>
         <pubDate>Mon, 21 Feb 2022 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2022/02/21/lightning/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2022/02/21/lightning/</guid>
+        <link>https://www.foolishtalk.org/2022/02/21/lightning/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2022/02/21/lightning/</guid>
         
         <category>Lightning</category>
         
@@ -314,8 +314,8 @@ Copy the property declaration to Generating Lazy Variable code&lt;/li&gt;
 &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2016/721/&quot;&gt;Unified Logging and Activity Tracing&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 03 May 2021 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2021/05/03/WWDC-2018%E7%AC%94%E8%AE%B0-%E4%BD%BF%E7%94%A8Signposts%E5%88%86%E6%9E%90App%E6%80%A7%E8%83%BD/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2021/05/03/WWDC-2018%E7%AC%94%E8%AE%B0-%E4%BD%BF%E7%94%A8Signposts%E5%88%86%E6%9E%90App%E6%80%A7%E8%83%BD/</guid>
+        <link>https://www.foolishtalk.org/2021/05/03/WWDC-2018%E7%AC%94%E8%AE%B0-%E4%BD%BF%E7%94%A8Signposts%E5%88%86%E6%9E%90App%E6%80%A7%E8%83%BD/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2021/05/03/WWDC-2018%E7%AC%94%E8%AE%B0-%E4%BD%BF%E7%94%A8Signposts%E5%88%86%E6%9E%90App%E6%80%A7%E8%83%BD/</guid>
         
         <category>WWDC</category>
         
@@ -343,8 +343,8 @@ Copy the property declaration to Generating Lazy Variable code&lt;/li&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Wed, 07 Oct 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+        <link>https://www.foolishtalk.org/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
         
         <category>Chrome</category>
         
@@ -477,8 +477,8 @@ Status Message: Package Invalid
 &lt;a href=&quot;https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow&quot;&gt;Customizing the Notarization Workflow&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 08 Jul 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</guid>
+        <link>https://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</guid>
         
         <category>iOS</category>
         
@@ -557,8 +557,8 @@ Status Message: Package Invalid
 &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2019/429/&quot;&gt;LLDB: Beyond “po”&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 01 Jun 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</guid>
+        <link>https://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</guid>
         
         <category>iOS</category>
         
@@ -641,8 +641,8 @@ Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Point&
 In most case, it is better to provide the log file will be helpful. Please click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Export log file&lt;/code&gt; to generate the log file by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt;.&lt;/p&gt;
 </description>
         <pubDate>Sun, 19 Apr 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/04/19/magellan_en/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/04/19/magellan_en/</guid>
+        <link>https://www.foolishtalk.org/2020/04/19/magellan_en/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2020/04/19/magellan_en/</guid>
         
         <category>iOS</category>
         
@@ -697,8 +697,8 @@ In most case, it is better to provide the log file will be helpful. Please click
 &lt;a href=&quot;https://apple.stackexchange.com/questions/167245/yosemite-bluetooth-audio-is-choppy-skips/259954#259954&quot;&gt;Yosemite bluetooth audio is choppy/skips&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 10 Jan 2020 00:00:00 +0800</pubDate>
-        <link>http://www.foolishtalk.org/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</link>
-        <guid isPermaLink="true">http://www.foolishtalk.org/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</guid>
+        <link>https://www.foolishtalk.org/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/</guid>
         
         <category>iOS</category>
         
