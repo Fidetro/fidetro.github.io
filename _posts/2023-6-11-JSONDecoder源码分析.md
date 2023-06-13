@@ -30,8 +30,6 @@ The tight integration of parsing JSON in Swift for initializing Codable types im
 
 # 泄漏的JSONDecoder  
 
-![](https://www.foolishtalk.org/cloud/TW9uIEp1biAxMiAyMzoxNzoxMiBDU1QgMjAyMwo%3D.png)
-
 先将data转成了json对象，初始化`_JSONDecoder`，`unbox`开始解包
 ```swift
     open func decode<T : Decodable>(_ type: T.Type, from data: Data) throws -> T {
@@ -92,8 +90,8 @@ class Person: Codable {
       }
 
     required init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        var nameValue = try values.decode(String.self, forKey: .name)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try values.decode(String.self, forKey: .name)
         sex = try values.decode(Int.self, forKey: .sex)
     }
 }
@@ -155,16 +153,14 @@ class Person: Codable {
 
 # Swift-Foundation的JSONDecoder
 
-![](https://www.foolishtalk.org/cloud/VHVlIEp1biAxMyAwMToyMTowMSBDU1QgMjAyMwo%3D.png)
+`decode`方法的实现
 ```swift
 open func decode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T {
     try _decode({
         try $0.unwrap($1, as: type, for: .root, _JSONKey?.none)
     }, from: data)
 }
-```
 
-```swift
 private func _decode<T>(_ unwrap: (JSONDecoderImpl, JSONMap.Value) throws -> T, from data: Data) throws -> T {
     do {
         //先通过二进制缓存区前几位，判断是否是utf8编码，如果不是，转成utf8编码
@@ -323,7 +319,7 @@ mutating func record(tagType: JSONMap.TypeDescriptor, count: Int, dataOffset: In
     mapData.append(contentsOf: [tagType.mapMarker, count, dataOffset])
 }
 ```
-
+根据不同类型进行解包
 ```swift
 func unwrap<T: Decodable>(_ mapValue: JSONMap.Value, as type: T.Type, for codingPathNode: _JSONCodingPathNode, _ additionalKey: (some CodingKey)? = nil) throws -> T {
     if type == Date.self {
@@ -349,6 +345,7 @@ func unwrap<T: Decodable>(_ mapValue: JSONMap.Value, as type: T.Type, for coding
 }
 ```
 
+如果触发模型的解包，会先从`container<Key: CodingKey>(keyedBy _: Key.Type)`拿到解包key后的`[String:JSONMap.Value]`，随后再根据字段进行`decode`，取到值赋值到属性
 ```swift
 class Person: Codable {
 
@@ -361,13 +358,14 @@ class Person: Codable {
       }
 
     required init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        var nameValue = try values.decode(String.self, forKey: .name)
-        sex = try values.decode(Int.self, forKey: .sex)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decode(String.self, forKey: .name)
+        sex = try container.decode(Int.self, forKey: .sex)
     }
 }
 ```
 
+初始化`container`,拿到解包key后的`[String:JSONMap.Value]`，返回`container`
 ```swift
 func container<Key: CodingKey>(keyedBy _: Key.Type) throws -> KeyedDecodingContainer<Key> {
     switch topValue {
@@ -399,6 +397,7 @@ init(impl: JSONDecoderImpl, codingPathNode: _JSONCodingPathNode, region: JSONMap
 }
 ```
 
+遍历当前结构下的所有`keyValue`,这里的`keyValue`还是指json里的key，value才是json的value，此时经过`unwrapString`后，会将解包成String的key更新到result
 ```swift
 static func stringify(objectRegion: JSONMap.Region, using impl: JSONDecoderImpl, codingPathNode: _JSONCodingPathNode, keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy) throws -> [String:JSONMap.Value] {
             var result = [String:JSONMap.Value]()
@@ -438,7 +437,7 @@ static func stringify(objectRegion: JSONMap.Region, using impl: JSONDecoderImpl,
         }
 ```
 
-
+和上面解包keyValue的类似，这里是解包value，如果value对应是对象，会再次触发`unwrap`递归解包剩下的字段
 ```swift
 func decode(_ type: String.Type, forKey key: K) throws -> String {
     let value = try getValue(forKey: key)
@@ -453,7 +452,7 @@ mutating func decode<T: Decodable>(_ type: T.Type) throws -> T {
 }
 ```
 
-
+将`JSONMap.Value`解包成`String`的实现，前面scan的时候，已经记录了字段位置了，经过`stringify`后，转成`JSONMap.Value`，再经过这里转成`String`
 ```swift
 private func unwrapString(from value: JSONMap.Value, for codingPathNode: _JSONCodingPathNode, _additionalKey: (some CodingKey)? = nil) throws -> String {
     try checkNotNull(value, expectedType: [String].self, for: codingPathNode, additionalKey)
@@ -478,3 +477,19 @@ private func unwrapString(from value: JSONMap.Value, for codingPathNode: _JSONCo
 ```
 
 
+# 对比  
+
+![](https://www.foolishtalk.org/cloud/TW9uIEp1biAxMiAyMzoxNzoxMiBDU1QgMjAyMwo%3D.png)  
+
+![](https://www.foolishtalk.org/cloud/VHVlIEp1biAxMyAwMToyMTowMSBDU1QgMjAyMwo%3D.png)  
+
+通过两者之间对比，不难发现现在的`JSONDecoder`和通过Swift重写后的`JSONDecoder`差别很大。
+现在的`JSONDecoder`：  
+需要先通过OC的`JSONSerialization`转成字典，然后再递归赋值；
+`Swift-Foundation`重写后：  
+直接通过`Data`进行操作，将整个`Data`扫描一次后，记录key和value的位置以及长度，然后再递归赋值；
+
+
+#总结  
+
+表面上看起来重写后的`Swift-Foundtion`是好了很多，至少我们能知道它是怎么工作的了，但是现实并没有那么美好，我试了单独将`JSONDecoder`抽出到工程测试，性能并没有比`JSONSerialization`好，甚至还慢了不少，不过还发现了个比较有意思的点，通过Swift 5.9运行要比Swift 5.8快了接近50%，`Swift-Foundation`本身是需要在Swift 5.9才能使用，不出意外的话，今年（2023）就会发布了，等正式发布后说不定能达到苹果说的优化呢？让我们期待一下吧。
