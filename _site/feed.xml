@@ -5,8 +5,8 @@
     <description></description>
     <link>https://www.foolishtalk.org/</link>
     <atom:link href="https://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 14 Jun 2023 01:30:28 +0800</pubDate>
-    <lastBuildDate>Wed, 14 Jun 2023 01:30:28 +0800</lastBuildDate>
+    <pubDate>Wed, 14 Jun 2023 01:39:38 +0800</pubDate>
+    <lastBuildDate>Wed, 14 Jun 2023 01:39:38 +0800</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -471,9 +471,13 @@
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Swift-Foundation&lt;/code&gt;重写后：&lt;br /&gt;
 直接通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Data&lt;/code&gt;进行操作，将整个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Data&lt;/code&gt;扫描一次后，记录key和value的位置以及长度，然后再递归赋值；&lt;/p&gt;
 
-&lt;p&gt;#总结&lt;/p&gt;
+&lt;h1 id=&quot;总结&quot;&gt;总结&lt;/h1&gt;
 
 &lt;p&gt;表面上看起来重写后的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Swift-Foundtion&lt;/code&gt;是好了很多，至少我们能知道它是怎么工作的了，但是现实并没有那么美好，我试了单独将&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JSONDecoder&lt;/code&gt;抽出到工程测试，性能并没有比&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JSONSerialization&lt;/code&gt;好，甚至还慢了不少，不过还发现了个比较有意思的点，通过Swift 5.9运行要比Swift 5.8快了接近50%，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Swift-Foundation&lt;/code&gt;本身是需要在Swift 5.9才能使用，不出意外的话，今年（2023）就会发布了，等正式发布后说不定能达到苹果说的优化呢？让我们期待一下吧。&lt;/p&gt;
+
+&lt;h1 id=&quot;参考链接&quot;&gt;参考链接&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/Fidetro/swift/blob/JSONEncoder/stdlib/public/SDK/Foundation&quot;&gt;Swift-Foundation&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://forums.swift.org/t/how-to-build-and-debug-jsondecoder/44690&quot;&gt;How to build and debug JSONDecoder?&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 14 Jun 2023 00:00:00 +0800</pubDate>
         <link>https://www.foolishtalk.org/2023/06/14/JSONDecoder%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</link>

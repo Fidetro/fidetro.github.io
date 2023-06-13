@@ -490,6 +490,11 @@ private func unwrapString(from value: JSONMap.Value, for codingPathNode: _JSONCo
 直接通过`Data`进行操作，将整个`Data`扫描一次后，记录key和value的位置以及长度，然后再递归赋值；
 
 
-#总结  
+# 总结  
 
 表面上看起来重写后的`Swift-Foundtion`是好了很多，至少我们能知道它是怎么工作的了，但是现实并没有那么美好，我试了单独将`JSONDecoder`抽出到工程测试，性能并没有比`JSONSerialization`好，甚至还慢了不少，不过还发现了个比较有意思的点，通过Swift 5.9运行要比Swift 5.8快了接近50%，`Swift-Foundation`本身是需要在Swift 5.9才能使用，不出意外的话，今年（2023）就会发布了，等正式发布后说不定能达到苹果说的优化呢？让我们期待一下吧。
+
+
+# 参考链接  
+[Swift-Foundation](https://github.com/Fidetro/swift/blob/JSONEncoder/stdlib/public/SDK/Foundation)  
+[How to build and debug JSONDecoder?](https://forums.swift.org/t/how-to-build-and-debug-jsondecoder/44690)  
