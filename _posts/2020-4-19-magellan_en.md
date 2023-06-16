@@ -29,7 +29,7 @@ there is an ico at system navigation bar as following after `Magellan App` runni
 
 If `Magellan` installation fails, please download and install it separately from [here]((https://www.foolishtalk.org/magellan/magellan.pkg))
 
-3.	Connect the mobile phone to your computer, then choose your personal mobile.  
+3.	Connect your iPhone/iPad to your Mac using a USB or USB-C cable, then choose your personal mobile.  
 ![](https://www.foolishtalk.org/cloud/d944f3a7aa0e20280cb65dff013839e6.png)
 
 4.	If there is no installing the driver before, please click to `Install the driver `firstly.  

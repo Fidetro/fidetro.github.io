@@ -34,7 +34,7 @@ tags:
 
 # 正文  
 
-首先手机要连接电脑，然后选择设备。  
+首先使用 USB 或 USB-C 线缆将iPhone/iPad连接到 Mac，然后选择设备。  
 ![](https://www.foolishtalk.org/cloud/c81ff0aa45218b3cf8131ad8592eea96.png)
 然后再点击安装驱动：  
 ![](https://www.foolishtalk.org/cloud/d762c75e8c2838d7f7bd7d1afff0c881.png)
