@@ -113,8 +113,6 @@ class Person: Codable {
         let container = _JSONKeyedEncodingContainer<Key>(referencing: self, codingPath: self.codingPath, wrapping: topContainer)
         return KeyedEncodingContainer(container)
     }
-
-
 ```
 从`container`拿到value更新属性，如果是对象，会递归触发`unbox`进行解包
 
@@ -452,7 +450,7 @@ mutating func decode<T: Decodable>(_ type: T.Type) throws -> T {
 }
 ```
 
-将`JSONMap.Value`解包成`String`的实现，前面scan的时候，已经记录了字段位置了，经过`stringify`后，转成`JSONMap.Value`，再经过这里转成`String`
+如果value是字符串，会通过下面的方法将`JSONMap.Value`解包成`String`的实现，前面scan的时候，已经记录了字段位置了，经过`stringify`后，转成`JSONMap.Value`，再经过这里转成`String`，其他的类型也类似
 ```swift
 private func unwrapString(from value: JSONMap.Value, for codingPathNode: _JSONCodingPathNode, _additionalKey: (some CodingKey)? = nil) throws -> String {
     try checkNotNull(value, expectedType: [String].self, for: codingPathNode, additionalKey)

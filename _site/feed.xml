@@ -5,9 +5,171 @@
     <description></description>
     <link>https://www.foolishtalk.org/</link>
     <atom:link href="https://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 17 Jun 2023 00:30:00 +0800</pubDate>
-    <lastBuildDate>Sat, 17 Jun 2023 00:30:00 +0800</lastBuildDate>
+    <pubDate>Wed, 16 Aug 2023 23:49:36 +0800</pubDate>
+    <lastBuildDate>Wed, 16 Aug 2023 23:49:36 +0800</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
+    
+      <item>
+        <title>识别iOS虚拟定位</title>
+        <description>&lt;p&gt;iOS虚拟定位几种方法：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;使用Xcode自带&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Simulate Location&lt;/code&gt;，通过GPX文件修改；&lt;/li&gt;
+  &lt;li&gt;通过Mac/PC应用修改手机定位；&lt;/li&gt;
+  &lt;li&gt;通过外设修改手机定位；&lt;/li&gt;
+  &lt;li&gt;逆向App，hook定位经纬度；&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;xcode-simulate-location使用&quot;&gt;Xcode Simulate Location使用&lt;/h1&gt;
+&lt;p&gt;要使用 Xcode 的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Simulate Location&lt;/code&gt;，可以按照以下步骤：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;打开 Xcode 并新建一个iOS项目；&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/7c8e9eec1f77a83fa290663a998ea610.jpg&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;运行项目，然后在菜单栏中，选择 Debug &amp;gt; Simulate Location；&lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/337b1cf71e128194a9ce7bf78ae7c84b.jpg&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;在 Simulate Location 窗口中，选择&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Xcode&lt;/code&gt;预设的一些位置，或者通过GPX文件修改即可；
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/6d90c5c21a1c1f54113b3988d452133b.jpg&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;usbmux&quot;&gt;Usbmux&lt;/h1&gt;
+&lt;p&gt;不管是Xcode、iTunes还是第三方的Mac/PC应用，都是通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Usbmux&lt;/code&gt;去调用iOS的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;com.apple.dt.simulatelocation&lt;/code&gt;服务。&lt;br /&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Usbmux&lt;/code&gt;是可以通过一个usb管道建立多个连接的系统，他提供了一个类似TCP的系统，启动主机的进程连接到移动设备的端口号上，在Mac上，是由&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/System/Library/PrivateFrameworks/MobileDevice.framework/Resources/usbmuxd&lt;/code&gt;处理,这是一个由 launchd 启动的守护进程 &lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/cbdb08da0ac1af2ff1433bfc1f5b666e.jpg&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+它在 /var/run/usbmuxd 处创建一个监听 UNIX 域socket。然后&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;usbmuxd&lt;/code&gt;通过USB监视设备连接，并和设备进行通讯。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;usbmuxd&lt;/code&gt;建立了连接之后，iTunes/Xcode会通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MobileDevice.framework&lt;/code&gt;调用一些功能，通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;class-dump&lt;/code&gt;可以发现一些安装DeviceSupport、固件升级、启动服务等的类：  &lt;br /&gt;
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/788956a243a2f6bf47e7943e324f9911.jpg&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+而&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MobileDevice.framework&lt;/code&gt;只存在于Mac，通常会使用开源的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;libimobiledevice&lt;/code&gt;，他不仅实现了usbmuxd监听，并且为没有公开的服务进行的封装，iOS的性能测试、自动化测试基本都离不开它。&lt;/p&gt;
+
+&lt;h1 id=&quot;识别虚拟定位的方法&quot;&gt;识别虚拟定位的方法&lt;/h1&gt;
+
+&lt;h2 id=&quot;issimulatedbysoftware--isproducedbyaccessory&quot;&gt;isSimulatedBySoftware &amp;amp; isProducedByAccessory&lt;/h2&gt;
+&lt;p&gt;既然有攻，就会有守，先试试看从系统提供的定位API返回的信息中，是否有能有区分出是正常定位，还是虚拟定位。
+在查阅了Apple的文档后发现，在iOS 15之后，是有提供&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CLLocationSourceInformation&lt;/code&gt;定位来源可以区分是否是软件产生的虚拟定位或者是外设产生的虚拟定位。&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;@available&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iOS&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;15.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CLLocationSourceInformation&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSCopying&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSSecureCoding&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+    
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;softwareSimulationState&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;isSoftware&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;andExternalAccessoryState&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;isAccessory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    
+    &lt;span class=&quot;cm&quot;&gt;/*
+     * isSimulatedBySoftware
+     *
+     * Discussion:
+     *	Set to YES if this location was detected as being generated by a software simulator, such as Xcode
+     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;isSimulatedBySoftware&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Bool&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    
+    &lt;span class=&quot;cm&quot;&gt;/*
+     * isProducedByAccessory
+     *
+     * Discussion:
+     * 	Set to YES if this location was generated from an external accessory, such as CarPlay or an MFi accessory
+     */&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;isProducedByAccessory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Bool&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;经过测试后，这两个字段确实是有用的，正常定位的时候：&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;locationManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;manager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CLLocationManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;didUpdateLocations&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;CLLocation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;是否是其他软件生成：&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sourceInformation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isSimulatedBySoftware&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;??&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 是否是其他软件生成：false&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;是否是其他配件生成：&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sourceInformation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isProducedByAccessory&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;??&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 是否是其他配件生成：false&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;使用其他软件修改定位的时候：&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;locationManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;manager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CLLocationManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;didUpdateLocations&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;CLLocation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;是否是其他软件生成：&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sourceInformation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isSimulatedBySoftware&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;??&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 是否是其他软件生成：true&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;是否是其他配件生成：&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sourceInformation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isProducedByAccessory&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;??&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 是否是其他配件生成：false&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;altitude--verticalaccuracy&quot;&gt;altitude &amp;amp; verticalAccuracy&lt;/h2&gt;
+&lt;p&gt;而在iOS 15之前，系统的没有提供的，查阅了网上的资料后，发现如果是虚拟定位&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CLLocation&lt;/code&gt;的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;altitude&lt;/code&gt;(海拔)总是会返回0，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;verticalAccuracy&lt;/code&gt;(精度)只会返回-1，所以测试了一下，使用正常定位的时候：&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;locationManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;manager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CLLocationManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;didUpdateLocations&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;CLLocation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;location altitude:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;altitude&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// location altitude:Optional(27.427248001098633)&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;location verticalAccuracy:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;verticalAccuracy&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// location verticalAccuracy:Optional(17.320518493652344)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;使用其他软件修改定位的时候：&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;locationManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;manager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CLLocationManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;didUpdateLocations&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;CLLocation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;location altitude:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;altitude&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// location altitude:Optional(0.0)&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;location verticalAccuracy:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;verticalAccuracy&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// location verticalAccuracy:Optional(-1.0)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;type&quot;&gt;type&lt;/h2&gt;
+&lt;p&gt;另外&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CLLocation&lt;/code&gt;还有个私有属性&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;type&lt;/code&gt;，可以用来区分是否是虚拟定位，正常定位的时候：&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;location&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 13&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;使用其他软件修改定位的时候：&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;location&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;逆向&quot;&gt;逆向&lt;/h2&gt;
+&lt;p&gt;逆向是最头疼的问题，有攻才有防，在你不知道对方用什么招的时候，只能猜测对方会用什么方法，常规的方法，因为越狱后会存在Cydia，并且不再是沙盒权限，可以通过判断Cydia和越狱后才能获取得到的路径：&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isJailedDevice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Bool&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;jailPaths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/Applications/Cydia.app&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                     &lt;span class=&quot;s&quot;&gt;&quot;/Library/MobileSubstrate/MobileSubstrate.dylib&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                     &lt;span class=&quot;s&quot;&gt;&quot;/bin/bash&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                     &lt;span class=&quot;s&quot;&gt;&quot;/usr/sbin/sshd&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                     &lt;span class=&quot;s&quot;&gt;&quot;/etc/apt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jailPaths&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;FileManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fileExists&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;atPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;越狱只是前提修改定位的前提，我们需要真正保护自己的App不受修改，防止被hook，iOS hook通常是通过注入dylib，替换方法实现达到效果，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dladdr&lt;/code&gt;可以帮我们验证这个类的实现是来自哪里，在没有被hook的时候：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;+ (void)test
+{
+    Dl_info info;
+    IMP imp = class_getMethodImplementation(objc_getClass(&quot;CLLocation&quot;),
+                                            sel_registerName(@selector(coordinate)));
+    if(dladdr(imp,&amp;amp;info)) {
+        NSLog(@&quot;dli_fname:%s&quot;,info.dli_fname);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;上面输出的是：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2023-08-16 23:35:07.194234+0800 LocationTest[2989:383262] dli_fname:/System/Library/Frameworks/CoreLocation.framework/CoreLocation
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;而被hook后，输出的是：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2023-08-16 23:35:18.194507+0800 LocationTest[2989:383262] dli_fname:/private/var/containers/Bundle/Application/1DB1541C-6997-4895-8850-B77645F4DB94/LocationTest.app/LocationTest
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;所以我们可以通过这个函数判断是否被hook。&lt;/p&gt;
+
+&lt;h1 id=&quot;总结&quot;&gt;总结&lt;/h1&gt;
+&lt;p&gt;可以通过以下的几个方法识别出iOS的虚拟定位：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;iOS 15以上，可以通过系统新增的两个属性&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;isSimulatedBySoftware&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;isProducedByAccessory&lt;/code&gt;判断是否是虚拟定位；&lt;/li&gt;
+  &lt;li&gt;判断海拔&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;altitude&lt;/code&gt;为0，精度&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;verticalAccuracy&lt;/code&gt;为-1；&lt;/li&gt;
+  &lt;li&gt;通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CLLocation&lt;/code&gt;的私有属性&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;type&lt;/code&gt;判断，为1的时候，是虚拟定位；&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dladdr&lt;/code&gt;判断是否被hook&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 16 Aug 2023 00:00:00 +0800</pubDate>
+        <link>https://www.foolishtalk.org/2023/08/16/%E8%AF%86%E5%88%ABiOS%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2023/08/16/%E8%AF%86%E5%88%ABiOS%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Xcode</category>
+        
+        
+      </item>
     
       <item>
         <title>JSONDecoder源码分析</title>
@@ -106,8 +268,6 @@
         &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;container&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_JSONKeyedEncodingContainer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;referencing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;codingPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;codingPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;wrapping&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;topContainer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;KeyedEncodingContainer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;从&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;container&lt;/code&gt;拿到value更新属性，如果是对象，会递归触发&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unbox&lt;/code&gt;进行解包&lt;/p&gt;
 
@@ -436,7 +596,7 @@
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;将&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JSONMap.Value&lt;/code&gt;解包成&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String&lt;/code&gt;的实现，前面scan的时候，已经记录了字段位置了，经过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;stringify&lt;/code&gt;后，转成&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JSONMap.Value&lt;/code&gt;，再经过这里转成&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;如果value是字符串，会通过下面的方法将&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JSONMap.Value&lt;/code&gt;解包成&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String&lt;/code&gt;的实现，前面scan的时候，已经记录了字段位置了，经过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;stringify&lt;/code&gt;后，转成&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JSONMap.Value&lt;/code&gt;，再经过这里转成&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String&lt;/code&gt;，其他的类型也类似&lt;/p&gt;
 &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;unwrapString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;JSONMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;codingPathNode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_JSONCodingPathNode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;_additionalKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;some&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;CodingKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;checkNotNull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;expectedType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;codingPathNode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;additionalKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;region&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;isSimple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -1044,90 +1204,6 @@ Status Message: Package Invalid
         <pubDate>Mon, 01 Jun 2020 00:00:00 +0800</pubDate>
         <link>https://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</link>
         <guid isPermaLink="true">https://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</guid>
-        
-        <category>iOS</category>
-        
-        <category>Xcode</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Modify iPhone positioning via Virtual Location</title>
-        <description>&lt;h1 id=&quot;installation&quot;&gt;Installation:&lt;/h1&gt;
-
-&lt;p&gt;Firstly, download &lt;a href=&quot;https://apps.apple.com/cn/app/%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/id1459663647?mt=12&quot;&gt;Virtual Location App&lt;/a&gt; and &lt;a href=&quot;https://www.foolishtalk.org/magellan/magellan.pkg&quot;&gt;Magellan App&lt;/a&gt;. It requires running both these two apps to modify the location.&lt;/p&gt;
-
-&lt;p&gt;The Virtual Location interface looks like this:
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;If Magellan is not installed, when the virtual location is first started, it will appear::
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/b7cdd9f10f727ca59420902b277aa9c8_en.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-Or, when double-clicking on the map, the following pop-up will appear：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/14d2cba4eeda3d9fa77b1efd8a1aa6d9_en.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Click on “Open Magellan Downloader”,If Magellan is installed successfully,
-there is an ico at system navigation bar as following after &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt; running successfully.&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/bc9e8955850855ca07147e65957f8087.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Magellan&lt;/code&gt; installation fails, please download and install it separately from &lt;a href=&quot;(https://www.foolishtalk.org/magellan/magellan.pkg)&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Connect your iPhone/iPad to your Mac using a USB or USB-C cable, then choose your personal mobile.&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/d944f3a7aa0e20280cb65dff013839e6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;If there is no installing the driver before, please click to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install the driver &lt;/code&gt;firstly.&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/0d0da9bb126e3bd24ebfb83bd16ef3c0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;It will download the driver automatically for the first installing.&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/0fcda7c41ae4197d268c1a01bb2392a8.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Please click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install the Driver&lt;/code&gt; again after download successfully. After installation successfully, there will be following tips.&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/15393a5bdbede13840e344e94f5d4946.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;It need to run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Magellan app&lt;/code&gt; again after installation.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;In iOS 16 and above, you need to enable developer mode to work.
-First you need to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Activate developer mode&lt;/code&gt; by clicking on Magellan. &lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/MTY2NDYxOTAwOQ%3D%3D.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;And then go to iPhone/iPad Settings &amp;gt; Privacy &amp;amp; Security on the iOS device.Scroll down to the Developer Mode list item and navigate into it. To toggle Developer mode, use the “Developer Mode” switch.&lt;br /&gt;
-&lt;img src=&quot;https://docs-assets.developer.apple.com/published/72b149b975624bfaf5f6fb577655b200/developer-mode-03~dark@2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;If you are interested, you can click &lt;a href=&quot;https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device&quot;&gt;Learn more&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;operation&quot;&gt;Operation:&lt;/h1&gt;
-&lt;ol&gt;
-  &lt;li&gt;Open &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Virtual Location App&lt;/code&gt;&lt;br /&gt;
-There are two ways to modify the position as followings:&lt;br /&gt;
-(1) &lt;br /&gt;
-Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Point&lt;/code&gt;. Double click the map on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Virtual Location App&lt;/code&gt;. Then you will find your position on mobile phone has already changed.&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_1.png&quot; alt=&quot;&quot; /&gt;
-(2) &lt;br /&gt;
-① Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Route&lt;/code&gt;. Double click the map on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Virtual Location　App&lt;/code&gt;. There will be generated multi-spots on the map as picture shows.&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/guide_en_2.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;② Please input Speed and click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Start&lt;/code&gt; finally. You will find your mobile phone is moving along programmed route.&lt;/p&gt;
-
-&lt;p&gt;If there are any questions, please feel free to contact me and send email to zykzzzz@hotmail.com. 
-In most case, it is better to provide the log file will be helpful. Please click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Export log file&lt;/code&gt; to generate the log file by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Magellan App&lt;/code&gt;.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 19 Apr 2020 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2020/04/19/magellan_en/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2020/04/19/magellan_en/</guid>
         
         <category>iOS</category>
         

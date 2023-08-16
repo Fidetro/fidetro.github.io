@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>pip折腾记 - FoolishTalk 技术分享</title>
+    <title>识别iOS虚拟定位 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="https://www.foolishtalk.org/2019/12/07/pip%E6%8A%98%E8%85%BE%E8%AE%B0/">
+    <link rel="canonical" href="https://www.foolishtalk.org/2023/08/16/%E8%AF%86%E5%88%ABiOS%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -177,15 +177,15 @@
                         
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
-                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
+                        <a class="tag" href="/tags/#Xcode" title="Xcode">Xcode</a>
                         
                     </div>
-                    <h1>pip折腾记</h1>
+                    <h1>识别iOS虚拟定位</h1>
                     
                     
-                    <h2 class="subheading">iOS，Python</h2>
+                    <h2 class="subheading">iOS，定位，Xcode，虚拟定位</h2>
                     
-                    <span class="meta">Posted by Karim on December 7, 2019</span>
+                    <span class="meta">Posted by Karim on August 16, 2023</span>
                 </div>
             </div>
         </div>
@@ -227,48 +227,154 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="前言">前言</h1>
+                <p>iOS虚拟定位几种方法：</p>
+<ul>
+  <li>使用Xcode自带<code class="language-plaintext highlighter-rouge">Simulate Location</code>，通过GPX文件修改；</li>
+  <li>通过Mac/PC应用修改手机定位；</li>
+  <li>通过外设修改手机定位；</li>
+  <li>逆向App，hook定位经纬度；</li>
+</ul>
 
-<p>最近在公司的新电脑上，要用到一个python2编写的库，发现python版本默认已经是3.0了，pip也是默认使用pip3，但是网上很多是使用pip去安装环境，为了折腾这个环境，花了好长时间，记录一下。</p>
+<h1 id="xcode-simulate-location使用">Xcode Simulate Location使用</h1>
+<p>要使用 Xcode 的<code class="language-plaintext highlighter-rouge">Simulate Location</code>，可以按照以下步骤：</p>
 
-<h1 id="正文">正文</h1>
-<p>pip安装先把安装的脚本下载下来：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget curl https://bootstrap.pypa.io/get-pip.py
-</code></pre></div></div>
-<p>如果默认的是python3，需要用指定python版本：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>python2.7 get-pip.py
-</code></pre></div></div>
-<p>安装的过程中，会发现各种超时，原因是要翻墙。我是通过privoxy实现http代理，如果环境没装，自己安装一下：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>privoxy
+<ol>
+  <li>打开 Xcode 并新建一个iOS项目；<br />
+<img src="https://www.foolishtalk.org/cloud/7c8e9eec1f77a83fa290663a998ea610.jpg" alt="" /></li>
+  <li>运行项目，然后在菜单栏中，选择 Debug &gt; Simulate Location；<br />
+<img src="https://www.foolishtalk.org/cloud/337b1cf71e128194a9ce7bf78ae7c84b.jpg" alt="" /></li>
+  <li>在 Simulate Location 窗口中，选择<code class="language-plaintext highlighter-rouge">Xcode</code>预设的一些位置，或者通过GPX文件修改即可；
+<img src="https://www.foolishtalk.org/cloud/6d90c5c21a1c1f54113b3988d452133b.jpg" alt="" /></li>
+</ol>
+
+<h1 id="usbmux">Usbmux</h1>
+<p>不管是Xcode、iTunes还是第三方的Mac/PC应用，都是通过<code class="language-plaintext highlighter-rouge">Usbmux</code>去调用iOS的<code class="language-plaintext highlighter-rouge">com.apple.dt.simulatelocation</code>服务。<br />
+<code class="language-plaintext highlighter-rouge">Usbmux</code>是可以通过一个usb管道建立多个连接的系统，他提供了一个类似TCP的系统，启动主机的进程连接到移动设备的端口号上，在Mac上，是由<code class="language-plaintext highlighter-rouge">/System/Library/PrivateFrameworks/MobileDevice.framework/Resources/usbmuxd</code>处理,这是一个由 launchd 启动的守护进程 <br />
+<img src="https://www.foolishtalk.org/cloud/cbdb08da0ac1af2ff1433bfc1f5b666e.jpg" alt="" /><br />
+它在 /var/run/usbmuxd 处创建一个监听 UNIX 域socket。然后<code class="language-plaintext highlighter-rouge">usbmuxd</code>通过USB监视设备连接，并和设备进行通讯。</p>
+
+<p><code class="language-plaintext highlighter-rouge">usbmuxd</code>建立了连接之后，iTunes/Xcode会通过<code class="language-plaintext highlighter-rouge">MobileDevice.framework</code>调用一些功能，通过<code class="language-plaintext highlighter-rouge">class-dump</code>可以发现一些安装DeviceSupport、固件升级、启动服务等的类：  <br />
+<img src="https://www.foolishtalk.org/cloud/788956a243a2f6bf47e7943e324f9911.jpg" alt="" /><br />
+而<code class="language-plaintext highlighter-rouge">MobileDevice.framework</code>只存在于Mac，通常会使用开源的<code class="language-plaintext highlighter-rouge">libimobiledevice</code>，他不仅实现了usbmuxd监听，并且为没有公开的服务进行的封装，iOS的性能测试、自动化测试基本都离不开它。</p>
+
+<h1 id="识别虚拟定位的方法">识别虚拟定位的方法</h1>
+
+<h2 id="issimulatedbysoftware--isproducedbyaccessory">isSimulatedBySoftware &amp; isProducedByAccessory</h2>
+<p>既然有攻，就会有守，先试试看从系统提供的定位API返回的信息中，是否有能有区分出是正常定位，还是虚拟定位。
+在查阅了Apple的文档后发现，在iOS 15之后，是有提供<code class="language-plaintext highlighter-rouge">CLLocationSourceInformation</code>定位来源可以区分是否是软件产生的虚拟定位或者是外设产生的虚拟定位。</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">15.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">CLLocationSourceInformation</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">NSCopying</span><span class="p">,</span> <span class="kt">NSSecureCoding</span> <span class="p">{</span>
+
+    
+    <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">softwareSimulationState</span> <span class="nv">isSoftware</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="n">andExternalAccessoryState</span> <span class="nv">isAccessory</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span>
+
+    
+    <span class="cm">/*
+     * isSimulatedBySoftware
+     *
+     * Discussion:
+     *	Set to YES if this location was detected as being generated by a software simulator, such as Xcode
+     */</span>
+    <span class="kd">open</span> <span class="k">var</span> <span class="nv">isSimulatedBySoftware</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+
+    
+    <span class="cm">/*
+     * isProducedByAccessory
+     *
+     * Discussion:
+     * 	Set to YES if this location was generated from an external accessory, such as CarPlay or an MFi accessory
+     */</span>
+    <span class="kd">open</span> <span class="k">var</span> <span class="nv">isProducedByAccessory</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
-<p>如果brew安装太慢。。。再挂下代理：</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export ALL_PROXY=socks5://127.0.0.1:portnumber
+<p>经过测试后，这两个字段确实是有用的，正常定位的时候：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">locationManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt">CLLocationManager</span><span class="p">,</span> <span class="n">didUpdateLocations</span> <span class="nv">locations</span><span class="p">:</span> <span class="p">[</span><span class="kt">CLLocation</span><span class="p">])</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"是否是其他软件生成：</span><span class="se">\(</span><span class="n">locations</span><span class="o">.</span><span class="n">first</span><span class="p">?</span><span class="o">.</span><span class="n">sourceInformation</span><span class="p">?</span><span class="o">.</span><span class="n">isSimulatedBySoftware</span> <span class="p">??</span> <span class="kc">false</span><span class="se">)</span><span class="s">"</span><span class="p">)</span> <span class="c1">// 是否是其他软件生成：false</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"是否是其他配件生成：</span><span class="se">\(</span><span class="n">locations</span><span class="o">.</span><span class="n">first</span><span class="p">?</span><span class="o">.</span><span class="n">sourceInformation</span><span class="p">?</span><span class="o">.</span><span class="n">isProducedByAccessory</span> <span class="p">??</span> <span class="kc">false</span><span class="se">)</span><span class="s">"</span><span class="p">)</span> <span class="c1">// 是否是其他配件生成：false</span>
+    <span class="p">}</span>
 </code></pre></div></div>
 
-<p>在配置文件<code class="language-plaintext highlighter-rouge">/usr/local/etc/privoxy/config</code>下面加上监听的端口号，以及本地socks5代理的端口号：</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>listen-address 0.0.0.0:8118
-forward-socks5 / localhost:1080 .
-</code></pre></div></div>
-<p>启动privoxy：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> /usr/local/sbin/privoxy /usr/local/etc/privoxy/config
-</code></pre></div></div>
-<p>检查是否启动成功：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netstat <span class="nt">-na</span> | <span class="nb">grep </span>8118
-</code></pre></div></div>
-<p>将 socks5 代理转化成 http 代理：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">http_proxy</span><span class="o">=</span><span class="s1">'http://localhost:8118'</span>
-<span class="nb">export </span><span class="nv">https_proxy</span><span class="o">=</span><span class="s1">'http://localhost:8118'</span>
-</code></pre></div></div>
-<p>如果嫌每次设置麻烦，可以把这两行加在<code class="language-plaintext highlighter-rouge">~/.bash_profile</code>下。
-不想使用可以通过下面的命令取消：</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unset </span>http_proxy
-<span class="nb">unset </span>https_proxy
+<p>使用其他软件修改定位的时候：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">locationManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt">CLLocationManager</span><span class="p">,</span> <span class="n">didUpdateLocations</span> <span class="nv">locations</span><span class="p">:</span> <span class="p">[</span><span class="kt">CLLocation</span><span class="p">])</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"是否是其他软件生成：</span><span class="se">\(</span><span class="n">locations</span><span class="o">.</span><span class="n">first</span><span class="p">?</span><span class="o">.</span><span class="n">sourceInformation</span><span class="p">?</span><span class="o">.</span><span class="n">isSimulatedBySoftware</span> <span class="p">??</span> <span class="kc">false</span><span class="se">)</span><span class="s">"</span><span class="p">)</span> <span class="c1">// 是否是其他软件生成：true</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"是否是其他配件生成：</span><span class="se">\(</span><span class="n">locations</span><span class="o">.</span><span class="n">first</span><span class="p">?</span><span class="o">.</span><span class="n">sourceInformation</span><span class="p">?</span><span class="o">.</span><span class="n">isProducedByAccessory</span> <span class="p">??</span> <span class="kc">false</span><span class="se">)</span><span class="s">"</span><span class="p">)</span> <span class="c1">// 是否是其他配件生成：false</span>
+    <span class="p">}</span>
 </code></pre></div></div>
 
-<p>参考链接：<br />
-<a href="https://www.zhihu.com/question/31360766/answer/149140490">Homebrew有比较快的源（mirror）吗？ - skytraveler的回答 - 知乎</a><br />
-<a href="https://double-c.github.io/2018/10/17/mac-ss-cmd/index.html">Mac命令行终端下使用shadowsocks翻墙</a></p>
+<h2 id="altitude--verticalaccuracy">altitude &amp; verticalAccuracy</h2>
+<p>而在iOS 15之前，系统的没有提供的，查阅了网上的资料后，发现如果是虚拟定位<code class="language-plaintext highlighter-rouge">CLLocation</code>的<code class="language-plaintext highlighter-rouge">altitude</code>(海拔)总是会返回0，<code class="language-plaintext highlighter-rouge">verticalAccuracy</code>(精度)只会返回-1，所以测试了一下，使用正常定位的时候：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">locationManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt">CLLocationManager</span><span class="p">,</span> <span class="n">didUpdateLocations</span> <span class="nv">locations</span><span class="p">:</span> <span class="p">[</span><span class="kt">CLLocation</span><span class="p">])</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"location altitude:</span><span class="se">\(</span><span class="n">locations</span><span class="o">.</span><span class="n">first</span><span class="p">?</span><span class="o">.</span><span class="n">altitude</span><span class="se">)</span><span class="s">"</span><span class="p">)</span> <span class="c1">// location altitude:Optional(27.427248001098633)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"location verticalAccuracy:</span><span class="se">\(</span><span class="n">locations</span><span class="o">.</span><span class="n">first</span><span class="p">?</span><span class="o">.</span><span class="n">verticalAccuracy</span><span class="se">)</span><span class="s">"</span><span class="p">)</span> <span class="c1">// location verticalAccuracy:Optional(17.320518493652344)</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+<p>使用其他软件修改定位的时候：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">locationManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt">CLLocationManager</span><span class="p">,</span> <span class="n">didUpdateLocations</span> <span class="nv">locations</span><span class="p">:</span> <span class="p">[</span><span class="kt">CLLocation</span><span class="p">])</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"location altitude:</span><span class="se">\(</span><span class="n">locations</span><span class="o">.</span><span class="n">first</span><span class="p">?</span><span class="o">.</span><span class="n">altitude</span><span class="se">)</span><span class="s">"</span><span class="p">)</span> <span class="c1">// location altitude:Optional(0.0)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"location verticalAccuracy:</span><span class="se">\(</span><span class="n">locations</span><span class="o">.</span><span class="n">first</span><span class="p">?</span><span class="o">.</span><span class="n">verticalAccuracy</span><span class="se">)</span><span class="s">"</span><span class="p">)</span> <span class="c1">// location verticalAccuracy:Optional(-1.0)</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="type">type</h2>
+<p>另外<code class="language-plaintext highlighter-rouge">CLLocation</code>还有个私有属性<code class="language-plaintext highlighter-rouge">type</code>，可以用来区分是否是虚拟定位，正常定位的时候：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">location</span> <span class="o">=</span> <span class="n">locations</span><span class="o">.</span><span class="n">first</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">location</span><span class="p">?</span><span class="o">.</span><span class="nf">value</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="s">"type"</span><span class="p">))</span> <span class="c1">// 13</span>
+</code></pre></div></div>
+
+<p>使用其他软件修改定位的时候：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">location</span> <span class="o">=</span> <span class="n">locations</span><span class="o">.</span><span class="n">first</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">location</span><span class="p">?</span><span class="o">.</span><span class="nf">value</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="s">"type"</span><span class="p">))</span> <span class="c1">// 1</span>
+</code></pre></div></div>
+
+<h2 id="逆向">逆向</h2>
+<p>逆向是最头疼的问题，有攻才有防，在你不知道对方用什么招的时候，只能猜测对方会用什么方法，常规的方法，因为越狱后会存在Cydia，并且不再是沙盒权限，可以通过判断Cydia和越狱后才能获取得到的路径：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">isJailedDevice</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">jailPaths</span> <span class="o">=</span> <span class="p">[</span><span class="s">"/Applications/Cydia.app"</span><span class="p">,</span>
+                     <span class="s">"/Library/MobileSubstrate/MobileSubstrate.dylib"</span><span class="p">,</span>
+                     <span class="s">"/bin/bash"</span><span class="p">,</span>
+                     <span class="s">"/usr/sbin/sshd"</span><span class="p">,</span>
+                     <span class="s">"/etc/apt"</span><span class="p">]</span>
+    
+    <span class="k">for</span> <span class="n">item</span> <span class="k">in</span> <span class="n">jailPaths</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="kt">FileManager</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nf">fileExists</span><span class="p">(</span><span class="nv">atPath</span><span class="p">:</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="kc">false</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>越狱只是前提修改定位的前提，我们需要真正保护自己的App不受修改，防止被hook，iOS hook通常是通过注入dylib，替换方法实现达到效果，<code class="language-plaintext highlighter-rouge">dladdr</code>可以帮我们验证这个类的实现是来自哪里，在没有被hook的时候：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+ (void)test
+{
+    Dl_info info;
+    IMP imp = class_getMethodImplementation(objc_getClass("CLLocation"),
+                                            sel_registerName(@selector(coordinate)));
+    if(dladdr(imp,&amp;info)) {
+        NSLog(@"dli_fname:%s",info.dli_fname);
+    }
+}
+</code></pre></div></div>
+<p>上面输出的是：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2023-08-16 23:35:07.194234+0800 LocationTest[2989:383262] dli_fname:/System/Library/Frameworks/CoreLocation.framework/CoreLocation
+</code></pre></div></div>
+
+<p>而被hook后，输出的是：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2023-08-16 23:35:18.194507+0800 LocationTest[2989:383262] dli_fname:/private/var/containers/Bundle/Application/1DB1541C-6997-4895-8850-B77645F4DB94/LocationTest.app/LocationTest
+</code></pre></div></div>
+
+<p>所以我们可以通过这个函数判断是否被hook。</p>
+
+<h1 id="总结">总结</h1>
+<p>可以通过以下的几个方法识别出iOS的虚拟定位：</p>
+<ul>
+  <li>iOS 15以上，可以通过系统新增的两个属性<code class="language-plaintext highlighter-rouge">isSimulatedBySoftware</code>和<code class="language-plaintext highlighter-rouge">isProducedByAccessory</code>判断是否是虚拟定位；</li>
+  <li>判断海拔<code class="language-plaintext highlighter-rouge">altitude</code>为0，精度<code class="language-plaintext highlighter-rouge">verticalAccuracy</code>为-1；</li>
+  <li>通过<code class="language-plaintext highlighter-rouge">CLLocation</code>的私有属性<code class="language-plaintext highlighter-rouge">type</code>判断，为1的时候，是虚拟定位；</li>
+  <li><code class="language-plaintext highlighter-rouge">dladdr</code>判断是否被hook</li>
+</ul>
 
 
                 <hr>
@@ -297,16 +403,11 @@ forward-socks5 / localhost:1080 .
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2019/12/04/magellan/"
-                            data-toggle="tooltip" data-placement="top" title="使用虚拟定位修改iPhone定位">&larr; Previous
+                        <a href="/2023/06/14/JSONDecoder%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"
+                            data-toggle="tooltip" data-placement="top" title="JSONDecoder源码分析">&larr; Previous
                             Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/" data-toggle="tooltip"
-                            data-placement="top" title="mac连接蓝牙音箱问题小记">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -478,8 +579,8 @@ forward-socks5 / localhost:1080 .
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "fidetro-github-io";
-    var disqus_identifier = "/2019/12/07/pip折腾记";
-    var disqus_url = "https://www.foolishtalk.org/2019/12/07/pip%E6%8A%98%E8%85%BE%E8%AE%B0/";
+    var disqus_identifier = "/2023/08/16/识别iOS虚拟定位";
+    var disqus_url = "https://www.foolishtalk.org/2023/08/16/%E8%AF%86%E5%88%ABiOS%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/";
 
     (function () {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
