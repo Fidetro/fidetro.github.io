@@ -43,6 +43,7 @@ If `Magellan` installation fails, please download and install it separately from
 
 7.	It need to run `Magellan app` again after installation.
 
+# iOS 16 and above
 In iOS 16 and above, you need to enable developer mode to work.
 First you need to `Activate developer mode` by clicking on Magellan.   
 ![](https://www.foolishtalk.org/cloud/MTY2NDYxOTAwOQ%3D%3D.png)  
@@ -52,6 +53,12 @@ And then go to iPhone/iPad Settings > Privacy & Security on the iOS device.Scrol
 
 If you are interested, you can click [Learn more](https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device)  
 
+# iOS 17 Know Issues
+Magellan 2.2.6+ already supports iOS 17.  
+- Every iPhone/iPad with iOS 17 or higher requires a computer password the first time it is connected.
+- Route mode doesn't work properly, it returns to the true position before each point movement.
+- iOS 17 doesn't support Wi-Fi modifications, so it has blocked Wi-Fi connections for iOS
+- iOS 17 is still in the process of optimization, if you encounter any problems while using it, please let me know via email zykzzzz@hotmail.com, thank you for your support!
 
 # Operation:
 1.	Open `Virtual Location App`  

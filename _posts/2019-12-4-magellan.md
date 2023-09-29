@@ -54,6 +54,13 @@ tags:
 
 感兴趣了解为什么iOS 16需要这样做，可以点击[了解更多](https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device)  
 
+### iOS 17 已知问题
+Magellan 2.2.6以上已经支持iOS 17。  
+- 每台iOS 17以上的iPhone/iPad首次连接使用都需要输入电脑密码
+- 轨迹模式无法正常使用，每次移动点之前都会回到真实位置
+- iOS 17不支持Wi-Fi
+- iOS17 仍在优化过程中，如果您在使用过程中遇到任何问题，请通过电子邮件 zykzzzz@hotmail.com 通知我，谢谢您的支持！
+
 ##### 如果是首次安装驱动，记得要重新插拔一次手机，不然可能会没法识别。
 如果等待超过2分钟没有反应，点击日志，会在桌面上生成一个“虚拟定位日志.txt”，可以通过邮箱zykzzzz@hotmail.com或者[微博](https://weibo.com/u/2095454814)联系到我，我会尽快帮你解决问题。
 
