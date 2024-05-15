@@ -5,9 +5,65 @@
     <description></description>
     <link>https://www.foolishtalk.org/</link>
     <atom:link href="https://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 05 Nov 2023 22:01:13 +0800</pubDate>
-    <lastBuildDate>Sun, 05 Nov 2023 22:01:13 +0800</lastBuildDate>
-    <generator>Jekyll v4.3.2</generator>
+    <pubDate>Wed, 15 May 2024 21:09:57 +0800</pubDate>
+    <lastBuildDate>Wed, 15 May 2024 21:09:57 +0800</lastBuildDate>
+    <generator>Jekyll v4.3.3</generator>
+    
+      <item>
+        <title>appstore-server-api使用</title>
+        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+&lt;p&gt;前段时间有用户要求我退款，实际上退款只能由用户发起退款，苹果审核通过就可以了，开发者并没有权限处理退款。&lt;br /&gt;
+但是用户把订单号发我了，我也很好奇开发者能否查到相关的订单信息，因此我去折腾了一下，先说一下结论：&lt;/p&gt;
+&lt;h6 id=&quot;如果是用户是购买app产生的订单号苹果并没有提供对应的能力给开发者查询&quot;&gt;如果是用户是购买App产生的订单号，苹果并没有提供对应的能力给开发者查询。&lt;/h6&gt;
+&lt;h6 id=&quot;如果是用户是在app内购产生的订单号那么可以通过appstore-server-api查询相关的信息&quot;&gt;如果是用户是在App内购产生的订单号，那么可以通过AppStore-Server-API查询相关的信息。&lt;/h6&gt;
+
+&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
+&lt;p&gt;首先用户会向我们提供&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;orderId&lt;/code&gt;，如下：
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/82a4811eb5cc97db549425e0270847a8.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+但是我们会发现，苹果的API大多数都是需要通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;transactionId&lt;/code&gt;，而不是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;orderId&lt;/code&gt;，幸好苹果提供了&lt;a href=&quot;https://developer.apple.com/documentation/appstoreserverapi/look_up_order_id&quot;&gt;API&lt;/a&gt;给我们可以通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;orderId&lt;/code&gt;去查&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;transactionId&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;苹果的接口文档写的很复杂，建议是通过他们已经封装好的框架进行调用，目前已经有Swift、Java、Python、Node。在&lt;a href=&quot;https://developer.apple.com/documentation/appstoreserverapi/simplifying_your_implementation_by_using_the_app_store_server_library&quot;&gt;这里&lt;/a&gt;可以获取到对应语言的框架。&lt;/p&gt;
+
+&lt;p&gt;我这里也写了一个简单的demo调用可以&lt;a href=&quot;https://github.com/Fidetro/appstore-server&quot;&gt;参考&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fromUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;issuerId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;xxx-xxx-xxx-xxx-xxx&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;keyId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;xxx&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;bundleId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;com.karim.xxx&quot;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;encodedKey&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;try!&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;contentsOfFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/appstore-server/appstore-server/XXXX.p8&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;environment&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Environment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;production&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;try!&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;AppStoreServerAPIClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;signingKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;encodedKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;keyId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keyId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;issuerId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;issuerId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;bundleId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bundleId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;lookUpOrderId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;orderId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;XXXXXX&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;switch&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;failure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;errorCode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;rawApiError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;apiError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;errorMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;causedBy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;errorCode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rawApiError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;apiError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;errorMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;causedBy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fromUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;上面代码中的issuerId、keyId、p8密钥，需要在&lt;a href=&quot;https://appstoreconnect.apple.com/&quot;&gt;appstoreconnect&lt;/a&gt;中自己生成，bundleId填入对应app的bundleId即可。
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/7b5ffc11e32b3e5c1c8b2c21d2384bea.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 15 May 2024 00:00:00 +0800</pubDate>
+        <link>https://www.foolishtalk.org/2024/05/15/appstore-sever%E4%BD%BF%E7%94%A8/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2024/05/15/appstore-sever%E4%BD%BF%E7%94%A8/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Xcode</category>
+        
+        
+      </item>
     
       <item>
         <title>识别iOS虚拟定位</title>
@@ -255,7 +311,7 @@
         &lt;span class=&quot;c1&quot;&gt;// If an existing keyed container was already requested, return that one.&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;topContainer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSMutableDictionary&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;canEncodeNewValue&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;c1&quot;&gt;// We haven't yet pushed a container at this level; do so here.&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;// We haven&apos;t yet pushed a container at this level; do so here.&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;topContainer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;storage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pushKeyedContainer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
             &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;container&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;storage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;last&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as?&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSMutableDictionary&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -364,7 +420,7 @@
         &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;byte2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;uncheckedOffset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;byte3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;uncheckedOffset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;
         &lt;span class=&quot;c1&quot;&gt;// Check for explicit BOM first, then check the first two bytes. Note that if there is a BOM, we have to create our string without it.&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;// This isn't strictly part of the JSON spec but it's useful to do anyway.&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// This isn&apos;t strictly part of the JSON spec but it&apos;s useful to do anyway.&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;sourceEncoding&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Encoding&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;bomLength&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;switch&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;byte0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;byte1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;byte2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;byte3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -395,7 +451,7 @@
         &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;some&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;nz1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;some&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;nz2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;where&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nz1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nz2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;sourceEncoding&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utf16LittleEndian&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;bomLength&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;// These cases technically aren't specified by RFC4627, since it only covers cases where the input has at least 4 octets. However, when parsing JSON with fragments allowed, it's possible to have a valid UTF-16 input that is a single digit, which is 2 octets. To properly support these inputs, we'll extend the pattern described above for 4 octets of UTF-16.&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// These cases technically aren&apos;t specified by RFC4627, since it only covers cases where the input has at least 4 octets. However, when parsing JSON with fragments allowed, it&apos;s possible to have a valid UTF-16 input that is a single digit, which is 2 octets. To properly support these inputs, we&apos;ll extend the pattern described above for 4 octets of UTF-16.&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;some&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;nz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;where&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;sourceEncoding&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utf16BigEndian&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;bomLength&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
@@ -562,7 +618,7 @@
                     &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;try!&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;impl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;unwrapString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keyValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;codingPathNode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_JSONKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
                     &lt;span class=&quot;c1&quot;&gt;// Convert the snake case keys in the container to camel case.&lt;/span&gt;
-                    &lt;span class=&quot;c1&quot;&gt;// If we hit a duplicate key after conversion, then we'll use the first one we saw.&lt;/span&gt;
+                    &lt;span class=&quot;c1&quot;&gt;// If we hit a duplicate key after conversion, then we&apos;ll use the first one we saw.&lt;/span&gt;
                     &lt;span class=&quot;c1&quot;&gt;// Effectively an undefined behavior with JSON dictionaries.&lt;/span&gt;
                     &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;JSONDecoder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;KeyDecodingStrategy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_convertFromSnakeCase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_setIfNil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
                 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -766,7 +822,7 @@ B % git remote &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;from_repo_A
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#创建hooks文件夹
 mkdir -p ~/.git-templates/hooks
 #配置全局git templates
-git config --global init.templatedir '~/.git-templates'  
+git config --global init.templatedir &apos;~/.git-templates&apos;  
 #确保脚本可以执行
 chmod a+x ~/.git-hooksPath/hooks/xxx
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -797,7 +853,7 @@ git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; core.hooksPath
 &lt;span class=&quot;c&quot;&gt;# Doing this in a hook is a bad idea in general, but the prepare-commit-msg&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# hook is more suited to it.&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*&amp;gt;\).*$/Signed-off-by: \1/p')&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# SOB=$(git var GIT_AUTHOR_IDENT | sed -n &apos;s/^\(.*&amp;gt;\).*$/Signed-off-by: \1/p&apos;)&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# grep -qs &quot;^$SOB&quot; &quot;$1&quot; || echo &quot;$SOB&quot; &amp;gt;&amp;gt; &quot;$1&quot;&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;# This example catches duplicate Signed-off-by lines.&lt;/span&gt;
@@ -975,7 +1031,7 @@ Copy the property declaration to Generating Lazy Variable code&lt;/li&gt;
         <title>解决博客在Chrome里http和https混合使用的问题</title>
         <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
 &lt;p&gt;今天突然发现博客的图片都无法加载了，打开浏览器控制台一看，发现是无法找到https资源报错了：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Mixed Content: The page at '&amp;lt;URL&amp;gt;' was loaded over HTTPS, but requested an insecure font '&amp;lt;URL&amp;gt;'
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Mixed Content: The page at &apos;&amp;lt;URL&amp;gt;&apos; was loaded over HTTPS, but requested an insecure font &apos;&amp;lt;URL&amp;gt;&apos;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;原来是因为更新了Chrome后，如果网站是https，会把非https的资源强制转成了http，我博客用的七牛云，使用https流量是要另外收费的，所以只好找个方法曲线救国。&lt;/p&gt;
 
@@ -1124,86 +1180,6 @@ Status Message: Package Invalid
         <pubDate>Wed, 08 Jul 2020 00:00:00 +0800</pubDate>
         <link>https://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</link>
         <guid isPermaLink="true">https://www.foolishtalk.org/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/</guid>
-        
-        <category>iOS</category>
-        
-        <category>Xcode</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>你真的了解p、po、v区别吗</title>
-        <description>&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
-&lt;p&gt;平常在使用Xcode断点调试问题时，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;可能是最常用到的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LLVM&lt;/code&gt;命令了。&lt;br /&gt;
-通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;命令，我们可以在Xcode的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LLDB&lt;/code&gt;控制台打印对象的描述，系统在运行时会提供一个默认值，如图：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/caed4a8d6cbafa4387d2fb57155cf6e7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;我们可以通过重写&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;func debugDescription()&lt;/code&gt;达到我们希望在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;的时候返回预期的返回值。&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/54e45465efc65c1b4fd93f2d8995ea4e.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;的底层逻辑实现：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/57320d88124faf7812bbaa673f37fee4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;事实上打印对象有三种方法，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;只是其中一种。&lt;/p&gt;
-
-&lt;p&gt;第二种方式是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;的区别在于，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt;不会随着&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;func debugDescription()&lt;/code&gt;方法修改而且改变打印的值。
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/0bb5fdda413e64e8b3ba45c58d1c2ec3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;但是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;po&lt;/code&gt;，遵循swift的语法，在下面的例子中，是无法打印的。&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/f65d30492a3fc575e641976544a7aa1e.png&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-同样下面的代码也会报错：&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;    let student : Person = Student(name:&quot;john&quot;)
-    print(student.name) //这里是会报错的
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt;的底层逻辑实现：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/e2b0f3feefd02283937b5230a420110d.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;第三种方式是通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;打印。&lt;br /&gt;
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;同样不会不会随着&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;func debugDescription()&lt;/code&gt;方法修改而且改变打印的值。&lt;br /&gt;
-而且&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;有自己的语法，不需要通过编译，而是进行动态类型解析，但是它无法执行代码。&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/849c0b54225807f00201d31cd8bf072c.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;的底层逻辑实现：&lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/67340b5668cffd5d75e007e1839d46fd.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;总结&quot;&gt;总结&lt;/h1&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;po&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;p&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;v&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;显示对象的方式&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;通过对象描述方法打印&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;通过格式化打印&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;通过格式化打印&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;计算结果的方式&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;通过编译表达，可以完整访问编程语言&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;通过编译表达，可以完整访问编程语言&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;有自己的语法、解释和表达，解释过程中会多次动态类型解析&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h1 id=&quot;参考链接&quot;&gt;参考链接&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2019/429/&quot;&gt;LLDB: Beyond “po”&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Mon, 01 Jun 2020 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97-copy/</guid>
         
         <category>iOS</category>
         

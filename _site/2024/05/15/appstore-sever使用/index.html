@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>更新自己的CocoaPods库 - FoolishTalk 技术分享</title>
+    <title>appstore-server-api使用 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="https://www.foolishtalk.org/2017/06/21/%E6%9B%B4%E6%96%B0%E8%87%AA%E5%B7%B1%E7%9A%84CocoaPods%E5%BA%93/">
+    <link rel="canonical" href="https://www.foolishtalk.org/2024/05/15/appstore-sever%E4%BD%BF%E7%94%A8/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -158,12 +158,12 @@
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-andre-benz.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header {
-        background-image: url('/img/post-bg-old.jpg')
+        background-image: url('/img/post-bg-andre-benz.jpg')
     }
 </style>
 <header class="intro-header">
@@ -175,17 +175,17 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#问题随笔" title="问题随笔">问题随笔</a>
-                        
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
+                        <a class="tag" href="/tags/#Xcode" title="Xcode">Xcode</a>
+                        
                     </div>
-                    <h1>更新自己的CocoaPods库</h1>
+                    <h1>appstore-server-api使用</h1>
                     
                     
-                    <h2 class="subheading">CocoaPod，iOS</h2>
+                    <h2 class="subheading">StoreKit，appstore-server</h2>
                     
-                    <span class="meta">Posted by Karim on June 21, 2017</span>
+                    <span class="meta">Posted by Karim on May 15, 2024</span>
                 </div>
             </div>
         </div>
@@ -227,41 +227,48 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>以自己写的一个库为例子</p>
+                <h1 id="前言">前言</h1>
+<p>前段时间有用户要求我退款，实际上退款只能由用户发起退款，苹果审核通过就可以了，开发者并没有权限处理退款。<br />
+但是用户把订单号发我了，我也很好奇开发者能否查到相关的订单信息，因此我去折腾了一下，先说一下结论：</p>
+<h6 id="如果是用户是购买app产生的订单号苹果并没有提供对应的能力给开发者查询">如果是用户是购买App产生的订单号，苹果并没有提供对应的能力给开发者查询。</h6>
+<h6 id="如果是用户是在app内购产生的订单号那么可以通过appstore-server-api查询相关的信息">如果是用户是在App内购产生的订单号，那么可以通过AppStore-Server-API查询相关的信息。</h6>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Pod</span><span class="o">::</span><span class="no">Spec</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
+<h1 id="正文">正文</h1>
+<p>首先用户会向我们提供<code class="language-plaintext highlighter-rouge">orderId</code>，如下：
+<img src="https://www.foolishtalk.org/cloud/82a4811eb5cc97db549425e0270847a8.png" alt="" /><br />
+但是我们会发现，苹果的API大多数都是需要通过<code class="language-plaintext highlighter-rouge">transactionId</code>，而不是<code class="language-plaintext highlighter-rouge">orderId</code>，幸好苹果提供了<a href="https://developer.apple.com/documentation/appstoreserverapi/look_up_order_id">API</a>给我们可以通过<code class="language-plaintext highlighter-rouge">orderId</code>去查<code class="language-plaintext highlighter-rouge">transactionId</code>。</p>
 
-  <span class="n">s</span><span class="p">.</span><span class="nf">name</span>         <span class="o">=</span> <span class="s2">"FFDB"</span>
-  <span class="n">s</span><span class="p">.</span><span class="nf">version</span>      <span class="o">=</span> <span class="s2">"1.7.0"</span>
-  <span class="n">s</span><span class="p">.</span><span class="nf">summary</span>      <span class="o">=</span> <span class="s2">"easy to use FMDB"</span>
-  <span class="n">s</span><span class="p">.</span><span class="nf">homepage</span>     <span class="o">=</span> <span class="s2">"https://github.com/Fidetro/FFDB"</span>
-  <span class="n">s</span><span class="p">.</span><span class="nf">license</span>          <span class="o">=</span> <span class="p">{</span> <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="s2">"MIT"</span><span class="p">,</span> <span class="ss">:file</span> <span class="o">=&gt;</span> <span class="s2">"LICENSE"</span> <span class="p">}</span>
-  <span class="n">s</span><span class="p">.</span><span class="nf">author</span>             <span class="o">=</span> <span class="p">{</span> <span class="s2">"fidetro"</span> <span class="o">=&gt;</span> <span class="s2">"zykzzzz@hotmail.com"</span> <span class="p">}</span>
-  <span class="n">s</span><span class="p">.</span><span class="nf">platform</span>     <span class="o">=</span> <span class="ss">:ios</span><span class="p">,</span> <span class="s2">"8.0"</span>
-  <span class="n">s</span><span class="p">.</span><span class="nf">source</span>       <span class="o">=</span> <span class="p">{</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s2">"https://github.com/Fidetro/FFDB.git"</span><span class="p">,</span> <span class="ss">:tag</span> <span class="o">=&gt;</span> <span class="s2">"1.7.0"</span> <span class="p">}</span>
-  <span class="n">s</span><span class="p">.</span><span class="nf">source_files</span>  <span class="o">=</span> <span class="s2">"FFDB"</span><span class="p">,</span> <span class="s2">"FFDB/*.{h,m}"</span>
-  <span class="n">s</span><span class="p">.</span><span class="nf">library</span> <span class="o">=</span> <span class="s1">'sqlite3'</span>
-  <span class="n">s</span><span class="p">.</span><span class="nf">dependency</span> <span class="s2">"FMDB"</span><span class="p">,</span><span class="s2">"~&gt; 2.6.2"</span>
+<p>苹果的接口文档写的很复杂，建议是通过他们已经封装好的框架进行调用，目前已经有Swift、Java、Python、Node。在<a href="https://developer.apple.com/documentation/appstoreserverapi/simplifying_your_implementation_by_using_the_app_store_server_library">这里</a>可以获取到对应语言的框架。</p>
 
+<p>我这里也写了一个简单的demo调用可以<a href="https://github.com/Fidetro/appstore-server">参考</a></p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">fromUser</span><span class="p">()</span> <span class="k">async</span> <span class="p">{</span>
 
-<span class="k">end</span>
+    <span class="k">let</span> <span class="nv">issuerId</span> <span class="o">=</span> <span class="s">"xxx-xxx-xxx-xxx-xxx"</span>
+    <span class="k">let</span> <span class="nv">keyId</span> <span class="o">=</span> <span class="s">"xxx"</span>
+    <span class="k">let</span> <span class="nv">bundleId</span> <span class="o">=</span> <span class="s">"com.karim.xxx"</span>
 
+    <span class="k">let</span> <span class="nv">encodedKey</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">String</span><span class="p">(</span><span class="nv">contentsOfFile</span><span class="p">:</span> <span class="s">"/appstore-server/appstore-server/XXXX.p8"</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">environment</span> <span class="o">=</span> <span class="kt">Environment</span><span class="o">.</span><span class="n">production</span>
+    <span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">AppStoreServerAPIClient</span><span class="p">(</span><span class="nv">signingKey</span><span class="p">:</span> <span class="n">encodedKey</span><span class="p">,</span> <span class="nv">keyId</span><span class="p">:</span> <span class="n">keyId</span><span class="p">,</span> <span class="nv">issuerId</span><span class="p">:</span> <span class="n">issuerId</span><span class="p">,</span> <span class="nv">bundleId</span><span class="p">:</span> <span class="n">bundleId</span><span class="p">,</span> <span class="nv">environment</span><span class="p">:</span> <span class="n">environment</span><span class="p">)</span>
+
+    <span class="k">let</span> <span class="nv">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="nf">lookUpOrderId</span><span class="p">(</span><span class="nv">orderId</span><span class="p">:</span> <span class="s">"XXXXXX"</span><span class="p">)</span>
+    <span class="k">switch</span> <span class="n">response</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">response</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">errorCode</span><span class="p">,</span> <span class="k">let</span> <span class="nv">rawApiError</span><span class="p">,</span> <span class="k">let</span> <span class="nv">apiError</span><span class="p">,</span> <span class="k">let</span> <span class="nv">errorMessage</span><span class="p">,</span> <span class="k">let</span> <span class="nv">causedBy</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">errorCode</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">rawApiError</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">apiError</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">errorMessage</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">causedBy</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">await</span> <span class="nf">fromUser</span><span class="p">()</span>
 </code></pre></div></div>
-<p>原本在CocoaPods的版本是<code class="language-plaintext highlighter-rouge">s.version = "1.7.0"</code>
-如果要更新成<code class="language-plaintext highlighter-rouge">1.8.0</code>版本，先改成<code class="language-plaintext highlighter-rouge">s.version = "1.8.0"</code>
-同时把<code class="language-plaintext highlighter-rouge">s.source</code>的tag改成<code class="language-plaintext highlighter-rouge"> s.source       = { :git =&gt; "https://github.com/Fidetro/FFDB.git", :tag =&gt; "1.8.0" }</code></p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add *
-git commit -m "tag 1.8.0"
-git push origin -u master
-</code></pre></div></div>
 
-<p>再打上标签</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag 1.8.0
-git push --tags
-</code></pre></div></div>
-<p>最后提交到Pod</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pod trunk push FFDB.podspec
-</code></pre></div></div>
+<p>上面代码中的issuerId、keyId、p8密钥，需要在<a href="https://appstoreconnect.apple.com/">appstoreconnect</a>中自己生成，bundleId填入对应app的bundleId即可。
+<img src="https://www.foolishtalk.org/cloud/7b5ffc11e32b3e5c1c8b2c21d2384bea.png" alt="" /></p>
 
 
                 <hr>
@@ -289,16 +296,11 @@ git push --tags
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/06/21/WWDC-2017%E7%AC%94%E8%AE%B0-Codable/"
-                            data-toggle="tooltip" data-placement="top" title="WWDC-2017笔记---Codable">&larr; Previous
+                        <a href="/2023/08/16/%E8%AF%86%E5%88%ABiOS%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/"
+                            data-toggle="tooltip" data-placement="top" title="识别iOS虚拟定位">&larr; Previous
                             Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/07/02/Swift%E5%85%B3%E9%94%AE%E5%AD%97-@escaping%E9%80%83%E9%80%B8%E9%97%AD%E5%8C%85/" data-toggle="tooltip"
-                            data-placement="top" title="Swift关键字-@escaping逃逸闭包">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
