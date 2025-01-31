@@ -10,20 +10,19 @@ tags:
 - Xcode
 ---
 
-# 问题  
+#### 问题  
 自从升级了Xcode 16之后，swift环境下使用po就会出现问题，报错如下：
 ```shell
 error: type for self cannot be reconstructed: type for typename "$s17swift_lldb_module10ModuleViewCD" was not found
 error: Couldn't realize Swift AST type of self. Hint: using `v` to directly inspect variables and fields may still work.
 ```
 
-# 正文  
 从日志信息可以看出，是因为lldb无法获取到类型信息，导致的问题。  
 
-## 类型信息的作用是什么？
+#### 类型信息的作用是什么？
 编译器提供的调试信息会告诉给调试器变量在内存中的位置,然后通过Types，lldb可以知道聚合类型源变量中的结构和内存布局，从而知道有哪些字段，并且通过Types使用数据格式化打印出更客观的格式出来。
 
-## 类型信息从哪里来
+#### 类型信息从哪里来
 在调试器端，用frame variable或v命令的时候，lldb从debug info和swift反射获取类型信息。
 ![](https://www.foolishtalk.org/cloud/swift_lldb002.jpeg)  
 而在编译器端，用expr或po命令的时候，lldb通过Modules获取类型信息。  
@@ -44,7 +43,7 @@ SwiftASTContextForExpressions(module: "swift_lldb_module", cu: "Base64.swift")::
 因此更加可以确定是Modules导入失败导致的问题。  
 
 
-## 解决  
+#### 解决  
 接下来要怎么解决这个问题已经很明显了，可以通过`-add_ast_path`来注册Swift模块，让lldb可以找到类型信息。  
 如果是使用cocoapods，可以通过在Podfile中添加`post_integrate`脚本来解决这个问题。  
 ```ruby
@@ -86,6 +85,6 @@ end
 
 
 
-# 参考  
+#### 参考  
 [Debug Swift debugging with LLDB](https://developer.apple.com/videos/play/wwdc2022/110370/)  
 [Breakpoint issue: 'self cannot be reconstructed'](https://developer.apple.com/forums/thread/767051)

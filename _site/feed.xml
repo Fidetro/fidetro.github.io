@@ -5,25 +5,24 @@
     <description></description>
     <link>https://www.foolishtalk.org/</link>
     <atom:link href="https://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 31 Jan 2025 18:13:37 +0800</pubDate>
-    <lastBuildDate>Fri, 31 Jan 2025 18:13:37 +0800</lastBuildDate>
+    <pubDate>Fri, 31 Jan 2025 18:54:56 +0800</pubDate>
+    <lastBuildDate>Fri, 31 Jan 2025 18:54:56 +0800</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
         <title>lldb与swift的问题记录</title>
-        <description>&lt;h1 id=&quot;问题&quot;&gt;问题&lt;/h1&gt;
+        <description>&lt;h4 id=&quot;问题&quot;&gt;问题&lt;/h4&gt;
 &lt;p&gt;自从升级了Xcode 16之后，swift环境下使用po就会出现问题，报错如下：&lt;/p&gt;
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;error: &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;self cannot be reconstructed: &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;typename &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$s17swift_lldb_module10ModuleViewCD&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; was not found
 error: Couldn&lt;span class=&quot;s1&quot;&gt;&apos;t realize Swift AST type of self. Hint: using `v` to directly inspect variables and fields may still work.
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
 &lt;p&gt;从日志信息可以看出，是因为lldb无法获取到类型信息，导致的问题。&lt;/p&gt;
 
-&lt;h2 id=&quot;类型信息的作用是什么&quot;&gt;类型信息的作用是什么？&lt;/h2&gt;
+&lt;h4 id=&quot;类型信息的作用是什么&quot;&gt;类型信息的作用是什么？&lt;/h4&gt;
 &lt;p&gt;编译器提供的调试信息会告诉给调试器变量在内存中的位置,然后通过Types，lldb可以知道聚合类型源变量中的结构和内存布局，从而知道有哪些字段，并且通过Types使用数据格式化打印出更客观的格式出来。&lt;/p&gt;
 
-&lt;h2 id=&quot;类型信息从哪里来&quot;&gt;类型信息从哪里来&lt;/h2&gt;
+&lt;h4 id=&quot;类型信息从哪里来&quot;&gt;类型信息从哪里来&lt;/h4&gt;
 &lt;p&gt;在调试器端，用frame variable或v命令的时候，lldb从debug info和swift反射获取类型信息。
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/swift_lldb002.jpeg&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
 而在编译器端，用expr或po命令的时候，lldb通过Modules获取类型信息。&lt;br /&gt;
@@ -41,7 +40,7 @@ SwiftASTContextForExpressions&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;modul
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;因此更加可以确定是Modules导入失败导致的问题。&lt;/p&gt;
 
-&lt;h2 id=&quot;解决&quot;&gt;解决&lt;/h2&gt;
+&lt;h4 id=&quot;解决&quot;&gt;解决&lt;/h4&gt;
 &lt;p&gt;接下来要怎么解决这个问题已经很明显了，可以通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-add_ast_path&lt;/code&gt;来注册Swift模块，让lldb可以找到类型信息。&lt;br /&gt;
 如果是使用cocoapods，可以通过在Podfile中添加&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;post_integrate&lt;/code&gt;脚本来解决这个问题。&lt;/p&gt;
 &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;post_integrate&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;installer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
@@ -78,7 +77,7 @@ SwiftASTContextForExpressions&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;modul
     end.join&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos; &apos;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h1 id=&quot;参考&quot;&gt;参考&lt;/h1&gt;
+&lt;h4 id=&quot;参考&quot;&gt;参考&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2022/110370/&quot;&gt;Debug Swift debugging with LLDB&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&quot;https://developer.apple.com/forums/thread/767051&quot;&gt;Breakpoint issue: ‘self cannot be reconstructed’&lt;/a&gt;&lt;/p&gt;
 </description>
