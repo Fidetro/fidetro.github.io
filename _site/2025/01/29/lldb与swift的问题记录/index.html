@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>UISlider实现点击效果 - FoolishTalk 技术分享</title>
+    <title>lldb与swift的问题记录 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="https://www.foolishtalk.org/2017/03/16/UISlider%E5%AE%9E%E7%8E%B0%E7%82%B9%E5%87%BB%E6%95%88%E6%9E%9C/">
+    <link rel="canonical" href="https://www.foolishtalk.org/2025/01/29/lldb%E4%B8%8Eswift%E7%9A%84%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -158,12 +158,12 @@
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-old.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-andre-benz.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header {
-        background-image: url('/img/post-bg-old.jpg')
+        background-image: url('/img/post-bg-andre-benz.jpg')
     }
 </style>
 <header class="intro-header">
@@ -175,17 +175,17 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#问题随笔" title="问题随笔">问题随笔</a>
-                        
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
+                        <a class="tag" href="/tags/#Xcode" title="Xcode">Xcode</a>
+                        
                     </div>
-                    <h1>UISlider实现点击效果</h1>
+                    <h1>lldb与swift的问题记录</h1>
                     
                     
-                    <h2 class="subheading">CocoaPod，iOS，UI</h2>
+                    <h2 class="subheading">swift、lldb</h2>
                     
-                    <span class="meta">Posted by Karim on March 16, 2017</span>
+                    <span class="meta">Posted by Karim on January 29, 2025</span>
                 </div>
             </div>
         </div>
@@ -227,27 +227,76 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>找了很久网上文章都是各种复制，而且不管用，最后在stackOverFlow找到怎么解决，记录一下<a href="http://stackoverflow.com/questions/22717167/how-to-enable-tap-and-slide-in-a-uislider">链接</a></p>
+                <h1 id="问题">问题</h1>
+<p>自从升级了Xcode 16之后，swift环境下使用po就会出现问题，报错如下：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>error: <span class="nb">type </span><span class="k">for </span>self cannot be reconstructed: <span class="nb">type </span><span class="k">for </span>typename <span class="s2">"</span><span class="nv">$s17swift_lldb_module10ModuleViewCD</span><span class="s2">"</span> was not found
+error: Couldn<span class="s1">'t realize Swift AST type of self. Hint: using `v` to directly inspect variables and fields may still work.
+</span></code></pre></div></div>
 
-<p>关键是用UILongPressGestureRecognizer，实现拖动和点击</p>
-<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">actionLongGesture</span><span class="p">:(</span><span class="n">UILongPressGestureRecognizer</span> <span class="o">*</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
-    
-    <span class="k">if</span> <span class="p">(</span><span class="n">sender</span><span class="p">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">UIGestureRecognizerStateBegan</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">CGPoint</span> <span class="n">touchPoint</span> <span class="o">=</span> <span class="p">[</span><span class="n">sender</span> <span class="nf">locationInView</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">];</span>
-        <span class="n">CGFloat</span> <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">.</span><span class="n">maximumValue</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">.</span><span class="n">minimumValue</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">touchPoint</span><span class="p">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="p">);</span>
-        <span class="n">NSInteger</span> <span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)(</span><span class="n">value</span> <span class="o">+</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">);</span>
-        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span> <span class="nf">setValue</span><span class="p">:</span><span class="n">index</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">NO</span><span class="p">];</span>
-        <span class="p">[</span><span class="n">self</span> <span class="nf">valueChange</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">];</span>
-    <span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">sender</span><span class="p">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">UIGestureRecognizerStateChanged</span><span class="p">){</span>
-        <span class="n">CGPoint</span> <span class="n">touchPoint</span> <span class="o">=</span> <span class="p">[</span><span class="n">sender</span> <span class="nf">locationInView</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">];</span>
-        <span class="n">CGFloat</span> <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">.</span><span class="n">maximumValue</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">.</span><span class="n">minimumValue</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">touchPoint</span><span class="p">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="p">);</span>
-        <span class="n">NSInteger</span> <span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)(</span><span class="n">value</span> <span class="o">+</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">);</span>
-        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span> <span class="nf">setValue</span><span class="p">:</span><span class="n">index</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">NO</span><span class="p">];</span>
-        <span class="p">[</span><span class="n">self</span> <span class="nf">valueChange</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">progressSlider</span><span class="p">];</span>
-    <span class="p">}</span>
- 
-<span class="p">}</span>
+<h1 id="正文">正文</h1>
+<p>从日志信息可以看出，是因为lldb无法获取到类型信息，导致的问题。</p>
+
+<h2 id="类型信息的作用是什么">类型信息的作用是什么？</h2>
+<p>编译器提供的调试信息会告诉给调试器变量在内存中的位置,然后通过Types，lldb可以知道聚合类型源变量中的结构和内存布局，从而知道有哪些字段，并且通过Types使用数据格式化打印出更客观的格式出来。</p>
+
+<h2 id="类型信息从哪里来">类型信息从哪里来</h2>
+<p>在调试器端，用frame variable或v命令的时候，lldb从debug info和swift反射获取类型信息。
+<img src="https://www.foolishtalk.org/cloud/swift_lldb002.jpeg" alt="" /><br />
+而在编译器端，用expr或po命令的时候，lldb通过Modules获取类型信息。<br />
+<img src="https://www.foolishtalk.org/cloud/swift_lldb003.jpeg" alt="" /><br />
+Modules是编译器构建类型声明的方式。 <br />
+<img src="https://www.foolishtalk.org/cloud/swift_lldb001.jpeg" alt="" /><br />
+由此可见，应该是因为Modules导入失败，导致了lldb无法获取到类型信息。<br />
+通过<code class="language-plaintext highlighter-rouge">swift-healthcheck</code>命令，可以用来诊断swift环境的问题，在运行po命令发送错误之后，执行<code class="language-plaintext highlighter-rouge">swift-healthcheck</code>命令:</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>lldb<span class="o">)</span> swift-healthcheck
+Health check written to /var/folders/c5/7j9s6knn0wvfdhfkz1pv67bh0000gn/T/lldb/5648/lldb-healthcheck-cad017.log
 </code></pre></div></div>
+<p>然后可以看到输出的日志:</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SwiftASTContextForExpressions<span class="o">(</span>module: <span class="s2">"swift_lldb_module"</span>, cu: <span class="s2">"Base64.swift"</span><span class="o">)</span>::LoadOneModule<span class="o">()</span> <span class="nt">--</span> Missing Swift module or Clang module found <span class="k">for</span> <span class="s2">"swift_lldb_module"</span>, <span class="s2">"imported"</span> via SwiftDWARFImporterDelegate. Hint: Register Swift modules with the linker using <span class="nt">-add_ast_path</span><span class="nb">.</span>
+SwiftASTContextForExpressions<span class="o">(</span>module: <span class="s2">"swift_lldb_module"</span>, cu: <span class="s2">"Base64.swift"</span><span class="o">)</span>::LoadOneModule<span class="o">()</span> <span class="nt">--</span> Missing Swift module or Clang module found <span class="k">for</span> <span class="s2">"swift_lldb_module"</span>, <span class="s2">"imported"</span> via SwiftDWARFImporterDelegate. Hint: Register Swift modules with the linker using <span class="nt">-add_ast_path</span><span class="nb">.</span>
+</code></pre></div></div>
+<p>因此更加可以确定是Modules导入失败导致的问题。</p>
+
+<h2 id="解决">解决</h2>
+<p>接下来要怎么解决这个问题已经很明显了，可以通过<code class="language-plaintext highlighter-rouge">-add_ast_path</code>来注册Swift模块，让lldb可以找到类型信息。<br />
+如果是使用cocoapods，可以通过在Podfile中添加<code class="language-plaintext highlighter-rouge">post_integrate</code>脚本来解决这个问题。</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">post_integrate</span> <span class="k">do</span> <span class="o">|</span><span class="n">installer</span><span class="o">|</span>
+    <span class="c1">#将swift-lldb-debug替换成你的target名字</span>
+    <span class="n">xcconfig_path</span> <span class="o">=</span> <span class="n">installer</span><span class="p">.</span><span class="nf">sandbox</span><span class="p">.</span><span class="nf">target_support_files_root</span><span class="p">.</span><span class="nf">to_s</span> <span class="o">+</span> <span class="s1">'/Pods-swift-lldb-debug/Pods-swift-lldb-debug.debug.xcconfig'</span>
+
+    <span class="n">xcconfig_content</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">read</span> <span class="n">xcconfig_path</span>
+    <span class="n">xcconfig_original_ld_flags</span> <span class="o">=</span> <span class="n">xcconfig_content</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/OTHER_LDFLAGS = ([^\n]+)\n/</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">swift_module_flags</span> <span class="o">=</span> <span class="n">installer</span><span class="p">.</span><span class="nf">pods_project</span><span class="p">.</span><span class="nf">targets</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">target</span><span class="o">|</span>
+           <span class="s2">"-Wl,-add_ast_path,$(TARGET_BUILD_DIR)/</span><span class="si">#{</span><span class="n">target</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">target</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2">.swiftmodule/$(NATIVE_ARCH_ACTUAL)-apple-$(SHALLOW_BUNDLE_TRIPLE).swiftmodule"</span>
+    <span class="k">end</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s1">' '</span><span class="p">)</span>
+
+    <span class="n">xcconfig_new_ld_flags</span> <span class="o">=</span> <span class="o">&lt;&lt;~</span><span class="no">CONTENT</span><span class="sh">
+
+    OTHER_LDFLAGS = </span><span class="si">#{</span><span class="n">xcconfig_original_ld_flags</span><span class="si">}</span><span class="sh"> </span><span class="si">#{</span><span class="n">swift_module_flags</span><span class="si">}</span><span class="sh">
+
+</span><span class="no">    CONTENT</span>
+
+    <span class="n">xcconfig_content</span><span class="p">.</span><span class="nf">gsub!</span> <span class="sr">/OTHER_LDFLAGS = ([^\n]+)\n/</span><span class="p">,</span> <span class="n">xcconfig_new_ld_flags</span>
+
+    <span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="n">xcconfig_path</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+      <span class="n">f</span><span class="p">.</span><span class="nf">puts</span> <span class="n">xcconfig_content</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>执行<code class="language-plaintext highlighter-rouge">pod install</code>之后，就可以在<code class="language-plaintext highlighter-rouge">Pods-xxx.debug.xcconfig</code>中看到通过<code class="language-plaintext highlighter-rouge">-add_ast_path</code>注册的swift模块。<br />
+<img src="https://www.foolishtalk.org/cloud/swift_lldb004.png" alt="" /></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>这样就可以解决lldb无法获取类型信息的问题了，这里还有一个小插曲，如果你的项目是通过rosetta运行到模拟器上，还需要注册到x86_64的swift模块，可以将<span class="sb">`</span><span class="si">$(</span>NATIVE_ARCH_ACTUAL<span class="si">)</span><span class="sb">`</span>替换成这段手动指定不同架构上：  
+<span class="sb">```</span>ruby
+    swift_module_flags <span class="o">=</span> installer.pods_project.targets.map <span class="k">do</span> |target|      
+      <span class="s2">"-Wl,-add_ast_path,</span><span class="si">$(</span>TARGET_BUILD_DIR<span class="si">)</span><span class="s2">/#{target.name}/#{target.name}.swiftmodule/x86_64-apple-</span><span class="si">$(</span>SHALLOW_BUNDLE_TRIPLE<span class="si">)</span><span class="s2">.swiftmodule -Wl,-add_ast_path,</span><span class="si">$(</span>TARGET_BUILD_DIR<span class="si">)</span><span class="s2">/#{target.name}/#{target.name}.swiftmodule/arm64-apple-</span><span class="si">$(</span>SHALLOW_BUNDLE_TRIPLE<span class="si">)</span><span class="s2">.swiftmodule"</span>
+    end.join<span class="o">(</span><span class="s1">' '</span><span class="o">)</span>
+</code></pre></div></div>
+
+<h1 id="参考">参考</h1>
+<p><a href="https://developer.apple.com/videos/play/wwdc2022/110370/">Debug Swift debugging with LLDB</a><br />
+<a href="https://developer.apple.com/forums/thread/767051">Breakpoint issue: ‘self cannot be reconstructed’</a></p>
 
 
                 <hr>
@@ -275,16 +324,11 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/01/02/2016%E5%B9%B4%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E4%BA%8B/"
-                            data-toggle="tooltip" data-placement="top" title="2016年的一些小事">&larr; Previous
+                        <a href="/2024/05/15/appstore-sever%E4%BD%BF%E7%94%A8/"
+                            data-toggle="tooltip" data-placement="top" title="appstore-server-api使用">&larr; Previous
                             Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/03/27/CollectionViewLayout%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" data-toggle="tooltip"
-                            data-placement="top" title="CollectionViewLayout遇到的问题">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
