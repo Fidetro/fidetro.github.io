@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>lldb与swift的问题记录 - FoolishTalk 技术分享</title>
+    <title>利用lldb分析Swift调试问题 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="https://www.foolishtalk.org/2025/01/29/lldb%E4%B8%8Eswift%E7%9A%84%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">
+    <link rel="canonical" href="https://www.foolishtalk.org/2025/01/29/%E5%88%A9%E7%94%A8lldb%E5%88%86%E6%9E%90Swift%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -180,7 +180,7 @@
                         <a class="tag" href="/tags/#Xcode" title="Xcode">Xcode</a>
                         
                     </div>
-                    <h1>lldb与swift的问题记录</h1>
+                    <h1>利用lldb分析Swift调试问题</h1>
                     
                     
                     <h2 class="subheading">swift、lldb</h2>
@@ -286,11 +286,10 @@ SwiftASTContextForExpressions<span class="o">(</span>module: <span class="s2">"s
 <p>执行<code class="language-plaintext highlighter-rouge">pod install</code>之后，就可以在<code class="language-plaintext highlighter-rouge">Pods-xxx.debug.xcconfig</code>中看到通过<code class="language-plaintext highlighter-rouge">-add_ast_path</code>注册的swift模块。<br />
 <img src="https://www.foolishtalk.org/cloud/swift_lldb004.png" alt="" /></p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>这样就可以解决lldb无法获取类型信息的问题了，这里还有一个小插曲，如果你的项目是通过rosetta运行到模拟器上，还需要注册到x86_64的swift模块，可以将<span class="sb">`</span><span class="si">$(</span>NATIVE_ARCH_ACTUAL<span class="si">)</span><span class="sb">`</span>替换成这段手动指定不同架构上：  
-<span class="sb">```</span>ruby
-    swift_module_flags <span class="o">=</span> installer.pods_project.targets.map <span class="k">do</span> |target|      
-      <span class="s2">"-Wl,-add_ast_path,</span><span class="si">$(</span>TARGET_BUILD_DIR<span class="si">)</span><span class="s2">/#{target.name}/#{target.name}.swiftmodule/x86_64-apple-</span><span class="si">$(</span>SHALLOW_BUNDLE_TRIPLE<span class="si">)</span><span class="s2">.swiftmodule -Wl,-add_ast_path,</span><span class="si">$(</span>TARGET_BUILD_DIR<span class="si">)</span><span class="s2">/#{target.name}/#{target.name}.swiftmodule/arm64-apple-</span><span class="si">$(</span>SHALLOW_BUNDLE_TRIPLE<span class="si">)</span><span class="s2">.swiftmodule"</span>
-    end.join<span class="o">(</span><span class="s1">' '</span><span class="o">)</span>
+<p>这样就可以解决lldb无法获取类型信息的问题了，这里还有一个小插曲，如果你的项目是通过rosetta运行到模拟器上，还需要注册到x86_64的swift模块，可以将<code class="language-plaintext highlighter-rouge">$(NATIVE_ARCH_ACTUAL)</code>替换成这段手动指定不同架构上：</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">swift_module_flags</span> <span class="o">=</span> <span class="n">installer</span><span class="p">.</span><span class="nf">pods_project</span><span class="p">.</span><span class="nf">targets</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">target</span><span class="o">|</span>      
+      <span class="s2">"-Wl,-add_ast_path,$(TARGET_BUILD_DIR)/</span><span class="si">#{</span><span class="n">target</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">target</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2">.swiftmodule/x86_64-apple-$(SHALLOW_BUNDLE_TRIPLE).swiftmodule -Wl,-add_ast_path,$(TARGET_BUILD_DIR)/</span><span class="si">#{</span><span class="n">target</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">target</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2">.swiftmodule/arm64-apple-$(SHALLOW_BUNDLE_TRIPLE).swiftmodule"</span>
+    <span class="k">end</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s1">' '</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h4 id="参考">参考</h4>

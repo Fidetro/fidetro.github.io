@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "lldb与swift的问题记录"
+title:      "利用lldb分析Swift调试问题"
 subtitle:   "swift、lldb"
 date:       2025-1-29
 author:     "Karim"
@@ -74,8 +74,7 @@ end
 执行`pod install`之后，就可以在`Pods-xxx.debug.xcconfig`中看到通过`-add_ast_path`注册的swift模块。  
 ![](https://www.foolishtalk.org/cloud/swift_lldb004.png)  
 
-```shell
-这样就可以解决lldb无法获取类型信息的问题了，这里还有一个小插曲，如果你的项目是通过rosetta运行到模拟器上，还需要注册到x86_64的swift模块，可以将`$(NATIVE_ARCH_ACTUAL)`替换成这段手动指定不同架构上：  
+这样就可以解决lldb无法获取类型信息的问题了，这里还有一个小插曲，如果你的项目是通过rosetta运行到模拟器上，还需要注册到x86_64的swift模块，可以将`$(NATIVE_ARCH_ACTUAL)`替换成这段手动指定不同架构上：   
 ```ruby
     swift_module_flags = installer.pods_project.targets.map do |target|      
       "-Wl,-add_ast_path,$(TARGET_BUILD_DIR)/#{target.name}/#{target.name}.swiftmodule/x86_64-apple-$(SHALLOW_BUNDLE_TRIPLE).swiftmodule -Wl,-add_ast_path,$(TARGET_BUILD_DIR)/#{target.name}/#{target.name}.swiftmodule/arm64-apple-$(SHALLOW_BUNDLE_TRIPLE).swiftmodule"

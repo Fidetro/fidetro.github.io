@@ -5,12 +5,12 @@
     <description></description>
     <link>https://www.foolishtalk.org/</link>
     <atom:link href="https://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 31 Jan 2025 18:54:56 +0800</pubDate>
-    <lastBuildDate>Fri, 31 Jan 2025 18:54:56 +0800</lastBuildDate>
+    <pubDate>Mon, 10 Feb 2025 21:30:57 +0800</pubDate>
+    <lastBuildDate>Mon, 10 Feb 2025 21:30:57 +0800</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
-        <title>lldb与swift的问题记录</title>
+        <title>利用lldb分析Swift调试问题</title>
         <description>&lt;h4 id=&quot;问题&quot;&gt;问题&lt;/h4&gt;
 &lt;p&gt;自从升级了Xcode 16之后，swift环境下使用po就会出现问题，报错如下：&lt;/p&gt;
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;error: &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;self cannot be reconstructed: &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;typename &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$s17swift_lldb_module10ModuleViewCD&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; was not found
@@ -70,11 +70,10 @@ SwiftASTContextForExpressions&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;modul
 &lt;p&gt;执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pod install&lt;/code&gt;之后，就可以在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Pods-xxx.debug.xcconfig&lt;/code&gt;中看到通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-add_ast_path&lt;/code&gt;注册的swift模块。&lt;br /&gt;
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/swift_lldb004.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;这样就可以解决lldb无法获取类型信息的问题了，这里还有一个小插曲，如果你的项目是通过rosetta运行到模拟器上，还需要注册到x86_64的swift模块，可以将&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;NATIVE_ARCH_ACTUAL&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;替换成这段手动指定不同架构上：  
-&lt;span class=&quot;sb&quot;&gt;```&lt;/span&gt;ruby
-    swift_module_flags &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; installer.pods_project.targets.map &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; |target|      
-      &lt;span class=&quot;s2&quot;&gt;&quot;-Wl,-add_ast_path,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;TARGET_BUILD_DIR&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/#{target.name}/#{target.name}.swiftmodule/x86_64-apple-&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;SHALLOW_BUNDLE_TRIPLE&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.swiftmodule -Wl,-add_ast_path,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;TARGET_BUILD_DIR&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/#{target.name}/#{target.name}.swiftmodule/arm64-apple-&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;SHALLOW_BUNDLE_TRIPLE&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.swiftmodule&quot;&lt;/span&gt;
-    end.join&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos; &apos;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;p&gt;这样就可以解决lldb无法获取类型信息的问题了，这里还有一个小插曲，如果你的项目是通过rosetta运行到模拟器上，还需要注册到x86_64的swift模块，可以将&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(NATIVE_ARCH_ACTUAL)&lt;/code&gt;替换成这段手动指定不同架构上：&lt;/p&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;n&quot;&gt;swift_module_flags&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;installer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pods_project&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;targets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;      
+      &lt;span class=&quot;s2&quot;&gt;&quot;-Wl,-add_ast_path,$(TARGET_BUILD_DIR)/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.swiftmodule/x86_64-apple-$(SHALLOW_BUNDLE_TRIPLE).swiftmodule -Wl,-add_ast_path,$(TARGET_BUILD_DIR)/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.swiftmodule/arm64-apple-$(SHALLOW_BUNDLE_TRIPLE).swiftmodule&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos; &apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h4 id=&quot;参考&quot;&gt;参考&lt;/h4&gt;
@@ -82,8 +81,8 @@ SwiftASTContextForExpressions&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;modul
 &lt;a href=&quot;https://developer.apple.com/forums/thread/767051&quot;&gt;Breakpoint issue: ‘self cannot be reconstructed’&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 29 Jan 2025 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2025/01/29/lldb%E4%B8%8Eswift%E7%9A%84%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2025/01/29/lldb%E4%B8%8Eswift%E7%9A%84%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</guid>
+        <link>https://www.foolishtalk.org/2025/01/29/%E5%88%A9%E7%94%A8lldb%E5%88%86%E6%9E%90Swift%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2025/01/29/%E5%88%A9%E7%94%A8lldb%E5%88%86%E6%9E%90Swift%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</guid>
         
         <category>iOS</category>
         
