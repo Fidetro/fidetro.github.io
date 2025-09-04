@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>2025年了，iOS终于可以实现闹钟了！ - FoolishTalk 技术分享</title>
+
+    <link rel="canonical" href="https://www.foolishtalk.org/2025/08/24/iOS%E7%BB%88%E4%BA%8E%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E9%97%B9%E9%92%9F%E4%BA%86/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<head>
+    <script data-ad-client="ca-pub-2211183676955599" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">FoolishTalk</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <style type="text/css">
+    /* 新浪微博 */
+    .-mob-share-weibo {
+        background-image: url("https://www.foolishtalk.org/cloud/sina_share.png") !important;
+        background-repeat: no-repeat;
+        background-color: #ffffff;
+        width: 30px;
+        height: 30px;
+        border: none;
+    }
+
+    /* 微信 */
+    .-mob-share-weixin {
+        background-image: url("https://www.foolishtalk.org/cloud/wechat_share.png") !important;
+        background-repeat: no-repeat;
+        background-color: #ffffff;
+        width: 30px;
+        height: 30px;
+        border: none;
+    }
+
+    /* QQ */
+    .-mob-share-qq {
+        background-image: url("https://www.foolishtalk.org/cloud/qq_share.png") !important;
+        background-repeat: no-repeat;
+        background-color: #ffffff;
+        width: 30px;
+        height: 30px;
+        border: none;
+    }
+</style>
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-andre-benz.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/post-bg-andre-benz.jpg')
+    }
+</style>
+<header class="intro-header">
+    <script data-ad-client="ca-pub-2211183676955599" async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                        <a class="tag" href="/tags/#Alarmkit" title="Alarmkit">Alarmkit</a>
+                        
+                        <a class="tag" href="/tags/#WWDC2025" title="WWDC2025">WWDC2025</a>
+                        
+                    </div>
+                    <h1>2025年了，iOS终于可以实现闹钟了！</h1>
+                    
+                    
+                    <h2 class="subheading">swift、Alarmkit</h2>
+                    
+                    <span class="meta">Posted by Karim on August 24, 2025</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <script src="/live2d/live2d/L2Dwidget.min.js"></script>
+    <script type="text/javascript">
+        L2Dwidget.init({
+            model: {
+                jsonPath: '/live2d/live2d/tororo/assets/tororo.model.json',
+            },
+            display: {
+                superSample: 2,
+                width: 100,
+                height: 100,
+                position: 'left',
+                hOffset: 0,
+                vOffset: 0,
+            },
+            mobile: {
+                show: true,
+                scale: 1,
+                motion: true,
+            },
+            react: {
+                opacityDefault: 0.8,
+                opacityOnHover: 0.2,
+            }
+        })
+    </script>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="alarmkit介绍">AlarmKit介绍</h1>
+
+<p>苹果在iOS 26中引入了全新的AlarmKit框架，这是一个令开发者们期待已久的功能。终于，我们可以在自己的应用中创建和管理系统级别的闹钟了！</p>
+
+<p>AlarmKit是iOS 26新增的系统框架，允许第三方应用创建系统级闹钟。与通知不同，AlarmKit创建的闹钟会显示在系统时钟应用中，并且进行铃声强提醒。</p>
+
+<h1 id="对比eventkit的局限性">对比EventKit的局限性</h1>
+
+<p>EventKit主要用于日历事件和提醒事项，虽然可以设置提醒，但有以下限制：</p>
+<ul>
+  <li>提醒不会在时钟应用中显示</li>
+  <li>只能存在通知或者日历中</li>
+  <li>用户体验不一致</li>
+  <li>无法利用系统闹钟的高级功能</li>
+</ul>
+
+<h2 id="alarmkit的优势">AlarmKit的优势</h2>
+<ul>
+  <li>创建系统体验一样的闹钟</li>
+  <li>支持所有系统闹钟功能</li>
+  <li>用户体验更好</li>
+</ul>
+
+<h1 id="代码示例">代码示例</h1>
+
+<p>让我们通过实际代码来看看如何使用AlarmKit。</p>
+
+<h2 id="1-请求权限">1. 请求权限</h2>
+
+<p>首先，需要在Info.plist中添加权限说明：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;key&gt;</span>NSAlarmKitUsageDescription<span class="nt">&lt;/key&gt;</span>
+<span class="nt">&lt;string&gt;</span>此应用需要创建闹钟来开始提醒<span class="nt">&lt;/string&gt;</span>
+</code></pre></div></div>
+
+<p>然后在代码中请求权限：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">AlarmKit</span>
+<span class="kd">func</span> <span class="nf">requestPermission</span><span class="p">()</span> <span class="k">async</span> <span class="p">{</span>
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">manager</span> <span class="o">=</span> <span class="kt">AlarmManager</span><span class="o">.</span><span class="n">shared</span>
+        <span class="k">let</span> <span class="nv">status</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="nf">requestAuthorization</span><span class="p">()</span>
+        <span class="k">switch</span> <span class="n">status</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">authorized</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"Authorized"</span><span class="p">)</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">denied</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"Denied"</span><span class="p">)</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">notDetermined</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"Not Determined"</span><span class="p">)</span>
+        <span class="kd">@unknown</span> <span class="k">default</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Error requesting permission: </span><span class="se">\(</span><span class="n">error</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>系统提供了两种闹钟，一种是倒计时闹钟，一种是指定时间闹钟。</p>
+
+<h2 id="2-创建闹钟">2. 创建闹钟</h2>
+<p>AlarmKit提供了多种创建闹钟的方式，以下代码以固定日期闹钟以及倒计时闹钟为例。</p>
+
+<p>创建固定日期闹钟:</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="kd">typealias</span> <span class="kt">AlarmConfiguration</span> <span class="o">=</span> <span class="kt">AlarmManager</span><span class="o">.</span><span class="kt">AlarmConfiguration</span><span class="o">&lt;</span><span class="kt">AlarmData</span><span class="o">&gt;</span>
+        
+        <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="kt">UUID</span><span class="p">()</span>
+        
+        <span class="k">let</span> <span class="nv">dateComponents</span> <span class="o">=</span> <span class="kt">DateComponents</span><span class="p">(</span>
+            <span class="nv">calendar</span><span class="p">:</span> <span class="o">.</span><span class="n">current</span><span class="p">,</span>
+            <span class="nv">year</span><span class="p">:</span> <span class="mi">2025</span><span class="p">,</span>
+            <span class="nv">month</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+            <span class="nv">day</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="nv">hour</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
+            <span class="nv">minute</span><span class="p">:</span> <span class="mi">27</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">date</span> <span class="o">=</span> <span class="kt">Calendar</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="nf">date</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">dateComponents</span><span class="p">)</span><span class="o">!</span>
+        <span class="k">let</span> <span class="nv">scheduleFixed</span> <span class="o">=</span> <span class="kt">Alarm</span><span class="o">.</span><span class="kt">Schedule</span><span class="o">.</span><span class="nf">fixed</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+        
+        <span class="k">let</span> <span class="nv">customMetadata</span> <span class="o">=</span> <span class="kt">AlarmData</span><span class="p">()</span>
+        
+        <span class="k">let</span> <span class="nv">stopButton</span> <span class="o">=</span> <span class="kt">AlarmButton</span><span class="p">(</span>
+            <span class="nv">text</span><span class="p">:</span> <span class="s">"关闭"</span><span class="p">,</span>
+            <span class="nv">textColor</span><span class="p">:</span> <span class="o">.</span><span class="n">white</span><span class="p">,</span>
+            <span class="nv">systemImageName</span><span class="p">:</span> <span class="s">"stop.circle"</span><span class="p">)</span>
+        
+        
+        <span class="k">let</span> <span class="nv">alertContent</span> <span class="o">=</span> <span class="kt">AlarmPresentation</span><span class="o">.</span><span class="kt">Alert</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="s">"直播开始啦！"</span><span class="p">,</span>
+                                                   <span class="nv">stopButton</span><span class="p">:</span> <span class="n">stopButton</span><span class="p">,</span>
+                                                   <span class="nv">secondaryButton</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span>
+                                                   <span class="nv">secondaryButtonBehavior</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+        
+        <span class="k">let</span> <span class="nv">attributes</span> <span class="o">=</span> <span class="kt">AlarmAttributes</span><span class="p">(</span><span class="nv">presentation</span><span class="p">:</span> <span class="kt">AlarmPresentation</span><span class="p">(</span><span class="nv">alert</span><span class="p">:</span> <span class="n">alertContent</span><span class="p">),</span>
+                                         <span class="nv">metadata</span><span class="p">:</span> <span class="n">customMetadata</span><span class="p">,</span>
+                                         <span class="nv">tintColor</span><span class="p">:</span> <span class="kt">Color</span><span class="o">.</span><span class="n">accentColor</span><span class="p">)</span>
+        
+        
+        <span class="k">let</span> <span class="nv">alarmConfiguration</span> <span class="o">=</span> <span class="kt">AlarmConfiguration</span><span class="o">.</span><span class="nf">alarm</span><span class="p">(</span><span class="nv">schedule</span><span class="p">:</span> <span class="n">scheduleFixed</span><span class="p">,</span><span class="nv">attributes</span><span class="p">:</span> <span class="n">attributes</span><span class="p">)</span>
+        
+        <span class="k">try</span> <span class="k">await</span> <span class="kt">AlarmManager</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">schedule</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="n">id</span><span class="p">,</span> <span class="nv">configuration</span><span class="p">:</span> <span class="n">alarmConfiguration</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>创建倒计时闹钟:</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        
+        <span class="c1">// preAlert: 第一次提醒时间，单位为秒</span>
+        <span class="c1">// postAlert: 再次提醒时间，单位为秒</span>
+        <span class="k">let</span> <span class="nv">duration</span> <span class="o">=</span> <span class="kt">Alarm</span><span class="o">.</span><span class="kt">CountdownDuration</span><span class="p">(</span><span class="nv">preAlert</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="nv">postAlert</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="c1">// 创建警报UI样式</span>
+        <span class="k">let</span> <span class="nv">stopButton</span> <span class="o">=</span> <span class="kt">AlarmButton</span><span class="p">(</span>
+            <span class="nv">text</span><span class="p">:</span> <span class="s">"关闭"</span><span class="p">,</span>
+            <span class="nv">textColor</span><span class="p">:</span> <span class="o">.</span><span class="n">white</span><span class="p">,</span>
+            <span class="nv">systemImageName</span><span class="p">:</span> <span class="s">"stop.circle"</span><span class="p">)</span>
+        
+        <span class="k">let</span> <span class="nv">repeatButton</span> <span class="o">=</span> <span class="kt">AlarmButton</span><span class="p">(</span>
+            <span class="nv">text</span><span class="p">:</span> <span class="s">"重复"</span><span class="p">,</span>
+            <span class="nv">textColor</span><span class="p">:</span> <span class="o">.</span><span class="n">white</span><span class="p">,</span>
+            <span class="nv">systemImageName</span><span class="p">:</span> <span class="s">"repeat.circle"</span><span class="p">)</span>
+        
+        <span class="k">let</span> <span class="nv">alertPresentation</span> <span class="o">=</span> <span class="kt">AlarmPresentation</span><span class="o">.</span><span class="kt">Alert</span><span class="p">(</span>
+            <span class="nv">title</span><span class="p">:</span> <span class="s">"抢票开始啦!"</span><span class="p">,</span>
+            <span class="nv">stopButton</span><span class="p">:</span> <span class="n">stopButton</span><span class="p">,</span>
+            <span class="nv">secondaryButton</span><span class="p">:</span> <span class="n">repeatButton</span><span class="p">,</span>
+            <span class="nv">secondaryButtonBehavior</span><span class="p">:</span> <span class="o">.</span><span class="n">countdown</span><span class="p">)</span>
+        
+        <span class="c1">// 创建通知UI样式</span>
+        <span class="k">let</span> <span class="nv">pauseButton</span> <span class="o">=</span> <span class="kt">AlarmButton</span><span class="p">(</span>
+            <span class="nv">text</span><span class="p">:</span> <span class="s">"暂停"</span><span class="p">,</span>
+            <span class="nv">textColor</span><span class="p">:</span> <span class="o">.</span><span class="n">green</span><span class="p">,</span>
+            <span class="nv">systemImageName</span><span class="p">:</span> <span class="s">"pause"</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">countdownPresentation</span> <span class="o">=</span> <span class="kt">AlarmPresentation</span><span class="o">.</span><span class="kt">Countdown</span><span class="p">(</span>
+            <span class="nv">title</span><span class="p">:</span> <span class="s">"抢票时间"</span><span class="p">,</span>
+            <span class="nv">pauseButton</span><span class="p">:</span> <span class="n">pauseButton</span><span class="p">)</span>
+
+        <span class="c1">// 创建闹钟属性</span>
+        <span class="k">let</span> <span class="nv">attributes</span> <span class="o">=</span> <span class="kt">AlarmAttributes</span><span class="o">&lt;</span><span class="kt">AlarmData</span><span class="o">&gt;</span><span class="p">(</span>
+            <span class="nv">presentation</span><span class="p">:</span> <span class="kt">AlarmPresentation</span><span class="p">(</span>
+              <span class="nv">alert</span><span class="p">:</span> <span class="n">alertPresentation</span><span class="p">,</span>
+              <span class="nv">countdown</span><span class="p">:</span> <span class="n">countdownPresentation</span><span class="p">),</span>
+            <span class="nv">metadata</span><span class="p">:</span> <span class="n">customMetadata</span><span class="p">,</span>
+            <span class="nv">tintColor</span><span class="p">:</span> <span class="kt">Color</span><span class="o">.</span><span class="n">green</span><span class="p">)</span>
+
+        <span class="c1">// 创建闹钟配置</span>
+        <span class="k">let</span> <span class="nv">alarmConfiguration</span> <span class="o">=</span> <span class="kt">AlarmConfiguration</span><span class="p">(</span>
+            <span class="nv">countdownDuration</span><span class="p">:</span> <span class="n">duration</span><span class="p">,</span>
+            <span class="nv">attributes</span><span class="p">:</span> <span class="n">attributes</span><span class="p">)</span>
+
+        <span class="c1">// 真正创建闹钟的地方</span>
+        <span class="k">try</span> <span class="k">await</span> <span class="kt">AlarmManager</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">schedule</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="n">id</span><span class="p">,</span> <span class="nv">configuration</span><span class="p">:</span> <span class="n">alarmConfiguration</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>为了更方便理解，我画了一张图，方便理解AlarmKit在倒计时闹钟中的流程图。<br />
+<img src="https://www.foolishtalk.org/cloud/MjAyNeW5tCA45pyIMjjml6Ug5pif5pyf5ZubIDIw5pe2NTjliIYyNuenkiBDU1QK.png" alt="" /></p>
+
+<p>处理完创建闹钟的代码之后，你会发现依然没有出现闹钟的样式，是因为我们还没有通过widget extension定义UI。<br />
+UI的代码需要通过SwiftUI实现，代码比较多，可以参考这里<a href="https://docs-assets.developer.apple.com/published/c2045ce0bff8/SchedulingAnAlarmWithAlarmKit.zip">示例代码</a>的实现。</p>
+
+<p>另外还要注意一点，闹钟的操作事件需要通过AppIntent来实现，这里也比较容易理解，通过alarmID来获取对应的闹钟，然后就可以进行停止、暂停、恢复、重复等操作。</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">PauseIntent</span><span class="p">:</span> <span class="kt">LiveActivityIntent</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">perform</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">IntentResult</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="kt">AlarmManager</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">pause</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">(</span><span class="nv">uuidString</span><span class="p">:</span> <span class="n">alarmID</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">.</span><span class="nf">result</span><span class="p">()</span>
+    <span class="p">}</span>
+    
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">LocalizedStringResource</span> <span class="o">=</span> <span class="s">"Pause"</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">description</span> <span class="o">=</span> <span class="kt">IntentDescription</span><span class="p">(</span><span class="s">"Pause a countdown"</span><span class="p">)</span>
+    
+    <span class="kd">@Parameter</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="s">"alarmID"</span><span class="p">)</span>
+    <span class="k">var</span> <span class="nv">alarmID</span><span class="p">:</span> <span class="kt">String</span>
+    
+    <span class="nf">init</span><span class="p">(</span><span class="nv">alarmID</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">alarmID</span> <span class="o">=</span> <span class="n">alarmID</span>
+    <span class="p">}</span>
+    
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">alarmID</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">StopIntent</span><span class="p">:</span> <span class="kt">LiveActivityIntent</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">perform</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">IntentResult</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="kt">AlarmManager</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">stop</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">(</span><span class="nv">uuidString</span><span class="p">:</span> <span class="n">alarmID</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">.</span><span class="nf">result</span><span class="p">()</span>
+    <span class="p">}</span>
+    
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">LocalizedStringResource</span> <span class="o">=</span> <span class="s">"Stop"</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">description</span> <span class="o">=</span> <span class="kt">IntentDescription</span><span class="p">(</span><span class="s">"Stop an alert"</span><span class="p">)</span>
+    
+    <span class="kd">@Parameter</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="s">"alarmID"</span><span class="p">)</span>
+    <span class="k">var</span> <span class="nv">alarmID</span><span class="p">:</span> <span class="kt">String</span>
+    
+    <span class="nf">init</span><span class="p">(</span><span class="nv">alarmID</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">alarmID</span> <span class="o">=</span> <span class="n">alarmID</span>
+    <span class="p">}</span>
+    
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">alarmID</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">RepeatIntent</span><span class="p">:</span> <span class="kt">LiveActivityIntent</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">perform</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">IntentResult</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="kt">AlarmManager</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">countdown</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">(</span><span class="nv">uuidString</span><span class="p">:</span> <span class="n">alarmID</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">.</span><span class="nf">result</span><span class="p">()</span>
+    <span class="p">}</span>
+    
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">LocalizedStringResource</span> <span class="o">=</span> <span class="s">"Repeat"</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">description</span> <span class="o">=</span> <span class="kt">IntentDescription</span><span class="p">(</span><span class="s">"Repeat a countdown"</span><span class="p">)</span>
+    
+    <span class="kd">@Parameter</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="s">"alarmID"</span><span class="p">)</span>
+    <span class="k">var</span> <span class="nv">alarmID</span><span class="p">:</span> <span class="kt">String</span>
+    
+    <span class="nf">init</span><span class="p">(</span><span class="nv">alarmID</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">alarmID</span> <span class="o">=</span> <span class="n">alarmID</span>
+    <span class="p">}</span>
+    
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">alarmID</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">ResumeIntent</span><span class="p">:</span> <span class="kt">LiveActivityIntent</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">perform</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">IntentResult</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="kt">AlarmManager</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">resume</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">(</span><span class="nv">uuidString</span><span class="p">:</span> <span class="n">alarmID</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">.</span><span class="nf">result</span><span class="p">()</span>
+    <span class="p">}</span>
+    
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">LocalizedStringResource</span> <span class="o">=</span> <span class="s">"Resume"</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">description</span> <span class="o">=</span> <span class="kt">IntentDescription</span><span class="p">(</span><span class="s">"Resume a countdown"</span><span class="p">)</span>
+    
+    <span class="kd">@Parameter</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="s">"alarmID"</span><span class="p">)</span>
+    <span class="k">var</span> <span class="nv">alarmID</span><span class="p">:</span> <span class="kt">String</span>
+    
+    <span class="nf">init</span><span class="p">(</span><span class="nv">alarmID</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">alarmID</span> <span class="o">=</span> <span class="n">alarmID</span>
+    <span class="p">}</span>
+    
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">alarmID</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">OpenAlarmAppIntent</span><span class="p">:</span> <span class="kt">LiveActivityIntent</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">perform</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">IntentResult</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="kt">AlarmManager</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">stop</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">(</span><span class="nv">uuidString</span><span class="p">:</span> <span class="n">alarmID</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">.</span><span class="nf">result</span><span class="p">()</span>
+    <span class="p">}</span>
+    
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">LocalizedStringResource</span> <span class="o">=</span> <span class="s">"Open App"</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">description</span> <span class="o">=</span> <span class="kt">IntentDescription</span><span class="p">(</span><span class="s">"Opens the Sample app"</span><span class="p">)</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">openAppWhenRun</span> <span class="o">=</span> <span class="kc">true</span>
+    
+    <span class="kd">@Parameter</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="s">"alarmID"</span><span class="p">)</span>
+    <span class="k">var</span> <span class="nv">alarmID</span><span class="p">:</span> <span class="kt">String</span>
+    
+    <span class="nf">init</span><span class="p">(</span><span class="nv">alarmID</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">alarmID</span> <span class="o">=</span> <span class="n">alarmID</span>
+    <span class="p">}</span>
+    
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">alarmID</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>最终效果如下：<br />
+<img src="https://www.foolishtalk.org/cloud/MjAyNeW5tCA55pyIIDTml6Ug5pif5pyf5ZubIDIz5pe2MDDliIYzOOenkiBDU1QK.png" alt="" /> 
+<img src="https://www.foolishtalk.org/cloud/MjAyNeW5tCA55pyIIDTml6Ug5pif5pyf5ZubIDIz5pe2MDDliIY0OOenkiBDU1QK.png" alt="" /> <br />
+<img src="https://www.foolishtalk.org/cloud/MjAyNeW5tCA55pyIIDTml6Ug5pif5pyf5ZubIDIz5pe2MDTliIYxMeenkiBDU1QK.png" alt="" /></p>
+
+<h1 id="闹钟自定义铃声">闹钟自定义铃声</h1>
+<p>另外闹钟支持自定义铃声，如果不传入sound，系统将会使用默认声音：</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">let</span> <span class="nv">sound</span> <span class="o">=</span> <span class="kt">AlertConfiguration</span><span class="o">.</span><span class="kt">AlertSound</span><span class="o">.</span><span class="nf">named</span><span class="p">(</span><span class="s">"Chime"</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">alarmConfiguration</span> <span class="o">=</span> <span class="kt">AlarmConfiguration</span><span class="p">(</span>
+            <span class="nv">countdownDuration</span><span class="p">:</span> <span class="n">duration</span><span class="p">,</span>
+            <span class="nv">attributes</span><span class="p">:</span> <span class="n">attributes</span><span class="p">,</span>
+            <span class="nv">sound</span><span class="p">:</span> <span class="n">sound</span><span class="p">)</span>
+</code></pre></div></div>
+<p>如果需要自定义声音，需要将声音文件放在mainbunle或者Library/Sounds下。</p>
+
+<h1 id="总结">总结</h1>
+<p>AlarmKit是一个非常强大的框架，可以让我们在iOS上创建系统体验一样的闹钟，并且支持自定义铃声。我们可以通过闹钟替换到现有的日历提醒功能，给用户带来更好的体验。</p>
+
+<h1 id="参考链接">参考链接</h1>
+<p><a href="https://developer.apple.com/videos/play/wwdc2025/230/">Wake up to the AlarmKit API</a></p>
+
+
+                <hr>
+                <div>
+                    <p>请保持转载后文章内容的完整，以及文章出处。本人保留所有版权相关权利。</p>
+                    <!-- 要是你找到这个，想打赏就打赏吧 <p>如果你看了文章，觉得有收获，可以通过下面的支付宝二维码打赏。</p>
+                <b>
+                <img height="100" width="100" src="https://www.foolishtalk.org/cloud/qrcode.png">
+                </b> -->
+                </div>
+                <!-- 分享代码 -->
+                <div class="-foot-share-buttons">
+                    <b>分享到：</b>
+                    <button class="-mob-share-weibo"></button>
+                    <button class="-mob-share-weixin"></button>
+                    <button class="-mob-share-qq"></button>
+                </div>
+                <script id="-mob-share"
+                    src="https://f1.webshare.mob.com/code/mob-share.js?appkey=23ba60f5704b3"></script>
+
+                <hr>
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2025/01/29/%E5%88%A9%E7%94%A8lldb%E5%88%86%E6%9E%90Swift%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/"
+                            data-toggle="tooltip" data-placement="top" title="利用lldb分析Swift调试问题">&larr; Previous
+                            Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+                
+
+            </div>
+
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        <a href="/tags/#Objective-C" title="Objective-C" rel="2">
+                            Objective-C
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#iOS" title="iOS" rel="43">
+                            iOS
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#问题随笔" title="问题随笔" rel="13">
+                            问题随笔
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#Code-Life" title="Code-Life" rel="2">
+                            Code-Life
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/#WWDC" title="WWDC" rel="3">
+                            WWDC
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#Swift" title="Swift" rel="19">
+                            Swift
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#Perfect-Server" title="Perfect-Server" rel="3">
+                            Perfect-Server
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/#Swift-Tips" title="Swift-Tips" rel="4">
+                            Swift-Tips
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#杂谈" title="杂谈" rel="3">
+                            杂谈
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#RxSwift" title="RxSwift" rel="2">
+                            RxSwift
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/#Xcode" title="Xcode" rel="9">
+                            Xcode
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/#Mac" title="Mac" rel="2">
+                            Mac
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                    <li><a href="https://www.maaiting.com">make</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+<canvas height="990" style="position: fixed; top: 0px; left: 0px; z-index: -1; opacity: 0.1;" width="1920">
+</canvas>
+<script src="/js/mylines.js" type="text/javascript">
+</script>
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/2095454814">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/fidetro">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; FoolishTalk 2025   <a href="https://www.foolishtalk.org/privacy.html">隐私政策</a> 
+                    <br>
+                </p>
+                <p class="copyright text-muted">
+                    
+                    <a href="http://beian.miit.gov.cn">粤ICP备17090793号</a>                    
+                    </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+<script>
+    
+    var _gaId = 'UA-111166556-1';
+    var _gaDomain = 'foolishtalk.org';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+<script>
+    var _baId = '04196a2ea468bf450920ada8e098d8f7';
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?"+_baId;      
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="50" height="50" /> -->
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
