@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>2019的关键词 - FoolishTalk 技术分享</title>
+    <title>Xcode26.3 AI体验 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://localhost:4000/2019/02/04/2019%E7%9A%84%E5%85%B3%E9%94%AE%E8%AF%8D/">
+    <link rel="canonical" href="http://localhost:4000/2026/03/05/Xcode26.3-AI%E4%BD%93%E9%AA%8C/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -158,12 +158,12 @@
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-sea.jpg" width="0" height="0"> -->
+<!-- <img src="/img/DSC01667.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header {
-        background-image: url('/img/post-bg-sea.jpg')
+        background-image: url('/img/DSC01667.jpg')
     }
 </style>
 <header class="intro-header">
@@ -175,15 +175,17 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#杂谈" title="杂谈">杂谈</a>
+                        <a class="tag" href="/tags/#Xcode" title="Xcode">Xcode</a>
+                        
+                        <a class="tag" href="/tags/#AI" title="AI">AI</a>
                         
                     </div>
-                    <h1>2019的关键词</h1>
+                    <h1>Xcode26.3 AI体验</h1>
                     
                     
-                    <h2 class="subheading">杂谈</h2>
+                    <h2 class="subheading">Xcode、Apple Intelligence、AI</h2>
                     
-                    <span class="meta">Posted by Karim on February 4, 2019</span>
+                    <span class="meta">Posted by Karim on March 5, 2026</span>
                 </div>
             </div>
         </div>
@@ -225,22 +227,50 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="2018">2018</h1>
+                <h1 id="前言">前言</h1>
+<p>随着Xcode26.3的发布，开发者们终于可以在Xcode中直接使用AI来辅助开发了。Xcode支持多种AI模型，包括OpenAI、Claude以及本地部署的模型，让开发者可以根据自己的需求选择合适的AI模型来提升开发效率。</p>
 
-<p>在过去的一年，经历了人生第一次裁员，被万表裁了之后，期间去过YY面试，第一次去到大公司去面试，面试之前并没有怎么好好准备，一直以来对自己的水平都是非常自信，结果依旧在上面栽了个大跟斗，最终在东莞和广州之间，还是选择留在了广州，去到了悦跑圈，年轻还是尽量希望能够往更好的平台和城市发展。<br />
-在工作和技术上，并没有很大突破，这点其实很遗憾，日复一日的搬砖，自身专业上没有很好沉淀，对细节把控不够，深度依旧不够深入，真的很不满意现状的水平。<br />
-给自己定下2019的几个关键词，不忘初心，方得始终。</p>
+<h1 id="安装本地模型">安装本地模型</h1>
+<p>因为Xcode支持本地部署的AI模型，所以我体验了一下在本地进行部署，然后在Xcode中配置使用。这里我选择了ollama这个工具来部署本地模型，下面是具体的步骤，先安装ollama：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -fsSL https://ollama.com/install.sh | sh
+</code></pre></div></div>
 
-<h1 id="细节">细节</h1>
-<p>deadline短，并不是给自己代码不规范的借口，注重细节，真的很大程度上可以减少更多bug。<br />
-看待问题要有更全面的思考，稍不注意就有可能影响到原有的逻辑。</p>
+<p>这里可以看到ollama支持的模型，https://ollama.com/library</p>
 
-<h1 id="清醒">清醒</h1>
-<p>不被他人左右自己的方向，知道自己要做的是什么，什么该做，什么不该做，当机立断。</p>
+<p>我这里选择的是<code class="language-plaintext highlighter-rouge">qwen3-coder:30b</code>，安装命令如下：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ollama pull qwen3-coder:30b
+</code></pre></div></div>
+<p>下载完成后可以看到模型已经安装好了：
+<img src="https://www.foolishtalk.org/cloud/15211b56-2cd8-4217-b56b-475f04937807.png" alt="" /></p>
 
-<h1 id="感恩">感恩</h1>
-<p>感谢那些纵容你犯错后以后原谅你的人，不要再犯错，失去别人对你的信任了。</p>
+<p>ollama默认会在本地启动一个服务，监听11434端口，我们可以请求测试一下：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl http://localhost:11434/api/generate -d '{
+  "model": "qwen3-coder:30b",
+  "prompt": "Write a Swift async HTTP request example"
+}'
+</code></pre></div></div>
+<p>看到成功有返回之后就可以在Xcode中进行配置了使用了。</p>
 
+<h1 id="xcode配置本地模型">Xcode配置本地模型</h1>
+<p>打开Xcode，选择菜单栏的<code class="language-plaintext highlighter-rouge">Xcode</code>-&gt;<code class="language-plaintext highlighter-rouge">Settings</code>，在弹出的设置界面中选择<code class="language-plaintext highlighter-rouge">Intelligence</code>，这里可以看到支持OpenAI和Claude，我要演示的本地模型的使用，所以点击<code class="language-plaintext highlighter-rouge">Add a Provider...</code>：
+<img src="https://www.foolishtalk.org/cloud/c2f5a408-2fb7-43fe-a5c2-bd622ce45f52.png" alt="" /></p>
+
+<p>选择Locally Hosted,填写Port为11434和Description后就可以了。
+<img src="https://www.foolishtalk.org/cloud/d29ec550-8100-4a40-9f3a-a3bc7d7e3a88.png" alt="" /></p>
+
+<p>简单的让Xcode使用这个模型写了个demo，效果还不错：
+<img src="https://www.foolishtalk.org/cloud/576f6837-ffab-4e1c-8768-57d2e9750383.png" alt="" /></p>
+
+<p><img src="https://www.foolishtalk.org/cloud/0f949b6b-4ccd-40d3-b0e6-65db5b6088e1.png" alt="" /></p>
+
+<p><img src="https://www.foolishtalk.org/cloud/7082a4cd-73cd-40ae-9a6b-2fd931492dd9.png" alt="" /></p>
+
+<h1 id="总结">总结</h1>
+<p>Xcode26.3终于支持了AI，但是目前其实非常有限，仅限于代码生成，连代码补全都不支持，感觉更像是一个独立的AI工具，而不是集成在Xcode中的AI助手，而官方提到的其他功能，在cursor、vscode等工具一样能做，而且别人做的更好，想必Xcode在这还有很长的一条路要走。</p>
+
+<h1 id="参考">参考</h1>
+<p><a href="https://developer.apple.com/videos/play/tech-talks/111428/">Meet agentic coding in Xcode</a><br />
+<a href="https://docs.ollama.com/">Ollama</a></p>
 
 
                 <hr>
@@ -268,16 +298,11 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/12/15/CloudKit%E5%AE%9E%E8%B7%B5/"
-                            data-toggle="tooltip" data-placement="top" title="CloudKit实践">&larr; Previous
+                        <a href="/2025/12/02/%E5%9B%BD%E8%A1%8CiPhone%E5%BC%80%E5%90%AFApple-Intelligence%E4%BD%93%E9%AA%8CFoundation-Models/"
+                            data-toggle="tooltip" data-placement="top" title="国行iPhone开启Apple Intelligence体验Foundation Models">&larr; Previous
                             Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2019/02/16/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%80%BB%E7%BB%93/" data-toggle="tooltip"
-                            data-placement="top" title="iOS多线程总结">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 

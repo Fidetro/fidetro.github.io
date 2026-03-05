@@ -3,11 +3,69 @@
   <channel>
     <title>FoolishTalk</title>
     <description></description>
-    <link>https://www.foolishtalk.org/</link>
-    <atom:link href="https://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 02 Dec 2025 22:37:52 +0800</pubDate>
-    <lastBuildDate>Tue, 02 Dec 2025 22:37:52 +0800</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Thu, 05 Mar 2026 23:07:02 +0800</pubDate>
+    <lastBuildDate>Thu, 05 Mar 2026 23:07:02 +0800</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
+    
+      <item>
+        <title>Xcode26.3 AI体验</title>
+        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+&lt;p&gt;随着Xcode26.3的发布，开发者们终于可以在Xcode中直接使用AI来辅助开发了。Xcode支持多种AI模型，包括OpenAI、Claude以及本地部署的模型，让开发者可以根据自己的需求选择合适的AI模型来提升开发效率。&lt;/p&gt;
+
+&lt;h1 id=&quot;安装本地模型&quot;&gt;安装本地模型&lt;/h1&gt;
+&lt;p&gt;因为Xcode支持本地部署的AI模型，所以我体验了一下在本地进行部署，然后在Xcode中配置使用。这里我选择了ollama这个工具来部署本地模型，下面是具体的步骤，先安装ollama：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -fsSL https://ollama.com/install.sh | sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这里可以看到ollama支持的模型，https://ollama.com/library&lt;/p&gt;
+
+&lt;p&gt;我这里选择的是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;qwen3-coder:30b&lt;/code&gt;，安装命令如下：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ollama pull qwen3-coder:30b
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;下载完成后可以看到模型已经安装好了：
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/15211b56-2cd8-4217-b56b-475f04937807.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;ollama默认会在本地启动一个服务，监听11434端口，我们可以请求测试一下：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl http://localhost:11434/api/generate -d &apos;{
+  &quot;model&quot;: &quot;qwen3-coder:30b&quot;,
+  &quot;prompt&quot;: &quot;Write a Swift async HTTP request example&quot;
+}&apos;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;看到成功有返回之后就可以在Xcode中进行配置了使用了。&lt;/p&gt;
+
+&lt;h1 id=&quot;xcode配置本地模型&quot;&gt;Xcode配置本地模型&lt;/h1&gt;
+&lt;p&gt;打开Xcode，选择菜单栏的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Xcode&lt;/code&gt;-&amp;gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings&lt;/code&gt;，在弹出的设置界面中选择&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Intelligence&lt;/code&gt;，这里可以看到支持OpenAI和Claude，我要演示的本地模型的使用，所以点击&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add a Provider...&lt;/code&gt;：
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/c2f5a408-2fb7-43fe-a5c2-bd622ce45f52.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;选择Locally Hosted,填写Port为11434和Description后就可以了。
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/d29ec550-8100-4a40-9f3a-a3bc7d7e3a88.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;简单的让Xcode使用这个模型写了个demo，效果还不错：
+&lt;img src=&quot;https://www.foolishtalk.org/cloud/576f6837-ffab-4e1c-8768-57d2e9750383.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/0f949b6b-4ccd-40d3-b0e6-65db5b6088e1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/7082a4cd-73cd-40ae-9a6b-2fd931492dd9.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;总结&quot;&gt;总结&lt;/h1&gt;
+&lt;p&gt;Xcode26.3终于支持了AI，但是目前其实非常有限，仅限于代码生成，连代码补全都不支持，感觉更像是一个独立的AI工具，而不是集成在Xcode中的AI助手，而官方提到的其他功能，在cursor、vscode等工具一样能做，而且别人做的更好，想必Xcode在这还有很长的一条路要走。&lt;/p&gt;
+
+&lt;h1 id=&quot;参考&quot;&gt;参考&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/tech-talks/111428/&quot;&gt;Meet agentic coding in Xcode&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://docs.ollama.com/&quot;&gt;Ollama&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 05 Mar 2026 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2026/03/05/Xcode26.3-AI%E4%BD%93%E9%AA%8C/</link>
+        <guid isPermaLink="true">http://localhost:4000/2026/03/05/Xcode26.3-AI%E4%BD%93%E9%AA%8C/</guid>
+        
+        <category>Xcode</category>
+        
+        <category>AI</category>
+        
+        
+      </item>
     
       <item>
         <title>国行iPhone开启Apple Intelligence体验Foundation Models</title>
@@ -69,8 +127,8 @@ https://www.icloud.com/shortcuts/313d0562fc7f466b9775cef026577670&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 02 Dec 2025 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2025/12/02/%E5%9B%BD%E8%A1%8CiPhone%E5%BC%80%E5%90%AFApple-Intelligence%E4%BD%93%E9%AA%8CFoundation-Models/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2025/12/02/%E5%9B%BD%E8%A1%8CiPhone%E5%BC%80%E5%90%AFApple-Intelligence%E4%BD%93%E9%AA%8CFoundation-Models/</guid>
+        <link>http://localhost:4000/2025/12/02/%E5%9B%BD%E8%A1%8CiPhone%E5%BC%80%E5%90%AFApple-Intelligence%E4%BD%93%E9%AA%8CFoundation-Models/</link>
+        <guid isPermaLink="true">http://localhost:4000/2025/12/02/%E5%9B%BD%E8%A1%8CiPhone%E5%BC%80%E5%90%AFApple-Intelligence%E4%BD%93%E9%AA%8CFoundation-Models/</guid>
         
         <category>iOS</category>
         
@@ -370,8 +428,8 @@ UI的代码需要通过SwiftUI实现，代码比较多，可以参考这里&lt;a
 &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2025/230/&quot;&gt;Wake up to the AlarmKit API&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 24 Aug 2025 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2025/08/24/iOS%E7%BB%88%E4%BA%8E%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E9%97%B9%E9%92%9F%E4%BA%86/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2025/08/24/iOS%E7%BB%88%E4%BA%8E%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E9%97%B9%E9%92%9F%E4%BA%86/</guid>
+        <link>http://localhost:4000/2025/08/24/iOS%E7%BB%88%E4%BA%8E%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E9%97%B9%E9%92%9F%E4%BA%86/</link>
+        <guid isPermaLink="true">http://localhost:4000/2025/08/24/iOS%E7%BB%88%E4%BA%8E%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E9%97%B9%E9%92%9F%E4%BA%86/</guid>
         
         <category>iOS</category>
         
@@ -454,8 +512,8 @@ SwiftASTContextForExpressions&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;modul
 &lt;a href=&quot;https://developer.apple.com/forums/thread/767051&quot;&gt;Breakpoint issue: ‘self cannot be reconstructed’&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 29 Jan 2025 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2025/01/29/%E5%88%A9%E7%94%A8lldb%E5%88%86%E6%9E%90Swift%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2025/01/29/%E5%88%A9%E7%94%A8lldb%E5%88%86%E6%9E%90Swift%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</guid>
+        <link>http://localhost:4000/2025/01/29/%E5%88%A9%E7%94%A8lldb%E5%88%86%E6%9E%90Swift%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">http://localhost:4000/2025/01/29/%E5%88%A9%E7%94%A8lldb%E5%88%86%E6%9E%90Swift%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</guid>
         
         <category>iOS</category>
         
@@ -510,8 +568,8 @@ SwiftASTContextForExpressions&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;modul
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/7b5ffc11e32b3e5c1c8b2c21d2384bea.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 15 May 2024 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2024/05/15/appstore-sever%E4%BD%BF%E7%94%A8/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2024/05/15/appstore-sever%E4%BD%BF%E7%94%A8/</guid>
+        <link>http://localhost:4000/2024/05/15/appstore-sever%E4%BD%BF%E7%94%A8/</link>
+        <guid isPermaLink="true">http://localhost:4000/2024/05/15/appstore-sever%E4%BD%BF%E7%94%A8/</guid>
         
         <category>iOS</category>
         
@@ -672,8 +730,8 @@ SwiftASTContextForExpressions&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;modul
 &lt;/ul&gt;
 </description>
         <pubDate>Wed, 16 Aug 2023 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2023/08/16/%E8%AF%86%E5%88%ABiOS%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2023/08/16/%E8%AF%86%E5%88%ABiOS%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/</guid>
+        <link>http://localhost:4000/2023/08/16/%E8%AF%86%E5%88%ABiOS%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/</link>
+        <guid isPermaLink="true">http://localhost:4000/2023/08/16/%E8%AF%86%E5%88%ABiOS%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/</guid>
         
         <category>iOS</category>
         
@@ -1151,8 +1209,8 @@ SwiftASTContextForExpressions&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;modul
 &lt;a href=&quot;https://forums.swift.org/t/how-to-build-and-debug-jsondecoder/44690&quot;&gt;How to build and debug JSONDecoder?&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 14 Jun 2023 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2023/06/14/JSONDecoder%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2023/06/14/JSONDecoder%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</guid>
+        <link>http://localhost:4000/2023/06/14/JSONDecoder%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</link>
+        <guid isPermaLink="true">http://localhost:4000/2023/06/14/JSONDecoder%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</guid>
         
         <category>Codable</category>
         
@@ -1222,8 +1280,8 @@ B % git remote &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;from_repo_A
 &lt;a href=&quot;https://www.jianshu.com/p/7b4247f2d0fd&quot;&gt;Git跨仓库迁移代码文件，并保留git历史记录&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 19 Jun 2022 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</guid>
+        <link>http://localhost:4000/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</guid>
         
         <category>Git</category>
         
@@ -1248,8 +1306,8 @@ B % git remote &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;from_repo_A
 &lt;p&gt;加上双引号就会当成一个参数处理，就能解决这个问题了。&lt;/p&gt;
 </description>
         <pubDate>Sat, 18 Jun 2022 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</guid>
+        <link>http://localhost:4000/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</guid>
         
         <category>随笔</category>
         
@@ -1351,49 +1409,10 @@ changeCommitMsg&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&q
 &lt;a href=&quot;https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90&quot;&gt;Git 钩子&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 09 Mar 2022 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</guid>
+        <link>http://localhost:4000/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</guid>
         
         <category>git</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Installing Lightning for Xcode</title>
-        <description>&lt;p&gt;Lightning for Xcode is an Xcode developer plugin that improves development efficiency for iOS and Mac developers.&lt;/p&gt;
-
-&lt;p&gt;Lightning for Xcode has the following features:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Extracting Method Declarations
-copy the implementation of the function to extract the Method declaration&lt;/li&gt;
-  &lt;li&gt;Generating Lazy Variable
-Copy the property declaration to Generating Lazy Variable code&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;to-install-lightning-for-xcode-in-xcode&quot;&gt;To install Lightning for Xcode in Xcode:&lt;/h1&gt;
-&lt;ol&gt;
-  &lt;li&gt;Quit Xcode;&lt;/li&gt;
-  &lt;li&gt;Enable Lightning extension in System Preferences -&amp;gt; Extensions -&amp;gt; Xcode Source Editor;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/C54AFAC1-558F-4682-AF83-C7AC04E89E75.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/E1AA6956-0246-4377-B085-DA45E9FAF733.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;Restart Xcode;&lt;/li&gt;
-  &lt;li&gt;Select the code you want to extracting;&lt;/li&gt;
-  &lt;li&gt;Use Xcode Editor -&amp;gt; Lightning menu;&lt;/li&gt;
-  &lt;li&gt;Enjoy coding!&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h1 id=&quot;tips&quot;&gt;Tips&lt;/h1&gt;
-&lt;p&gt;You can set a shortcut (Key Binding) for any command via Xcode -&amp;gt; Preferences -&amp;gt; Key Bindings. &lt;br /&gt;
-&lt;img src=&quot;https://www.foolishtalk.org/cloud/D7233F8D-4E03-4B53-8A14-8B402BF4051A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;If there are any questions, please feel free to contact me and send email to zykzzzz@hotmail.com.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 21 Feb 2022 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2022/02/21/lightning/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2022/02/21/lightning/</guid>
-        
-        <category>Lightning</category>
         
         
       </item>
