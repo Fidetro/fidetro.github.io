@@ -3,14 +3,41 @@
   <channel>
     <title>FoolishTalk</title>
     <description></description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 05 Mar 2026 23:07:02 +0800</pubDate>
-    <lastBuildDate>Thu, 05 Mar 2026 23:07:02 +0800</lastBuildDate>
+    <link>https://www.foolishtalk.org/</link>
+    <atom:link href="https://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Fri, 05 Jun 2026 23:50:26 +0800</pubDate>
+    <lastBuildDate>Fri, 05 Jun 2026 23:50:26 +0800</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
-        <title>Xcode26.3 AI体验</title>
+        <title>AI盛行后，我不再热衷于开源了</title>
+        <description>&lt;p&gt;早在去年年底的时候，我就想聊聊这个话题，当时我对开源社区或者说是GitHub还有心存希望，实际上是越来越失望了。
+在过去，我参与一些开源项目主要动机是：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;在自己vibe coding的项目里应用了一些开源库，发现了一些问题或者者有一些功能需求，就自己提PR来处理，因为我受益了，所以我希望反哺开源社区；&lt;/li&gt;
+  &lt;li&gt;看到一些知名的库想参与进来，看看issue有什么问题是比较容易上手的，来锻炼一下自己的能力；&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;但是现在，AI的出现改变了这一切，开源社区的氛围变得越来越糟糕了，甚至有些项目已经不再欢迎外部贡献了。因为AI可以轻松地生成代码，甚至可以自动修复bug，有项目被AI优化后AI做的项目更火了，也有被AI生成PR充斥满整个项目，让我觉得参与到开源项目似乎已经没有什么意义了。过去参与开源能证明你有阅读和理解作者代码的能力，然而现在只能证明你会使用AI工具了而已。&lt;/p&gt;
+
+&lt;p&gt;这段由AI生成，但是我也表达了我的想法：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;现在的开源，更像是资本家在利用开源社区来为他们的AI模型提供训练数据，开源社区成了AI模型的免费劳动力，而我们这些开发者则成了被剥削的对象。AI模型的训练需要大量的数据，而开源社区正好提供了这些数据，然而我们却没有得到任何回报，反而还要被AI模型取代了工作机会。我觉得这种情况非常不公平，也非常令人失望。开源社区曾经是一个充满激情和创造力的地方，但现在却变成了一个被AI统治的地方，我觉得我们应该重新思考一下我们在开源社区中的角色和价值。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Fri, 05 Jun 2026 00:00:00 +0800</pubDate>
+        <link>https://www.foolishtalk.org/2026/06/05/AI%E7%9B%9B%E8%A1%8C%E5%90%8E-%E6%88%91%E4%B8%8D%E5%86%8D%E7%83%AD%E8%A1%B7%E4%BA%8E%E5%BC%80%E6%BA%90%E4%BA%86/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2026/06/05/AI%E7%9B%9B%E8%A1%8C%E5%90%8E-%E6%88%91%E4%B8%8D%E5%86%8D%E7%83%AD%E8%A1%B7%E4%BA%8E%E5%BC%80%E6%BA%90%E4%BA%86/</guid>
+        
+        <category>开源</category>
+        
+        <category>AI</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>AI盛行后，我不再热衷于开源了</title>
         <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
 &lt;p&gt;随着Xcode26.3的发布，开发者们终于可以在Xcode中直接使用AI来辅助开发了。Xcode支持多种AI模型，包括OpenAI、Claude以及本地部署的模型，让开发者可以根据自己的需求选择合适的AI模型来提升开发效率。&lt;/p&gt;
 
@@ -56,9 +83,9 @@
 &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/tech-talks/111428/&quot;&gt;Meet agentic coding in Xcode&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&quot;https://docs.ollama.com/&quot;&gt;Ollama&lt;/a&gt;&lt;/p&gt;
 </description>
-        <pubDate>Thu, 05 Mar 2026 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2026/03/05/Xcode26.3-AI%E4%BD%93%E9%AA%8C/</link>
-        <guid isPermaLink="true">http://localhost:4000/2026/03/05/Xcode26.3-AI%E4%BD%93%E9%AA%8C/</guid>
+        <pubDate>Fri, 05 Jun 2026 00:00:00 +0800</pubDate>
+        <link>https://www.foolishtalk.org/2026/06/05/Xcode26.3-AI%E4%BD%93%E9%AA%8C/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2026/06/05/Xcode26.3-AI%E4%BD%93%E9%AA%8C/</guid>
         
         <category>Xcode</category>
         
@@ -127,8 +154,8 @@ https://www.icloud.com/shortcuts/313d0562fc7f466b9775cef026577670&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 02 Dec 2025 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2025/12/02/%E5%9B%BD%E8%A1%8CiPhone%E5%BC%80%E5%90%AFApple-Intelligence%E4%BD%93%E9%AA%8CFoundation-Models/</link>
-        <guid isPermaLink="true">http://localhost:4000/2025/12/02/%E5%9B%BD%E8%A1%8CiPhone%E5%BC%80%E5%90%AFApple-Intelligence%E4%BD%93%E9%AA%8CFoundation-Models/</guid>
+        <link>https://www.foolishtalk.org/2025/12/02/%E5%9B%BD%E8%A1%8CiPhone%E5%BC%80%E5%90%AFApple-Intelligence%E4%BD%93%E9%AA%8CFoundation-Models/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2025/12/02/%E5%9B%BD%E8%A1%8CiPhone%E5%BC%80%E5%90%AFApple-Intelligence%E4%BD%93%E9%AA%8CFoundation-Models/</guid>
         
         <category>iOS</category>
         
@@ -428,8 +455,8 @@ UI的代码需要通过SwiftUI实现，代码比较多，可以参考这里&lt;a
 &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2025/230/&quot;&gt;Wake up to the AlarmKit API&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 24 Aug 2025 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2025/08/24/iOS%E7%BB%88%E4%BA%8E%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E9%97%B9%E9%92%9F%E4%BA%86/</link>
-        <guid isPermaLink="true">http://localhost:4000/2025/08/24/iOS%E7%BB%88%E4%BA%8E%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E9%97%B9%E9%92%9F%E4%BA%86/</guid>
+        <link>https://www.foolishtalk.org/2025/08/24/iOS%E7%BB%88%E4%BA%8E%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E9%97%B9%E9%92%9F%E4%BA%86/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2025/08/24/iOS%E7%BB%88%E4%BA%8E%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E9%97%B9%E9%92%9F%E4%BA%86/</guid>
         
         <category>iOS</category>
         
@@ -512,8 +539,8 @@ SwiftASTContextForExpressions&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;modul
 &lt;a href=&quot;https://developer.apple.com/forums/thread/767051&quot;&gt;Breakpoint issue: ‘self cannot be reconstructed’&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 29 Jan 2025 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2025/01/29/%E5%88%A9%E7%94%A8lldb%E5%88%86%E6%9E%90Swift%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</link>
-        <guid isPermaLink="true">http://localhost:4000/2025/01/29/%E5%88%A9%E7%94%A8lldb%E5%88%86%E6%9E%90Swift%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</guid>
+        <link>https://www.foolishtalk.org/2025/01/29/%E5%88%A9%E7%94%A8lldb%E5%88%86%E6%9E%90Swift%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2025/01/29/%E5%88%A9%E7%94%A8lldb%E5%88%86%E6%9E%90Swift%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</guid>
         
         <category>iOS</category>
         
@@ -568,8 +595,8 @@ SwiftASTContextForExpressions&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;modul
 &lt;img src=&quot;https://www.foolishtalk.org/cloud/7b5ffc11e32b3e5c1c8b2c21d2384bea.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 15 May 2024 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2024/05/15/appstore-sever%E4%BD%BF%E7%94%A8/</link>
-        <guid isPermaLink="true">http://localhost:4000/2024/05/15/appstore-sever%E4%BD%BF%E7%94%A8/</guid>
+        <link>https://www.foolishtalk.org/2024/05/15/appstore-sever%E4%BD%BF%E7%94%A8/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2024/05/15/appstore-sever%E4%BD%BF%E7%94%A8/</guid>
         
         <category>iOS</category>
         
@@ -730,8 +757,8 @@ SwiftASTContextForExpressions&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;modul
 &lt;/ul&gt;
 </description>
         <pubDate>Wed, 16 Aug 2023 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2023/08/16/%E8%AF%86%E5%88%ABiOS%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/</link>
-        <guid isPermaLink="true">http://localhost:4000/2023/08/16/%E8%AF%86%E5%88%ABiOS%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/</guid>
+        <link>https://www.foolishtalk.org/2023/08/16/%E8%AF%86%E5%88%ABiOS%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2023/08/16/%E8%AF%86%E5%88%ABiOS%E8%99%9A%E6%8B%9F%E5%AE%9A%E4%BD%8D/</guid>
         
         <category>iOS</category>
         
@@ -1209,8 +1236,8 @@ SwiftASTContextForExpressions&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;modul
 &lt;a href=&quot;https://forums.swift.org/t/how-to-build-and-debug-jsondecoder/44690&quot;&gt;How to build and debug JSONDecoder?&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 14 Jun 2023 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2023/06/14/JSONDecoder%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</link>
-        <guid isPermaLink="true">http://localhost:4000/2023/06/14/JSONDecoder%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</guid>
+        <link>https://www.foolishtalk.org/2023/06/14/JSONDecoder%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2023/06/14/JSONDecoder%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</guid>
         
         <category>Codable</category>
         
@@ -1280,8 +1307,8 @@ B % git remote &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;from_repo_A
 &lt;a href=&quot;https://www.jianshu.com/p/7b4247f2d0fd&quot;&gt;Git跨仓库迁移代码文件，并保留git历史记录&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 19 Jun 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</guid>
+        <link>https://www.foolishtalk.org/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</guid>
         
         <category>Git</category>
         
@@ -1306,113 +1333,12 @@ B % git remote &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;from_repo_A
 &lt;p&gt;加上双引号就会当成一个参数处理，就能解决这个问题了。&lt;/p&gt;
 </description>
         <pubDate>Sat, 18 Jun 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</guid>
+        <link>https://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</guid>
         
         <category>随笔</category>
         
         <category>shell</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>全局git hook的几种方式</title>
-        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
-&lt;p&gt;随着自己开发的个人项目越来越多，也给自己制定了一些git的规范，例如&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git commit&lt;/code&gt;提交日志的规范。&lt;br /&gt;
-因为我的个人项目都是放在GitHub上，我在给项目开发新需求的时候，会新建一个issue，GitHub会给这个issue，创建一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id&lt;/code&gt;(不知道正确叫法是什么)，然后在开发新需求的时候，会把分支名称改成&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id&lt;/code&gt;，这样就可以方便的跟踪项目后续问题回溯，同时还会在提交日志加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id&lt;/code&gt;，类似这样的格式：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#id-问题/功能描述
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;这样的格式，可以在GitHub的页面直接跳转到对应的issue或者pull request，非常方便。&lt;br /&gt;
-但是每次都得手动加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id-&lt;/code&gt;，这样会比较麻烦，所以我想到了用git-hooks，在提交日志的时候，自动加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id-&lt;/code&gt;，这样就可以让我们不用手动加上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#id-&lt;/code&gt;了。&lt;/p&gt;
-
-&lt;h1 id=&quot;正文&quot;&gt;正文&lt;/h1&gt;
-&lt;p&gt;关于git-hooks，我就不多说了，可以看看这里对git-hooks的&lt;a href=&quot;https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90&quot;&gt;介绍&lt;/a&gt;,如果只想把hook的规则单独使用在某个项目中，可以在项目的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.git/hooks&lt;/code&gt;下创建hook脚本。&lt;br /&gt;
-如果想要在全局使用，有两种方式&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;init.templatedir&lt;/code&gt;或者&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;core.hooksPath&lt;/code&gt;。&lt;/p&gt;
-
-&lt;h2 id=&quot;inittemplatedir&quot;&gt;init.templatedir&lt;/h2&gt;
-&lt;p&gt;这种方式会在你的项目&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git init&lt;/code&gt;的时候，自动创建一个hooks文件夹，然后把所有的hook脚本都放在这个文件夹下，如果是旧的项目就需要再次执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git init&lt;/code&gt;才会生效。&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#创建hooks文件夹
-mkdir -p ~/.git-templates/hooks
-#配置全局git templates
-git config --global init.templatedir &apos;~/.git-templates&apos;  
-#确保脚本可以执行
-chmod a+x ~/.git-hooksPath/hooks/xxx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;将hook的脚本放入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.git-templates/hooks&lt;/code&gt;中即可。&lt;/p&gt;
-
-&lt;h2 id=&quot;corehookspath&quot;&gt;core.hooksPath&lt;/h2&gt;
-&lt;p&gt;这种方式需要git的版本在2.9+以上才能正常使用，比第一种方式方便在旧项目不需要再次init就可以使用。&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#创建hooks文件夹&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; ~/.git-hooksPath/hooks
-&lt;span class=&quot;c&quot;&gt;#配置全局git hooksPath&lt;/span&gt;
-git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; core.hooksPath ~/.git-hooksPath/hooks  
-&lt;span class=&quot;c&quot;&gt;#确保脚本可以执行&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;a+x ~/.git-hooksPath/hooks/commit-msg
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;将hook的脚本放入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.git-hooksPath/hooks&lt;/code&gt;中即可。&lt;br /&gt;
-实现上面的功能，可以参考下面的脚本：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# An example hook script to check the commit log message.&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# Called by &quot;git commit&quot; with one argument, the name of the file&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# that has the commit message.  The hook should exit with non-zero&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# status after issuing an appropriate message if it wants to stop the&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# commit.  The hook is allowed to edit the commit message file.&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# To enable this hook, rename this file to &quot;commit-msg&quot;.&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# Uncomment the below to add a Signed-off-by line to the message.&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# Doing this in a hook is a bad idea in general, but the prepare-commit-msg&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# hook is more suited to it.&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# SOB=$(git var GIT_AUTHOR_IDENT | sed -n &apos;s/^\(.*&amp;gt;\).*$/Signed-off-by: \1/p&apos;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# grep -qs &quot;^$SOB&quot; &quot;$1&quot; || echo &quot;$SOB&quot; &amp;gt;&amp;gt; &quot;$1&quot;&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# This example catches duplicate Signed-off-by lines.&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;#获取当前分支&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;branch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;git symbolic-ref &lt;span class=&quot;nt&quot;&gt;--short&lt;/span&gt; HEAD&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;commit_msg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
-changeCommitMsg&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;    
-    &lt;span class=&quot;c&quot;&gt;#根据#分割branch取最后一个&lt;/span&gt;
-    &lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;branch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;##*/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#如果有下划线，分割下划线前面&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$sub_branch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;_&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;then
-        &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;%%_*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;fi
-
-    
-    &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$sub_branch&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;#&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$result&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
-        &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sub_branch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#other&quot;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
-
-    &lt;span class=&quot;c&quot;&gt;#$sub_branch替换$message中的[branch]字符串&lt;/span&gt;
-    &lt;span class=&quot;nv&quot;&gt;commit_msg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;//\[branch\]/&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$sub_branch&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$commit_msg&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$commit_msg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;~ &lt;span class=&quot;s2&quot;&gt;&quot;[branch]&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
-   &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;newmsg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;changeCommitMsg&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt; 
-   &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$newmsg&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;如果有个别项目不需要使用全局的git hooks，可以在项目的根目录下重新配置git hooksPath，比如：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config core.hooksPath .git/hooks 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;参考&quot;&gt;参考&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/2293498/applying-a-git-post-commit-hook-to-all-current-and-future-repositories&quot;&gt;Applying a git post-commit hook to all current and future repositories&lt;/a&gt; &lt;br /&gt;
-&lt;a href=&quot;https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90&quot;&gt;Git 钩子&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Wed, 09 Mar 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</guid>
-        
-        <category>git</category>
         
         
       </item>

@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Xcode26.3 AI体验 - FoolishTalk 技术分享</title>
+    <title>AI盛行后，我不再热衷于开源了 - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="http://localhost:4000/2026/03/05/Xcode26.3-AI%E4%BD%93%E9%AA%8C/">
+    <link rel="canonical" href="https://www.foolishtalk.org/2026/06/05/AI%E7%9B%9B%E8%A1%8C%E5%90%8E-%E6%88%91%E4%B8%8D%E5%86%8D%E7%83%AD%E8%A1%B7%E4%BA%8E%E5%BC%80%E6%BA%90%E4%BA%86/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -175,17 +175,17 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Xcode" title="Xcode">Xcode</a>
+                        <a class="tag" href="/tags/#开源" title="开源">开源</a>
                         
                         <a class="tag" href="/tags/#AI" title="AI">AI</a>
                         
                     </div>
-                    <h1>Xcode26.3 AI体验</h1>
+                    <h1>AI盛行后，我不再热衷于开源了</h1>
                     
                     
-                    <h2 class="subheading">Xcode、Apple Intelligence、AI</h2>
+                    <h2 class="subheading">开源</h2>
                     
-                    <span class="meta">Posted by Karim on March 5, 2026</span>
+                    <span class="meta">Posted by Karim on June 5, 2026</span>
                 </div>
             </div>
         </div>
@@ -227,50 +227,19 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="前言">前言</h1>
-<p>随着Xcode26.3的发布，开发者们终于可以在Xcode中直接使用AI来辅助开发了。Xcode支持多种AI模型，包括OpenAI、Claude以及本地部署的模型，让开发者可以根据自己的需求选择合适的AI模型来提升开发效率。</p>
+                <p>早在去年年底的时候，我就想聊聊这个话题，当时我对开源社区或者说是GitHub还有心存希望，实际上是越来越失望了。
+在过去，我参与一些开源项目主要动机是：</p>
+<ul>
+  <li>在自己vibe coding的项目里应用了一些开源库，发现了一些问题或者者有一些功能需求，就自己提PR来处理，因为我受益了，所以我希望反哺开源社区；</li>
+  <li>看到一些知名的库想参与进来，看看issue有什么问题是比较容易上手的，来锻炼一下自己的能力；</li>
+</ul>
 
-<h1 id="安装本地模型">安装本地模型</h1>
-<p>因为Xcode支持本地部署的AI模型，所以我体验了一下在本地进行部署，然后在Xcode中配置使用。这里我选择了ollama这个工具来部署本地模型，下面是具体的步骤，先安装ollama：</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -fsSL https://ollama.com/install.sh | sh
+<p>但是现在，AI的出现改变了这一切，开源社区的氛围变得越来越糟糕了，甚至有些项目已经不再欢迎外部贡献了。因为AI可以轻松地生成代码，甚至可以自动修复bug，有项目被AI优化后AI做的项目更火了，也有被AI生成PR充斥满整个项目，让我觉得参与到开源项目似乎已经没有什么意义了。过去参与开源能证明你有阅读和理解作者代码的能力，然而现在只能证明你会使用AI工具了而已。</p>
+
+<p>这段由AI生成，但是我也表达了我的想法：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>现在的开源，更像是资本家在利用开源社区来为他们的AI模型提供训练数据，开源社区成了AI模型的免费劳动力，而我们这些开发者则成了被剥削的对象。AI模型的训练需要大量的数据，而开源社区正好提供了这些数据，然而我们却没有得到任何回报，反而还要被AI模型取代了工作机会。我觉得这种情况非常不公平，也非常令人失望。开源社区曾经是一个充满激情和创造力的地方，但现在却变成了一个被AI统治的地方，我觉得我们应该重新思考一下我们在开源社区中的角色和价值。
 </code></pre></div></div>
 
-<p>这里可以看到ollama支持的模型，https://ollama.com/library</p>
-
-<p>我这里选择的是<code class="language-plaintext highlighter-rouge">qwen3-coder:30b</code>，安装命令如下：</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ollama pull qwen3-coder:30b
-</code></pre></div></div>
-<p>下载完成后可以看到模型已经安装好了：
-<img src="https://www.foolishtalk.org/cloud/15211b56-2cd8-4217-b56b-475f04937807.png" alt="" /></p>
-
-<p>ollama默认会在本地启动一个服务，监听11434端口，我们可以请求测试一下：</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl http://localhost:11434/api/generate -d '{
-  "model": "qwen3-coder:30b",
-  "prompt": "Write a Swift async HTTP request example"
-}'
-</code></pre></div></div>
-<p>看到成功有返回之后就可以在Xcode中进行配置了使用了。</p>
-
-<h1 id="xcode配置本地模型">Xcode配置本地模型</h1>
-<p>打开Xcode，选择菜单栏的<code class="language-plaintext highlighter-rouge">Xcode</code>-&gt;<code class="language-plaintext highlighter-rouge">Settings</code>，在弹出的设置界面中选择<code class="language-plaintext highlighter-rouge">Intelligence</code>，这里可以看到支持OpenAI和Claude，我要演示的本地模型的使用，所以点击<code class="language-plaintext highlighter-rouge">Add a Provider...</code>：
-<img src="https://www.foolishtalk.org/cloud/c2f5a408-2fb7-43fe-a5c2-bd622ce45f52.png" alt="" /></p>
-
-<p>选择Locally Hosted,填写Port为11434和Description后就可以了。
-<img src="https://www.foolishtalk.org/cloud/d29ec550-8100-4a40-9f3a-a3bc7d7e3a88.png" alt="" /></p>
-
-<p>简单的让Xcode使用这个模型写了个demo，效果还不错：
-<img src="https://www.foolishtalk.org/cloud/576f6837-ffab-4e1c-8768-57d2e9750383.png" alt="" /></p>
-
-<p><img src="https://www.foolishtalk.org/cloud/0f949b6b-4ccd-40d3-b0e6-65db5b6088e1.png" alt="" /></p>
-
-<p><img src="https://www.foolishtalk.org/cloud/7082a4cd-73cd-40ae-9a6b-2fd931492dd9.png" alt="" /></p>
-
-<h1 id="总结">总结</h1>
-<p>Xcode26.3终于支持了AI，但是目前其实非常有限，仅限于代码生成，连代码补全都不支持，感觉更像是一个独立的AI工具，而不是集成在Xcode中的AI助手，而官方提到的其他功能，在cursor、vscode等工具一样能做，而且别人做的更好，想必Xcode在这还有很长的一条路要走。</p>
-
-<h1 id="参考">参考</h1>
-<p><a href="https://developer.apple.com/videos/play/tech-talks/111428/">Meet agentic coding in Xcode</a><br />
-<a href="https://docs.ollama.com/">Ollama</a></p>
 
 
                 <hr>
@@ -298,8 +267,8 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2025/12/02/%E5%9B%BD%E8%A1%8CiPhone%E5%BC%80%E5%90%AFApple-Intelligence%E4%BD%93%E9%AA%8CFoundation-Models/"
-                            data-toggle="tooltip" data-placement="top" title="国行iPhone开启Apple Intelligence体验Foundation Models">&larr; Previous
+                        <a href="/2026/06/05/Xcode26.3-AI%E4%BD%93%E9%AA%8C/"
+                            data-toggle="tooltip" data-placement="top" title="AI盛行后，我不再热衷于开源了">&larr; Previous
                             Post</a>
                     </li>
                     
@@ -448,6 +417,12 @@
                         
                         
                         
+                        
+                        
+                        
+                        <a href="/tags/#AI" title="AI" rel="2">
+                            AI
+                        </a>
                         
                         
                         
