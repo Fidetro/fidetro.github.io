@@ -5,8 +5,8 @@
     <description></description>
     <link>https://www.foolishtalk.org/</link>
     <atom:link href="https://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 05 Jun 2026 23:56:19 +0800</pubDate>
-    <lastBuildDate>Fri, 05 Jun 2026 23:56:19 +0800</lastBuildDate>
+    <pubDate>Thu, 11 Jun 2026 21:20:26 +0800</pubDate>
+    <lastBuildDate>Thu, 11 Jun 2026 21:20:26 +0800</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -36,7 +36,7 @@
       </item>
     
       <item>
-        <title>AI盛行后，我不再热衷于开源了</title>
+        <title>Xcode26.3 AI体验</title>
         <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
 &lt;p&gt;随着Xcode26.3的发布，开发者们终于可以在Xcode中直接使用AI来辅助开发了。Xcode支持多种AI模型，包括OpenAI、Claude以及本地部署的模型，让开发者可以根据自己的需求选择合适的AI模型来提升开发效率。&lt;/p&gt;
 
