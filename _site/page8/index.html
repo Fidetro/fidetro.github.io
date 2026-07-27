@@ -12,7 +12,7 @@
 
     <title>FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="https://www.foolishtalk.org/page2/">
+    <link rel="canonical" href="https://www.foolishtalk.org/page8/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -184,284 +184,34 @@
             ">
             
 <div class="post-preview">
-    <a href="/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/">
+    <a href="/2016/08/22/iOS%E5%9F%BA%E4%BA%8E%E7%81%B0%E5%BA%A6%E7%9A%84%E5%9D%87%E5%80%BC%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%9B%BE%E5%83%8F%E5%8C%B9%E9%85%8D/">
         <h2 class="post-title">
-            Git迁移文件到其他仓库保留commit
+            iOS基于灰度的均值哈希算法实现图像匹配
         </h2>
         
         <h3 class="post-subtitle">
-            Git
+            Swift，iOS，Objective-C
         </h3>
         
         <div class="post-content-preview">
-            在开发的过程中，往往存在架构上调整导致类需要迁移到其他的仓库，假设A仓库的目录如下：
+            流程：
 
-------------------
-src/
-    views/
-        index.html
-        ...
-    models/
-        index.js
-        ...
-    controllers/
-        index.js
-        ...
-...
+
+  先获取相机的实时数据，得到image，这里需要用到自定义相机
+这里已经写的很详细了，我是参考了苹果的Demo自己写了一个  
+ iOS开发–AVFoundation自定义相机 
+
+
+图像识别主要分为3种基于灰度相关，基于特征，基于关系。
+
+  这里也有详细的介绍
+
+常用的图像匹配算法及优缺点有哪些？
+剩下的是一些参考过别的语言实现的资料，有些没写上因为当时找的时候记下来，只能...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Karim on June 19, 2022
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/">
-        <h2 class="post-title">
-            shell空格问题
-        </h2>
-        
-        <h3 class="post-subtitle">
-            随笔，shell
-        </h3>
-        
-        <div class="post-content-preview">
-            folder="test example"
-#会出现报错
-#ls: example: No such file or directory
-#ls: test: No such file or directory
-ls ${folder}
-#运行正常
-ls "${folder}"
-
-后来发现，这个问题是因为shell的空格问题，所以我们可以使用双引号来解决这个问题。
-在第一种情况下，shell...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on June 18, 2022
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2022/03/09/%E5%85%A8%E5%B1%80git-hook%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">
-        <h2 class="post-title">
-            全局git hook的几种方式
-        </h2>
-        
-        <h3 class="post-subtitle">
-            git
-        </h3>
-        
-        <div class="post-content-preview">
-            前言
-随着自己开发的个人项目越来越多，也给自己制定了一些git的规范，例如git commit提交日志的规范。
-因为我的个人项目都是放在GitHub上，我在给项目开发新需求的时候，会新建一个issue，GitHub会给这个issue，创建一个#id(不知道正确叫法是什么)，然后在开发新需求的时候，会把分支名称改成#id，这样就可以方便的跟踪项目后续问题回溯，同时还会在提交日志加上#id，类似...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on March 9, 2022
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2022/02/21/lightning/">
-        <h2 class="post-title">
-            Installing Lightning for Xcode
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Lightning
-        </h3>
-        
-        <div class="post-content-preview">
-            Lightning for Xcode is an Xcode developer plugin that improves development efficiency for iOS and Mac developers.
-
-Lightning for Xcode has the following features:
-
-  Extracting Method Declarations
-...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on February 21, 2022
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2021/05/03/WWDC-2018%E7%AC%94%E8%AE%B0-%E4%BD%BF%E7%94%A8Signposts%E5%88%86%E6%9E%90App%E6%80%A7%E8%83%BD/">
-        <h2 class="post-title">
-            WWDC-2018笔记---使用Signposts分析App性能
-        </h2>
-        
-        <h3 class="post-subtitle">
-            WWDC
-        </h3>
-        
-        <div class="post-content-preview">
-            正文
-Signposts 可以针对某段代码块进行性能分析，并且能在Instrument中显示,并且允许我们标记一段开始和结束，然后将这两点时间发生的事情与日志关联起来。
-
-代码如下：
-import os.signpost
-
-let refreshLog = OSLog(subsystem: "com.example.your-app", category: "RefreshOperation...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on May 3, 2021
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2020/10/07/%E8%A7%A3%E5%86%B3%E5%8D%9A%E5%AE%A2%E5%9C%A8Chrome%E9%87%8Chttp%E5%92%8Chttps%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/">
-        <h2 class="post-title">
-            解决博客在Chrome里http和https混合使用的问题
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Chrome Nginx
-        </h3>
-        
-        <div class="post-content-preview">
-            前言
-今天突然发现博客的图片都无法加载了，打开浏览器控制台一看，发现是无法找到https资源报错了：
-Mixed Content: The page at '&lt;URL&gt;' was loaded over HTTPS, but requested an insecure font '&lt;URL&gt;'
-
-原来是因为更新了Chrome后，如果网站是https，会把非https的...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on October 7, 2020
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2020/07/08/Mac-App%E5%85%AC%E8%AF%81/">
-        <h2 class="post-title">
-            Mac App公证
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Mac OSX
-        </h3>
-        
-        <div class="post-content-preview">
-            前言
-
-从非Mac AppStore的地方下载的App，大家应该都有遇到过这样的提示：
-
-
-遇到这种情况，可以在终端输入，将安全性与隐私-通用-任何来源开启，这样就可以解决了：
-$ sudo spctl --master-disable
-
-
-
-但是作为一个普通用户，会认为你的App不安全，我开发的虚拟定位因为需要依赖非沙盒环境下的Magellan，也遇到这个问题，也有国外用户因为觉得这个行为...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on July 8, 2020
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2020/06/01/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3p-po-v%E5%8C%BA%E5%88%AB%E5%90%97/">
-        <h2 class="post-title">
-            你真的了解p、po、v区别吗
-        </h2>
-        
-        <h3 class="post-subtitle">
-            iOS，Xcode，LLDB
-        </h3>
-        
-        <div class="post-content-preview">
-            正文
-平常在使用Xcode断点调试问题时，po可能是最常用到的LLVM命令了。
-通过po命令，我们可以在Xcode的LLDB控制台打印对象的描述，系统在运行时会提供一个默认值，如图：
-
-
-我们可以通过重写func debugDescription()达到我们希望在po的时候返回预期的返回值。
-
-
-po的底层逻辑实现：
-
-
-事实上打印对象有三种方法，po只是其中一种。
-
-第二种方式是p。
-
-p...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on June 1, 2020
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2020/04/19/magellan_en/">
-        <h2 class="post-title">
-            Modify iPhone positioning via Virtual Location
-        </h2>
-        
-        <h3 class="post-subtitle">
-            iOS，Virtual Location，Magellan
-        </h3>
-        
-        <div class="post-content-preview">
-            Installation:
-
-Firstly, download Virtual Location App and Magellan App. It requires running both these two apps to modify the location.
-
-The Virtual Location interface looks like this:
-
-
-
-  
-    If...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on April 19, 2020
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2020/01/10/mac%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/">
-        <h2 class="post-title">
-            mac连接蓝牙音箱问题小记
-        </h2>
-        
-        <h3 class="post-subtitle">
-            蓝牙，Mac
-        </h3>
-        
-        <div class="post-content-preview">
-            前言
-
-过年的时候，公司发了个蓝牙音箱，我的Mac Pro左声道已经坏了很久了，正好可以拿来当音箱用。
-但是电脑连了蓝牙音箱后，一直会卡卡的和出现沙沙的声音，手机却没有问题，猜想是因为电脑码率比较高导致，带着这个猜想开始搜索相关的一些问题，发现原来不止这款音箱会，别的一些蓝牙设备，包括AirPods也会出现这样的问题。
-
-正文
-
-先上一组电脑在放歌时的传输速率：
-
-
-通过这组数据可以知道，在...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Karim on January 10, 2020
+        Posted by Karim on August 22, 2016
     </p>
 </div>
 <hr>
@@ -472,13 +222,9 @@ The Virtual Location interface looks like this:
 <ul class="pager">
     
     <li class="previous">
-        <a href="/">&larr; Newer Posts</a>
+        <a href="/page7">&larr; Newer Posts</a>
     </li>
     
-    
-    <li class="next">
-        <a href="/page3">Older Posts &rarr;</a>
-    </li>
     
 </ul>
 

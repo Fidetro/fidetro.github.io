@@ -5,9 +5,347 @@
     <description></description>
     <link>https://www.foolishtalk.org/</link>
     <atom:link href="https://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 15 Jul 2026 23:49:02 +0800</pubDate>
-    <lastBuildDate>Wed, 15 Jul 2026 23:49:02 +0800</lastBuildDate>
+    <pubDate>Mon, 27 Jul 2026 22:01:31 +0800</pubDate>
+    <lastBuildDate>Mon, 27 Jul 2026 22:01:31 +0800</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
+    
+      <item>
+        <title>ShotMark User Guide: Add Camera Info Watermarks on Mac</title>
+        <description>&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+
+&lt;p&gt;ShotMark is a native macOS photo library and camera-info watermark app. It reads details such as camera, lens, focal length, aperture, shutter speed, and ISO from a photo, then presents them in a clean layout around the image.&lt;/p&gt;
+
+&lt;p&gt;ShotMark supports JPEG, PNG, HEIC, and RAW formats that the installed macOS Core Image RAW decoder can open. You can browse a group of photos, apply a template to one or many images, and export finished files as JPEG, PNG, or HEIC.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/01-library_en.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;system-requirements&quot;&gt;System Requirements&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;macOS 14 Sonoma or later.&lt;/li&gt;
+  &lt;li&gt;RAW compatibility depends on the camera formats supported by your current macOS installation.&lt;/li&gt;
+  &lt;li&gt;ShotMark includes English and Simplified Chinese and follows the app language selected in macOS.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;add-photos&quot;&gt;Add Photos&lt;/h1&gt;
+
+&lt;p&gt;Open ShotMark and click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Photos&lt;/code&gt;, or drag photos directly into the library window.&lt;/p&gt;
+
+&lt;p&gt;ShotMark keeps access information for each source file without copying, moving, or modifying the original photo. If the same source file is imported again, you can skip the duplicate, import it anyway, or cancel the import.&lt;/p&gt;
+
+&lt;p&gt;The library toolbar helps you manage larger groups of photos:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Search by filename and by camera or lens information that has already been read.&lt;/li&gt;
+  &lt;li&gt;Filter by availability, file format, or watermark template.&lt;/li&gt;
+  &lt;li&gt;Sort by import order, import date, filename, camera, or capture date.&lt;/li&gt;
+  &lt;li&gt;Adjust thumbnail size without losing your selection.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;preview-a-photo-and-choose-a-watermark&quot;&gt;Preview a Photo and Choose a Watermark&lt;/h1&gt;
+
+&lt;p&gt;Double-click a photo to open it in a separate preview window. Use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Previous&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Next&lt;/code&gt;, or the arrow keys, to move through the current library results.&lt;/p&gt;
+
+&lt;p&gt;ShotMark includes two watermark templates:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Classic&lt;/code&gt; adds a clean information bar below the photo.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Polaroid&lt;/code&gt; uses a print-inspired border with room for the photo details.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/03-export-effect_en.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The preview and full-resolution export use the same layout rules, so the composition and text placement you review are preserved in the finished image.&lt;/p&gt;
+
+&lt;h1 id=&quot;edit-camera-information&quot;&gt;Edit Camera Information&lt;/h1&gt;
+
+&lt;p&gt;Click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Edit Info&lt;/code&gt; in the preview window to control:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Camera&lt;/li&gt;
+  &lt;li&gt;Lens&lt;/li&gt;
+  &lt;li&gt;Focal Length&lt;/li&gt;
+  &lt;li&gt;Aperture&lt;/li&gt;
+  &lt;li&gt;Shutter&lt;/li&gt;
+  &lt;li&gt;ISO&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Each field has three display modes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Automatic&lt;/code&gt; uses the value detected in the photo.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Custom&lt;/code&gt; lets you enter the text that should appear in the watermark.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hidden&lt;/code&gt; removes that field from the watermark.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These choices are stored only in the ShotMark library. They are not written back to the photo’s EXIF metadata and do not alter the source file.&lt;/p&gt;
+
+&lt;h1 id=&quot;select-and-process-multiple-photos&quot;&gt;Select and Process Multiple Photos&lt;/h1&gt;
+
+&lt;p&gt;ShotMark follows standard macOS selection behavior:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Command-click&lt;/code&gt; adds or removes one photo from the selection.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Shift-click&lt;/code&gt; selects a continuous range.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Command-A&lt;/code&gt; selects all photos in the current search and filter results.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Escape&lt;/code&gt; clears the selection.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;After selecting multiple photos, you can apply either template to the whole selection or start a batch export.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/02-selection-actions_en.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Choosing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Remove&lt;/code&gt; deletes only the ShotMark library records and thumbnail cache. It does not delete, move, or modify the source photos, and the operation can be undone with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Command-Z&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;export-photos&quot;&gt;Export Photos&lt;/h1&gt;
+
+&lt;h2 id=&quot;export-one-photo&quot;&gt;Export One Photo&lt;/h2&gt;
+
+&lt;p&gt;Click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Export&lt;/code&gt; in the preview window, then choose JPEG, PNG, or HEIC. JPEG and HEIC include a quality setting, while PNG uses lossless encoding.&lt;/p&gt;
+
+&lt;h2 id=&quot;batch-export&quot;&gt;Batch Export&lt;/h2&gt;
+
+&lt;p&gt;Select multiple photos in the library and click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Export N Selected&lt;/code&gt;:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Choose a destination folder.&lt;/li&gt;
+  &lt;li&gt;Choose JPEG, PNG, or HEIC.&lt;/li&gt;
+  &lt;li&gt;Set the output quality for JPEG or HEIC.&lt;/li&gt;
+  &lt;li&gt;Start the export and follow its progress.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The default output name is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;original-name-shotmark.extension&lt;/code&gt;. If that name already exists, ShotMark adds &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-2&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-3&lt;/code&gt;, and so on instead of overwriting a file.&lt;/p&gt;
+
+&lt;p&gt;You can cancel a batch export. Files already completed are kept, and items that have not started are stopped. A failure on one photo does not stop the remaining photos; ShotMark shows a summary when the batch finishes.&lt;/p&gt;
+
+&lt;h1 id=&quot;relocate-an-unavailable-file&quot;&gt;Relocate an Unavailable File&lt;/h1&gt;
+
+&lt;p&gt;Because ShotMark works with the original photo rather than an internal copy, a file may become unavailable after it is moved or renamed, or while an external drive is disconnected.&lt;/p&gt;
+
+&lt;p&gt;Right-click the photo and choose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Relocate...&lt;/code&gt; to reconnect it to the source file. The same menu can reveal an available source in Finder or regenerate a thumbnail when needed.&lt;/p&gt;
+
+&lt;h1 id=&quot;privacy-and-source-file-safety&quot;&gt;Privacy and Source-File Safety&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ShotMark does not upload photos and has no cloud-sync feature.&lt;/li&gt;
+  &lt;li&gt;Original photos are not copied into the ShotMark library.&lt;/li&gt;
+  &lt;li&gt;Camera-info edits remain in ShotMark’s local index.&lt;/li&gt;
+  &lt;li&gt;Removing an item from the library does not delete the source photo.&lt;/li&gt;
+  &lt;li&gt;Export never overwrites an imported source photo.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;qa&quot;&gt;Q&amp;amp;A&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Why can’t ShotMark preview a RAW file?&lt;/strong&gt;
+RAW support is provided by the Core Image RAW decoder installed with macOS. Update macOS first. If the camera format is still unsupported, convert the photo to a compatible format before importing it.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Does editing camera information change the photo’s EXIF metadata?&lt;/strong&gt;
+No. Custom and hidden settings affect only ShotMark previews and exports.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Does Remove from Library delete the file from my drive?&lt;/strong&gt;
+No. It removes only ShotMark’s library record and thumbnail cache.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Can batch export overwrite an existing image?&lt;/strong&gt;
+No. ShotMark automatically adds a numeric suffix when a filename is already in use.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Can I change the watermark template for several photos at once?&lt;/strong&gt;
+Yes. Select the photos, open the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Template&lt;/code&gt; menu, and choose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Classic&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Polaroid&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Why does a photo show “File unavailable” after I move it?&lt;/strong&gt;
+ShotMark uses the source file and does not keep a separate photo copy. Choose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Relocate...&lt;/code&gt; to reconnect the moved file.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;If you report an issue, including your macOS version, photo format, and the exact steps that produced the problem will make troubleshooting much faster.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 27 Jul 2026 00:00:00 +0800</pubDate>
+        <link>https://www.foolishtalk.org/2026/07/27/shotmark_en/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2026/07/27/shotmark_en/</guid>
+        
+        <category>macOS</category>
+        
+        <category>Photography</category>
+        
+        <category>ShotMark</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>ShotMark 使用指南：在 Mac 上为照片添加拍摄信息水印</title>
+        <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+
+&lt;p&gt;ShotMark 是一款原生 macOS 照片图库与拍摄信息水印应用。它可以读取照片中的相机、镜头、焦距、光圈、快门和 ISO 等信息，并把这些内容以简洁的版式融入照片。&lt;/p&gt;
+
+&lt;p&gt;ShotMark 支持 JPEG、PNG、HEIC，以及当前 macOS Core Image 能够解码的 RAW 格式。你可以集中浏览一组照片，为单张或多张照片选择模板，再导出 JPEG、PNG 或 HEIC 成品。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/01-library_zh.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;系统要求&quot;&gt;系统要求&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;macOS 14 Sonoma 或更高版本。&lt;/li&gt;
+  &lt;li&gt;如果需要处理 RAW，具体格式是否可用取决于当前 macOS 对相机 RAW 格式的支持情况。&lt;/li&gt;
+  &lt;li&gt;ShotMark 支持英文和简体中文，并会跟随 macOS 的应用语言设置。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;添加照片&quot;&gt;添加照片&lt;/h1&gt;
+
+&lt;p&gt;打开 ShotMark 后，点击左上角的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;添加照片&lt;/code&gt;，也可以直接把照片拖入窗口。&lt;/p&gt;
+
+&lt;p&gt;照片加入后会显示在图库中。ShotMark 只保存访问原文件所需的信息，不会复制、移动或修改源照片。再次导入同一个源文件时，应用会提示你跳过重复项、仍然导入或取消。&lt;/p&gt;
+
+&lt;p&gt;图库上方提供以下工具：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;搜索：按文件名，以及已读取的相机或镜头名称查找照片。&lt;/li&gt;
+  &lt;li&gt;筛选：按文件可用性、图片格式和水印模板筛选。&lt;/li&gt;
+  &lt;li&gt;排序：按导入顺序、导入日期、文件名、相机或拍摄日期排序。&lt;/li&gt;
+  &lt;li&gt;大小：调整图库中的缩略图尺寸。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;预览照片并选择水印&quot;&gt;预览照片并选择水印&lt;/h1&gt;
+
+&lt;p&gt;双击一张照片即可打开独立预览窗口。可以点击&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;上一张&lt;/code&gt;、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;下一张&lt;/code&gt;，或使用键盘方向键浏览当前结果中的其他照片。&lt;/p&gt;
+
+&lt;p&gt;ShotMark 内置两种水印模板：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;经典&lt;/code&gt;：在照片下方加入简洁的信息栏，适合横幅式展示拍摄参数。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;拍立得&lt;/code&gt;：使用更接近相纸留白的版式展示照片和拍摄信息。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/03-export-effect_zh.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;预览窗口与最终导出使用同一套排版规则，因此预览中的构图和文字效果会与成品保持一致。&lt;/p&gt;
+
+&lt;h1 id=&quot;编辑拍摄信息&quot;&gt;编辑拍摄信息&lt;/h1&gt;
+
+&lt;p&gt;在预览窗口点击&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;编辑信息&lt;/code&gt;，可以分别设置以下内容：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;相机&lt;/li&gt;
+  &lt;li&gt;镜头&lt;/li&gt;
+  &lt;li&gt;焦距&lt;/li&gt;
+  &lt;li&gt;光圈&lt;/li&gt;
+  &lt;li&gt;快门&lt;/li&gt;
+  &lt;li&gt;ISO&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;每项信息都有三种显示方式：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;自动&lt;/code&gt;：使用照片中检测到的拍摄信息。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;自定义&lt;/code&gt;：输入你希望在水印中显示的内容。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;隐藏&lt;/code&gt;：不在水印中显示该项。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;这些修改只保存在 ShotMark 图库中，不会写回照片 EXIF，也不会改变源文件。&lt;/p&gt;
+
+&lt;h1 id=&quot;多选与批量操作&quot;&gt;多选与批量操作&lt;/h1&gt;
+
+&lt;p&gt;ShotMark 支持标准的 macOS 多选操作：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Command + 单击&lt;/code&gt;：添加或取消选择某张照片。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Shift + 单击&lt;/code&gt;：连续选择一段照片。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Command-A&lt;/code&gt;：选择当前搜索和筛选结果中的全部照片。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Escape&lt;/code&gt;：清空选择。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;选中多张照片后，可以统一套用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;经典&lt;/code&gt;或&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;拍立得&lt;/code&gt;模板，也可以直接批量导出。选择状态会在调整缩略图尺寸时保留。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/02-selection-actions_zh.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如果选择&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;移除&lt;/code&gt;，ShotMark 只会移除图库记录和对应缩略图缓存，不会删除、移动或修改源照片；误操作后还可以通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Command-Z&lt;/code&gt;撤销。&lt;/p&gt;
+
+&lt;h1 id=&quot;导出照片&quot;&gt;导出照片&lt;/h1&gt;
+
+&lt;h2 id=&quot;导出单张照片&quot;&gt;导出单张照片&lt;/h2&gt;
+
+&lt;p&gt;在预览窗口点击&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;导出&lt;/code&gt;，选择 JPEG、PNG 或 HEIC 格式。JPEG 和 HEIC 可以调整输出质量，PNG 则会保留无损编码方式。&lt;/p&gt;
+
+&lt;h2 id=&quot;批量导出&quot;&gt;批量导出&lt;/h2&gt;
+
+&lt;p&gt;在图库中选择多张照片，再点击&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;导出已选 N 张&lt;/code&gt;：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;选择目标文件夹。&lt;/li&gt;
+  &lt;li&gt;选择 JPEG、PNG 或 HEIC。&lt;/li&gt;
+  &lt;li&gt;JPEG 和 HEIC 可设置输出质量。&lt;/li&gt;
+  &lt;li&gt;开始导出并查看当前进度。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;默认输出文件名为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;原文件名-shotmark.扩展名&lt;/code&gt;。如果目标文件夹中已有同名文件，ShotMark 会自动添加&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-2&lt;/code&gt;、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-3&lt;/code&gt;等序号，不会覆盖已有文件。&lt;/p&gt;
+
+&lt;p&gt;批量导出过程中可以取消任务。已经成功导出的文件会保留，尚未开始的项目将停止；单张照片导出失败也不会中断整批任务，结束后会显示汇总结果。&lt;/p&gt;
+
+&lt;h1 id=&quot;文件失效与重新定位&quot;&gt;文件失效与重新定位&lt;/h1&gt;
+
+&lt;p&gt;由于 ShotMark 不会复制源照片，如果原文件被移动、重命名，或外置磁盘尚未连接，照片可能显示为“文件不可用”。&lt;/p&gt;
+
+&lt;p&gt;此时可以右键照片并选择&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;重新定位…&lt;/code&gt;，找到对应的源文件后即可恢复访问。也可以通过右键菜单在 Finder 中显示源照片，或在缩略图异常时重新生成缩略图。&lt;/p&gt;
+
+&lt;h1 id=&quot;隐私与源文件安全&quot;&gt;隐私与源文件安全&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ShotMark 不会上传照片，也不包含云同步功能。&lt;/li&gt;
+  &lt;li&gt;原始照片不会被复制到 ShotMark 图库中。&lt;/li&gt;
+  &lt;li&gt;编辑后的拍摄信息只保存在本机 ShotMark 索引中。&lt;/li&gt;
+  &lt;li&gt;从图库移除照片不会删除源文件。&lt;/li&gt;
+  &lt;li&gt;导出时不会覆盖已导入的源照片。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;qa&quot;&gt;Q&amp;amp;A&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;为什么有些 RAW 无法预览？&lt;/strong&gt;
+RAW 支持范围由当前 macOS 的 Core Image RAW 解码器决定。请先更新 macOS；如果系统仍不支持该相机格式，可以先转换为兼容格式再导入。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;编辑拍摄信息会修改照片的 EXIF 吗？&lt;/strong&gt;
+不会。自定义和隐藏规则只用于 ShotMark 中的预览与导出。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;从图库移除照片会删除硬盘上的文件吗？&lt;/strong&gt;
+不会。ShotMark 只移除自己的图库记录和缩略图缓存。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;批量导出会覆盖同名图片吗？&lt;/strong&gt;
+不会。ShotMark 会自动为重名文件添加数字序号。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;可以一次修改多张照片的水印模板吗？&lt;/strong&gt;
+可以。多选照片后，从工具栏的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;模板&lt;/code&gt;菜单选择&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;经典&lt;/code&gt;或&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;拍立得&lt;/code&gt;即可。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;为什么移动照片后显示“文件不可用”？&lt;/strong&gt;
+ShotMark 通过原文件工作，不保存照片副本。请使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;重新定位…&lt;/code&gt;重新关联移动后的文件。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;如果在使用过程中遇到问题，建议同时提供 macOS 版本、照片格式和具体操作步骤，以便更快定位问题。&lt;/p&gt;
+</description>
+        <pubDate>Mon, 27 Jul 2026 00:00:00 +0800</pubDate>
+        <link>https://www.foolishtalk.org/2026/07/27/shotmark/</link>
+        <guid isPermaLink="true">https://www.foolishtalk.org/2026/07/27/shotmark/</guid>
+        
+        <category>macOS</category>
+        
+        <category>Photography</category>
+        
+        <category>ShotMark</category>
+        
+        
+      </item>
     
       <item>
         <title>AI盛行后，我不再热衷于开源了</title>
@@ -1245,99 +1583,6 @@ SwiftASTContextForExpressions&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;modul
         <category>Swift-Foundation</category>
         
         <category>JSONDecoder</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Git迁移文件到其他仓库保留commit</title>
-        <description>&lt;p&gt;在开发的过程中，往往存在架构上调整导致类需要迁移到其他的仓库，假设A仓库的目录如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-t&quot;&gt;------------------
-src/
-    views/
-        index.html
-        ...
-    models/
-        index.js
-        ...
-    controllers/
-        index.js
-        ...
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;我们要将A仓库中models，迁移到B仓库，并保留A仓库的commit，这个时候需要用到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git filter-repo&lt;/code&gt;,
-macOS上的git并没有自带&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;filter-repo&lt;/code&gt;，这时候需要用到homebrew安装：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;git-filter-repo
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;首先我们需要fork A仓库，因为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git-filter-repo&lt;/code&gt;会只保留你迁移的文件，其他都会被移除。&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#从fork_A仓库中执行下方的命令,folder_path为A仓库下保留的文件夹路径&lt;/span&gt;
-fork_A % git filter-repo &lt;span class=&quot;nt&quot;&gt;--path&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;folder_path&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/
-&lt;span class=&quot;c&quot;&gt;#多目录可以这样使用&lt;/span&gt;
-fork_A % git filter-repo &lt;span class=&quot;nt&quot;&gt;--path&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;folder_path_A&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/ &lt;span class=&quot;nt&quot;&gt;--path&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;folder_path_B&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--path&lt;/code&gt; 会保留原来仓库目录下的文件&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--invert-paths --path&lt;/code&gt; 会删除path目录下的文件&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--subdirectory-filter&lt;/code&gt; 会仅保留根目录，同时将目录下所有文件都移动到根目录下&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;还有更多的参数可以参考&lt;a href=&quot;https://github.com/newren/git-filter-repo/blob/main/Documentation/git-filter-repo.txt&quot;&gt;官方文档&lt;/a&gt;，这里就不一一细说了。&lt;/p&gt;
-
-&lt;p&gt;执行上方命令后，会发现本地仓库，只剩下&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${folder_path}&lt;/code&gt;下的文件目录结构&lt;/p&gt;
-
-&lt;p&gt;然后去到我们要将&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${folder_path}&lt;/code&gt;文件下迁移到的B仓库目录下&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#&amp;lt;repo_A_directory&amp;gt;为本地路径&lt;/span&gt;
-B % git remote add from_repo_A &amp;lt;repo_A_directory&amp;gt;
-B % git pull from_repo_A main &lt;span class=&quot;nt&quot;&gt;--allow-unrelated-histories&lt;/span&gt; 
-B % git remote &lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;from_repo_A
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;然后就能看到B仓库的目录结构如下：&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-t&quot;&gt;B/
-    models/
-        index.js
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&quot;参考链接&quot;&gt;参考链接&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.jianshu.com/p/b71d901e8ffe&quot;&gt;利用git-filter-repo无缝迁移git项目&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://www.jianshu.com/p/7b4247f2d0fd&quot;&gt;Git跨仓库迁移代码文件，并保留git历史记录&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Sun, 19 Jun 2022 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2022/06/19/Git%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E4%BB%93%E5%BA%93%E4%BF%9D%E7%95%99commit/</guid>
-        
-        <category>Git</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>shell空格问题</title>
-        <description>&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;folder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;test example&quot;&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#会出现报错&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#ls: example: No such file or directory&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#ls: test: No such file or directory&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;folder&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#运行正常&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;folder&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;后来发现，这个问题是因为shell的空格问题，所以我们可以使用双引号来解决这个问题。
-在第一种情况下，shell实际上会当成以下命令执行，将test example当成了两个参数：&lt;/p&gt;
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;ls test &lt;/span&gt;example
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;加上双引号就会当成一个参数处理，就能解决这个问题了。&lt;/p&gt;
-</description>
-        <pubDate>Sat, 18 Jun 2022 00:00:00 +0800</pubDate>
-        <link>https://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</link>
-        <guid isPermaLink="true">https://www.foolishtalk.org/2022/06/18/shell%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98/</guid>
-        
-        <category>随笔</category>
-        
-        <category>shell</category>
         
         
       </item>

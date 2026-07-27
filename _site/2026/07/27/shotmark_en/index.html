@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>iOS实现隐藏状态栏动画 - FoolishTalk 技术分享</title>
+    <title>ShotMark User Guide: Add Camera Info Watermarks on Mac - FoolishTalk 技术分享</title>
 
-    <link rel="canonical" href="https://www.foolishtalk.org/2018/09/19/iOS%E5%AE%9E%E7%8E%B0%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E6%A0%8F%E5%8A%A8%E7%94%BB/">
+    <link rel="canonical" href="https://www.foolishtalk.org/2026/07/27/shotmark_en/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -158,12 +158,12 @@
 </style>
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-ismael.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-andre-benz.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header {
-        background-image: url('/img/post-bg-ismael.jpg')
+        background-image: url('/img/post-bg-andre-benz.jpg')
     }
 </style>
 <header class="intro-header">
@@ -175,17 +175,19 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        <a class="tag" href="/tags/#macOS" title="macOS">macOS</a>
                         
-                        <a class="tag" href="/tags/#动画" title="动画">动画</a>
+                        <a class="tag" href="/tags/#Photography" title="Photography">Photography</a>
+                        
+                        <a class="tag" href="/tags/#ShotMark" title="ShotMark">ShotMark</a>
                         
                     </div>
-                    <h1>iOS实现隐藏状态栏动画</h1>
+                    <h1>ShotMark User Guide: Add Camera Info Watermarks on Mac</h1>
                     
                     
-                    <h2 class="subheading">iOS，动画</h2>
+                    <h2 class="subheading">macOS, RAW, photo watermark, camera settings, ShotMark</h2>
                     
-                    <span class="meta">Posted by Karim on September 19, 2018</span>
+                    <span class="meta">Posted by Karim on July 27, 2026</span>
                 </div>
             </div>
         </div>
@@ -227,35 +229,159 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>隐藏状态栏是一个相对比较常见的需求，为了让隐藏状态栏更加平滑过渡，我们会给他增加一个动画效果。像常见的渐变透明隐藏效果和上下滚动隐藏效果，系统已经提供好对应的api给我们使用了。在需要隐藏状态栏的Controller下使用这段代码就可以实现了：</p>
+                <h1 id="introduction">Introduction</h1>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">override</span> <span class="kd">func</span> <span class="nf">touchesBegan</span><span class="p">(</span><span class="n">_</span> <span class="nv">touches</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">UITouch</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">with</span> <span class="nv">event</span><span class="p">:</span> <span class="kt">UIEvent</span><span class="p">?)</span> <span class="p">{</span>
-        <span class="n">isStatusBarHidden</span> <span class="o">=</span> <span class="o">!</span><span class="n">isStatusBarHidden</span>
-        <span class="kt">UIView</span><span class="o">.</span><span class="nf">animate</span><span class="p">(</span><span class="nv">withDuration</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">self</span><span class="o">.</span><span class="nf">setNeedsStatusBarAppearanceUpdate</span><span class="p">()</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    
-    <span class="k">override</span> <span class="k">var</span> <span class="nv">prefersStatusBarHidden</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">isStatusBarHidden</span>
-    <span class="p">}</span>
+<p>ShotMark is a native macOS photo library and camera-info watermark app. It reads details such as camera, lens, focal length, aperture, shutter speed, and ISO from a photo, then presents them in a clean layout around the image.</p>
 
-    <span class="k">override</span> <span class="k">var</span> <span class="nv">preferredStatusBarUpdateAnimation</span><span class="p">:</span> <span class="kt">UIStatusBarAnimation</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="o">.</span><span class="n">slide</span>
-    <span class="p">}</span>
-</code></pre></div></div>
+<p>ShotMark supports JPEG, PNG, HEIC, and RAW formats that the installed macOS Core Image RAW decoder can open. You can browse a group of photos, apply a template to one or many images, and export finished files as JPEG, PNG, or HEIC.</p>
 
-<p>如果是<code class="language-plaintext highlighter-rouge">present</code>过去ViewController还在<code class="language-plaintext highlighter-rouge">present</code>之前需要设置：</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vc</span><span class="o">.</span><span class="n">modalPresentationCapturesStatusBarAppearance</span> <span class="o">=</span> <span class="kc">true</span>
-</code></pre></div></div>
+<p><img src="https://www.foolishtalk.org/cloud/01-library_en.png" alt="" /></p>
 
-<p>要注意的一点是，使用这个方法需要在<code class="language-plaintext highlighter-rouge">info.plist</code>中将<code class="language-plaintext highlighter-rouge">View controller-based status bar appearance</code>字段设置成<code class="language-plaintext highlighter-rouge">YES</code>。（PS:没有设置的默认为YES</p>
+<h1 id="system-requirements">System Requirements</h1>
 
-<p>如果项目中<code class="language-plaintext highlighter-rouge">View controller-based status bar appearance</code>字段已经设置成了为<code class="language-plaintext highlighter-rouge">NO</code>,上面的方法是不会生效的，这时候可以使用：</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">UIApplication</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">setStatusBarHidden</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="nv">with</span><span class="p">:</span> <span class="o">.</span><span class="n">slide</span><span class="p">)</span>
-</code></pre></div></div>
+<ul>
+  <li>macOS 14 Sonoma or later.</li>
+  <li>RAW compatibility depends on the camera formats supported by your current macOS installation.</li>
+  <li>ShotMark includes English and Simplified Chinese and follows the app language selected in macOS.</li>
+</ul>
 
-<p>这样就能完美解决隐藏导航栏动画的问题了，但是要注意这个方法在iOS 9后已经废弃，尽量还是使用第一种方法。</p>
+<h1 id="add-photos">Add Photos</h1>
+
+<p>Open ShotMark and click <code class="language-plaintext highlighter-rouge">Add Photos</code>, or drag photos directly into the library window.</p>
+
+<p>ShotMark keeps access information for each source file without copying, moving, or modifying the original photo. If the same source file is imported again, you can skip the duplicate, import it anyway, or cancel the import.</p>
+
+<p>The library toolbar helps you manage larger groups of photos:</p>
+
+<ul>
+  <li>Search by filename and by camera or lens information that has already been read.</li>
+  <li>Filter by availability, file format, or watermark template.</li>
+  <li>Sort by import order, import date, filename, camera, or capture date.</li>
+  <li>Adjust thumbnail size without losing your selection.</li>
+</ul>
+
+<h1 id="preview-a-photo-and-choose-a-watermark">Preview a Photo and Choose a Watermark</h1>
+
+<p>Double-click a photo to open it in a separate preview window. Use <code class="language-plaintext highlighter-rouge">Previous</code> and <code class="language-plaintext highlighter-rouge">Next</code>, or the arrow keys, to move through the current library results.</p>
+
+<p>ShotMark includes two watermark templates:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">Classic</code> adds a clean information bar below the photo.</li>
+  <li><code class="language-plaintext highlighter-rouge">Polaroid</code> uses a print-inspired border with room for the photo details.</li>
+</ol>
+
+<p><img src="https://www.foolishtalk.org/cloud/03-export-effect_en.png" alt="" /></p>
+
+<p>The preview and full-resolution export use the same layout rules, so the composition and text placement you review are preserved in the finished image.</p>
+
+<h1 id="edit-camera-information">Edit Camera Information</h1>
+
+<p>Click <code class="language-plaintext highlighter-rouge">Edit Info</code> in the preview window to control:</p>
+
+<ul>
+  <li>Camera</li>
+  <li>Lens</li>
+  <li>Focal Length</li>
+  <li>Aperture</li>
+  <li>Shutter</li>
+  <li>ISO</li>
+</ul>
+
+<p>Each field has three display modes:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Automatic</code> uses the value detected in the photo.</li>
+  <li><code class="language-plaintext highlighter-rouge">Custom</code> lets you enter the text that should appear in the watermark.</li>
+  <li><code class="language-plaintext highlighter-rouge">Hidden</code> removes that field from the watermark.</li>
+</ul>
+
+<p>These choices are stored only in the ShotMark library. They are not written back to the photo’s EXIF metadata and do not alter the source file.</p>
+
+<h1 id="select-and-process-multiple-photos">Select and Process Multiple Photos</h1>
+
+<p>ShotMark follows standard macOS selection behavior:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Command-click</code> adds or removes one photo from the selection.</li>
+  <li><code class="language-plaintext highlighter-rouge">Shift-click</code> selects a continuous range.</li>
+  <li><code class="language-plaintext highlighter-rouge">Command-A</code> selects all photos in the current search and filter results.</li>
+  <li><code class="language-plaintext highlighter-rouge">Escape</code> clears the selection.</li>
+</ul>
+
+<p>After selecting multiple photos, you can apply either template to the whole selection or start a batch export.</p>
+
+<p><img src="https://www.foolishtalk.org/cloud/02-selection-actions_en.png" alt="" /></p>
+
+<p>Choosing <code class="language-plaintext highlighter-rouge">Remove</code> deletes only the ShotMark library records and thumbnail cache. It does not delete, move, or modify the source photos, and the operation can be undone with <code class="language-plaintext highlighter-rouge">Command-Z</code>.</p>
+
+<h1 id="export-photos">Export Photos</h1>
+
+<h2 id="export-one-photo">Export One Photo</h2>
+
+<p>Click <code class="language-plaintext highlighter-rouge">Export</code> in the preview window, then choose JPEG, PNG, or HEIC. JPEG and HEIC include a quality setting, while PNG uses lossless encoding.</p>
+
+<h2 id="batch-export">Batch Export</h2>
+
+<p>Select multiple photos in the library and click <code class="language-plaintext highlighter-rouge">Export N Selected</code>:</p>
+
+<ol>
+  <li>Choose a destination folder.</li>
+  <li>Choose JPEG, PNG, or HEIC.</li>
+  <li>Set the output quality for JPEG or HEIC.</li>
+  <li>Start the export and follow its progress.</li>
+</ol>
+
+<p>The default output name is <code class="language-plaintext highlighter-rouge">original-name-shotmark.extension</code>. If that name already exists, ShotMark adds <code class="language-plaintext highlighter-rouge">-2</code>, <code class="language-plaintext highlighter-rouge">-3</code>, and so on instead of overwriting a file.</p>
+
+<p>You can cancel a batch export. Files already completed are kept, and items that have not started are stopped. A failure on one photo does not stop the remaining photos; ShotMark shows a summary when the batch finishes.</p>
+
+<h1 id="relocate-an-unavailable-file">Relocate an Unavailable File</h1>
+
+<p>Because ShotMark works with the original photo rather than an internal copy, a file may become unavailable after it is moved or renamed, or while an external drive is disconnected.</p>
+
+<p>Right-click the photo and choose <code class="language-plaintext highlighter-rouge">Relocate...</code> to reconnect it to the source file. The same menu can reveal an available source in Finder or regenerate a thumbnail when needed.</p>
+
+<h1 id="privacy-and-source-file-safety">Privacy and Source-File Safety</h1>
+
+<ul>
+  <li>ShotMark does not upload photos and has no cloud-sync feature.</li>
+  <li>Original photos are not copied into the ShotMark library.</li>
+  <li>Camera-info edits remain in ShotMark’s local index.</li>
+  <li>Removing an item from the library does not delete the source photo.</li>
+  <li>Export never overwrites an imported source photo.</li>
+</ul>
+
+<h1 id="qa">Q&amp;A</h1>
+
+<ol>
+  <li>
+    <p><strong>Why can’t ShotMark preview a RAW file?</strong>
+RAW support is provided by the Core Image RAW decoder installed with macOS. Update macOS first. If the camera format is still unsupported, convert the photo to a compatible format before importing it.</p>
+  </li>
+  <li>
+    <p><strong>Does editing camera information change the photo’s EXIF metadata?</strong>
+No. Custom and hidden settings affect only ShotMark previews and exports.</p>
+  </li>
+  <li>
+    <p><strong>Does Remove from Library delete the file from my drive?</strong>
+No. It removes only ShotMark’s library record and thumbnail cache.</p>
+  </li>
+  <li>
+    <p><strong>Can batch export overwrite an existing image?</strong>
+No. ShotMark automatically adds a numeric suffix when a filename is already in use.</p>
+  </li>
+  <li>
+    <p><strong>Can I change the watermark template for several photos at once?</strong>
+Yes. Select the photos, open the <code class="language-plaintext highlighter-rouge">Template</code> menu, and choose <code class="language-plaintext highlighter-rouge">Classic</code> or <code class="language-plaintext highlighter-rouge">Polaroid</code>.</p>
+  </li>
+  <li>
+    <p><strong>Why does a photo show “File unavailable” after I move it?</strong>
+ShotMark uses the source file and does not keep a separate photo copy. Choose <code class="language-plaintext highlighter-rouge">Relocate...</code> to reconnect the moved file.</p>
+  </li>
+</ol>
+
+<p>If you report an issue, including your macOS version, photo format, and the exact steps that produced the problem will make troubleshooting much faster.</p>
 
 
                 <hr>
@@ -283,16 +409,11 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/09/10/High-Performance-Auto-Layout/"
-                            data-toggle="tooltip" data-placement="top" title="WWDC-2018笔记---High Performance Auto Layout">&larr; Previous
+                        <a href="/2026/07/27/shotmark/"
+                            data-toggle="tooltip" data-placement="top" title="ShotMark 使用指南：在 Mac 上为照片添加拍摄信息水印">&larr; Previous
                             Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2018/09/20/NS_ASSUME_NONNULL_BEGIN%E5%92%8CNS_ASSUME_NONNULL_END/" data-toggle="tooltip"
-                            data-placement="top" title="NS_ASSUME_NONNULL_BEGIN和NS_ASSUME_NONNULL_END">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
