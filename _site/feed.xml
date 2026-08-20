@@ -5,17 +5,17 @@
     <description></description>
     <link>https://www.foolishtalk.org/</link>
     <atom:link href="https://www.foolishtalk.org/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 27 Jul 2026 22:01:31 +0800</pubDate>
-    <lastBuildDate>Mon, 27 Jul 2026 22:01:31 +0800</lastBuildDate>
+    <pubDate>Thu, 20 Aug 2026 08:56:09 +0800</pubDate>
+    <lastBuildDate>Thu, 20 Aug 2026 08:56:09 +0800</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
-        <title>ShotMark User Guide: Add Camera Info Watermarks on Mac</title>
+        <title>AperTrace User Guide: Add Camera Info Watermarks on Mac</title>
         <description>&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
-&lt;p&gt;ShotMark is a native macOS photo library and camera-info watermark app. It reads details such as camera, lens, focal length, aperture, shutter speed, and ISO from a photo, then presents them in a clean layout around the image.&lt;/p&gt;
+&lt;p&gt;AperTrace is a native macOS photo library and camera-info watermark app. It reads details such as camera, lens, focal length, aperture, shutter speed, and ISO from a photo, then presents them in a clean layout around the image.&lt;/p&gt;
 
-&lt;p&gt;ShotMark supports JPEG, PNG, HEIC, and RAW formats that the installed macOS Core Image RAW decoder can open. You can browse a group of photos, apply a template to one or many images, and export finished files as JPEG, PNG, or HEIC.&lt;/p&gt;
+&lt;p&gt;AperTrace supports JPEG, PNG, HEIC, and RAW formats that the installed macOS Core Image RAW decoder can open. You can browse a group of photos, apply a template to one or many images, and export finished files as JPEG, PNG, or HEIC.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/01-library_en.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -24,14 +24,14 @@
 &lt;ul&gt;
   &lt;li&gt;macOS 14 Sonoma or later.&lt;/li&gt;
   &lt;li&gt;RAW compatibility depends on the camera formats supported by your current macOS installation.&lt;/li&gt;
-  &lt;li&gt;ShotMark includes English and Simplified Chinese and follows the app language selected in macOS.&lt;/li&gt;
+  &lt;li&gt;AperTrace includes English and Simplified Chinese and follows the app language selected in macOS.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h1 id=&quot;add-photos&quot;&gt;Add Photos&lt;/h1&gt;
 
-&lt;p&gt;Open ShotMark and click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Photos&lt;/code&gt;, or drag photos directly into the library window.&lt;/p&gt;
+&lt;p&gt;Open AperTrace and click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Photos&lt;/code&gt;, or drag photos directly into the library window.&lt;/p&gt;
 
-&lt;p&gt;ShotMark keeps access information for each source file without copying, moving, or modifying the original photo. If the same source file is imported again, you can skip the duplicate, import it anyway, or cancel the import.&lt;/p&gt;
+&lt;p&gt;AperTrace keeps access information for each source file without copying, moving, or modifying the original photo. If the same source file is imported again, you can skip the duplicate, import it anyway, or cancel the import.&lt;/p&gt;
 
 &lt;p&gt;The library toolbar helps you manage larger groups of photos:&lt;/p&gt;
 
@@ -46,7 +46,7 @@
 
 &lt;p&gt;Double-click a photo to open it in a separate preview window. Use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Previous&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Next&lt;/code&gt;, or the arrow keys, to move through the current library results.&lt;/p&gt;
 
-&lt;p&gt;ShotMark includes two watermark templates:&lt;/p&gt;
+&lt;p&gt;AperTrace includes two watermark templates:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Classic&lt;/code&gt; adds a clean information bar below the photo.&lt;/li&gt;
@@ -78,11 +78,11 @@
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hidden&lt;/code&gt; removes that field from the watermark.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;These choices are stored only in the ShotMark library. They are not written back to the photo’s EXIF metadata and do not alter the source file.&lt;/p&gt;
+&lt;p&gt;These choices are stored only in the AperTrace library. They are not written back to the photo’s EXIF metadata and do not alter the source file.&lt;/p&gt;
 
 &lt;h1 id=&quot;select-and-process-multiple-photos&quot;&gt;Select and Process Multiple Photos&lt;/h1&gt;
 
-&lt;p&gt;ShotMark follows standard macOS selection behavior:&lt;/p&gt;
+&lt;p&gt;AperTrace follows standard macOS selection behavior:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Command-click&lt;/code&gt; adds or removes one photo from the selection.&lt;/li&gt;
@@ -95,7 +95,7 @@
 
 &lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/02-selection-actions_en.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Choosing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Remove&lt;/code&gt; deletes only the ShotMark library records and thumbnail cache. It does not delete, move, or modify the source photos, and the operation can be undone with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Command-Z&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Choosing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Remove&lt;/code&gt; deletes only the AperTrace library records and thumbnail cache. It does not delete, move, or modify the source photos, and the operation can be undone with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Command-Z&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h1 id=&quot;export-photos&quot;&gt;Export Photos&lt;/h1&gt;
 
@@ -114,22 +114,22 @@
   &lt;li&gt;Start the export and follow its progress.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;The default output name is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;original-name-shotmark.extension&lt;/code&gt;. If that name already exists, ShotMark adds &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-2&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-3&lt;/code&gt;, and so on instead of overwriting a file.&lt;/p&gt;
+&lt;p&gt;The default output name is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;original-name-apertrace.extension&lt;/code&gt;. If that name already exists, AperTrace adds &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-2&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-3&lt;/code&gt;, and so on instead of overwriting a file.&lt;/p&gt;
 
-&lt;p&gt;You can cancel a batch export. Files already completed are kept, and items that have not started are stopped. A failure on one photo does not stop the remaining photos; ShotMark shows a summary when the batch finishes.&lt;/p&gt;
+&lt;p&gt;You can cancel a batch export. Files already completed are kept, and items that have not started are stopped. A failure on one photo does not stop the remaining photos; AperTrace shows a summary when the batch finishes.&lt;/p&gt;
 
 &lt;h1 id=&quot;relocate-an-unavailable-file&quot;&gt;Relocate an Unavailable File&lt;/h1&gt;
 
-&lt;p&gt;Because ShotMark works with the original photo rather than an internal copy, a file may become unavailable after it is moved or renamed, or while an external drive is disconnected.&lt;/p&gt;
+&lt;p&gt;Because AperTrace works with the original photo rather than an internal copy, a file may become unavailable after it is moved or renamed, or while an external drive is disconnected.&lt;/p&gt;
 
 &lt;p&gt;Right-click the photo and choose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Relocate...&lt;/code&gt; to reconnect it to the source file. The same menu can reveal an available source in Finder or regenerate a thumbnail when needed.&lt;/p&gt;
 
 &lt;h1 id=&quot;privacy-and-source-file-safety&quot;&gt;Privacy and Source-File Safety&lt;/h1&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;ShotMark does not upload photos and has no cloud-sync feature.&lt;/li&gt;
-  &lt;li&gt;Original photos are not copied into the ShotMark library.&lt;/li&gt;
-  &lt;li&gt;Camera-info edits remain in ShotMark’s local index.&lt;/li&gt;
+  &lt;li&gt;AperTrace does not upload photos and has no cloud-sync feature.&lt;/li&gt;
+  &lt;li&gt;Original photos are not copied into the AperTrace library.&lt;/li&gt;
+  &lt;li&gt;Camera-info edits remain in AperTrace’s local index.&lt;/li&gt;
   &lt;li&gt;Removing an item from the library does not delete the source photo.&lt;/li&gt;
   &lt;li&gt;Export never overwrites an imported source photo.&lt;/li&gt;
 &lt;/ul&gt;
@@ -138,20 +138,20 @@
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Why can’t ShotMark preview a RAW file?&lt;/strong&gt;
+    &lt;p&gt;&lt;strong&gt;Why can’t AperTrace preview a RAW file?&lt;/strong&gt;
 RAW support is provided by the Core Image RAW decoder installed with macOS. Update macOS first. If the camera format is still unsupported, convert the photo to a compatible format before importing it.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Does editing camera information change the photo’s EXIF metadata?&lt;/strong&gt;
-No. Custom and hidden settings affect only ShotMark previews and exports.&lt;/p&gt;
+No. Custom and hidden settings affect only AperTrace previews and exports.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Does Remove from Library delete the file from my drive?&lt;/strong&gt;
-No. It removes only ShotMark’s library record and thumbnail cache.&lt;/p&gt;
+No. It removes only AperTrace’s library record and thumbnail cache.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Can batch export overwrite an existing image?&lt;/strong&gt;
-No. ShotMark automatically adds a numeric suffix when a filename is already in use.&lt;/p&gt;
+No. AperTrace automatically adds a numeric suffix when a filename is already in use.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Can I change the watermark template for several photos at once?&lt;/strong&gt;
@@ -159,7 +159,7 @@ Yes. Select the photos, open the &lt;code class=&quot;language-plaintext highlig
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Why does a photo show “File unavailable” after I move it?&lt;/strong&gt;
-ShotMark uses the source file and does not keep a separate photo copy. Choose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Relocate...&lt;/code&gt; to reconnect the moved file.&lt;/p&gt;
+AperTrace uses the source file and does not keep a separate photo copy. Choose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Relocate...&lt;/code&gt; to reconnect the moved file.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
@@ -173,18 +173,18 @@ ShotMark uses the source file and does not keep a separate photo copy. Choose &l
         
         <category>Photography</category>
         
-        <category>ShotMark</category>
+        <category>AperTrace</category>
         
         
       </item>
     
       <item>
-        <title>ShotMark 使用指南：在 Mac 上为照片添加拍摄信息水印</title>
+        <title>AperTrace 使用指南：在 Mac 上为照片添加拍摄信息水印</title>
         <description>&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
 
-&lt;p&gt;ShotMark 是一款原生 macOS 照片图库与拍摄信息水印应用。它可以读取照片中的相机、镜头、焦距、光圈、快门和 ISO 等信息，并把这些内容以简洁的版式融入照片。&lt;/p&gt;
+&lt;p&gt;AperTrace 是一款原生 macOS 照片图库与拍摄信息水印应用。它可以读取照片中的相机、镜头、焦距、光圈、快门和 ISO 等信息，并把这些内容以简洁的版式融入照片。&lt;/p&gt;
 
-&lt;p&gt;ShotMark 支持 JPEG、PNG、HEIC，以及当前 macOS Core Image 能够解码的 RAW 格式。你可以集中浏览一组照片，为单张或多张照片选择模板，再导出 JPEG、PNG 或 HEIC 成品。&lt;/p&gt;
+&lt;p&gt;AperTrace 支持 JPEG、PNG、HEIC，以及当前 macOS Core Image 能够解码的 RAW 格式。你可以集中浏览一组照片，为单张或多张照片选择模板，再导出 JPEG、PNG 或 HEIC 成品。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/01-library_zh.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -193,14 +193,14 @@ ShotMark uses the source file and does not keep a separate photo copy. Choose &l
 &lt;ul&gt;
   &lt;li&gt;macOS 14 Sonoma 或更高版本。&lt;/li&gt;
   &lt;li&gt;如果需要处理 RAW，具体格式是否可用取决于当前 macOS 对相机 RAW 格式的支持情况。&lt;/li&gt;
-  &lt;li&gt;ShotMark 支持英文和简体中文，并会跟随 macOS 的应用语言设置。&lt;/li&gt;
+  &lt;li&gt;AperTrace 支持英文和简体中文，并会跟随 macOS 的应用语言设置。&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h1 id=&quot;添加照片&quot;&gt;添加照片&lt;/h1&gt;
 
-&lt;p&gt;打开 ShotMark 后，点击左上角的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;添加照片&lt;/code&gt;，也可以直接把照片拖入窗口。&lt;/p&gt;
+&lt;p&gt;打开 AperTrace 后，点击左上角的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;添加照片&lt;/code&gt;，也可以直接把照片拖入窗口。&lt;/p&gt;
 
-&lt;p&gt;照片加入后会显示在图库中。ShotMark 只保存访问原文件所需的信息，不会复制、移动或修改源照片。再次导入同一个源文件时，应用会提示你跳过重复项、仍然导入或取消。&lt;/p&gt;
+&lt;p&gt;照片加入后会显示在图库中。AperTrace 只保存访问原文件所需的信息，不会复制、移动或修改源照片。再次导入同一个源文件时，应用会提示你跳过重复项、仍然导入或取消。&lt;/p&gt;
 
 &lt;p&gt;图库上方提供以下工具：&lt;/p&gt;
 
@@ -215,7 +215,7 @@ ShotMark uses the source file and does not keep a separate photo copy. Choose &l
 
 &lt;p&gt;双击一张照片即可打开独立预览窗口。可以点击&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;上一张&lt;/code&gt;、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;下一张&lt;/code&gt;，或使用键盘方向键浏览当前结果中的其他照片。&lt;/p&gt;
 
-&lt;p&gt;ShotMark 内置两种水印模板：&lt;/p&gt;
+&lt;p&gt;AperTrace 内置两种水印模板：&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;经典&lt;/code&gt;：在照片下方加入简洁的信息栏，适合横幅式展示拍摄参数。&lt;/li&gt;
@@ -247,11 +247,11 @@ ShotMark uses the source file and does not keep a separate photo copy. Choose &l
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;隐藏&lt;/code&gt;：不在水印中显示该项。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;这些修改只保存在 ShotMark 图库中，不会写回照片 EXIF，也不会改变源文件。&lt;/p&gt;
+&lt;p&gt;这些修改只保存在 AperTrace 图库中，不会写回照片 EXIF，也不会改变源文件。&lt;/p&gt;
 
 &lt;h1 id=&quot;多选与批量操作&quot;&gt;多选与批量操作&lt;/h1&gt;
 
-&lt;p&gt;ShotMark 支持标准的 macOS 多选操作：&lt;/p&gt;
+&lt;p&gt;AperTrace 支持标准的 macOS 多选操作：&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Command + 单击&lt;/code&gt;：添加或取消选择某张照片。&lt;/li&gt;
@@ -264,7 +264,7 @@ ShotMark uses the source file and does not keep a separate photo copy. Choose &l
 
 &lt;p&gt;&lt;img src=&quot;https://www.foolishtalk.org/cloud/02-selection-actions_zh.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;如果选择&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;移除&lt;/code&gt;，ShotMark 只会移除图库记录和对应缩略图缓存，不会删除、移动或修改源照片；误操作后还可以通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Command-Z&lt;/code&gt;撤销。&lt;/p&gt;
+&lt;p&gt;如果选择&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;移除&lt;/code&gt;，AperTrace 只会移除图库记录和对应缩略图缓存，不会删除、移动或修改源照片；误操作后还可以通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Command-Z&lt;/code&gt;撤销。&lt;/p&gt;
 
 &lt;h1 id=&quot;导出照片&quot;&gt;导出照片&lt;/h1&gt;
 
@@ -283,22 +283,22 @@ ShotMark uses the source file and does not keep a separate photo copy. Choose &l
   &lt;li&gt;开始导出并查看当前进度。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;默认输出文件名为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;原文件名-shotmark.扩展名&lt;/code&gt;。如果目标文件夹中已有同名文件，ShotMark 会自动添加&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-2&lt;/code&gt;、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-3&lt;/code&gt;等序号，不会覆盖已有文件。&lt;/p&gt;
+&lt;p&gt;默认输出文件名为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;原文件名-apertrace.扩展名&lt;/code&gt;。如果目标文件夹中已有同名文件，AperTrace 会自动添加&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-2&lt;/code&gt;、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-3&lt;/code&gt;等序号，不会覆盖已有文件。&lt;/p&gt;
 
 &lt;p&gt;批量导出过程中可以取消任务。已经成功导出的文件会保留，尚未开始的项目将停止；单张照片导出失败也不会中断整批任务，结束后会显示汇总结果。&lt;/p&gt;
 
 &lt;h1 id=&quot;文件失效与重新定位&quot;&gt;文件失效与重新定位&lt;/h1&gt;
 
-&lt;p&gt;由于 ShotMark 不会复制源照片，如果原文件被移动、重命名，或外置磁盘尚未连接，照片可能显示为“文件不可用”。&lt;/p&gt;
+&lt;p&gt;由于 AperTrace 不会复制源照片，如果原文件被移动、重命名，或外置磁盘尚未连接，照片可能显示为“文件不可用”。&lt;/p&gt;
 
 &lt;p&gt;此时可以右键照片并选择&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;重新定位…&lt;/code&gt;，找到对应的源文件后即可恢复访问。也可以通过右键菜单在 Finder 中显示源照片，或在缩略图异常时重新生成缩略图。&lt;/p&gt;
 
 &lt;h1 id=&quot;隐私与源文件安全&quot;&gt;隐私与源文件安全&lt;/h1&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;ShotMark 不会上传照片，也不包含云同步功能。&lt;/li&gt;
-  &lt;li&gt;原始照片不会被复制到 ShotMark 图库中。&lt;/li&gt;
-  &lt;li&gt;编辑后的拍摄信息只保存在本机 ShotMark 索引中。&lt;/li&gt;
+  &lt;li&gt;AperTrace 不会上传照片，也不包含云同步功能。&lt;/li&gt;
+  &lt;li&gt;原始照片不会被复制到 AperTrace 图库中。&lt;/li&gt;
+  &lt;li&gt;编辑后的拍摄信息只保存在本机 AperTrace 索引中。&lt;/li&gt;
   &lt;li&gt;从图库移除照片不会删除源文件。&lt;/li&gt;
   &lt;li&gt;导出时不会覆盖已导入的源照片。&lt;/li&gt;
 &lt;/ul&gt;
@@ -312,15 +312,15 @@ RAW 支持范围由当前 macOS 的 Core Image RAW 解码器决定。请先更�
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;编辑拍摄信息会修改照片的 EXIF 吗？&lt;/strong&gt;
-不会。自定义和隐藏规则只用于 ShotMark 中的预览与导出。&lt;/p&gt;
+不会。自定义和隐藏规则只用于 AperTrace 中的预览与导出。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;从图库移除照片会删除硬盘上的文件吗？&lt;/strong&gt;
-不会。ShotMark 只移除自己的图库记录和缩略图缓存。&lt;/p&gt;
+不会。AperTrace 只移除自己的图库记录和缩略图缓存。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;批量导出会覆盖同名图片吗？&lt;/strong&gt;
-不会。ShotMark 会自动为重名文件添加数字序号。&lt;/p&gt;
+不会。AperTrace 会自动为重名文件添加数字序号。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;可以一次修改多张照片的水印模板吗？&lt;/strong&gt;
@@ -328,7 +328,7 @@ RAW 支持范围由当前 macOS 的 Core Image RAW 解码器决定。请先更�
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;为什么移动照片后显示“文件不可用”？&lt;/strong&gt;
-ShotMark 通过原文件工作，不保存照片副本。请使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;重新定位…&lt;/code&gt;重新关联移动后的文件。&lt;/p&gt;
+AperTrace 通过原文件工作，不保存照片副本。请使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;重新定位…&lt;/code&gt;重新关联移动后的文件。&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
@@ -342,7 +342,7 @@ ShotMark 通过原文件工作，不保存照片副本。请使用&lt;code class
         
         <category>Photography</category>
         
-        <category>ShotMark</category>
+        <category>AperTrace</category>
         
         
       </item>
